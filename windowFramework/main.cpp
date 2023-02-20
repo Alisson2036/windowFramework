@@ -1,6 +1,18 @@
 #include <Windows.h>
 
 
+LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM WParam, LPARAM LParam)
+{
+	switch (msg)
+	{
+	case WM_CLOSE:
+		PostQuitMessage(11);
+	}
+
+	return DefWindowProc(hwnd, msg, WParam, LParam);
+}
+
+
 int CALLBACK WinMain(
 	HINSTANCE hInstance,
 	HINSTANCE hPrevInstance,
@@ -9,10 +21,11 @@ int CALLBACK WinMain(
 {
 	const wchar_t CLASS_NAME[] = L"Sample Window Class";
 
+	//criando window class
 	WNDCLASSEX wc = { };
 	wc.cbSize = sizeof(wc);
 	wc.style = CS_OWNDC;
-	wc.lpfnWndProc = DefWindowProc;
+	wc.lpfnWndProc = WndProc;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
 	wc.hInstance = hInstance;
@@ -24,12 +37,12 @@ int CALLBACK WinMain(
 
 	RegisterClassEx(&wc);
 
-
+	//criando a janela
 	HWND hwnd = CreateWindowEx(
 		0,
 		L"window class",
 		L"janela",
-		0,
+		WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 		0,
 		0,
 		800,
@@ -45,9 +58,10 @@ int CALLBACK WinMain(
 	
 	while (GetMessage(&msg, nullptr, 0, 0) > 0)
 	{
+		
 		TranslateMessage(&msg);
 		DispatchMessage(&msg);
 	}
 	
-	return 0;
+	return msg.wParam;
 }
