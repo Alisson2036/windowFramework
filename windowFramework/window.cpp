@@ -2,7 +2,8 @@
 
 window::window(const LPCWSTR name, int width, int height):
 	hInstance(GetModuleHandle(NULL)),
-	mouse()
+	mouse(),
+	keyboard()
 {
 	//criando window class
 	WNDCLASSEX wc = { };
@@ -62,6 +63,8 @@ int window::update()
 	if (mouse.leftButtonPressed()) title = "Botao esquerdo";
 	if (mouse.rightButtonPressed()) title = "Botao direito";
 
+	if(keyboard.keysPressed.size() > 0) title += keyboard.keysPressed[keyboard.keysPressed.size()-1];
+
 	SetWindowTextA(hwnd, title.c_str());
 
 	return r;
@@ -110,24 +113,45 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 		PostQuitMessage(11);
 		break;
 
+	//-------------------------------
 	//MOUSE MESSAGES-----------------
 	case WM_MOUSEMOVE:
 		mouse.updatePosition(MAKEPOINTS(lParam));
 		break;
 	case WM_LBUTTONDOWN:
-		mouse.mouseButtons = 2;
+		mouse.buttonDown(mouse.leftButton);
 		break;
 	case WM_LBUTTONUP:
-		mouse.mouseButtons = 0;
+		mouse.buttonUp(mouse.leftButton);
 		break;
 	case WM_RBUTTONDOWN:
-		mouse.mouseButtons = 1;
+		mouse.buttonDown(mouse.rightButton);
 		break;
 	case WM_RBUTTONUP:
-		mouse.mouseButtons = 0;
+		mouse.buttonUp(mouse.rightButton);
 		break;
 	//------------------------------------
+	//KEYBOARD MESSAGES-------------------
+	case WM_KEYDOWN:
+		if (!(lParam & 0x40000000)) keyboard.keyDown(wParam);
+		break;
+	case WM_KEYUP:
+		keyboard.keyUp(wParam);
+		break;
+	case WM_SYSKEYDOWN:
+		if (!(lParam & 0x40000000)) keyboard.keyDown(wParam);
+		break;
+	case WM_SYSKEYUP:
+		keyboard.keyUp(wParam);
+		break;
+	//------------------------------------
+	//KILL FOCUS MESSAGE------------------
+	case WM_KILLFOCUS:
+		mouse.emptyButtonList();
+		keyboard.emptyKeys();
+		break;
 	}
+	
 	
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }

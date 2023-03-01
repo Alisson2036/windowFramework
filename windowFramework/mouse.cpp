@@ -38,3 +38,18 @@ void Mouse::updatePosition(POINTS p)
 
 }
 
+void Mouse::buttonDown(const char buttonArgs)
+{
+	mouseButtons = mouseButtons | buttonArgs;
+}
+
+void Mouse::buttonUp(const char buttonArgs)
+{
+	mouseButtons = mouseButtons - buttonArgs;
+}
+
+void Mouse::emptyButtonList()
+{
+	mouseButtons = 0;
+}
+

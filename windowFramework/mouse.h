@@ -21,6 +21,10 @@ public:
 
 private:
 	void updatePosition(POINTS p);
+	void buttonDown(const char buttonArgs);
+	void buttonUp(const char buttonArgs);
+
+	void emptyButtonList();
 
 private:
 	int xPos = 0;
@@ -31,7 +35,7 @@ private:
 	static const constexpr char leftButton = 0x2;
 	static const constexpr char rightButton = 0x1;
 
-	int scroll;
+	int scroll=0;
 	
 	
 };
