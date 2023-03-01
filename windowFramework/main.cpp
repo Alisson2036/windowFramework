@@ -20,6 +20,6 @@ int CALLBACK WinMain(
 	int nCmdShow )
 {
 	window wnd(L"aa", 800, 600);
-	while (wnd.handleMessage() > 0);
+	while (wnd.update() > 0);
 	return 0;
 }

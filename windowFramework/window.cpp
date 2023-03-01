@@ -2,7 +2,7 @@
 
 window::window(const LPCWSTR name, int width, int height):
 	hInstance(GetModuleHandle(NULL)),
-	mouse(Mouse(&lastMessage))
+	mouse()
 {
 	//criando window class
 	WNDCLASSEX wc = { };
@@ -21,6 +21,7 @@ window::window(const LPCWSTR name, int width, int height):
 	//registra a classe
 	RegisterClassEx(&wc);
 
+	//criando a janela
 	hwnd = CreateWindowEx(
 		0,
 		className,
@@ -33,7 +34,7 @@ window::window(const LPCWSTR name, int width, int height):
 		nullptr,
 		nullptr,
 		hInstance,
-		nullptr
+		this
 	);
 
 	//mostra a janela
@@ -46,7 +47,7 @@ window::~window()
 	UnregisterClass(className, hInstance);
 }
 
-int window::handleMessage()
+int window::update()
 {
 	
 	//acessa a ultima mensagem da janela e coloca o codigo de retorno em r
@@ -55,6 +56,13 @@ int window::handleMessage()
 	//tira a mensagem da fila
 	TranslateMessage(&lastMessage);
 	DispatchMessage(&lastMessage);
+
+	std::string title = std::to_string(mouse.getX()) + ' ' + std::to_string(mouse.getY());
+
+	if (mouse.leftButtonPressed()) title = "Botao esquerdo";
+	if (mouse.rightButtonPressed()) title = "Botao direito";
+
+	SetWindowTextA(hwnd, title.c_str());
 
 	return r;
 }
@@ -77,6 +85,8 @@ LRESULT CALLBACK window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam,
 	case WM_NCCREATE:
 		CREATESTRUCT* structP = reinterpret_cast<CREATESTRUCT*>(lParam);
 		window* wind = reinterpret_cast<window*>(structP->lpCreateParams);
+
+		wind;
 		
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(wind));
 		SetWindowLongPtr(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(wind->messageHandler));
@@ -98,6 +108,26 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 	{
 	case WM_CLOSE:
 		PostQuitMessage(11);
+		break;
+
+	//MOUSE MESSAGES-----------------
+	case WM_MOUSEMOVE:
+		mouse.updatePosition(MAKEPOINTS(lParam));
+		break;
+	case WM_LBUTTONDOWN:
+		mouse.mouseButtons = 2;
+		break;
+	case WM_LBUTTONUP:
+		mouse.mouseButtons = 0;
+		break;
+	case WM_RBUTTONDOWN:
+		mouse.mouseButtons = 1;
+		break;
+	case WM_RBUTTONUP:
+		mouse.mouseButtons = 0;
+		break;
+	//------------------------------------
 	}
+	
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }

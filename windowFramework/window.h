@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include "mouse.h"
+#include <string>
 
 class window
 {
@@ -9,7 +10,7 @@ public:
 	window(const LPCWSTR name, int width, int height);
 	window(window& w) = delete;
 	~window();
-	int handleMessage();
+	int update();
 
 	HINSTANCE get_hInstance() const;
 	Mouse* getMousePointer();

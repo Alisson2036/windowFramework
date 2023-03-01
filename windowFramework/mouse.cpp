@@ -1,17 +1,40 @@
 #include "mouse.h"
 
-Mouse::Mouse(MSG* lastMessagePointer):
-	lastMessage(lastMessagePointer)
-{	
-}
 
 int Mouse::getX() const
 {
-	return lastMessage->pt.x;
+	return xPos;
 }
 
 int Mouse::getY() const
 {
-	return lastMessage->pt.y;
+	return yPos;
+}
+
+int Mouse::getScroll() const
+{
+	return scroll;
+}
+
+void Mouse::resetScroll()
+{
+	scroll = 0;
+}
+
+bool Mouse::leftButtonPressed()
+{
+	return mouseButtons & leftButton;
+}
+
+bool Mouse::rightButtonPressed()
+{
+	return mouseButtons & rightButton;
+}
+
+void Mouse::updatePosition(POINTS p)
+{
+	xPos = p.x;
+	yPos = p.y;
+
 }
 
