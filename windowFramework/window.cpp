@@ -2,6 +2,7 @@
 
 window::window(const LPCWSTR name, int width, int height):
 	hInstance(GetModuleHandle(NULL)),
+	lastMessage(MSG()),
 	mouse(),
 	keyboard()
 {
@@ -63,7 +64,7 @@ int window::update()
 	if (mouse.leftButtonPressed()) title = "Botao esquerdo";
 	if (mouse.rightButtonPressed()) title = "Botao direito";
 
-	if(keyboard.keysPressed.size() > 0) title += keyboard.keysPressed[keyboard.keysPressed.size()-1];
+	if (keyboard.keysPressed.size() > 0) title += keyboard.keysPressed.back();
 
 	SetWindowTextA(hwnd, title.c_str());
 
@@ -79,6 +80,11 @@ HINSTANCE window::get_hInstance() const
 Mouse* window::getMousePointer()
 {
 	return &mouse;
+}
+
+void window::setTitle(std::string newTitle)
+{
+	SetWindowTextA(hwnd, newTitle.c_str());
 }
 
 LRESULT CALLBACK window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
@@ -133,16 +139,16 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 	//------------------------------------
 	//KEYBOARD MESSAGES-------------------
 	case WM_KEYDOWN:
-		if (!(lParam & 0x40000000)) keyboard.keyDown(wParam);
+		if (!(lParam & 0x40000000)) keyboard.keyDown((char)wParam);
 		break;
 	case WM_KEYUP:
-		keyboard.keyUp(wParam);
+		keyboard.keyUp((char)wParam);
 		break;
 	case WM_SYSKEYDOWN:
-		if (!(lParam & 0x40000000)) keyboard.keyDown(wParam);
+		if (!(lParam & 0x40000000)) keyboard.keyDown((char)wParam);
 		break;
 	case WM_SYSKEYUP:
-		keyboard.keyUp(wParam);
+		keyboard.keyUp((char)wParam);
 		break;
 	//------------------------------------
 	//KILL FOCUS MESSAGE------------------

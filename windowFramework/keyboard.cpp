@@ -6,6 +6,11 @@ bool Keyboard::isKeyPressed(char key)
     return false;
 }
 
+char Keyboard::getLastKey()
+{
+    return keysPressed.back();
+}
+
 void Keyboard::keyDown(char key)
 {
     keysPressed.push_back(key);

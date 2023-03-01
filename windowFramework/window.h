@@ -17,6 +17,7 @@ public:
 
 	HINSTANCE get_hInstance() const;
 	Mouse* getMousePointer();
+	void setTitle(std::string newTitle);
 
 
 private:

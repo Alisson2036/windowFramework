@@ -11,7 +11,7 @@ public:
 	Keyboard operator=(Keyboard&) = delete;
 
 	bool isKeyPressed(char key);
-	
+	char getLastKey();
 
 private:
 	void keyDown(char key);
@@ -20,7 +20,5 @@ private:
 
 private:
 	std::vector<char> keysPressed;
-	
-
 
 };
