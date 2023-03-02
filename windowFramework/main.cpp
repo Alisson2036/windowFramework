@@ -14,10 +14,11 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM WParam, LPARAM LParam)
 
 
 int CALLBACK WinMain(
-	_In_ HINSTANCE hInstance,
+	_In_      HINSTANCE hInstance,
 	_In_opt_  HINSTANCE hPrevInstance,
-	_In_ LPSTR lpCmdLine,
-	_In_ int nCmdShow )
+	_In_      LPSTR lpCmdLine,
+	_In_      int nCmdShow
+	)
 {
 	window wnd(L"aa", 800, 600);
 	while (wnd.update() > 0);

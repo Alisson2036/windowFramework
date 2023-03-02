@@ -51,24 +51,29 @@ window::~window()
 
 int window::update()
 {
-	
+
 	//acessa a ultima mensagem da janela e coloca o codigo de retorno em r
-	int r = GetMessage(&lastMessage, nullptr, 0, 0);
+	//int r = GetMessage(&lastMessage, nullptr, 0, 0);
 
-	//tira a mensagem da fila
-	TranslateMessage(&lastMessage);
-	DispatchMessage(&lastMessage);
+	//verifica se ainda tem mensagens para ler
+	while (PeekMessage(&lastMessage, nullptr, 0, 0, PM_REMOVE)) {
 
-	std::string title = std::to_string(mouse.getX()) + ' ' + std::to_string(mouse.getY());
+		//tira a mensagem da fila
+		TranslateMessage(&lastMessage);
+		DispatchMessage(&lastMessage);
 
-	if (mouse.leftButtonPressed()) title = "Botao esquerdo";
-	if (mouse.rightButtonPressed()) title = "Botao direito";
+		if (lastMessage.message == WM_QUIT)
+		{
+			throw("oi");
+			return 0;
+		}
 
-	if (keyboard.keysPressed.size() > 0) title += keyboard.keysPressed.back();
+		std::string title = std::to_string(mouse.getX()) + ' ' + std::to_string(mouse.getY());
+		SetWindowTextA(hwnd, title.c_str());
+		
+	}
 
-	SetWindowTextA(hwnd, title.c_str());
-
-	return r;
+	return 1;
 }
 
 
@@ -80,6 +85,11 @@ HINSTANCE window::get_hInstance() const
 Mouse* window::getMousePointer()
 {
 	return &mouse;
+}
+
+Keyboard* window::getKeyboarPointer()
+{
+	return &keyboard;
 }
 
 void window::setTitle(std::string newTitle)
@@ -99,6 +109,7 @@ LRESULT CALLBACK window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam,
 		
 		SetWindowLongPtr(hwnd, GWLP_USERDATA, reinterpret_cast<LONG_PTR>(wind));
 		SetWindowLongPtr(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(wind->messageHandler));
+
 	}
 
 	return DefWindowProc(hwnd, msg, wParam, lParam);
