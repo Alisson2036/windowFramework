@@ -13,7 +13,7 @@ int Mouse::getY() const
 
 int Mouse::getScroll() const
 {
-	return scroll;
+	return (int)scroll;
 }
 
 void Mouse::resetScroll()
@@ -46,6 +46,11 @@ void Mouse::buttonDown(const char buttonArgs)
 void Mouse::buttonUp(const char buttonArgs)
 {
 	mouseButtons = mouseButtons - buttonArgs;
+}
+
+void Mouse::wheelMove(int delta)
+{
+	scroll += (float)delta / 120.0f;
 }
 
 void Mouse::emptyButtonList()

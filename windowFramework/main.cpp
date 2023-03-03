@@ -1,17 +1,7 @@
 #include <Windows.h>
-#include "window.h"
-
-LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM WParam, LPARAM LParam)
-{
-	switch (msg)
-	{
-	case WM_CLOSE:
-		PostQuitMessage(11);
-	}
-
-	return DefWindowProc(hwnd, msg, WParam, LParam);
-}
-
+#include <string>
+#include <exception>
+#include "app.h"
 
 int CALLBACK WinMain(
 	_In_      HINSTANCE hInstance,
@@ -20,7 +10,21 @@ int CALLBACK WinMain(
 	_In_      int nCmdShow
 	)
 {
-	window wnd(L"aa", 800, 600);
-	while (wnd.update() > 0);
+	try
+	{
+		app main;
+		main.start();
+		
+	}
+	catch (const std::exception& a)
+	{
+		std::string error = a.what();
+		MessageBoxA(nullptr, error.c_str(), "STD EXCEPTION", 0);
+		
+	}
+	catch (...)
+	{
+		MessageBoxA(nullptr, "UNHANDLED EXCEPTION", "???", 0);
+	}
 	return 0;
 }

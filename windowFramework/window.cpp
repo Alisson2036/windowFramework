@@ -66,11 +66,7 @@ int window::update()
 		{
 			throw("oi");
 			return 0;
-		}
-
-		std::string title = std::to_string(mouse.getX()) + ' ' + std::to_string(mouse.getY());
-		SetWindowTextA(hwnd, title.c_str());
-		
+		}		
 	}
 
 	return 1;
@@ -146,6 +142,9 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 		break;
 	case WM_RBUTTONUP:
 		mouse.buttonUp(mouse.rightButton);
+		break;
+	case WM_MOUSEWHEEL:
+		mouse.wheelMove(GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
 	//------------------------------------
 	//KEYBOARD MESSAGES-------------------

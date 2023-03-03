@@ -24,6 +24,8 @@ private:
 	void buttonDown(const char buttonArgs);
 	void buttonUp(const char buttonArgs);
 
+	void wheelMove(int delta);
+
 	void emptyButtonList();
 
 private:
@@ -35,7 +37,7 @@ private:
 	static const constexpr char leftButton = 0x2;
 	static const constexpr char rightButton = 0x1;
 
-	int scroll=0;
+	float scroll=0;
 	
 	
 };
