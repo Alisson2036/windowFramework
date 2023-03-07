@@ -9,6 +9,8 @@ app::app():
 void app::start()
 {
 	while (win.update()) loop();
+
+	throw frameworkException(__LINE__, __FILE__);
 }
 
 void app::loop()

@@ -64,7 +64,6 @@ int window::update()
 
 		if (lastMessage.message == WM_QUIT)
 		{
-			throw("oi");
 			return 0;
 		}		
 	}

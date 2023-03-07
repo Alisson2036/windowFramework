@@ -1,5 +1,6 @@
 #pragma once
 #include "window.h"
+#include "exception.h"
 
 class app
 {
