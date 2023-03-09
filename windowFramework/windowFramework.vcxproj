@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="app.cpp" />
     <ClCompile Include="exception.cpp" />
+    <ClCompile Include="graphics.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
@@ -144,6 +145,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="exception.h" />
+    <ClInclude Include="graphics.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />
     <ClInclude Include="mouse.h" />

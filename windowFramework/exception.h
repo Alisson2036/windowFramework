@@ -18,3 +18,5 @@ private:
 	int line;
 
 };
+
+#define _throw throw frameworkException(__LINE__, __FILE__)

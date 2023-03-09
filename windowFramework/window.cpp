@@ -42,6 +42,8 @@ window::window(const LPCWSTR name, int width, int height):
 	//mostra a janela
 	ShowWindow(hwnd, 1);
 
+	pGfx = std::make_unique<Graphics>(hwnd);
+
 }
 
 window::~window()
@@ -68,6 +70,8 @@ int window::update()
 		}		
 	}
 
+	pGfx->flip();
+
 	return 1;
 }
 
@@ -85,6 +89,11 @@ Mouse* window::getMousePointer()
 Keyboard* window::getKeyboarPointer()
 {
 	return &keyboard;
+}
+
+Graphics& window::Gfx()
+{
+	return *pGfx;
 }
 
 void window::setTitle(std::string newTitle)

@@ -24,7 +24,7 @@ int CALLBACK WinMain(
 		error += "\n	line: ";
 		error += std::to_string(e.getLine());
 
-		MessageBoxA(nullptr, error.c_str(), "FRAMEWORK EXCEPTION", MB_ICONERROR | MB_ABORTRETRYIGNORE);
+		MessageBoxA(nullptr, error.c_str(), "FRAMEWORK EXCEPTION", MB_ICONERROR);
 	}
 	catch (const std::exception& e)
 	{

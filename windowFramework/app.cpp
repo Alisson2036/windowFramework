@@ -10,13 +10,17 @@ void app::start()
 {
 	while (win.update()) loop();
 
-	throw frameworkException(__LINE__, __FILE__);
 }
 
 void app::loop()
 {
 
 	std::string title = std::to_string(win.getMousePointer()->getX());
+
+	int x = win.getMousePointer()->getX();
+	int y = win.getMousePointer()->getY();
+
+	win.Gfx().fillScreen((float)x/800.0f, (float)y/600.0f, 0);
 
 	win.setTitle(title);
 

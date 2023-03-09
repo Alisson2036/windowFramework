@@ -1,9 +1,10 @@
 #pragma once
 #include <Windows.h>
 #include <string>
+#include <memory>
 #include "mouse.h"
 #include "keyboard.h"
-
+#include "graphics.h"
 
 class window
 {
@@ -18,6 +19,8 @@ public:
 	HINSTANCE get_hInstance() const;
 	Mouse* getMousePointer();
 	Keyboard* getKeyboarPointer();
+	Graphics& Gfx();
+
 	void setTitle(std::string newTitle);
 
 
@@ -35,6 +38,6 @@ private:
 
 	Mouse mouse;
 	Keyboard keyboard;
-
+	std::unique_ptr<Graphics> pGfx;
 	
 };
