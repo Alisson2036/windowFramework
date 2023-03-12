@@ -41,7 +41,9 @@ Graphics::Graphics(HWND hWnd)
 
 	ID3D11Resource* pBackBuffer;
 	swapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
-	d3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &targetView);
+	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &targetView);
+	else _throw;
+	pBackBuffer->Release();
 
 }
 
@@ -64,5 +66,5 @@ void Graphics::fillScreen(float r, float g, float b)
 void Graphics::flip()
 {
 	
-	swapChain->Present(0, 0);
+	swapChain->Present(1, 0);
 }

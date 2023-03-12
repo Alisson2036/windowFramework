@@ -1,6 +1,7 @@
 #pragma once
 #include "window.h"
 #include "exception.h"
+#include "timer.h"
 
 class app
 {
@@ -19,5 +20,6 @@ private:
 private:
 
 	window win;
+	Timer timeSinceCreation;
 
 };

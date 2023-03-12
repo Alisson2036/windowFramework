@@ -1,7 +1,9 @@
 #include "app.h"
 
-app::app():
-	win(L"Jojo fofo", 800, 600)
+app::app()
+	:
+	win(L"Jojo fofo", 800, 600),
+	timeSinceCreation()
 {
 
 }
@@ -21,6 +23,9 @@ void app::loop()
 	int y = win.getMousePointer()->getY();
 
 	win.Gfx().fillScreen((float)x/800.0f, (float)y/600.0f, 0);
+
+	title += ' ';
+	title += std::to_string(timeSinceCreation.getPassedMili());
 
 	win.setTitle(title);
 
