@@ -28,7 +28,7 @@ Graphics::Graphics(HWND hWnd)
 		NULL,
 		D3D_DRIVER_TYPE_HARDWARE,
 		NULL,
-		0,
+		D3D11_CREATE_DEVICE_DEBUG,
 		NULL, //usa o feature level array padrão
 		0, //numero de elementos no array do feature level
 		D3D11_SDK_VERSION,
@@ -38,12 +38,14 @@ Graphics::Graphics(HWND hWnd)
 		NULL,
 		&deviceContext
 	);
+	_throwHr(hr);
+	
 
-	ID3D11Resource* pBackBuffer;
-	swapChain->GetBuffer(0, __uuidof(ID3D11Resource), reinterpret_cast<void**>(&pBackBuffer));
-	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer, nullptr, &targetView);
+	Microsoft::WRL::ComPtr<ID3D11Resource> pBackBuffer;
+	hr = swapChain->GetBuffer(0, __uuidof(ID3D11Resource), &pBackBuffer);
+	_throwHr(hr);
+	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, &targetView);
 	else _throw;
-	pBackBuffer->Release();
 
 }
 
