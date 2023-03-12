@@ -1,6 +1,9 @@
 #pragma once
 #pragma comment (lib,"d3d11.lib")
+#pragma comment (lib,"D3DCompiler.lib")
+#pragma comment( lib, "dxgi.lib" ) 
 #include <windows.h>
+#include <d3dcompiler.h>
 #include <wrl.h>
 #include <d3d11.h>
 #include "exception.h"
@@ -12,7 +15,7 @@ public:
 	Graphics(Graphics&) = delete;
 	Graphics operator=(Graphics&) = delete;
 
-	
+	void testando();
 
 	~Graphics();
 
