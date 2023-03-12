@@ -9,6 +9,7 @@ class frameworkException : public std::exception
 public:
 	frameworkException(int _line, const char* _file);
 	frameworkException(int _line, const char* _file, HRESULT _hr);
+	frameworkException(int _line, const char* _file, std::string _message);
 
 	const char* what() const override;
 
@@ -20,6 +21,7 @@ public:
 
 private:
 
+	std::string msg;
 	std::string file;
 	int line;
 	HRESULT hr;

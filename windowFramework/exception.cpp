@@ -4,7 +4,8 @@ frameworkException::frameworkException(int _line, const char* _file)
 	:
 	file(_file),
 	line(_line),
-	hr(0)
+	hr(0),
+	msg("")
 {
 }
 
@@ -12,7 +13,17 @@ frameworkException::frameworkException(int _line, const char* _file, HRESULT _hr
 	:
 	file(_file),
 	line(_line),
-	hr(_hr)
+	hr(_hr),
+	msg("")
+{
+}
+
+frameworkException::frameworkException(int _line, const char* _file, std::string _message)
+	:
+	file(_file),
+	line(_line),
+	hr(0),
+	msg(_message)
 {
 }
 
@@ -35,7 +46,7 @@ const char* frameworkException::what() const
 		return "couldn't find message";
 
 	}
-	return "";
+	return msg.c_str();
 }
 
 int frameworkException::getLine() const
