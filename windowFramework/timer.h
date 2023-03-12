@@ -27,10 +27,6 @@ public:
 	{		
 		return std::chrono::duration<float>(std::chrono::high_resolution_clock::now() - start).count();
 	}
-	long long getPassedMili()
-	{
-		return (std::chrono::high_resolution_clock::now() - start).count()/1000000;
-	}
 
 
 private:

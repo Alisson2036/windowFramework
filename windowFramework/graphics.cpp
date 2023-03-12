@@ -49,18 +49,12 @@ Graphics::Graphics(HWND hWnd)
 
 Graphics::~Graphics()
 {
-	if (swapChain != nullptr) swapChain->Release();
-	else _throw;
-	if (d3dDevice != nullptr) d3dDevice->Release();
-	else _throw;
-	if (deviceContext != nullptr) deviceContext->Release();
-	else _throw;
 }
 
 void Graphics::fillScreen(float r, float g, float b)
 {
 	const float f[4] = { r, g, b, 1.0f};
-	deviceContext->ClearRenderTargetView(targetView, f);
+	deviceContext->ClearRenderTargetView(targetView.Get(), f);
 }
 
 void Graphics::flip()
