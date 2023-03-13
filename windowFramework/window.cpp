@@ -1,10 +1,12 @@
 #include "window.h"
 
-window::window(const LPCWSTR name, int width, int height):
+window::window(const LPCWSTR name, int _width, int _height):
 	hInstance(GetModuleHandle(NULL)),
 	lastMessage(MSG()),
 	mouse(),
-	keyboard()
+	keyboard(),
+	windowWidth(_width),
+	windowHeight(_height)
 {
 	//criando window class
 	WNDCLASSEX wc = { };
@@ -23,6 +25,13 @@ window::window(const LPCWSTR name, int width, int height):
 	//registra a classe
 	RegisterClassEx(&wc);
 
+	//calculando o tamanho da janela
+	RECT windowRect = { 0,0,_width, _height };
+	AdjustWindowRect(&windowRect, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, TRUE);
+	_width = windowRect.right - windowRect.left;
+	_height = windowRect.bottom - windowRect.top;
+
+
 	//criando a janela
 	hwnd = CreateWindowEx(
 		0,
@@ -31,8 +40,8 @@ window::window(const LPCWSTR name, int width, int height):
 		WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,
-		width,
-		height,
+		_width,
+		_height,
 		nullptr,
 		nullptr,
 		hInstance,
@@ -99,6 +108,16 @@ Graphics& window::Gfx()
 void window::setTitle(std::string newTitle)
 {
 	SetWindowTextA(hwnd, newTitle.c_str());
+}
+
+int window::getWindowSizeX()
+{
+	return windowWidth;
+}
+
+int window::getWindowSizeY()
+{
+	return windowHeight;
 }
 
 LRESULT CALLBACK window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)

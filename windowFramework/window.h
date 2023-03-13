@@ -23,6 +23,8 @@ public:
 
 	void setTitle(std::string newTitle);
 
+	int getWindowSizeX();
+	int getWindowSizeY();
 
 private:
 	static LRESULT CALLBACK messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -30,6 +32,9 @@ private:
 	LRESULT messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 private:
+	int windowWidth;
+	int windowHeight;
+
 	HWND hwnd;//window handle
 	HINSTANCE hInstance;
 	static constexpr const wchar_t* className = L"window class"; //nome da windowClass
