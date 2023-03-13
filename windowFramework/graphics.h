@@ -26,11 +26,19 @@ public:
 
 private:
 
+	void getPixelShader(const wchar_t* name);
+	void getVertexShader(const wchar_t* name);
+
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device>           d3dDevice;
 	Microsoft::WRL::ComPtr<IDXGISwapChain>         swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>    deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
+
+	Microsoft::WRL::ComPtr<ID3D11PixelShader>   pixelShader;
+	Microsoft::WRL::ComPtr<ID3DBlob>            pixelShaderBlob;
+	Microsoft::WRL::ComPtr<ID3D11VertexShader>  vertexShader;
+	Microsoft::WRL::ComPtr<ID3DBlob>            vertexShaderBlob;
 
 };
 
