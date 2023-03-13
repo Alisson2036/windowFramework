@@ -24,7 +24,7 @@ void app::loop()
 
 	win.Gfx().fillScreen((float)x/800.0f, (float)y/600.0f, 0);
 
-	win.Gfx().testando();
+	win.Gfx().test2();
 
 	win.setTitle(title);
 

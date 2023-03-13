@@ -71,4 +71,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>
+  <ItemGroup>
+    <PackageLayout Include="shaders.hlsl">
+      <Filter>Shaders</Filter>
+    </PackageLayout>
+  </ItemGroup>
 </Project>

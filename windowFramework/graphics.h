@@ -16,6 +16,7 @@ public:
 	Graphics operator=(Graphics&) = delete;
 
 	void testando();
+	void test2();
 
 	~Graphics();
 

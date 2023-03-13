@@ -9,7 +9,7 @@ window::window(const LPCWSTR name, int width, int height):
 	//criando window class
 	WNDCLASSEX wc = { };
 	wc.cbSize = sizeof(wc);
-	wc.style = CS_OWNDC;
+	wc.style = CS_OWNDC | CS_HREDRAW | CS_VREDRAW;
 	wc.lpfnWndProc = messageHandlerSetup;
 	wc.cbClsExtra = 0;
 	wc.cbWndExtra = 0;
