@@ -22,9 +22,30 @@ void app::loop()
 	int x = win.getMousePointer()->getX();
 	int y = win.getMousePointer()->getY();
 
-	win.Gfx().fillScreen((float)x/800.0f, (float)y/600.0f, 0);
+	float r = (float)x / 800.0f;
+	float g = (float)y / 600.0f;
+	float b = 0;
 
-	win.Gfx().test2();
+	win.Gfx().fillScreen(r/2, g/2, b/2);
+
+	float xPos = ((float)x - 400.0f) / 400.0f;
+	float yPos = -((float)y - 300.0f) / 300.0f;
+
+	title = std::to_string(xPos) + " " + std::to_string(yPos);
+
+	r *= 255;
+	g *= 255;
+	b *= 255;
+
+	Graphics::vertex2d v[3] =
+	{
+		Graphics::vertex2d( xPos, yPos, r, 255-r, g, 255),
+		Graphics::vertex2d( 0.5f,-0.5f, 255-g, r, 0, 255),
+		Graphics::vertex2d(-0.5f,-0.5f, g, 0, 255-r, 255),
+	};
+
+	win.Gfx().draw2dTriangle(v);
+	//win.Gfx().test2();
 
 	win.setTitle(title);
 

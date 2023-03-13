@@ -30,3 +30,4 @@ private:
 
 #define _throw throw frameworkException(__LINE__, __FILE__)
 #define _throwHr(hr) if(FAILED(hr)) throw frameworkException(__LINE__, __FILE__, hr)
+#define _throwMsg(msg) throw frameworkException(__LINE__, __FILE__, msg)

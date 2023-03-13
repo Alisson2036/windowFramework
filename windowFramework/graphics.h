@@ -11,12 +11,22 @@
 class Graphics
 {
 public:
+	struct vertex2d
+	{
+		float x;
+		float y;
+		char r;
+		char g;
+		char b;
+		char a;
+	};
+public:
 	Graphics(HWND _hwnd);
 	Graphics(Graphics&) = delete;
 	Graphics operator=(Graphics&) = delete;
 
-	void testando();
 	void test2();
+	void draw2dTriangle(vertex2d vertices[3]);
 
 	~Graphics();
 
