@@ -9,20 +9,12 @@
 
 
 
-class InputLayout : Bindable
+class InputLayout : public Bindable
 {
 public:
-	void create(VertexShader vs, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription, D3D11_PRIMITIVE_TOPOLOGY _topology);
+	void create(VertexShader& vs, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription, D3D11_PRIMITIVE_TOPOLOGY _topology);
 
 	void bind() override;
-	void setDevice(Microsoft::WRL::ComPtr<ID3D11Device> _device) override
-	{
-		device = _device;
-	}
-	void setContext(Microsoft::WRL::ComPtr<ID3D11DeviceContext> _deviceContext) override
-	{
-		context = _deviceContext;
-	}
 	
 
 

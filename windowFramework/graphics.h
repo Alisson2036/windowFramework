@@ -11,20 +11,16 @@
 #include "bindable.h"
 #include "vertexShader.h"
 #include "pixelShader.h"
+#include "inputLayout.h"
+#include "vertexBuffer.h"
+
+#include "v.h"
 
 class Graphics
 {
 	friend class Bindable;
 public:
-	struct vertex2d
-	{
-		float x;
-		float y;
-		char r;
-		char g;
-		char b;
-		char a;
-	};
+	
 public:
 	Graphics(HWND _hwnd);
 	Graphics(Graphics&) = delete;

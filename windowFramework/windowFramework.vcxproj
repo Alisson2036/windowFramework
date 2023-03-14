@@ -143,6 +143,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="pixelShader.cpp" />
+    <ClCompile Include="vertexBuffer.cpp" />
     <ClCompile Include="vertexShader.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
@@ -157,6 +158,8 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="pixelShader.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="v.h" />
+    <ClInclude Include="vertexBuffer.h" />
     <ClInclude Include="vertexShader.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

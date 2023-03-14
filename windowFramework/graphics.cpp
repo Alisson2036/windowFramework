@@ -68,19 +68,32 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 	ps.setContext(deviceContext.Get());
 	ps.create(L"PixelShader.cso");
 
+	InputLayout il;
+	il.setDevice(d3dDevice.Get());
+	il.setContext(deviceContext.Get());
+	il.create(vs,
+		{
+			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+		},
+		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
+	);
 
-
-	//Criando input layout
-	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
-	{
-		{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
-	_throwHr(d3dDevice->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), vs.getBlob()->GetBufferPointer(), vs.getBlob()->GetBufferSize(), &inputLayout));
 	
-
+	VertexBuffer vb;
+	//vb.setDevice(d3dDevice.Get());
+	//vb.setContext(deviceContext.Get());
+	/*
+	vb.create(
+		{
+			vertices[0],
+			vertices[1],
+			vertices[2]
+		}
+	);
+	*/
+	
+	
 	// Create Vertex Buffer
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
 	UINT numVerts;
@@ -100,7 +113,7 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 
 		_throwHr(d3dDevice->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &vertexBuffer));
 	}
-
+	
 
 
 	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, 800, 600, 0.0f, 1.0f };
@@ -108,16 +121,16 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 
 	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), nullptr);
 
-	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	deviceContext->IASetInputLayout(inputLayout.Get());
+	il.bind();
 
 	//bind shaders
 	vs.bind();
 	ps.bind();
 
 	deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+	//vb.bind();
 
-	deviceContext->Draw(numVerts, 0);
+	deviceContext->Draw(3, 0);
 }
 
 

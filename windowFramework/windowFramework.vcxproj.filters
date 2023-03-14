@@ -60,6 +60,9 @@
     <ClCompile Include="pixelShader.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="vertexBuffer.cpp">
+      <Filter>Arquivos de Origem\Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -97,6 +100,12 @@
     </ClInclude>
     <ClInclude Include="pixelShader.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="v.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

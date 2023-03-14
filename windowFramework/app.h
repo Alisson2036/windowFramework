@@ -3,6 +3,8 @@
 #include "exception.h"
 #include "timer.h"
 
+#include "v.h"
+
 class app
 {
 public:

@@ -6,21 +6,15 @@
 #include "exception.h"
 #include "bindable.h"
 
-class VertexShader : Bindable
+
+
+class VertexShader : public Bindable
 {
 public:
 
 	void create(const wchar_t* _shaderFile);
 
 	void bind() override;
-	void setDevice(Microsoft::WRL::ComPtr<ID3D11Device> _device) override
-	{
-		device = _device;
-	}
-	void setContext(Microsoft::WRL::ComPtr<ID3D11DeviceContext> _deviceContext) override
-	{
-		context = _deviceContext;
-	}
 
 	Microsoft::WRL::ComPtr<ID3DBlob> getBlob();
 

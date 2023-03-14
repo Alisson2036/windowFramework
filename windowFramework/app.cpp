@@ -37,11 +37,11 @@ void app::loop()
 	g *= 255;
 	b *= 255;
 
-	Graphics::vertex2d v[3] =
+	vertex2d v[3] =
 	{
-		Graphics::vertex2d( xPos, yPos, r, 255-r, g, 255),
-		Graphics::vertex2d( 0.5f,-0.5f, 255-g, r, 0, 255),
-		Graphics::vertex2d(-0.5f,-0.5f, g, 0, 255-r, 255),
+		vertex2d( xPos, yPos, r, 255-r, g, 255),
+		vertex2d( 0.5f,-0.5f, 255-g, r, 0, 255),
+		vertex2d(-0.5f,-0.5f, g, 0, 255-r, 255),
 	};
 
 	win.Gfx().draw2dTriangle(v);
