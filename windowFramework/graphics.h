@@ -8,6 +8,9 @@
 #include <d3d11.h>
 #include "exception.h"
 
+#include "bindable.h"
+#include "vertexShader.h"
+#include "pixelShader.h"
 
 class Graphics
 {
@@ -56,11 +59,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>    deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
 
-	//apagar esses shaders depois
-	Microsoft::WRL::ComPtr<ID3D11PixelShader>   pixelShader;
-	Microsoft::WRL::ComPtr<ID3DBlob>            pixelShaderBlob;
-	Microsoft::WRL::ComPtr<ID3D11VertexShader>  vertexShader;
-	Microsoft::WRL::ComPtr<ID3DBlob>            vertexShaderBlob;
+
 
 };
 

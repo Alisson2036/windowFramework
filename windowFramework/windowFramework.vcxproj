@@ -142,6 +142,8 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="pixelShader.cpp" />
+    <ClCompile Include="vertexShader.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -153,7 +155,9 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="pixelShader.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="vertexShader.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>
   <ItemGroup>

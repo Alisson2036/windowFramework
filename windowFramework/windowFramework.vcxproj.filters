@@ -54,6 +54,12 @@
     <ClCompile Include="inputLayout.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="vertexShader.cpp">
+      <Filter>Arquivos de Origem\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="pixelShader.cpp">
+      <Filter>Arquivos de Origem\Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -84,6 +90,12 @@
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
     <ClInclude Include="inputLayout.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexShader.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="pixelShader.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
   </ItemGroup>

@@ -57,12 +57,20 @@ Graphics::Graphics(HWND hWnd)
 
 void Graphics::draw2dTriangle(vertex2d vertices[3])
 {
-	//configurando os shaders
-	getVertexShader(L"VertexShader.cso");
-	getPixelShader(L"PixelShader.cso");
+	
+	VertexShader vs;
+	vs.setDevice(d3dDevice.Get());
+	vs.setContext(deviceContext.Get());
+	vs.create(L"VertexShader.cso");
+
+	PixelShader ps;
+	ps.setDevice(d3dDevice.Get());
+	ps.setContext(deviceContext.Get());
+	ps.create(L"PixelShader.cso");
+
+
 
 	//Criando input layout
-
 	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
 	{
 		{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -70,8 +78,8 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 	};
 
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
-	_throwHr(d3dDevice->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize(), &inputLayout));
-
+	_throwHr(d3dDevice->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), vs.getBlob()->GetBufferPointer(), vs.getBlob()->GetBufferSize(), &inputLayout));
+	
 
 	// Create Vertex Buffer
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
@@ -103,8 +111,9 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	deviceContext->IASetInputLayout(inputLayout.Get());
 
-	deviceContext->VSSetShader(vertexShader.Get(), nullptr, 0);
-	deviceContext->PSSetShader(pixelShader.Get(), nullptr, 0);
+	//bind shaders
+	vs.bind();
+	ps.bind();
 
 	deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 
@@ -137,17 +146,4 @@ Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getContext()
 	return deviceContext;
 }
 
-void Graphics::getPixelShader(const wchar_t* name)
-{
-	//criando o pixel shader
-	_throwHr(D3DReadFileToBlob(name, pixelShaderBlob.GetAddressOf()));
-	_throwHr(d3dDevice->CreatePixelShader(pixelShaderBlob->GetBufferPointer(), pixelShaderBlob->GetBufferSize(), nullptr, &pixelShader));
-	
-}
 
-void Graphics::getVertexShader(const wchar_t* name)
-{
-	//criando o vertex shader
-	_throwHr(D3DReadFileToBlob(name, vertexShaderBlob.GetAddressOf()));
-	d3dDevice->CreateVertexShader(vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize(), nullptr, &vertexShader);
-}
