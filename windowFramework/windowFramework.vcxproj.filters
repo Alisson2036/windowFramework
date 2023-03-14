@@ -16,6 +16,18 @@
     <Filter Include="Shaders">
       <UniqueIdentifier>{81538123-27fb-423a-8add-a08c06586bd7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Bindable">
+      <UniqueIdentifier>{0544bb03-7ae4-4020-8a6e-88df7d5d1f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Bindable">
+      <UniqueIdentifier>{3e623175-b3ef-4fe2-9e4c-74813484448a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Origem\Object">
+      <UniqueIdentifier>{ebb2b00b-1ecf-49f3-b4cb-620f7315a2ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Object">
+      <UniqueIdentifier>{e3b251c8-06f5-4681-8a3f-726aad08c768}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -39,6 +51,9 @@
     <ClCompile Include="graphics.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="inputLayout.cpp">
+      <Filter>Arquivos de Origem\Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -61,6 +76,15 @@
     </ClInclude>
     <ClInclude Include="timer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="bindable.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="object.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="inputLayout.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

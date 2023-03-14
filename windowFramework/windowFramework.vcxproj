@@ -138,17 +138,21 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="exception.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="inputLayout.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="bindable.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="inputLayout.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="object.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

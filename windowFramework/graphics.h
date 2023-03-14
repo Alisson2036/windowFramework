@@ -8,8 +8,10 @@
 #include <d3d11.h>
 #include "exception.h"
 
+
 class Graphics
 {
+	friend class Bindable;
 public:
 	struct vertex2d
 	{
@@ -24,17 +26,26 @@ public:
 	Graphics(HWND _hwnd);
 	Graphics(Graphics&) = delete;
 	Graphics operator=(Graphics&) = delete;
-
-	void test2();
-	void draw2dTriangle(vertex2d vertices[3]);
-
 	~Graphics();
 
-	void fillScreen(float r, float g, float b);
 
+	/*
+	// Draw functions
+	*/
+
+	void draw2dTriangle(vertex2d vertices[3]);	
+
+	void fillScreen(float r, float g, float b);
 	void flip();
 
+
+
 private:
+	/*
+	// Getters e Setters
+	*/
+	Microsoft::WRL::ComPtr<ID3D11Device>         getDevice();
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext>  getContext();
 
 	void getPixelShader(const wchar_t* name);
 	void getVertexShader(const wchar_t* name);
@@ -45,6 +56,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>    deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
 
+	//apagar esses shaders depois
 	Microsoft::WRL::ComPtr<ID3D11PixelShader>   pixelShader;
 	Microsoft::WRL::ComPtr<ID3DBlob>            pixelShaderBlob;
 	Microsoft::WRL::ComPtr<ID3D11VertexShader>  vertexShader;

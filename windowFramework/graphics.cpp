@@ -51,80 +51,16 @@ Graphics::Graphics(HWND hWnd)
 	else _throw;
 
 
-	//configurando os shaders
-	getVertexShader(L"VertexShader.cso");
-	getPixelShader(L"PixelShader.cso");
 	
 }
 
-
-void Graphics::test2()
-{
-	//Criando input layout
-	
-	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
-	{
-		{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-		{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-	};
-
-	Microsoft::WRL::ComPtr<ID3D11InputLayout> inputLayout;
-	HRESULT hResult = d3dDevice->CreateInputLayout(inputElementDesc, ARRAYSIZE(inputElementDesc), vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize(), &inputLayout);
-
-
-	// Create Vertex Buffer
-	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
-	UINT numVerts;
-	UINT stride;
-	UINT offset;
-	{
-		float a[] = { // x, y, r, g, b, a
-			 0.0f,  0.5f, 0.0f, 1.0f, 0.0f, 1.0f,
-			 0.5f, -0.5f, 1.0f, 0.0f, 0.0f, 1.0f,
-			-0.5f, -0.5f, 0.0f, 0.0f, 1.0f, 1.0f
-		};
-		Graphics::vertex2d vertexData[3] =
-		{
-			Graphics::vertex2d(0.0f, 0.5f, 255,0,0,255),
-			Graphics::vertex2d(0.5f,-0.5f, 255,0,0,255),
-			Graphics::vertex2d(-0.5f,-0.5f, 255,0,0,255),
-		};
-		stride = sizeof(vertex2d);
-		numVerts = 3;
-		offset = 0;
-
-		D3D11_BUFFER_DESC vertexBufferDesc = {};
-		vertexBufferDesc.ByteWidth = sizeof(vertexData);
-		vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
-		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
-		D3D11_SUBRESOURCE_DATA vertexSubresourceData = { vertexData };
-
-		HRESULT hResult = d3dDevice->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &vertexBuffer);
-	}
-
-
-
-	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, 800, 600, 0.0f, 1.0f };
-	deviceContext->RSSetViewports(1, &viewport);
-
-	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), nullptr);
-
-	deviceContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	deviceContext->IASetInputLayout(inputLayout.Get());
-
-	deviceContext->VSSetShader(vertexShader.Get(), nullptr, 0);
-	deviceContext->PSSetShader(pixelShader.Get(), nullptr, 0);
-
-	deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
-
-	deviceContext->Draw(numVerts, 0);
-
-
-}
 
 void Graphics::draw2dTriangle(vertex2d vertices[3])
 {
+	//configurando os shaders
+	getVertexShader(L"VertexShader.cso");
+	getPixelShader(L"PixelShader.cso");
+
 	//Criando input layout
 
 	D3D11_INPUT_ELEMENT_DESC inputElementDesc[] =
@@ -189,6 +125,16 @@ void Graphics::fillScreen(float r, float g, float b)
 void Graphics::flip()
 {
 	swapChain->Present(1, 0);
+}
+
+Microsoft::WRL::ComPtr<ID3D11Device> Graphics::getDevice()
+{
+	return d3dDevice;
+}
+
+Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getContext()
+{
+	return deviceContext;
 }
 
 void Graphics::getPixelShader(const wchar_t* name)
