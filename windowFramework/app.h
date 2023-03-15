@@ -3,6 +3,8 @@
 #include "exception.h"
 #include "timer.h"
 
+#include "triangle.h"
+
 #include "v.h"
 
 class app

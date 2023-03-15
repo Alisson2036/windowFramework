@@ -110,6 +110,19 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 	deviceContext->Draw(3, 0);
 }
 
+void Graphics::drawObject(Object obj)
+{
+
+	obj.bind();
+
+	deviceContext->Draw(3, 0);
+}
+
+Object::Fill Graphics::getFillable()
+{
+	return Object::Fill(d3dDevice.Get(), deviceContext.Get());
+}
+
 
 Graphics::~Graphics()
 {
@@ -123,7 +136,10 @@ void Graphics::fillScreen(float r, float g, float b)
 
 void Graphics::flip()
 {
-	swapChain->Present(1, 0);
+	if (FAILED(swapChain->Present(1, 0)))
+	{
+		_throwHr(d3dDevice->GetDeviceRemovedReason());
+	}
 }
 
 Microsoft::WRL::ComPtr<ID3D11Device> Graphics::getDevice()

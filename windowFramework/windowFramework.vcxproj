@@ -158,6 +158,7 @@
     <ClInclude Include="object.h" />
     <ClInclude Include="pixelShader.h" />
     <ClInclude Include="timer.h" />
+    <ClInclude Include="triangle.h" />
     <ClInclude Include="v.h" />
     <ClInclude Include="vertexBuffer.h" />
     <ClInclude Include="vertexShader.h" />

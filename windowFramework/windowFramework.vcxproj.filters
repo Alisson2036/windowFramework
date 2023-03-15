@@ -107,6 +107,9 @@
     <ClInclude Include="v.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="triangle.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="VertexShader.hlsl">

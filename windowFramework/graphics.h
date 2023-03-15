@@ -8,6 +8,9 @@
 #include <d3d11.h>
 #include "exception.h"
 
+#include "object.h"
+#include "triangle.h"
+
 #include "bindable.h"
 #include "vertexShader.h"
 #include "pixelShader.h"
@@ -32,6 +35,9 @@ public:
 	// Draw functions
 	*/
 	void draw2dTriangle(vertex2d vertices[3]);	
+	void drawObject(Object obj);
+
+	Object::Fill getFillable();
 
 	void fillScreen(float r, float g, float b);
 	void flip();

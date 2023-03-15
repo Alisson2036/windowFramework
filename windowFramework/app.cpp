@@ -44,7 +44,11 @@ void app::loop()
 		vertex2d(-0.5f,-0.5f, g, 0, 255-r, 255),
 	};
 
-	win.Gfx().draw2dTriangle(v);
+	Triangle t;
+	t.setFill(win.Gfx().getFillable());
+	t.create(v);
+
+	win.Gfx().drawObject(t);
 	//win.Gfx().test2();
 
 	win.setTitle(title);
