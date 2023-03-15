@@ -50,7 +50,12 @@ Graphics::Graphics(HWND hWnd)
 	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, targetView.GetAddressOf());
 	else _throw;
 
+	//configura viewport
+	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, 800, 600, 0.0f, 1.0f };
+	deviceContext->RSSetViewports(1, &viewport);
 
+	//configura render target
+	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), nullptr);
 	
 }
 
@@ -81,54 +86,26 @@ void Graphics::draw2dTriangle(vertex2d vertices[3])
 
 	
 	VertexBuffer vb;
-	//vb.setDevice(d3dDevice.Get());
-	//vb.setContext(deviceContext.Get());
-	/*
+	vb.setDevice(d3dDevice.Get());
+	vb.setContext(deviceContext.Get());
+	
 	vb.create(
-		{
-			vertices[0],
-			vertices[1],
-			vertices[2]
-		}
+		{vertices},
+		3,
+		sizeof(vertex2d)
 	);
-	*/
 	
 	
-	// Create Vertex Buffer
-	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
-	UINT numVerts;
-	UINT stride;
-	UINT offset;
-	{
-		stride = sizeof(vertex2d);
-		numVerts = 3;
-		offset = 0;
-
-		D3D11_BUFFER_DESC vertexBufferDesc = {};
-		vertexBufferDesc.ByteWidth = stride*3;
-		vertexBufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
-		vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
-
-		D3D11_SUBRESOURCE_DATA vertexSubresourceData = { vertices };
-
-		_throwHr(d3dDevice->CreateBuffer(&vertexBufferDesc, &vertexSubresourceData, &vertexBuffer));
-	}
-	
-
-
-	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, 800, 600, 0.0f, 1.0f };
-	deviceContext->RSSetViewports(1, &viewport);
-
-	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), nullptr);
-
-	il.bind();
 
 	//bind shaders
 	vs.bind();
 	ps.bind();
+	
+	//bind inputLayout
+	il.bind();
 
-	deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
-	//vb.bind();
+	//deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+	vb.bind();
 
 	deviceContext->Draw(3, 0);
 }

@@ -31,7 +31,6 @@ public:
 	/*
 	// Draw functions
 	*/
-
 	void draw2dTriangle(vertex2d vertices[3]);	
 
 	void fillScreen(float r, float g, float b);

@@ -7,15 +7,12 @@
 #include "bindable.h"
 
 
-
 class VertexBuffer : public Bindable
 {
 public:
-
-	void create(void* data, int arraySize, int objectSize);
+	void create(D3D11_SUBRESOURCE_DATA data, int arraySize, int objectSize);
 
 	void bind() override;
-	
 
 private:
 	//vertex buffer
@@ -23,5 +20,7 @@ private:
 
 	//tamanho de cada vertice em bytes
 	UINT stride;
+	UINT offset;
+
 };
 
