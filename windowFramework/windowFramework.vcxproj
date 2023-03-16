@@ -150,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bindable.h" />
+    <ClInclude Include="cube.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="indexBuffer.h" />
@@ -163,6 +164,7 @@
     <ClInclude Include="triangle.h" />
     <ClInclude Include="v.h" />
     <ClInclude Include="vertexBuffer.h" />
+    <ClInclude Include="vertexConstantBuffer.h" />
     <ClInclude Include="vertexShader.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

@@ -41,7 +41,7 @@ public:
 
 
 		vb.create(
-			{ vertices },
+			vertices,
 			3,
 			sizeof(vertex2d)
 		);

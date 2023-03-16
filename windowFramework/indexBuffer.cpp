@@ -1,7 +1,9 @@
 #include "indexBuffer.h"
 
-void IndexBuffer::create(D3D11_SUBRESOURCE_DATA data, int arraySize)
+void IndexBuffer::create(const void* data, int arraySize)
 {
+	D3D11_SUBRESOURCE_DATA subresource = { data };
+
 	D3D11_BUFFER_DESC bufferDesc = {};
 	bufferDesc.ByteWidth = sizeof(short) * arraySize;
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
@@ -10,7 +12,7 @@ void IndexBuffer::create(D3D11_SUBRESOURCE_DATA data, int arraySize)
 	_throwHr(
 		device->CreateBuffer(
 			&bufferDesc,
-			&data,
+			&subresource,
 			&indexBuffer
 		)
 	);

@@ -9,15 +9,9 @@
 #include "exception.h"
 
 #include "object.h"
-#include "triangle.h"
 
 #include "bindable.h"
-#include "vertexShader.h"
-#include "pixelShader.h"
-#include "inputLayout.h"
-#include "vertexBuffer.h"
 
-#include "v.h"
 
 class Graphics
 {

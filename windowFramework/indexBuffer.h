@@ -11,7 +11,7 @@ class IndexBuffer : public Bindable
 {
 public:
 	//deve ser composto por shorts
-	void create(D3D11_SUBRESOURCE_DATA data, int arraySize);
+	void create(const void* data, int arraySize);
 
 	void bind() override;
 
