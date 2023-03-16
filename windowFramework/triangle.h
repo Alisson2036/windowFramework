@@ -6,6 +6,7 @@
 #include "pixelShader.h"
 #include "vertexBuffer.h"
 #include "inputLayout.h"
+#include "indexBuffer.h"
 
 class Triangle : public Object
 {
@@ -20,9 +21,10 @@ public:
 		il.setContext(context.Get());
 		ps.setDevice(device.Get());
 		ps.setContext(context.Get());
-
 		vb.setDevice(device.Get());
 		vb.setContext(context.Get());
+		ib.setDevice(device.Get());
+		ib.setContext(context.Get());
 
 		vs.create(L"VertexShader.cso");
 
@@ -44,23 +46,24 @@ public:
 			sizeof(vertex2d)
 		);
 
+		short indexes[3] = { 0,1,2 };
+
+		ib.create(
+			{ indexes },
+			3
+		);
+
+
 		addBindable(&ps);
 		addBindable(&vs);
 		addBindable(&vb);
 		addBindable(&il);
+		addBindable(&ib);
 	}
 
 	void update() override {}
 	void draw() override
 	{
-		//vs.bind();
-		//ps.bind();
-		//il.bind();
-		//vb.bind();
-		bindables[0]->bind();
-		bindables[1]->bind();
-		bindables[2]->bind();
-		bindables[3]->bind();
 	}
 
 private:
@@ -68,6 +71,6 @@ private:
 	PixelShader ps;
 	InputLayout il;
 	VertexBuffer vb;
-
+	IndexBuffer ib;
 
 };

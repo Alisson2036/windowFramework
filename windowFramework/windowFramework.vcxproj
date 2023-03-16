@@ -138,6 +138,7 @@
     <ClCompile Include="app.cpp" />
     <ClCompile Include="exception.cpp" />
     <ClCompile Include="graphics.cpp" />
+    <ClCompile Include="indexBuffer.cpp" />
     <ClCompile Include="inputLayout.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="bindable.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
+    <ClInclude Include="indexBuffer.h" />
     <ClInclude Include="inputLayout.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />
