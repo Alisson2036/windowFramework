@@ -18,7 +18,7 @@ class Triangle : public Object
 {
 public:
 
-	void create(vertex2d vertices[3])
+	void create(vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
 	{
 
 		vs.setDevice(device.Get());
@@ -52,15 +52,14 @@ public:
 
 		vb.create(
 			vertices,
-			3,
+			vertexCount,
 			sizeof(vertex2d)
 		);
 
-		short indexes[3] = { 0,1,2 };
 
 		ib.create(
 			indexes,
-			3
+			indexCount
 		);
 
 

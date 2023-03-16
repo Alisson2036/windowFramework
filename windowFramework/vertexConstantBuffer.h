@@ -17,8 +17,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
 
 	//tamanho de cada vertice em bytes
-	UINT stride;
-	UINT offset;
+	UINT stride = 0;
+	UINT offset = 0;
 
 };
 

@@ -20,7 +20,7 @@ public:
 
 
 private:
-	D3D11_PRIMITIVE_TOPOLOGY topology;
+	D3D11_PRIMITIVE_TOPOLOGY topology{};
 	//D3D11_INPUT_ELEMENT_DESC* elementDescription;
 	Microsoft::WRL::ComPtr<ID3D11InputLayout> pInputLayout;
 

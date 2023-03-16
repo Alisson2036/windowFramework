@@ -95,14 +95,4 @@ void Graphics::flip()
 	}
 }
 
-Microsoft::WRL::ComPtr<ID3D11Device> Graphics::getDevice()
-{
-	return d3dDevice;
-}
-
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getContext()
-{
-	return deviceContext;
-}
-
 

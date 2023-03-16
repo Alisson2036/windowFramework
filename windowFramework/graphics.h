@@ -15,7 +15,6 @@
 
 class Graphics
 {
-	friend class Bindable;
 public:
 	
 public:
@@ -35,17 +34,6 @@ public:
 	void fillScreen(float r, float g, float b);
 	void flip();
 
-
-
-private:
-	/*
-	// Getters e Setters
-	*/
-	Microsoft::WRL::ComPtr<ID3D11Device>         getDevice();
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext>  getContext();
-
-	void getPixelShader(const wchar_t* name);
-	void getVertexShader(const wchar_t* name);
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11Device>           d3dDevice;
