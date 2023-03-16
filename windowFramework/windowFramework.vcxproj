@@ -145,6 +145,7 @@
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="pixelShader.cpp" />
     <ClCompile Include="vertexBuffer.cpp" />
+    <ClCompile Include="vertexConstantBuffer.cpp" />
     <ClCompile Include="vertexShader.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>

@@ -23,6 +23,9 @@ private:
 
 private:
 
+
+	Triangle t;
+
 	window win;
 	Timer timeSinceCreation;
 

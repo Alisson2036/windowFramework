@@ -5,7 +5,7 @@
 #include "bindable.h"
 
 
-class VertexBuffer : public Bindable
+class ConstantVertexBuffer : public Bindable
 {
 public:
 	void create(const void* data, int arraySize, int objectSize);
@@ -14,7 +14,7 @@ public:
 
 private:
 	//vertex buffer
-	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
+	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
 
 	//tamanho de cada vertice em bytes
 	UINT stride;
