@@ -42,7 +42,7 @@ public:
 
 		il.create(vs,
 			{
-				{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+				{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 				{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 			},
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
@@ -79,9 +79,14 @@ public:
 	void update() override 
 	{
 		float angle = timeSinceCreation.getPassedSeconds();
+
+		DirectX::XMMATRIX finalMatrix = DirectX::XMMatrixMultiply(DirectX::XMMatrixRotationZ(angle), DirectX::XMMatrixRotationY(angle));
+		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixTranslation(0.0f, 0.0f, 2.0f));
+		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f));
+
 		DirectX::XMMATRIX b[] = {
-			DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) *
-			DirectX::XMMatrixRotationZ(angle)
+			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
+			DirectX::XMMatrixTranspose(finalMatrix)
 		};
 
 		cvb.create(

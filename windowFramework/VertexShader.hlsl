@@ -1,6 +1,6 @@
 struct VS_Input
 {
-    float2 pos : Position;
+    float3 pos : Position;
     float4 color : Color;
 };
 
@@ -19,7 +19,7 @@ cbuffer buff
 VS_Output main(VS_Input input)
 {
     VS_Output output;
-    output.position = mul(float4(input.pos, 0.0f, 1.0f), mat);
+    output.position = mul(float4(input.pos, 1.0f), mat);
     output.color = input.color;
 
     return output;
