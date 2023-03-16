@@ -33,6 +33,8 @@ public:
 			bindables[i]->bind();
 		}
 	}
+	bool isIndexed() { return isIndexedBool; }
+	int indexNum() { return indicesNum; }
 	
 	virtual void update() {};
 	virtual void draw() {};
@@ -65,6 +67,9 @@ protected:
 
 	Microsoft::WRL::ComPtr<ID3D11Device> device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+
+	bool isIndexedBool = false;
+	int indicesNum = 0;
 
 
 };

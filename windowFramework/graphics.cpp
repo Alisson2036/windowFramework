@@ -65,8 +65,10 @@ void Graphics::drawObject(Object obj)
 {
 
 	obj.bind();
-
-	deviceContext->DrawIndexed(3, 0, 0);
+	if (obj.isIndexed())
+		deviceContext->DrawIndexed((UINT)obj.indexNum(), 0, 0);
+	else
+		deviceContext->Draw((UINT)obj.indexNum(), 0);
 }
 
 Object::Fill Graphics::getFillable()

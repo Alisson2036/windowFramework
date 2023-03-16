@@ -27,7 +27,7 @@ window::window(const LPCWSTR name, int _width, int _height):
 
 	//calculando o tamanho da janela
 	RECT windowRect = { 0,0,_width, _height };
-	AdjustWindowRect(&windowRect, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, TRUE);
+	AdjustWindowRect(&windowRect, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, FALSE);
 	_width = windowRect.right - windowRect.left;
 	_height = windowRect.bottom - windowRect.top;
 

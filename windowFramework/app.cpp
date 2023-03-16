@@ -14,7 +14,7 @@ void app::start()
 	t.setFill(win.Gfx().getFillable());
 	vertex2d v[3] =
 	{
-		vertex2d(0.0f, 0.5f, 255, 0  , 0  , 255),
+		vertex2d(0.0f, 1.0f, 255, 0  , 0  , 255),
 		vertex2d(0.5f,-0.5f, 0  , 0  , 255, 255),
 		vertex2d(-0.5f,-0.5f, 0  , 255, 0  , 255),
 	};

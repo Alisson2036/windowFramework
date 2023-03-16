@@ -64,21 +64,6 @@ public:
 		);
 
 
-		float angle = 1.0f;
-		
-		float b[4][4] = {
-			 std::cos(angle), std::sin(angle), 0, 0,
-			-std::sin(angle), std::cos(angle), 0, 0,
-			0, 0, 1, 0,
-			0, 0, 0, 1
-		};
-
-		cvb.create(
-			b,
-			16,
-			sizeof(float)
-		);
-
 		addBindable(&cvb);
 		addBindable(&ps);
 		addBindable(&vs);
@@ -87,22 +72,23 @@ public:
 		addBindable(&ib);
 
 		timeSinceCreation.reset();
+
+		indicesNum = 3;
+		isIndexedBool = true;
 	}
 
 	void update() override 
 	{
 		float angle = timeSinceCreation.getPassedSeconds();
-		float b[4][4] = {
-			 std::cos(angle), std::sin(angle), 0, 0,
-			-std::sin(angle), std::cos(angle), 0, 0,
-			0, 0, 1, 0,
-			0, 0, 0, 1
+		DirectX::XMMATRIX b[] = {
+			DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) *
+			DirectX::XMMatrixRotationZ(angle)
 		};
 
 		cvb.create(
 			b,
-			16,
-			sizeof(float)
+			1,
+			sizeof(b)
 		);
 	}
 	void draw() override

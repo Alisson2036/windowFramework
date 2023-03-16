@@ -12,7 +12,7 @@ struct VS_Output
 
 cbuffer buff
 {
-    matrix mat;
+    column_major matrix mat;
 };
 
 
