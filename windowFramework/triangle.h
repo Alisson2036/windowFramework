@@ -72,7 +72,7 @@ public:
 
 		timeSinceCreation.reset();
 
-		indicesNum = 3;
+		indicesNum = indexCount;
 		isIndexedBool = true;
 	}
 
