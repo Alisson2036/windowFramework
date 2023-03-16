@@ -60,55 +60,6 @@ Graphics::Graphics(HWND hWnd)
 }
 
 
-void Graphics::draw2dTriangle(vertex2d vertices[3])
-{
-	
-	VertexShader vs;
-	vs.setDevice(d3dDevice.Get());
-	vs.setContext(deviceContext.Get());
-	vs.create(L"VertexShader.cso");
-
-	PixelShader ps;
-	ps.setDevice(d3dDevice.Get());
-	ps.setContext(deviceContext.Get());
-	ps.create(L"PixelShader.cso");
-
-	InputLayout il;
-	il.setDevice(d3dDevice.Get());
-	il.setContext(deviceContext.Get());
-	il.create(vs,
-		{
-			{ "Position", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-		},
-		D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
-	);
-
-	
-	VertexBuffer vb;
-	vb.setDevice(d3dDevice.Get());
-	vb.setContext(deviceContext.Get());
-	
-	vb.create(
-		{vertices},
-		3,
-		sizeof(vertex2d)
-	);
-	
-	
-
-	//bind shaders
-	vs.bind();
-	ps.bind();
-	
-	//bind inputLayout
-	il.bind();
-
-	//deviceContext->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
-	vb.bind();
-
-	deviceContext->Draw(3, 0);
-}
 
 void Graphics::drawObject(Object obj)
 {

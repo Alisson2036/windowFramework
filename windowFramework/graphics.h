@@ -34,7 +34,6 @@ public:
 	/*
 	// Draw functions
 	*/
-	void draw2dTriangle(vertex2d vertices[3]);	
 	void drawObject(Object obj);
 
 	Object::Fill getFillable();
