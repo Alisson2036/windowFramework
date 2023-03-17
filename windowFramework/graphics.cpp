@@ -55,9 +55,49 @@ Graphics::Graphics(HWND hWnd)
 	
 	deviceContext->RSSetViewports(1, &viewport);
 
-	//configura render target
-	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), nullptr);
 	
+
+	//configura depth buffer
+	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
+	depthStencilDesc.DepthEnable = TRUE;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
+	
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
+	_throwHr(d3dDevice->CreateDepthStencilState(&depthStencilDesc, depthStencilState.GetAddressOf()));
+
+	//bind depth stencil state na pipeline
+	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1u);
+
+	//criando a textura do depth buffer
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthTexture;
+	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
+	depthTextureDesc.Width = 800;
+	depthTextureDesc.Height = 600;
+	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
+	depthTextureDesc.MipLevels = 1u;
+	depthTextureDesc.ArraySize = 1u;
+	depthTextureDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	depthTextureDesc.SampleDesc.Count = 1u;
+	depthTextureDesc.SampleDesc.Quality = 0u;
+	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
+
+	_throwHr(d3dDevice->CreateTexture2D(&depthTextureDesc, nullptr, depthTexture.GetAddressOf()));
+	
+
+	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
+	depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
+	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
+	depthStencilViewDesc.Texture2D.MipSlice = 0u;
+
+	_throwHr(d3dDevice->CreateDepthStencilView(depthTexture.Get(), &depthStencilViewDesc, depthStencilView.GetAddressOf()));
+
+	
+
+	//configura render target
+	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), depthStencilView.Get());
+
+
 }
 
 
@@ -90,6 +130,8 @@ void Graphics::fillScreen(float r, float g, float b)
 
 void Graphics::flip()
 {
+	deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
+
 	if (FAILED(swapChain->Present(1, 0)))
 	{
 		_throwHr(d3dDevice->GetDeviceRemovedReason());
