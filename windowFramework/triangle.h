@@ -81,7 +81,7 @@ public:
 		float angle = timeSinceCreation.getPassedSeconds();
 
 		DirectX::XMMATRIX finalMatrix = DirectX::XMMatrixMultiply(DirectX::XMMatrixRotationZ(angle), DirectX::XMMatrixRotationY(angle));
-		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixTranslation(0.0f, 0.0f, 2.0f));
+		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixTranslation(0.0f, 0.0f, 4.0f));
 		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f));
 
 		DirectX::XMMATRIX b[] = {
