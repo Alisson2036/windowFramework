@@ -24,7 +24,8 @@ private:
 private:
 
 
-	Triangle t;
+	Triangle cube1;
+	Triangle cube2;
 
 	window win;
 	Timer timeSinceCreation;

@@ -76,13 +76,17 @@ public:
 		isIndexedBool = true;
 	}
 
-	void update() override 
+	void update(float pos[3], float angle[3])
 	{
-		float angle = timeSinceCreation.getPassedSeconds();
+		//float angle = timeSinceCreation.getPassedSeconds();
 
-		DirectX::XMMATRIX finalMatrix = DirectX::XMMatrixMultiply(DirectX::XMMatrixRotationZ(angle), DirectX::XMMatrixRotationY(angle));
-		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixTranslation(0.0f, 0.0f, 4.0f));
-		finalMatrix = DirectX::XMMatrixMultiply(finalMatrix, DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f));
+		DirectX::XMMATRIX finalMatrix = 
+			DirectX::XMMatrixRotationX(angle[0]) * 
+			DirectX::XMMatrixRotationY(angle[1]) * 
+			DirectX::XMMatrixRotationZ(angle[2]);
+
+		finalMatrix *= DirectX::XMMatrixTranslation(pos[0], pos[1], pos[2] + 4.0f);
+		finalMatrix *= DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f);
 
 		DirectX::XMMATRIX b[] = {
 			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
