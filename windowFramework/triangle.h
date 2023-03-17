@@ -35,11 +35,13 @@ public:
 		cvb.setContext(context.Get());
 
 
-
+		//CRIA PIXEL SHADER
 		vs.create(L"VertexShader.cso");
 
+		//CRIA PIXEL SHADER
 		ps.create(L"PixelShader.cso");
 
+		//CRIA INPUT LAYOUT
 		il.create(vs,
 			{
 				{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
@@ -49,20 +51,33 @@ public:
 		);
 
 
-
+		//CRIA VERTEX BUFFER
 		vb.create(
 			vertices,
 			vertexCount,
 			sizeof(vertex2d)
 		);
 
-
+		//CRIA INDEX BUFFER
 		ib.create(
 			indexes,
 			indexCount
 		);
 
+		//CRIA CONSTANT BUFFER
+		DirectX::XMMATRIX b[] = {
+			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
+			DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
+		};
 
+
+		cvb.create(
+			b,
+			1,
+			sizeof(DirectX::XMMATRIX)
+		);
+
+		//adiciona todos os bindables
 		addBindable(&cvb);
 		addBindable(&ps);
 		addBindable(&vs);
@@ -93,11 +108,16 @@ public:
 			DirectX::XMMatrixTranspose(finalMatrix)
 		};
 
+		cvb.update(
+			b
+		);
+		/*
 		cvb.create(
 			b,
 			1,
-			sizeof(b)
+			sizeof(DirectX::XMMATRIX)
 		);
+		*/
 	}
 	void draw() override
 	{

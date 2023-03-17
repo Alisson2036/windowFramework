@@ -10,6 +10,8 @@ class ConstantVertexBuffer : public Bindable
 public:
 	void create(const void* data, int arraySize, int objectSize);
 
+	void update(const void* data);
+
 	void bind() override;
 
 private:
@@ -17,7 +19,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
 
 	//tamanho de cada vertice em bytes
-	UINT stride = 0;
+	UINT arraySize = 0;
+	UINT objectSize = 0;
 	UINT offset = 0;
 
 };
