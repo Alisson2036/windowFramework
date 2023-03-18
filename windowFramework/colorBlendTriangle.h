@@ -11,35 +11,29 @@
 #include "vertexConstantBuffer.h"
 
 
-#include "timer.h"
 
-
-class Triangle : public Object
+class colorBlendTriangle : public Object
 {
 public:
 
 	void create(vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
 	{
 
-		vs.setDevice(device.Get());
-		vs.setContext(context.Get());
-		il.setDevice(device.Get());
-		il.setContext(context.Get());
-		ps.setDevice(device.Get());
-		ps.setContext(context.Get());
-		vb.setDevice(device.Get());
-		vb.setContext(context.Get());
-		ib.setDevice(device.Get());
-		ib.setContext(context.Get());
-		cvb.setDevice(device.Get());
-		cvb.setContext(context.Get());
+		//adiciona todos os bindables
+		addBindable(&cvb);
+		addBindable(&ps);
+		addBindable(&vs);
+		addBindable(&vb);
+		addBindable(&il);
+		addBindable(&ib);
 
+		fillBindables();
 
 		//CRIA PIXEL SHADER
-		vs.create(L"VertexShader.cso");
+		vs.create(L"colorBlendVS.cso");
 
 		//CRIA PIXEL SHADER
-		ps.create(L"PixelShader.cso");
+		ps.create(L"colorBlendPS.cso");
 
 		//CRIA INPUT LAYOUT
 		il.create(vs,
@@ -66,26 +60,14 @@ public:
 
 		//CRIA CONSTANT BUFFER
 		DirectX::XMMATRIX b[] = {
-			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
 			DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
 		};
-
 
 		cvb.create(
 			b,
 			1,
 			sizeof(DirectX::XMMATRIX)
 		);
-
-		//adiciona todos os bindables
-		addBindable(&cvb);
-		addBindable(&ps);
-		addBindable(&vs);
-		addBindable(&vb);
-		addBindable(&il);
-		addBindable(&ib);
-
-		timeSinceCreation.reset();
 
 		indicesNum = indexCount;
 		isIndexedBool = true;
@@ -95,17 +77,17 @@ public:
 	{
 		//float angle = timeSinceCreation.getPassedSeconds();
 
-		DirectX::XMMATRIX finalMatrix = 
-			DirectX::XMMatrixRotationX(angle[0]) * 
-			DirectX::XMMatrixRotationY(angle[1]) * 
-			DirectX::XMMatrixRotationZ(angle[2]);
+		DirectX::XMMATRIX finalMatrix =
+			DirectX::XMMatrixRotationX(angle[0]) *
+			DirectX::XMMatrixRotationY(angle[1]) *
+			DirectX::XMMatrixRotationZ(angle[2]) *
+			DirectX::XMMatrixTranslation(pos[0], pos[1], pos[2] + 4.0f);
 
-		finalMatrix *= DirectX::XMMatrixTranslation(pos[0], pos[1], pos[2] + 4.0f);
-		finalMatrix *= DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f);
+		DirectX::XMMATRIX projectionMatrix = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f);
 
 		DirectX::XMMATRIX b[] = {
 			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
-			DirectX::XMMatrixTranspose(finalMatrix)
+			DirectX::XMMatrixTranspose(finalMatrix * projectionMatrix)
 		};
 
 		cvb.update(
@@ -119,13 +101,7 @@ public:
 		);
 		*/
 	}
-	void draw() override
-	{
-	}
-
 private:
-	Timer timeSinceCreation;
-
 	VertexShader vs;
 	PixelShader ps;
 	InputLayout il;

@@ -37,7 +37,14 @@ public:
 	int indexNum() { return indicesNum; }
 	
 	virtual void update() {};
-	virtual void draw() {};
+	void draw() 
+	{
+		bind();
+		if (isIndexedBool)
+			context->DrawIndexed(indicesNum, 0, 0);
+		else
+			context->Draw(indicesNum, 0);
+	};
 
 	void addBindable(Bindable* bind)
 	{
@@ -62,6 +69,15 @@ public:
 	
 
 protected:
+	void fillBindables()
+	{
+		for (auto bind : bindables)
+		{
+			bind->setContext(context.Get());
+			bind->setDevice(device.Get());
+		}
+	}
+
 	std::vector<Bindable*> bindables;
 
 

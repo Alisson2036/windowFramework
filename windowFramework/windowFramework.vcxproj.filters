@@ -63,6 +63,12 @@
     <ClCompile Include="vertexBuffer.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="vertexConstantBuffer.cpp">
+      <Filter>Arquivos de Origem\Bindable</Filter>
+    </ClCompile>
+    <ClCompile Include="indexBuffer.cpp">
+      <Filter>Arquivos de Origem\Bindable</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -107,15 +113,24 @@
     <ClInclude Include="v.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="triangle.h">
+    <ClInclude Include="colorBlendTriangle.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="cube.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="vertexConstantBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="indexBuffer.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="VertexShader.hlsl">
+    <FxCompile Include="colorBlendVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
-    <FxCompile Include="PixelShader.hlsl">
+    <FxCompile Include="colorBlendPS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

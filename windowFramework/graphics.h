@@ -24,11 +24,8 @@ public:
 	~Graphics();
 
 
-	/*
-	// Draw functions
-	*/
-	void drawObject(Object obj);
 
+	//classe que armazena pointers para os objetos
 	Object::Fill getFillable();
 
 	void fillScreen(float r, float g, float b);

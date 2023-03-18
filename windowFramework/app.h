@@ -3,7 +3,7 @@
 #include "exception.h"
 #include "timer.h"
 
-#include "triangle.h"
+#include "colorBlendTriangle.h"
 
 #include "v.h"
 
@@ -24,8 +24,7 @@ private:
 private:
 
 
-	Triangle cube1;
-	Triangle cube2;
+	colorBlendTriangle cube;
 
 	window win;
 	Timer timeSinceCreation;

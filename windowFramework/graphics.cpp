@@ -102,16 +102,6 @@ Graphics::Graphics(HWND hWnd)
 
 
 
-void Graphics::drawObject(Object obj)
-{
-
-	obj.bind();
-	if (obj.isIndexed())
-		deviceContext->DrawIndexed((UINT)obj.indexNum(), 0, 0);
-	else
-		deviceContext->Draw((UINT)obj.indexNum(), 0);
-}
-
 Object::Fill Graphics::getFillable()
 {
 	return Object::Fill(d3dDevice.Get(), deviceContext.Get());
