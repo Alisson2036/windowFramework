@@ -2,18 +2,18 @@
 
 
 
-void InputLayout::create(VertexShader& vs,std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription, D3D11_PRIMITIVE_TOPOLOGY _topology)
+void InputLayout::create(VertexShader* vs,std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription, D3D11_PRIMITIVE_TOPOLOGY _topology)
 {
 	topology = _topology;
 
 	getDevice()->CreateInputLayout(
 		elementDescription.data(),
 		elementDescription.size(),
-		vs.getBlob()->GetBufferPointer(),
-		vs.getBlob()->GetBufferSize(),
+		vs->getBlob()->GetBufferPointer(),
+		vs->getBlob()->GetBufferSize(),
 		&pInputLayout
 	);
-	//initialized = true;
+	initialized = true;
 }
 
 void InputLayout::bind()

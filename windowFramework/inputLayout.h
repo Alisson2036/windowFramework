@@ -12,7 +12,7 @@
 class InputLayout : public Bindable
 {
 public:
-	void create(VertexShader& vs, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription, D3D11_PRIMITIVE_TOPOLOGY _topology);
+	void create(VertexShader* vs, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription, D3D11_PRIMITIVE_TOPOLOGY _topology);
 
 	void bind() override;
 	

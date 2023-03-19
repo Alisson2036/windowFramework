@@ -52,6 +52,7 @@ public:
 	void addBindable(Bindable* bind)
 	{
 		bindables.push_back(bind);
+		bind += 1;
 	}
 
 	void setFill(Fill filler)

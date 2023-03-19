@@ -19,25 +19,33 @@ public:
 
 	void create(vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
 	{
+		
+		cvb = new ConstantVertexBuffer;
+		ps  = new PixelShader;
+		vs  = new VertexShader;
+		vb  = new VertexBuffer;
+		il  = new InputLayout;
+		ib  = new IndexBuffer;
+		
 
 		//adiciona todos os bindables
-		addBindable(&cvb);
-		addBindable(&ps);
-		addBindable(&vs);
-		addBindable(&vb);
-		addBindable(&il);
-		addBindable(&ib);
+		addBindable(cvb);
+		addBindable(ps);
+		addBindable(vs);
+		addBindable(vb);
+		addBindable(il);
+		addBindable(ib);
 
 		fillBindables();
 
 		//CRIA PIXEL SHADER
-		vs.create(L"colorBlendVS.cso");
+		vs->create(L"colorBlendVS.cso");
 
 		//CRIA PIXEL SHADER
-		ps.create(L"colorBlendPS.cso");
+		ps->create(L"colorBlendPS.cso");
 
 		//CRIA INPUT LAYOUT
-		il.create(vs,
+		il->create(vs,
 			{
 				{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 				{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
@@ -47,14 +55,14 @@ public:
 
 
 		//CRIA VERTEX BUFFER
-		vb.create(
+		vb->create(
 			vertices,
 			vertexCount,
 			sizeof(vertex2d)
 		);
 
 		//CRIA INDEX BUFFER
-		ib.create(
+		ib->create(
 			indexes,
 			indexCount
 		);
@@ -64,7 +72,7 @@ public:
 			DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
 		};
 
-		cvb.create(
+		cvb->create(
 			b,
 			1,
 			sizeof(DirectX::XMMATRIX)
@@ -86,17 +94,17 @@ public:
 			finalMatrix * projectionMatrix
 		};
 
-		cvb.update(
+		cvb->update(
 			b
 		);
 
 	}
 private:
-	VertexShader vs;
-	PixelShader ps;
-	InputLayout il;
-	VertexBuffer vb;
-	ConstantVertexBuffer cvb;
-	IndexBuffer ib;
+	VertexShader* vs;
+	PixelShader* ps;
+	InputLayout* il;
+	VertexBuffer* vb;
+	ConstantVertexBuffer* cvb;
+	IndexBuffer* ib;
 
 };
