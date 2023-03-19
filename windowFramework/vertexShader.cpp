@@ -11,6 +11,8 @@ void VertexShader::create(const wchar_t* _shaderFile)
 
 
 	_throwHr(getDevice()->CreateVertexShader(vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize(), nullptr, &vertexShader));
+
+	initialized = true;
 }
 
 void VertexShader::bind()

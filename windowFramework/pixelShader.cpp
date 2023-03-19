@@ -11,6 +11,8 @@ void PixelShader::create(const wchar_t* _shaderFile)
 
 
 	_throwHr(getDevice()->CreatePixelShader(pixelShaderBlob->GetBufferPointer(), pixelShaderBlob->GetBufferSize(), nullptr, &pixelShader));
+
+	initialized = true;
 }
 
 void PixelShader::bind()

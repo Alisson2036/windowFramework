@@ -14,6 +14,7 @@ void VertexBuffer::create(const void* data, int arraySize, int objectSize)
 
 
 	_throwHr(device->CreateBuffer(&vertexBufferDesc, &subresource, &vertexBuffer));
+	initialized = true;
 }
 
 void VertexBuffer::bind()

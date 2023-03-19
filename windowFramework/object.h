@@ -30,7 +30,10 @@ public:
 	{
 		for (auto i = 0; i < bindables.size(); i++)
 		{
-			bindables[i]->bind();
+			if (bindables[i]->isInitialized())
+				bindables[i]->bind();
+			else
+				_throwMsg("Bindable not initialized trying to bind");
 		}
 	}
 	bool isIndexed() { return isIndexedBool; }

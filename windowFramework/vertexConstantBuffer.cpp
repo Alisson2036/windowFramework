@@ -18,6 +18,7 @@ void ConstantVertexBuffer::create(const void* data, int _arraySize, int _objectS
 
 
 	_throwHr(device->CreateBuffer(&constantBufferDesc, &subresource, &constantBuffer));
+	initialized = true;
 }
 
 void ConstantVertexBuffer::update(const void* data)

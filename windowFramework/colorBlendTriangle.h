@@ -89,13 +89,7 @@ public:
 		cvb.update(
 			b
 		);
-		/*
-		cvb.create(
-			b,
-			1,
-			sizeof(DirectX::XMMATRIX)
-		);
-		*/
+
 	}
 private:
 	VertexShader vs;

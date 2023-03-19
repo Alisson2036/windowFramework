@@ -13,6 +13,7 @@ void InputLayout::create(VertexShader& vs,std::vector<D3D11_INPUT_ELEMENT_DESC>e
 		vs.getBlob()->GetBufferSize(),
 		&pInputLayout
 	);
+	//initialized = true;
 }
 
 void InputLayout::bind()

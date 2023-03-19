@@ -16,6 +16,8 @@ void IndexBuffer::create(const void* data, int arraySize)
 			&indexBuffer
 		)
 	);
+
+	initialized = true;
 }
 
 void IndexBuffer::bind()
