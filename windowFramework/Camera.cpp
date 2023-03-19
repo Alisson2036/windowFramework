@@ -51,9 +51,10 @@ DirectX::XMMATRIX Camera::getMatrix()
 {
 
 	return DirectX::XMMATRIX(
+		DirectX::XMMatrixTranslation(-position[0], -position[1], -position[2]) *
 		DirectX::XMMatrixRotationX(angle[0]) *
 		DirectX::XMMatrixRotationY(angle[1]) *
-		DirectX::XMMatrixRotationZ(angle[2]) *
-		DirectX::XMMatrixTranslation(-position[0], -position[1], -position[2]));
+		DirectX::XMMatrixRotationZ(angle[2]) 
+	);
 
 }

@@ -36,7 +36,7 @@ void app::start()
 	
 	cube.create(v, ARRAYSIZE(v), i, ARRAYSIZE(i));
 
-	float p[3] = {0.0f,0.0f,0.0f};
+	float p[3] = {0.0f,0.0f,-4.0f};
 	float a[3] = {0.0f,0.0f,0.0f};
 	cam.setPositionAndAngle(p, a);
 	
@@ -60,21 +60,35 @@ void app::loop()
 	if (win.getKeyboarPointer()->isKeyPressed('S')) cam.movePosition(0.0f, 0.0f,-0.1f);
 	if (win.getKeyboarPointer()->isKeyPressed('A')) cam.movePosition(-0.1f, 0.0f, 0.0f);
 	if (win.getKeyboarPointer()->isKeyPressed('D')) cam.movePosition(0.1f, 0.0f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
+	//olhar para outros angulos
+	if (win.getKeyboarPointer()->isKeyPressed('I')) cam.moveAngle(0.1f, 0.0f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('J')) cam.moveAngle(0.0f, 0.1f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('L')) cam.moveAngle(0.0f,-0.1f, 0.0f);
+
 
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
 
-	float pos[3]   = {xPos,yPos,4.0f};
-	float angle[3] = {timeSinceCreation.getPassedSeconds(), timeSinceCreation.getPassedSeconds(), 0.0f};
+
+	float pos[3] = { 0.0f,0.0f,0.0f };
+	float angle[3] = { 0.0f, 0.0f, 0.0f };
+
 	Instance inst(pos, angle);
-	cube.update(inst);
-	cube.draw();
+	for (int j = 0; j < 10; j++)
+	{
+		for (int i = -20; i < 20; i++)
+		{
+			pos[0] = i * 4;
+			pos[1] = cos(timeSinceCreation.getPassedSeconds() * 2 + i);
+			pos[2] = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j*10;
 
-	float pos2[3] = { 0.0f,0.0f,4.0f };
-	float angle2[3] = { 0.0f, 0.0f, 0.0f };
-	inst.update(pos2, angle2);
-	cube.update(inst);
-	cube.draw();
+			inst.update(pos, angle);
 
-
+			cube.update(inst);
+			cube.draw();
+		}
+	}
 
 }

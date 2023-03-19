@@ -79,7 +79,7 @@ public:
 		//float angle = timeSinceCreation.getPassedSeconds();
 
 		DirectX::XMMATRIX finalMatrix = inst.getMatrix();
-		DirectX::XMMATRIX projectionMatrix = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f);
+		DirectX::XMMATRIX projectionMatrix = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 100.0f);
 
 		DirectX::XMMATRIX b[] = {
 			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
