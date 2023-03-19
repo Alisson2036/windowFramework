@@ -1,6 +1,6 @@
 #include "Camera.h"
 
-Camera::Camera(float _position[3], float _angle[3])
+Camera::Camera(float _position[3], float _angle[2])
 {
 	position[0] = _position[0];
 	position[1] = _position[1];
@@ -8,10 +8,9 @@ Camera::Camera(float _position[3], float _angle[3])
 
 	angle[0] = _angle[0];
 	angle[1] = _angle[1];
-	angle[2] = _angle[2];
 }
 
-void Camera::setPositionAndAngle(float _position[3], float _angle[3])
+void Camera::setPositionAndAngle(float _position[3], float _angle[2])
 {
 	position[0] = _position[0];
 	position[1] = _position[1];
@@ -19,10 +18,9 @@ void Camera::setPositionAndAngle(float _position[3], float _angle[3])
 
 	angle[0] = _angle[0];
 	angle[1] = _angle[1];
-	angle[2] = _angle[2];
 }
 
-void Camera::move(float _position[3], float _angle[3])
+void Camera::move(float _position[3], float _angle[2])
 {
 	position[0] += _position[0];
 	position[1] += _position[1];
@@ -35,26 +33,38 @@ void Camera::move(float _position[3], float _angle[3])
 
 void Camera::movePosition(float x, float y, float z)
 {
-	position[0] += x;
-	position[1] += y;
-	position[2] += z;
+	DirectX::XMVECTOR cameraDirection = DirectX::XMVectorSet(x, y, z, 1.0f);
+
+	cameraDirection = DirectX::XMVector3Transform(
+		cameraDirection,
+		DirectX::XMMatrixTranspose(getRotationMatrix())
+	);
+
+	position[0] += DirectX::XMVectorGetX(cameraDirection);
+	position[1] += DirectX::XMVectorGetY(cameraDirection);
+	position[2] += DirectX::XMVectorGetZ(cameraDirection);
 }
 
-void Camera::moveAngle(float x, float y, float z)
+void Camera::moveAngle(float x, float y)
 {
 	angle[0] += x;
 	angle[1] += y;
-	angle[2] += z;
 }
 
 DirectX::XMMATRIX Camera::getMatrix()
 {
-
+	//DirectX::XMMatrixRotationNormal
 	return DirectX::XMMATRIX(
 		DirectX::XMMatrixTranslation(-position[0], -position[1], -position[2]) *
-		DirectX::XMMatrixRotationX(angle[0]) *
-		DirectX::XMMatrixRotationY(angle[1]) *
-		DirectX::XMMatrixRotationZ(angle[2]) 
+		getRotationMatrix()
 	);
 
+}
+
+DirectX::XMMATRIX Camera::getRotationMatrix()
+{
+	return DirectX::XMMATRIX(
+		DirectX::XMMatrixRotationY(angle[1]) *
+		DirectX::XMMatrixRotationX(angle[0])
+	);
 }

@@ -7,20 +7,22 @@ class Camera
 public:
 	Camera() = default;
 
-	Camera(float _position[3], float _angle[3]);
+	Camera(float _position[3], float _angle[2]);
 
-	void setPositionAndAngle(float _position[3], float _angle[3]);
+	void setPositionAndAngle(float _position[2], float _angle[2]);
 
-	void move(float _position[3], float _angle[3]);
+	void move(float _position[3], float _angle[2]);
 	void movePosition(float x, float y, float z);
-	void moveAngle(float x, float y, float z);
+	void moveAngle(float x, float y);
 
 	DirectX::XMMATRIX getMatrix();
 
 
 private:
+	DirectX::XMMATRIX getRotationMatrix();
+
 	float position[3];
-	float angle[3];
+	float angle[2];
 
 };
 

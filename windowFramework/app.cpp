@@ -63,10 +63,10 @@ void app::loop()
 	if (win.getKeyboarPointer()->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
 	if (win.getKeyboarPointer()->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
 	//olhar para outros angulos
-	if (win.getKeyboarPointer()->isKeyPressed('I')) cam.moveAngle(0.1f, 0.0f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('J')) cam.moveAngle(0.0f, 0.1f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('L')) cam.moveAngle(0.0f,-0.1f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('I')) cam.moveAngle( 0.1f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
+	if (win.getKeyboarPointer()->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
 
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
