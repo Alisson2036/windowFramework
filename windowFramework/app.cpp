@@ -14,14 +14,14 @@ void app::start()
 	cube.setFill(win.Gfx().getFillable());
 	vertex2d v[] =
 	{
-		vertex2d(-1.0f,-1.0f,-1.0f, 255, 0  , 0  , 255),
-		vertex2d( 1.0f,-1.0f,-1.0f, 0  , 0  , 255, 255),
-		vertex2d(-1.0f, 1.0f,-1.0f, 0  , 255, 0  , 255),
-		vertex2d( 1.0f, 1.0f,-1.0f, 255, 255, 255, 255),
-		vertex2d(-1.0f,-1.0f, 1.0f, 70 , 0  , 200, 255),
-		vertex2d( 1.0f,-1.0f, 1.0f, 0  , 0  , 255, 255),
-		vertex2d(-1.0f, 1.0f, 1.0f, 0  , 255, 0  , 255),
-		vertex2d( 1.0f, 1.0f, 1.0f, 255, 0  , 255, 255),
+		vertex2d(-1.0f,-1.0f,-1.0f, 255u, 0u  , 0u  , 255u),
+		vertex2d( 1.0f,-1.0f,-1.0f, 0u  , 0u  , 255u, 255u),
+		vertex2d(-1.0f, 1.0f,-1.0f, 0u  , 255u, 0u  , 255u),
+		vertex2d( 1.0f, 1.0f,-1.0f, 255u, 255u, 255u, 255u),
+		vertex2d(-1.0f,-1.0f, 1.0f, 70u , 0u  , 200u, 255u),
+		vertex2d( 1.0f,-1.0f, 1.0f, 0u  , 0u  , 255u, 255u),
+		vertex2d(-1.0f, 1.0f, 1.0f, 0u  , 255u, 0u  , 255u),
+		vertex2d( 1.0f, 1.0f, 1.0f, 255u, 0u  , 255u, 255u),
 	};
 	short i[] =
 	{
@@ -36,6 +36,12 @@ void app::start()
 	
 	cube.create(v, ARRAYSIZE(v), i, ARRAYSIZE(i));
 
+	float p[3] = {0.0f,0.0f,0.0f};
+	float a[3] = {0.0f,0.0f,0.0f};
+	cam.setPositionAndAngle(p, a);
+	
+	Instance::initializeCamera(&cam);
+
 
 	while (win.update()) loop();
 
@@ -43,24 +49,30 @@ void app::start()
 
 void app::loop()
 {
-	float x = win.getMousePointer()->getX();
-	float y = win.getMousePointer()->getY();
+	float x = (int)win.getMousePointer()->getX();
+	float y = (int)win.getMousePointer()->getY();
 
 	float xPos = ((float)x - 400.0f) / 400.0f;
 	float yPos = -((float)y - 300.0f) / 300.0f;
 
-
+	//movimento da camera
+	if (win.getKeyboarPointer()->isKeyPressed('W')) cam.movePosition(0.0f, 0.0f, 0.1f);
+	if (win.getKeyboarPointer()->isKeyPressed('S')) cam.movePosition(0.0f, 0.0f,-0.1f);
+	if (win.getKeyboarPointer()->isKeyPressed('A')) cam.movePosition(-0.1f, 0.0f, 0.0f);
+	if (win.getKeyboarPointer()->isKeyPressed('D')) cam.movePosition(0.1f, 0.0f, 0.0f);
 
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
 
-	float pos[3]   = {xPos,yPos,0.0f};
+	float pos[3]   = {xPos,yPos,4.0f};
 	float angle[3] = {timeSinceCreation.getPassedSeconds(), timeSinceCreation.getPassedSeconds(), 0.0f};
-	cube.update(pos, angle);
+	Instance inst(pos, angle);
+	cube.update(inst);
 	cube.draw();
 
-	float pos2[3] = { 0.0f,0.0f,0.0f };
+	float pos2[3] = { 0.0f,0.0f,4.0f };
 	float angle2[3] = { 0.0f, 0.0f, 0.0f };
-	cube.update(pos2, angle2);
+	inst.update(pos2, angle2);
+	cube.update(inst);
 	cube.draw();
 
 

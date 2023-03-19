@@ -2,6 +2,7 @@
 #include <DirectXMath.h>
 #include "v.h"
 #include "object.h"
+#include "Instance.h"
 
 #include "vertexShader.h"
 #include "pixelShader.h"
@@ -73,21 +74,16 @@ public:
 		isIndexedBool = true;
 	}
 
-	void update(float pos[3], float angle[3])
+	void update(Instance inst)
 	{
 		//float angle = timeSinceCreation.getPassedSeconds();
 
-		DirectX::XMMATRIX finalMatrix =
-			DirectX::XMMatrixRotationX(angle[0]) *
-			DirectX::XMMatrixRotationY(angle[1]) *
-			DirectX::XMMatrixRotationZ(angle[2]) *
-			DirectX::XMMatrixTranslation(pos[0], pos[1], pos[2] + 4.0f);
-
+		DirectX::XMMATRIX finalMatrix = inst.getMatrix();
 		DirectX::XMMATRIX projectionMatrix = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 10.0f);
 
 		DirectX::XMMATRIX b[] = {
 			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
-			DirectX::XMMatrixTranspose(finalMatrix * projectionMatrix)
+			finalMatrix * projectionMatrix
 		};
 
 		cvb.update(

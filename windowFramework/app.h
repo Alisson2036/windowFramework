@@ -4,6 +4,7 @@
 #include "timer.h"
 
 #include "colorBlendTriangle.h"
+#include "Camera.h"
 
 #include "v.h"
 
@@ -22,7 +23,7 @@ private:
 
 
 private:
-
+	Camera cam;
 
 	colorBlendTriangle cube;
 
