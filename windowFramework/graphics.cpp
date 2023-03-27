@@ -99,7 +99,6 @@ Graphics::Graphics(HWND hWnd)
 
 	//inicia pipeline
 	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get());
-
 }
 
 
@@ -117,6 +116,7 @@ Pipeline* Graphics::getPipeline()
 
 Graphics::~Graphics()
 {
+	delete pipeline;
 }
 
 void Graphics::fillScreen(float r, float g, float b)
