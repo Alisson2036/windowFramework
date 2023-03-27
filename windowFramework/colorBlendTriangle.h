@@ -19,23 +19,25 @@ public:
 
 	void create(vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
 	{
-		
 		//adiciona todos os bindables
 		addBindable(&cvb);
-		addBindable(&ps);
-		addBindable(&vs);
+		//addBindable(&ps);
+		//addBindable(&vs);
 		addBindable(&vb);
-		addBindable(&il);
+		//addBindable(&il);
 		addBindable(&ib);
+
 
 		fillBindables();
 
+		/*
 		//CRIA PIXEL SHADER
 		vs.create(L"colorBlendVS.cso");
 
 		//CRIA PIXEL SHADER
 		ps.create(L"colorBlendPS.cso");
 
+		
 		//CRIA INPUT LAYOUT
 		il.create(&vs,
 			{
@@ -44,7 +46,7 @@ public:
 			},
 			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
 		);
-
+		*/
 
 		//CRIA VERTEX BUFFER
 		vb.create(
@@ -74,6 +76,7 @@ public:
 		isIndexedBool = true;
 	}
 
+
 	void update(Instance inst)
 	{
 		//float angle = timeSinceCreation.getPassedSeconds();
@@ -92,9 +95,9 @@ public:
 
 	}
 private:
-	VertexShader vs;
-	PixelShader ps;
-	InputLayout il;
+	//VertexShader vs;
+	//PixelShader ps;
+	//InputLayout il;
 	VertexBuffer vb;
 	ConstantVertexBuffer cvb;
 	IndexBuffer ib;

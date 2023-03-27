@@ -145,6 +145,7 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="pipeline.cpp" />
     <ClCompile Include="pixelShader.cpp" />
     <ClCompile Include="vertexBuffer.cpp" />
     <ClCompile Include="vertexConstantBuffer.cpp" />
@@ -164,6 +165,7 @@
     <ClInclude Include="app.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="object.h" />
+    <ClInclude Include="pipeline.h" />
     <ClInclude Include="pixelShader.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="colorBlendTriangle.h" />
