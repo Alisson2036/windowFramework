@@ -97,6 +97,8 @@ Graphics::Graphics(HWND hWnd)
 	//configura render target
 	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), depthStencilView.Get());
 
+	//inicia pipeline
+	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get());
 
 }
 
@@ -105,6 +107,11 @@ Graphics::Graphics(HWND hWnd)
 Object::Fill Graphics::getFillable()
 {
 	return Object::Fill(d3dDevice.Get(), deviceContext.Get());
+}
+
+Pipeline* Graphics::getPipeline()
+{
+	return pipeline;
 }
 
 

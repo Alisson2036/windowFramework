@@ -21,8 +21,6 @@ public:
 	{
 		//adiciona todos os bindables
 		addBindable(&cvb);
-		//addBindable(&ps);
-		//addBindable(&vs);
 		addBindable(&vb);
 		//addBindable(&il);
 		addBindable(&ib);
@@ -30,23 +28,6 @@ public:
 
 		fillBindables();
 
-		/*
-		//CRIA PIXEL SHADER
-		vs.create(L"colorBlendVS.cso");
-
-		//CRIA PIXEL SHADER
-		ps.create(L"colorBlendPS.cso");
-
-		
-		//CRIA INPUT LAYOUT
-		il.create(&vs,
-			{
-				{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-				{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
-			},
-			D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST
-		);
-		*/
 
 		//CRIA VERTEX BUFFER
 		vb.create(
@@ -95,9 +76,6 @@ public:
 
 	}
 private:
-	//VertexShader vs;
-	//PixelShader ps;
-	//InputLayout il;
 	VertexBuffer vb;
 	ConstantVertexBuffer cvb;
 	IndexBuffer ib;

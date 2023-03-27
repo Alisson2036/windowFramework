@@ -44,7 +44,7 @@ public:
 	virtual void update() {};
 	void draw() 
 	{
-		pipeline.bind();
+		//pipeline.bind();
 		bind();
 		if (isIndexedBool)
 			context->DrawIndexed(indicesNum, 0, 0);
@@ -61,7 +61,7 @@ public:
 	{
 		device = filler.device;
 		context = filler.context;
-		pipeline.create(device, context);
+		//pipeline.create(device, context);
 	}
 
 	
@@ -87,7 +87,7 @@ protected:
 
 	std::vector<Bindable*> bindables;
 
-	Pipeline pipeline;
+	//Pipeline pipeline;
 
 
 	Microsoft::WRL::ComPtr<ID3D11Device> device;

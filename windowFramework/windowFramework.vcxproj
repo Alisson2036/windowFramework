@@ -155,7 +155,6 @@
   <ItemGroup>
     <ClInclude Include="bindable.h" />
     <ClInclude Include="Camera.h" />
-    <ClInclude Include="cube.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="indexBuffer.h" />

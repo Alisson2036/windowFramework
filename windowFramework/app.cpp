@@ -87,6 +87,7 @@ void app::loop()
 			inst.update(pos, angle);
 
 			cube.update(inst);
+			win.Gfx().getPipeline()->bind();
 			cube.draw();
 		}
 	}

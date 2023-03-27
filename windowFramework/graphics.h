@@ -8,9 +8,10 @@
 #include <d3d11.h>
 #include "exception.h"
 
+#include "pipeline.h"
+
 #include "object.h"
 
-#include "bindable.h"
 
 
 class Graphics
@@ -27,6 +28,7 @@ public:
 
 	//classe que armazena pointers para os objetos
 	Object::Fill getFillable();
+	Pipeline* getPipeline();
 
 	void fillScreen(float r, float g, float b);
 	void flip();
@@ -39,6 +41,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
 
+	Pipeline* pipeline;
 
 };
 
