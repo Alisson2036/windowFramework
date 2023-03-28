@@ -99,6 +99,7 @@ Graphics::Graphics(HWND hWnd)
 
 	//inicia pipeline
 	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get());
+	
 }
 
 

@@ -26,15 +26,16 @@ public:
 	{
 		pipeline = pipe;
 
+		pipe->initializeBindable(&vb);
+		pipe->initializeBindable(&ib);
+		pipe->initializeBindable(&cvb);
+
 		desc.type = Pipeline::ObjectType::ColorBlend;
 		desc.indexBuffer = &ib;
 		desc.vertexBuffer = &vb;
 		desc.constantVertexBuffer = &cvb;
 		desc.indicesNum = indexCount;
 
-		pipe->initializeBindable(&vb );
-		pipe->initializeBindable(&ib );
-		pipe->initializeBindable(&cvb);
 
 		//CRIA VERTEX BUFFER
 		vb.create(
@@ -68,16 +69,13 @@ public:
 		//float angle = timeSinceCreation.getPassedSeconds();
 
 		DirectX::XMMATRIX finalMatrix = inst.getMatrix();
-		DirectX::XMMATRIX projectionMatrix = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 100.0f);
+		DirectX::XMMATRIX projectionMatrix = inst.getProjectionMatrix();
 
 		DirectX::XMMATRIX b[] = {
-			//DirectX::XMMatrixScaling(3.0f/4.0f,1.0f,1.0f) 
 			finalMatrix * projectionMatrix
 		};
 
-		cvb.update(
-			b
-		);
+		cvb.update(b);
 
 	}
 

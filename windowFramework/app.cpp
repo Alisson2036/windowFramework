@@ -55,17 +55,18 @@ void app::loop()
 	float yPos = -((float)y - 300.0f) / 300.0f;
 
 	//movimento da camera
-	if (win.getKeyboarPointer()->isKeyPressed('W')) cam.movePosition(0.0f, 0.0f, 0.1f);
-	if (win.getKeyboarPointer()->isKeyPressed('S')) cam.movePosition(0.0f, 0.0f,-0.1f);
-	if (win.getKeyboarPointer()->isKeyPressed('A')) cam.movePosition(-0.1f, 0.0f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('D')) cam.movePosition(0.1f, 0.0f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
+	auto kb = win.getKeyboarPointer();
+	if (kb->isKeyPressed('W')) cam.movePosition(0.0f, 0.0f, 0.1f);
+	if (kb->isKeyPressed('S')) cam.movePosition(0.0f, 0.0f,-0.1f);
+	if (kb->isKeyPressed('A')) cam.movePosition(-0.1f, 0.0f, 0.0f);
+	if (kb->isKeyPressed('D')) cam.movePosition(0.1f, 0.0f, 0.0f);
+	if (kb->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
+	if (kb->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
 	//olhar para outros angulos
-	if (win.getKeyboarPointer()->isKeyPressed('I')) cam.moveAngle( 0.1f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f);
-	if (win.getKeyboarPointer()->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
-	if (win.getKeyboarPointer()->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
+	if (kb->isKeyPressed('I')) cam.moveAngle( 0.1f, 0.0f);
+	if (kb->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f);
+	if (kb->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
+	if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
 
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
@@ -75,19 +76,21 @@ void app::loop()
 	float angle[3] = { 0.0f, 0.0f, 0.0f };
 
 	Instance inst(pos, angle);
-	for (int j = 0; j < 10; j++)
+	for (int n = -5; n < 5; n++)
 	{
-		for (int i = -20; i < 20; i++)
+		for (int j = -5; j < 5; j++)
 		{
-			pos[0] = i * 4;
-			pos[1] = cos(timeSinceCreation.getPassedSeconds() * 2 + i);
-			pos[2] = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j*10;
+			for (int i = -20; i < 20; i++)
+			{
+				pos[0] = i * 4;
+				pos[1] = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
+				pos[2] = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
-			inst.update(pos, angle);
+				inst.update(pos, angle);
 
-			cube.update(inst);
-			cube.draw();
+				cube.update(inst);
+				cube.draw();
+			}
 		}
 	}
-
 }

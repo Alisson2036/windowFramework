@@ -14,6 +14,7 @@ public:
 	void move(float _position[3], float _angle[3]);
 
 	DirectX::XMMATRIX getMatrix();
+	DirectX::XMMATRIX getProjectionMatrix();
 
 
 private:

@@ -54,3 +54,8 @@ DirectX::XMMATRIX Instance::getMatrix()
 	);
 
 }
+
+DirectX::XMMATRIX Instance::getProjectionMatrix()
+{
+	return cam->getProjectionMatrix();
+}

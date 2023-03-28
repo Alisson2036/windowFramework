@@ -33,9 +33,9 @@ void Pipeline::initializeBindable(Bindable* bindable)
 void Pipeline::bind(ObjectDescriptor* desc)
 {
 	staticBinds[desc->type].bind();
-	desc->indexBuffer->bind();
-	desc->constantVertexBuffer->bind();
-	desc->vertexBuffer->bind();
+	if(desc->indexBuffer) desc->indexBuffer->bind();
+	if(desc->constantVertexBuffer) desc->constantVertexBuffer->bind();
+	if(desc->vertexBuffer) desc->vertexBuffer->bind();
 
 	context->DrawIndexed(desc->indicesNum, 0, 0);
 }

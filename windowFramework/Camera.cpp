@@ -28,7 +28,6 @@ void Camera::move(float _position[3], float _angle[2])
 
 	angle[0] += _angle[0];
 	angle[1] += _angle[1];
-	angle[2] += _angle[2];
 }
 
 void Camera::movePosition(float x, float y, float z)
@@ -59,6 +58,11 @@ DirectX::XMMATRIX Camera::getMatrix()
 		getRotationMatrix()
 	);
 
+}
+
+DirectX::XMMATRIX Camera::getProjectionMatrix()
+{
+	return projectionMatrix;
 }
 
 DirectX::XMMATRIX Camera::getRotationMatrix()
