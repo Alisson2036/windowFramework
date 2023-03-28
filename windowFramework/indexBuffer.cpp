@@ -10,7 +10,7 @@ void IndexBuffer::create(const void* data, int arraySize)
 	bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
 	_throwHr(
-		device->CreateBuffer(
+		getDevice()->CreateBuffer(
 			&bufferDesc,
 			&subresource,
 			&indexBuffer
@@ -22,5 +22,5 @@ void IndexBuffer::create(const void* data, int arraySize)
 
 void IndexBuffer::bind()
 {
-	context->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+	getContext()->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
 }

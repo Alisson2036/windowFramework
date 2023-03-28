@@ -17,7 +17,7 @@ void ConstantVertexBuffer::create(const void* data, int _arraySize, int _objectS
 	constantBufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 
 
-	_throwHr(device->CreateBuffer(&constantBufferDesc, &subresource, &constantBuffer));
+	_throwHr(getDevice()->CreateBuffer(&constantBufferDesc, &subresource, &constantBuffer));
 	initialized = true;
 }
 
@@ -25,15 +25,15 @@ void ConstantVertexBuffer::update(const void* data)
 {
 	D3D11_MAPPED_SUBRESOURCE msr = {};
 	_throwHr(
-		context->Map(constantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &msr)
+		getContext()->Map(constantBuffer.Get(), 0u, D3D11_MAP_WRITE_DISCARD, 0u, &msr)
 	);
 
 	memcpy(msr.pData, data, objectSize * arraySize);
 
-	context->Unmap(constantBuffer.Get(), 0u);
+	getContext()->Unmap(constantBuffer.Get(), 0u);
 }
 
 void ConstantVertexBuffer::bind()
 {
-	context->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+	getContext()->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
 }

@@ -13,11 +13,11 @@ void VertexBuffer::create(const void* data, int arraySize, int objectSize)
 	vertexBufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
 
-	_throwHr(device->CreateBuffer(&vertexBufferDesc, &subresource, &vertexBuffer));
+	_throwHr(getDevice()->CreateBuffer(&vertexBufferDesc, &subresource, &vertexBuffer));
 	initialized = true;
 }
 
 void VertexBuffer::bind()
 {
-	context->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+	getContext()->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 }

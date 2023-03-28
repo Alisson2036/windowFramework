@@ -1,8 +1,6 @@
 #include "pipeline.h"
 
 
-Microsoft::WRL::ComPtr<ID3D11Device>        device;
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
 
 
@@ -32,7 +30,9 @@ void Pipeline::initializeBindable(Bindable* bindable)
 
 void Pipeline::bind(ObjectDescriptor* desc)
 {
-	staticBinds[desc->type].bind();
+	if(lastBinded != desc->type) 
+		staticBinds[desc->type].bind();
+	lastBinded = desc->type;
 	if(desc->indexBuffer) desc->indexBuffer->bind();
 	if(desc->constantVertexBuffer) desc->constantVertexBuffer->bind();
 	if(desc->vertexBuffer) desc->vertexBuffer->bind();
@@ -42,13 +42,6 @@ void Pipeline::bind(ObjectDescriptor* desc)
 
 Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)
 {
-	vs.setContext(context);
-	vs.setDevice(device);
-	ps.setContext(context);
-	ps.setDevice(device);
-	il.setContext(context);
-	il.setDevice(device);
-
 	//CRIA PIXEL SHADER
 	vs.create(vertexShader);
 

@@ -7,7 +7,7 @@
 #include <wrl.h>
 #include <d3d11.h>
 #include "exception.h"
-
+#include "bindable.h"
 #include "pipeline.h"
 
 

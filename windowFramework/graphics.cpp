@@ -97,6 +97,11 @@ Graphics::Graphics(HWND hWnd)
 	//configura render target
 	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), depthStencilView.Get());
 
+
+
+	//inicia bindables
+	Bindable::setDevice(d3dDevice.Get());
+	Bindable::setContext(deviceContext.Get());
 	//inicia pipeline
 	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get());
 	

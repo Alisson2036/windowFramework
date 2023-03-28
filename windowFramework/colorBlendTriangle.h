@@ -1,8 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include <memory>
 #include "Instance.h"
-
 #include "pipeline.h"
 
 
@@ -26,9 +24,6 @@ public:
 	{
 		pipeline = pipe;
 
-		pipe->initializeBindable(&vb);
-		pipe->initializeBindable(&ib);
-		pipe->initializeBindable(&cvb);
 
 		desc.type = Pipeline::ObjectType::ColorBlend;
 		desc.indexBuffer = &ib;
