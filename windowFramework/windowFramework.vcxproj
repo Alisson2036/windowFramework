@@ -163,12 +163,10 @@
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />
     <ClInclude Include="mouse.h" />
-    <ClInclude Include="object.h" />
     <ClInclude Include="pipeline.h" />
     <ClInclude Include="pixelShader.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="colorBlendTriangle.h" />
-    <ClInclude Include="v.h" />
     <ClInclude Include="vertexBuffer.h" />
     <ClInclude Include="vertexConstantBuffer.h" />
     <ClInclude Include="vertexShader.h" />

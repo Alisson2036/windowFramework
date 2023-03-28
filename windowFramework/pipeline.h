@@ -13,14 +13,31 @@ class Pipeline
 public:
 	Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context);
 
-	void bind();
+	enum ObjectType
+	{
+		ColorBlend
+	};
+
+	struct ObjectDescriptor
+	{
+		ObjectType type;
+		IndexBuffer* indexBuffer;
+		VertexBuffer* vertexBuffer;
+		ConstantVertexBuffer* constantVertexBuffer;
+		int indicesNum;
+	};
+
+	void initializeBindable(Bindable* bindable);
+	void bind(ObjectDescriptor* desc);
 
 private:
-	class staticBind
+
+
+	class StaticBind
 	{
 	public:
 		//construtor para inicializar com VS, PS e IL
-		void initialize(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription);
+		StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription);
 		//coloca na pipeline
 		void bind();
 	private:
@@ -31,6 +48,6 @@ private:
 
 private:
 
-	staticBind colorBlend;
+	std::vector<StaticBind> staticBinds;
 
 };

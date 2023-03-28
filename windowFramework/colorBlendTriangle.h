@@ -1,33 +1,40 @@
 #pragma once
 #include <DirectXMath.h>
-#include "v.h"
-#include "object.h"
+#include <memory>
 #include "Instance.h"
 
-#include "vertexShader.h"
-#include "pixelShader.h"
-#include "vertexBuffer.h"
-#include "inputLayout.h"
-#include "indexBuffer.h"
-#include "vertexConstantBuffer.h"
+#include "pipeline.h"
 
 
 
-class colorBlendTriangle : public Object
+class colorBlendTriangle
 {
 public:
 
-	void create(vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
+	struct vertex2d
 	{
-		//adiciona todos os bindables
-		addBindable(&cvb);
-		addBindable(&vb);
-		//addBindable(&il);
-		addBindable(&ib);
+		float x;
+		float y;
+		float z;
+		char r;
+		char g;
+		char b;
+		char a;
+	};
 
+	void create(Pipeline* pipe, vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
+	{
+		pipeline = pipe;
 
-		fillBindables();
+		desc.type = Pipeline::ObjectType::ColorBlend;
+		desc.indexBuffer = &ib;
+		desc.vertexBuffer = &vb;
+		desc.constantVertexBuffer = &cvb;
+		desc.indicesNum = indexCount;
 
+		pipe->initializeBindable(&vb );
+		pipe->initializeBindable(&ib );
+		pipe->initializeBindable(&cvb);
 
 		//CRIA VERTEX BUFFER
 		vb.create(
@@ -53,8 +60,6 @@ public:
 			sizeof(DirectX::XMMATRIX)
 		);
 
-		indicesNum = indexCount;
-		isIndexedBool = true;
 	}
 
 
@@ -75,9 +80,18 @@ public:
 		);
 
 	}
+
+	void draw()
+	{
+		pipeline->bind(&desc);
+	}
 private:
 	VertexBuffer vb;
 	ConstantVertexBuffer cvb;
 	IndexBuffer ib;
+
+	Pipeline::ObjectDescriptor desc;
+
+	Pipeline* pipeline;
 
 };

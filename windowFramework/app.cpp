@@ -11,17 +11,16 @@ app::app()
 void app::start()
 {
 
-	cube.setFill(win.Gfx().getFillable());
-	vertex2d v[] =
+	colorBlendTriangle::vertex2d v[] =
 	{
-		vertex2d(-1.0f,-1.0f,-1.0f, 255u, 0u  , 0u  , 255u),
-		vertex2d( 1.0f,-1.0f,-1.0f, 0u  , 0u  , 255u, 255u),
-		vertex2d(-1.0f, 1.0f,-1.0f, 0u  , 255u, 0u  , 255u),
-		vertex2d( 1.0f, 1.0f,-1.0f, 255u, 255u, 255u, 255u),
-		vertex2d(-1.0f,-1.0f, 1.0f, 70u , 0u  , 200u, 255u),
-		vertex2d( 1.0f,-1.0f, 1.0f, 0u  , 0u  , 255u, 255u),
-		vertex2d(-1.0f, 1.0f, 1.0f, 0u  , 255u, 0u  , 255u),
-		vertex2d( 1.0f, 1.0f, 1.0f, 255u, 0u  , 255u, 255u),
+		colorBlendTriangle::vertex2d(-1.0f,-1.0f,-1.0f, 255u, 0u  , 0u  , 255u),
+		colorBlendTriangle::vertex2d( 1.0f,-1.0f,-1.0f, 0u  , 0u  , 255u, 255u),
+		colorBlendTriangle::vertex2d(-1.0f, 1.0f,-1.0f, 0u  , 255u, 0u  , 255u),
+		colorBlendTriangle::vertex2d( 1.0f, 1.0f,-1.0f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d(-1.0f,-1.0f, 1.0f, 70u , 0u  , 200u, 255u),
+		colorBlendTriangle::vertex2d( 1.0f,-1.0f, 1.0f, 0u  , 0u  , 255u, 255u),
+		colorBlendTriangle::vertex2d(-1.0f, 1.0f, 1.0f, 0u  , 255u, 0u  , 255u),
+		colorBlendTriangle::vertex2d( 1.0f, 1.0f, 1.0f, 255u, 0u  , 255u, 255u),
 	};
 	short i[] =
 	{
@@ -34,7 +33,7 @@ void app::start()
 	};
 
 	
-	cube.create(v, ARRAYSIZE(v), i, ARRAYSIZE(i));
+	cube.create(win.Gfx().getPipeline(), v, ARRAYSIZE(v), i, ARRAYSIZE(i));
 
 	float p[3] = {0.0f,0.0f,-4.0f};
 	float a[3] = {0.0f,0.0f,0.0f};
@@ -87,7 +86,6 @@ void app::loop()
 			inst.update(pos, angle);
 
 			cube.update(inst);
-			win.Gfx().getPipeline()->bind();
 			cube.draw();
 		}
 	}

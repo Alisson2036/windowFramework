@@ -10,7 +10,6 @@
 
 #include "pipeline.h"
 
-#include "object.h"
 
 
 
@@ -27,7 +26,6 @@ public:
 
 
 	//classe que armazena pointers para os objetos
-	Object::Fill getFillable();
 	Pipeline* getPipeline();
 
 	void fillScreen(float r, float g, float b);

@@ -11,22 +11,36 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	device = _device;
 	context = _context;
 
-	colorBlend.initialize(
+	
+	//colorBlend
+	staticBinds.push_back(StaticBind(
 		L"ColorBlendVS.cso",
 		L"ColorBlendPS.cso",
 		{
 			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
 			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		}
-	);
+	));
 }
 
-void Pipeline::bind()
+
+void Pipeline::initializeBindable(Bindable* bindable)
 {
-	colorBlend.bind();
+	bindable->setContext(context.Get());
+	bindable->setDevice(device.Get());
 }
 
-void Pipeline::staticBind::initialize(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)
+void Pipeline::bind(ObjectDescriptor* desc)
+{
+	staticBinds[desc->type].bind();
+	desc->indexBuffer->bind();
+	desc->constantVertexBuffer->bind();
+	desc->vertexBuffer->bind();
+
+	context->DrawIndexed(desc->indicesNum, 0, 0);
+}
+
+Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)
 {
 	vs.setContext(context);
 	vs.setDevice(device);
@@ -45,7 +59,7 @@ void Pipeline::staticBind::initialize(const wchar_t* vertexShader, const wchar_t
 	il.create(&vs, elementDescription, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
-void Pipeline::staticBind::bind()
+void Pipeline::StaticBind::bind()
 {
 	if (vs.isInitialized()) vs.bind();
 	if (ps.isInitialized()) ps.bind();

@@ -6,7 +6,6 @@
 #include "colorBlendTriangle.h"
 #include "Camera.h"
 
-#include "v.h"
 
 class app
 {
