@@ -3,6 +3,7 @@
 #include <iostream>
 #include <Windows.h>
 #include <gdiplus.h>
+#include "exception.h"
 
 
 class Texture

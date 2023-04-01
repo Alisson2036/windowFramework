@@ -39,13 +39,14 @@ Texture::Texture(std::wstring fileName)
 void Texture::loadFile(std::wstring fileName)
 {
 	//criando bitmap no heap
-	img = new Gdiplus::Bitmap(fileName.c_str());
-
+	Gdiplus::Bitmap img(fileName.c_str());
+	if (img.GetLastStatus())
+		_throwMsg("Texture not found");
 
 	//configurando imageData
-	imageData.pixelCount = img->GetWidth() * img->GetHeight();
-	imageData.width = img->GetWidth();
-	imageData.height = img->GetHeight();
+	imageData.pixelCount = img.GetWidth() * img.GetHeight();
+	imageData.width = img.GetWidth();
+	imageData.height = img.GetHeight();
 
 	//alocando espaço na memoria para armazenar a imagem
 	imageData.data = new pixel[imageData.pixelCount];
@@ -54,19 +55,16 @@ void Texture::loadFile(std::wstring fileName)
 	for (int i = 0; i < imageData.pixelCount; i++)
 	{
 		Gdiplus::Color c;
-		img->GetPixel(
+		img.GetPixel(
 			i % imageData.width,
 			int(i / imageData.height),
 			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
 		);
 	}
 
-
-
-
 }
 
 Texture::data& Texture::getData()
 {
-	return &imageData;//mudar para enviar por referencia depois
+	return imageData;//mudar para enviar por referencia depois
 }
