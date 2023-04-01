@@ -69,6 +69,21 @@
     <ClCompile Include="indexBuffer.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="bindable.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Instance.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="pipeline.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="texture.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -95,9 +110,6 @@
     <ClInclude Include="bindable.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="object.h">
-      <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
     <ClInclude Include="inputLayout.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
@@ -110,20 +122,26 @@
     <ClInclude Include="vertexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="v.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="colorBlendTriangle.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="cube.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="vertexConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="indexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Instance.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="pipeline.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="texture.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
