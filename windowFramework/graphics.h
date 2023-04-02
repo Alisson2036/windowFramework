@@ -9,7 +9,7 @@
 #include "exception.h"
 #include "bindable.h"
 #include "pipeline.h"
-
+#include "texture.h"
 
 
 

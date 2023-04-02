@@ -41,7 +41,7 @@ void Texture::loadFile(std::wstring fileName)
 	//criando bitmap no heap
 	Gdiplus::Bitmap img(fileName.c_str());
 	if (img.GetLastStatus())
-		_throwMsg("Texture not found");
+		_throwMsg("Image does not exist");
 
 	//configurando imageData
 	imageData.pixelCount = img.GetWidth() * img.GetHeight();

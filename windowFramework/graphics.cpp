@@ -105,6 +105,7 @@ Graphics::Graphics(HWND hWnd)
 	//inicia pipeline
 	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get());
 	
+	Texture::initialize();
 }
 
 
@@ -117,6 +118,7 @@ Pipeline* Graphics::getPipeline()
 
 Graphics::~Graphics()
 {
+	Texture::uninitialize();
 	delete pipeline;
 }
 
