@@ -19,6 +19,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		}
 	));
+
+	sampler.create();
 }
 
 
@@ -33,9 +35,18 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	if(lastBinded != desc->type) 
 		staticBinds[desc->type].bind();
 	lastBinded = desc->type;
+
+	//dynamic binds
 	if(desc->indexBuffer) desc->indexBuffer->bind();
 	if(desc->constantVertexBuffer) desc->constantVertexBuffer->bind();
 	if(desc->vertexBuffer) desc->vertexBuffer->bind();
+
+	//texture
+	if (desc->texture)
+	{
+		sampler.bind();
+		desc->texture->bind();
+	}
 
 	context->DrawIndexed(desc->indicesNum, 0, 0);
 }

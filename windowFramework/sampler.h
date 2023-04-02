@@ -14,6 +14,6 @@ public:
 	void bind() override;
 
 private:
-
+	Microsoft::WRL::ComPtr<ID3D11SamplerState> samplerState;
 
 };

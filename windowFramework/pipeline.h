@@ -7,6 +7,8 @@
 #include "inputLayout.h"
 #include "indexBuffer.h"
 #include "vertexConstantBuffer.h"
+#include "texture.h"
+#include "sampler.h"
 
 class Pipeline
 {
@@ -24,6 +26,7 @@ public:
 		IndexBuffer* indexBuffer;
 		VertexBuffer* vertexBuffer;
 		ConstantVertexBuffer* constantVertexBuffer;
+		Texture* texture;
 		int indicesNum;
 	};
 
@@ -52,6 +55,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
 	std::vector<StaticBind> staticBinds;
+
+	Sampler sampler;
 
 	int lastBinded = -1;
 

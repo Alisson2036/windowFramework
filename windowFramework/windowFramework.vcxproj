@@ -149,6 +149,7 @@
     <ClCompile Include="pipeline.cpp" />
     <ClCompile Include="pixelShader.cpp" />
     <ClCompile Include="image.cpp" />
+    <ClCompile Include="sampler.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="vertexBuffer.cpp" />
     <ClCompile Include="vertexConstantBuffer.cpp" />
