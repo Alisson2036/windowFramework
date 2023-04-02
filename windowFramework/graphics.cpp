@@ -60,7 +60,7 @@ Graphics::Graphics(HWND hWnd)
 	//configura depth buffer
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
 	depthStencilDesc.DepthEnable = TRUE;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS;
+	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;

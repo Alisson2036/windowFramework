@@ -61,7 +61,7 @@ void Image::loadFile(std::wstring fileName)
 			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
 		);
 	}
-
+	
 }
 
 Image::data& Image::getData()

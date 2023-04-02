@@ -4,7 +4,7 @@ struct VS_Output
     float2 tex : TexCoord;
 };
 
-Texture2D tex;
+Texture2D tex : register(t0);
 SamplerState samp;
 
 float4 main(VS_Output input) : SV_TARGET

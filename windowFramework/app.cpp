@@ -98,6 +98,11 @@ void app::loop()
 	plane.update(inst);
 	plane.draw();
 
+	angle[0] = DirectX::XM_PI;
+	inst.update(pos, angle);
+	plane.update(inst);
+	plane.draw();
+
 	for (int n = -5; n < -1; n++)
 	{
 		for (int j = -5; j < 5; j++)
