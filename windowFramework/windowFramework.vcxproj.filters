@@ -155,12 +155,21 @@
     <ClInclude Include="pipeline.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
+    <ClInclude Include="texturedTriangle.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="colorBlendVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="colorBlendPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="texturedVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="texturedPS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

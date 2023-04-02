@@ -11,7 +11,6 @@ app::app()
 void app::start()
 {
 	Image img(L"a.png");
-	Texture tex;
 	tex.create(img);
 
 	colorBlendTriangle::vertex2d v[] =
@@ -34,9 +33,25 @@ void app::start()
 		0,4,2, 2,4,6,
 		0,1,4, 1,5,4
 	};
-
 	
 	cube.create(win.Gfx().getPipeline(), v, ARRAYSIZE(v), i, ARRAYSIZE(i));
+
+	//-----------------
+	TexturedTriangle::vertex3d vp[] =
+	{
+		TexturedTriangle::vertex3d(-10.0f, 0.0f, 10.0f, 0.0f, 0.0f),//cima esquerda
+		TexturedTriangle::vertex3d( 10.0f, 0.0f, 10.0f, 2.0f, 0.0f),//cima direita
+		TexturedTriangle::vertex3d(-10.0f, 0.0f,-10.0f, 0.0f, 2.0f),//baixo esquerda
+		TexturedTriangle::vertex3d( 10.0f, 0.0f,-10.0f, 2.0f, 2.0f) //baixo direita
+	};
+	short ip[] =
+	{
+		0,1,2, 1,3,2
+	};
+
+	plane.create(win.Gfx().getPipeline(), vp, ARRAYSIZE(vp), ip, ARRAYSIZE(ip), &tex);
+
+
 
 	float p[3] = {0.0f,0.0f,-4.0f};
 	float a[3] = {0.0f,0.0f,0.0f};
@@ -75,11 +90,15 @@ void app::loop()
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
 
 
-	float pos[3] = { 0.0f,0.0f,0.0f };
+	float pos[3] = { 0.0f,-2.0f,0.0f };
 	float angle[3] = { 0.0f, 0.0f, 0.0f };
 
 	Instance inst(pos, angle);
-	for (int n = -5; n < 5; n++)
+
+	plane.update(inst);
+	plane.draw();
+
+	for (int n = -5; n < -1; n++)
 	{
 		for (int j = -5; j < 5; j++)
 		{
@@ -96,4 +115,5 @@ void app::loop()
 			}
 		}
 	}
+	
 }

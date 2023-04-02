@@ -4,6 +4,7 @@
 #include "timer.h"
 
 #include "colorBlendTriangle.h"
+#include "texturedTriangle.h"
 #include "Camera.h"
 
 #include "texture.h"
@@ -26,6 +27,9 @@ private:
 	Camera cam;
 
 	colorBlendTriangle cube;
+	TexturedTriangle plane;
+
+	Texture tex;
 
 	window win;
 	Timer timeSinceCreation;
