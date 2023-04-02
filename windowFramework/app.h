@@ -6,6 +6,7 @@
 #include "colorBlendTriangle.h"
 #include "Camera.h"
 
+#include "texture.h"
 
 class app
 {

@@ -10,6 +10,9 @@ app::app()
 
 void app::start()
 {
+	Image img(L"a.png");
+	Texture tex;
+	tex.create(img);
 
 	colorBlendTriangle::vertex2d v[] =
 	{
