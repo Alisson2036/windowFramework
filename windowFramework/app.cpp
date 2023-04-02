@@ -11,8 +11,6 @@ app::app()
 void app::start()
 {
 
-	Texture asd(L"a.png");
-
 	colorBlendTriangle::vertex2d v[] =
 	{
 		colorBlendTriangle::vertex2d(-1.0f,-1.0f,-1.0f, 255u, 0u  , 0u  , 255u),

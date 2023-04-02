@@ -6,7 +6,7 @@
 #include "exception.h"
 
 
-class Texture
+class Image
 {
 public:
 
@@ -28,11 +28,11 @@ public:
 	static void initialize();
 	static void uninitialize();
 
-	~Texture();
+	~Image();
 
-	Texture() = default;
-	Texture(std::wstring fileName);
-	Texture(Texture&) = default;
+	Image() = default;
+	Image(std::wstring fileName);
+	Image(Image&) = default;
 
 	void loadFile(std::wstring fileName);
 

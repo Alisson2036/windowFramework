@@ -1,10 +1,10 @@
-#include "texture.h"
+#include "image.h"
 
 
 ULONG_PTR token;
 
 
-void Texture::initialize()
+void Image::initialize()
 {
 	if (!token)
 	{
@@ -17,7 +17,7 @@ void Texture::initialize()
 	}
 }
 
-void Texture::uninitialize()
+void Image::uninitialize()
 {
 	if (token)
 		Gdiplus::GdiplusShutdown(token);
@@ -25,18 +25,18 @@ void Texture::uninitialize()
 
 
 
-Texture::~Texture()
+Image::~Image()
 {
 	if (img)
 		delete img;
 }
 
-Texture::Texture(std::wstring fileName)
+Image::Image(std::wstring fileName)
 {
 	loadFile(fileName);
 }
 
-void Texture::loadFile(std::wstring fileName)
+void Image::loadFile(std::wstring fileName)
 {
 	//criando bitmap no heap
 	Gdiplus::Bitmap img(fileName.c_str());
@@ -64,7 +64,7 @@ void Texture::loadFile(std::wstring fileName)
 
 }
 
-Texture::data& Texture::getData()
+Image::data& Image::getData()
 {
 	return imageData;//mudar para enviar por referencia depois
 }
