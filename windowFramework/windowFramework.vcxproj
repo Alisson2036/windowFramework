@@ -146,6 +146,7 @@
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
+    <ClCompile Include="objLoader.cpp" />
     <ClCompile Include="pipeline.cpp" />
     <ClCompile Include="pixelShader.cpp" />
     <ClCompile Include="image.cpp" />
@@ -167,6 +168,7 @@
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />
     <ClInclude Include="mouse.h" />
+    <ClInclude Include="objLoader.h" />
     <ClInclude Include="pipeline.h" />
     <ClInclude Include="pixelShader.h" />
     <ClInclude Include="image.h" />
