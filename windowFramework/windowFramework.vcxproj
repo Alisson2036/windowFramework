@@ -152,6 +152,7 @@
     <ClCompile Include="image.cpp" />
     <ClCompile Include="sampler.cpp" />
     <ClCompile Include="texture.cpp" />
+    <ClCompile Include="texturedTriangle.cpp" />
     <ClCompile Include="vertexBuffer.cpp" />
     <ClCompile Include="vertexConstantBuffer.cpp" />
     <ClCompile Include="vertexShader.cpp" />

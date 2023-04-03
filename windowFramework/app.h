@@ -28,6 +28,7 @@ private:
 
 	colorBlendTriangle cube;
 	TexturedTriangle plane;
+	TexturedTriangle cubeTex;
 
 	Texture tex;
 

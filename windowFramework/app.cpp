@@ -50,7 +50,11 @@ void app::start()
 	};
 
 	plane.create(win.Gfx().getPipeline(), vp, ARRAYSIZE(vp), ip, ARRAYSIZE(ip), &tex);
+	//-----------------------------
 
+	objLoader obj;
+	obj.fromFile("cube.obj");
+	cubeTex.create(win.Gfx().getPipeline(), obj, &tex);
 
 
 	float p[3] = {0.0f,0.0f,-4.0f};
@@ -95,13 +99,16 @@ void app::loop()
 
 	Instance inst(pos, angle);
 
+	cubeTex.update(inst);
+	cubeTex.draw();
+
 	plane.update(inst);
-	plane.draw();
+	//plane.draw();
 
 	angle[0] = DirectX::XM_PI;
 	inst.update(pos, angle);
 	plane.update(inst);
-	plane.draw();
+	//plane.draw();
 
 	for (int n = -5; n < -1; n++)
 	{
