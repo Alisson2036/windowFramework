@@ -6,8 +6,10 @@
 #include "colorBlendTriangle.h"
 #include "texturedTriangle.h"
 #include "Camera.h"
+#include "light.h"
 
 #include "texture.h"
+
 
 class app
 {
@@ -31,7 +33,10 @@ private:
 
 	Texture tex;
 
+
 	window win;
 	Timer timeSinceCreation;
 
+
+	Light light;//precisa ser inicializado depois do win se nao da erro
 };

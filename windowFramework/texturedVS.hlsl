@@ -31,13 +31,21 @@ cbuffer light : register(b2)
 VS_Output main(VS_Input input)
 {
     VS_Output output;
-
+    
+    //matriz final
     matrix a = mul(projectionMat, mat);
-
     output.position = mul(float4(input.pos, 1.0f), transpose(a));
+
+    //calculando a posicao da luz
+    float3x3 lightMat = mat;
+    float3 vertexPos = mul(input.pos, mat);
+    
+
+    output.lightNormal = normalize(mul(lightPos,lightMat) - vertexPos);
+
+
     output.tex = input.tex;
     output.normals = input.normals;
-    output.lightNormal = lightPos;
 
     return output;
 }

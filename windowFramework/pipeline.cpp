@@ -68,8 +68,9 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	}
 	
 
-	//luzes
-	light.bind(2);
+	//luzes..caso existirem
+	if(light)
+		light->bind(2);
 
 
 	//desenha tudo
@@ -77,6 +78,11 @@ void Pipeline::bind(ObjectDescriptor* desc)
 		context->DrawIndexed(desc->indicesNum, 0, 0);
 	else
 		context->Draw(desc->indicesNum, 0);
+}
+
+void Pipeline::setLight(Light* _light)
+{
+	light = _light;
 }
 
 Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)

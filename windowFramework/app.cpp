@@ -14,6 +14,9 @@ void app::start()
 	Image img(L"a.png");
 	tex.create(img);
 
+	//coloca luz na pipeline
+	win.Gfx().getPipeline()->setLight(&light);
+
 	//cria o cubo
 	colorBlendTriangle::vertex2d v[] =
 	{
@@ -83,8 +86,11 @@ void app::loop()
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
 
 
+
 	float pos[3] = { 0.0f,-2.0f,0.0f };
-	float angle[3] = { 0.0f, 0.0f, 0.0f };
+	float angle[3] = { 0.0f, timeSinceCreation.getPassedSeconds(), 0.0f};
+
+
 
 	Instance inst(pos, angle);
 
@@ -92,6 +98,10 @@ void app::loop()
 	//desenha o objeto texturizado no meio da tela
 	cubeTex.update(inst);
 	cubeTex.draw();
+
+	//pos[0] = int(timeSinceCreation.getPassedSeconds())%5;
+	//muda posicao da luz 
+	light.updatePos(pos);
 
 
 	//cria e desenha todos os cubos

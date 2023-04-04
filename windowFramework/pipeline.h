@@ -37,6 +37,8 @@ public:
 	void initializeBindable(Bindable* bindable);
 	void bind(ObjectDescriptor* desc);
 
+	void setLight(Light* _light);
+
 private:
 
 
@@ -55,7 +57,7 @@ private:
 
 private:
 
-	Light light;
+	Light* light;
 
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
