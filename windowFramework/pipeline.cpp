@@ -70,7 +70,7 @@ void Pipeline::bind(ObjectDescriptor* desc)
 
 	//luzes..caso existirem
 	if(light)
-		light->bind(2);
+		light->bind(0);
 
 
 	//desenha tudo

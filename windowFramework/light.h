@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include "vertexConstantBuffer.h"
+#include "pixelConstantBuffer.h"
 
 
 class Light
@@ -14,5 +14,5 @@ public:
 
 private:
 	float pos[3] = { 0.0f, 1.0f, 0.0f };
-	ConstantVertexBuffer buf;
+	ConstantPixelBuffer buf;
 };
