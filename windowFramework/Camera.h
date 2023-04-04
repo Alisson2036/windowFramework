@@ -16,7 +16,7 @@ public:
 	void moveAngle(float x, float y);
 	
 	DirectX::XMMATRIX getMatrix();
-	DirectX::XMMATRIX getProjectionMatrix();
+	static DirectX::XMMATRIX getProjectionMatrix();
 
 
 private:
@@ -25,7 +25,6 @@ private:
 	float position[3];
 	float angle[2];
 
-	const DirectX::XMMATRIX projectionMatrix = DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 100.0f);
 
 };
 

@@ -71,10 +71,9 @@ void TexturedTriangle::update(Instance inst)
 	//float angle = timeSinceCreation.getPassedSeconds();
 
 	DirectX::XMMATRIX finalMatrix = inst.getMatrix();
-	DirectX::XMMATRIX projectionMatrix = inst.getProjectionMatrix();
 
 	DirectX::XMMATRIX b[] = {
-		finalMatrix * projectionMatrix
+		finalMatrix //* inst.getProjectionMatrix() 
 	};
 
 	cvb.update(b);

@@ -33,9 +33,9 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	sampler.create();
 
 	//cria projection matrix
-	//DirectX::XMMATRIX mat[] = { Instance::getProjectionMatrix() };
-	//projectionMatrixConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
-	//projectionMatrixConstantBuffer.setSlot(1);
+	DirectX::XMMATRIX mat[] = { Instance::getProjectionMatrix() };
+	projectionMatrixConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
+	projectionMatrixConstantBuffer.setSlot(1);
 }
 
 
@@ -71,6 +71,8 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	//luzes
 	light.bind(2);
 
+
+	//desenha tudo
 	if (desc->indexBuffer)
 		context->DrawIndexed(desc->indicesNum, 0, 0);
 	else

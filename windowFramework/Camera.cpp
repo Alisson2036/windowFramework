@@ -62,7 +62,7 @@ DirectX::XMMATRIX Camera::getMatrix()
 
 DirectX::XMMATRIX Camera::getProjectionMatrix()
 {
-	return projectionMatrix;
+	return DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 100.0f);
 }
 
 DirectX::XMMATRIX Camera::getRotationMatrix()

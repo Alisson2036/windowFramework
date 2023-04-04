@@ -67,7 +67,7 @@ public:
 		DirectX::XMMATRIX projectionMatrix = inst.getProjectionMatrix();
 
 		DirectX::XMMATRIX b[] = {
-			finalMatrix * projectionMatrix
+			finalMatrix
 		};
 
 		cvb.update(b);
