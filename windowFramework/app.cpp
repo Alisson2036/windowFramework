@@ -40,7 +40,21 @@ void app::start()
 	};
 	
 	cube.create(win.Gfx().getPipeline(), v, ARRAYSIZE(v), i, ARRAYSIZE(i));
-
+	
+	//cria o cubo para mostrar a luz
+	//cria o cubo
+	colorBlendTriangle::vertex2d v2[] =
+	{
+		colorBlendTriangle::vertex2d(-0.1f,-0.1f,-0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d( 0.1f,-0.1f,-0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d(-0.1f, 0.1f,-0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d( 0.1f, 0.1f,-0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d(-0.1f,-0.1f, 0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d( 0.1f,-0.1f, 0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d(-0.1f, 0.1f, 0.1f, 255u, 255u, 255u, 255u),
+		colorBlendTriangle::vertex2d( 0.1f, 0.1f, 0.1f, 255u, 255u, 255u, 255u)
+	};
+	cubeLight.create(win.Gfx().getPipeline(), v2, ARRAYSIZE(v2), i, ARRAYSIZE(i));
 	
 	//-----------------------------
 
@@ -83,6 +97,7 @@ void app::loop()
 	if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
 
+	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
 
 
@@ -95,13 +110,18 @@ void app::loop()
 	Instance inst(pos, angle);
 
 
+
 	//desenha o objeto texturizado no meio da tela
 	cubeTex.update(inst);
 	cubeTex.draw();
 
-	//pos[0] = int(timeSinceCreation.getPassedSeconds())%5;
+
+
 	//muda posicao da luz 
-	light.updatePos(pos);
+	float pos1[3] = { 2.0f,-2.0f,0.0f };
+	light.updatePos(pos1);
+	cubeLight.update(Instance(pos1, angle));
+	cubeLight.draw();
 
 
 	//cria e desenha todos os cubos

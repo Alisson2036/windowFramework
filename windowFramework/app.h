@@ -29,6 +29,7 @@ private:
 	Camera cam;
 
 	colorBlendTriangle cube;
+	colorBlendTriangle cubeLight;
 	TexturedTriangle cubeTex;
 
 	Texture tex;
