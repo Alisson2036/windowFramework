@@ -20,7 +20,11 @@ Light::Light()
 
 void Light::updatePos(float _pos[3])
 {
-	buf.update(pos);
+	DirectX::XMVECTOR b[] = {
+		DirectX::XMVECTOR{_pos[0], _pos[1], _pos[2]}
+	};
+
+	buf.update(b);
 }
 
 void Light::bind(int bufferSlot)

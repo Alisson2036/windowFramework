@@ -16,7 +16,8 @@ public:
 
 	void bind() override;
 
-private:
+	//deve ser protected porque outros constantBuffers herdam desta classe
+protected:
 	//vertex buffer
 	Microsoft::WRL::ComPtr<ID3D11Buffer> constantBuffer;
 

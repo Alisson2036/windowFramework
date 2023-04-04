@@ -1,15 +1,14 @@
 #include "texturedTriangle.h"
 
-void TexturedTriangle::create(Pipeline* pipe, vertex3d vertices[], int vertexCount, short indexes[], int indexCount, Texture* tex)
+void TexturedTriangle::create(Pipeline* pipe, vertex3d vertices[], int vertexCount, Texture* tex)
 {
 	pipeline = pipe;
 
 
 	desc.type = Pipeline::ObjectType::Textured;
-	desc.indexBuffer = &ib;
 	desc.vertexBuffer = &vb;
 	desc.constantVertexBuffer = &cvb;
-	desc.indicesNum = indexCount;
+	desc.indicesNum = vertexCount;
 	desc.texture = tex;
 
 
@@ -20,11 +19,6 @@ void TexturedTriangle::create(Pipeline* pipe, vertex3d vertices[], int vertexCou
 		sizeof(vertex3d)
 	);
 
-	//CRIA INDEX BUFFER
-	ib.create(
-		indexes,
-		indexCount
-	);
 
 	//CRIA CONSTANT BUFFER
 	DirectX::XMMATRIX b[] = {
@@ -43,7 +37,6 @@ void TexturedTriangle::create(Pipeline* pipe, objLoader& obj, Texture* tex)
 {
 
 	std::vector<vertex3d> vertices;
-	std::vector<short> indexes;
 
 	for (objLoader::face& face : obj.faces)
 	{
@@ -67,11 +60,9 @@ void TexturedTriangle::create(Pipeline* pipe, objLoader& obj, Texture* tex)
 		}
 	}
 	
-	for (int i = 0; i < vertices.size(); i++)
-		indexes.emplace_back(i);
 
 
-	create(pipe, vertices.data(), vertices.size(), indexes.data(), indexes.size(), tex);
+	create(pipe, vertices.data(), vertices.size(), tex);
 
 }
 

@@ -14,6 +14,10 @@ cbuffer buff : register(b0)
 {
     row_major matrix mat;
 };
+cbuffer buff2 : register(b1)
+{
+    row_major matrix projectionMatrix;
+};
 
 
 VS_Output main(VS_Input input)

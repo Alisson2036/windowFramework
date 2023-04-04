@@ -27,7 +27,6 @@ private:
 	Camera cam;
 
 	colorBlendTriangle cube;
-	TexturedTriangle plane;
 	TexturedTriangle cubeTex;
 
 	Texture tex;

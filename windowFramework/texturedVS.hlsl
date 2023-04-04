@@ -18,7 +18,7 @@ cbuffer buff : register(b0)
     row_major matrix mat;
 };
 
-cbuffer light : register(b1)
+cbuffer light : register(b2)
 {
     float3 lightPos;
 };

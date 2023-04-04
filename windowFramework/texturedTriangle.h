@@ -22,7 +22,7 @@ public:
 		float normalZ;
 	};
 
-	void create(Pipeline* pipe, vertex3d vertices[], int vertexCount, short indexes[], int indexCount, Texture* tex);
+	void create(Pipeline* pipe, vertex3d vertices[], int vertexCount, Texture* tex);
 	void create(Pipeline* pipe, objLoader& obj, Texture* tex);
 
 

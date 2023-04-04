@@ -173,6 +173,7 @@
     <ClInclude Include="mouse.h" />
     <ClInclude Include="objLoader.h" />
     <ClInclude Include="pipeline.h" />
+    <ClInclude Include="pixelConstantBuffer.h" />
     <ClInclude Include="pixelShader.h" />
     <ClInclude Include="image.h" />
     <ClInclude Include="sampler.h" />

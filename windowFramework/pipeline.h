@@ -11,6 +11,7 @@
 #include "sampler.h"
 
 #include "light.h"
+#include "Instance.h"
 
 class Pipeline
 {
@@ -62,6 +63,8 @@ private:
 	std::vector<StaticBind> staticBinds;
 
 	Sampler sampler;
+
+	ConstantVertexBuffer projectionMatrixConstantBuffer;
 
 	int lastBinded = -1;
 

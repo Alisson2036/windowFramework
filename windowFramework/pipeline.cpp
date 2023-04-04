@@ -31,6 +31,11 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	));
 
 	sampler.create();
+
+	//cria projection matrix
+	//DirectX::XMMATRIX mat[] = { Instance::getProjectionMatrix() };
+	//projectionMatrixConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
+	//projectionMatrixConstantBuffer.setSlot(1);
 }
 
 
@@ -42,6 +47,10 @@ void Pipeline::initializeBindable(Bindable* bindable)
 
 void Pipeline::bind(ObjectDescriptor* desc)
 {
+	//bind projection matrix
+	projectionMatrixConstantBuffer.bind();
+
+	//static binds
 	if(lastBinded != desc->type) 
 		staticBinds[desc->type].bind();
 	lastBinded = desc->type;
@@ -58,7 +67,9 @@ void Pipeline::bind(ObjectDescriptor* desc)
 		desc->texture->bind();
 	}
 	
-	light.bind(1);
+
+	//luzes
+	light.bind(2);
 
 	if (desc->indexBuffer)
 		context->DrawIndexed(desc->indicesNum, 0, 0);

@@ -10,9 +10,11 @@ app::app()
 
 void app::start()
 {
+	//carregando imagem
 	Image img(L"a.png");
 	tex.create(img);
 
+	//cria o cubo
 	colorBlendTriangle::vertex2d v[] =
 	{
 		colorBlendTriangle::vertex2d(-1.0f,-1.0f,-1.0f, 255u, 0u  , 0u  , 255u),
@@ -36,20 +38,7 @@ void app::start()
 	
 	cube.create(win.Gfx().getPipeline(), v, ARRAYSIZE(v), i, ARRAYSIZE(i));
 
-	//-----------------
-	TexturedTriangle::vertex3d vp[] =
-	{
-		TexturedTriangle::vertex3d(-10.0f, 0.0f, 10.0f, 0.0f, 0.0f),//cima esquerda
-		TexturedTriangle::vertex3d( 10.0f, 0.0f, 10.0f, 2.0f, 0.0f),//cima direita
-		TexturedTriangle::vertex3d(-10.0f, 0.0f,-10.0f, 0.0f, 2.0f),//baixo esquerda
-		TexturedTriangle::vertex3d( 10.0f, 0.0f,-10.0f, 2.0f, 2.0f) //baixo direita
-	};
-	short ip[] =
-	{
-		0,1,2, 1,3,2
-	};
-
-	plane.create(win.Gfx().getPipeline(), vp, ARRAYSIZE(vp), ip, ARRAYSIZE(ip), &tex);
+	
 	//-----------------------------
 
 	objLoader obj;
@@ -70,8 +59,8 @@ void app::start()
 
 void app::loop()
 {
-	float x = (int)win.getMousePointer()->getX();
-	float y = (int)win.getMousePointer()->getY();
+	float x = (float)win.getMousePointer()->getX();
+	float y = (float)win.getMousePointer()->getY();
 
 	float xPos = ((float)x - 400.0f) / 400.0f;
 	float yPos = -((float)y - 300.0f) / 300.0f;
@@ -99,17 +88,13 @@ void app::loop()
 
 	Instance inst(pos, angle);
 
+
+	//desenha o objeto texturizado no meio da tela
 	cubeTex.update(inst);
 	cubeTex.draw();
 
-	plane.update(inst);
-	//plane.draw();
 
-	angle[0] = DirectX::XM_PI;
-	inst.update(pos, angle);
-	plane.update(inst);
-	//plane.draw();
-
+	//cria e desenha todos os cubos
 	for (int n = -5; n < -1; n++)
 	{
 		for (int j = -5; j < 5; j++)
