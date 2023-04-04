@@ -17,6 +17,9 @@ public:
 		float z;
 		float xTex;
 		float yTex;
+		float normalX;
+		float normalY;
+		float normalZ;
 	};
 
 	void create(Pipeline* pipe, vertex3d vertices[], int vertexCount, short indexes[], int indexCount, Texture* tex);

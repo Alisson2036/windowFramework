@@ -33,7 +33,12 @@ void ConstantVertexBuffer::update(const void* data)
 	getContext()->Unmap(constantBuffer.Get(), 0u);
 }
 
+void ConstantVertexBuffer::setSlot(int n)
+{
+	bufferSlot = n;
+}
+
 void ConstantVertexBuffer::bind()
 {
-	getContext()->VSSetConstantBuffers(0, 1, constantBuffer.GetAddressOf());
+	getContext()->VSSetConstantBuffers(bufferSlot, 1, constantBuffer.GetAddressOf());
 }

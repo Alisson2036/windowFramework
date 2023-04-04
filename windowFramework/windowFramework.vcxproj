@@ -144,6 +144,7 @@
     <ClCompile Include="inputLayout.cpp" />
     <ClCompile Include="Instance.cpp" />
     <ClCompile Include="keyboard.cpp" />
+    <ClCompile Include="light.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mouse.cpp" />
     <ClCompile Include="objLoader.cpp" />
@@ -168,6 +169,7 @@
     <ClInclude Include="Instance.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />
+    <ClInclude Include="light.h" />
     <ClInclude Include="mouse.h" />
     <ClInclude Include="objLoader.h" />
     <ClInclude Include="pipeline.h" />

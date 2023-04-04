@@ -90,6 +90,15 @@
     <ClCompile Include="texture.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
+    <ClCompile Include="objLoader.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="light.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="texturedTriangle.cpp">
+      <Filter>Arquivos de Origem\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -156,6 +165,12 @@
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
     <ClInclude Include="texturedTriangle.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="objLoader.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="light.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
   </ItemGroup>

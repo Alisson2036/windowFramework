@@ -12,6 +12,8 @@ public:
 
 	void update(const void* data);
 
+	void setSlot(int n);
+
 	void bind() override;
 
 private:
@@ -22,6 +24,9 @@ private:
 	UINT arraySize = 0;
 	UINT objectSize = 0;
 	UINT offset = 0;
+
+	//slot do constant buffer
+	int bufferSlot = 0;
 
 };
 

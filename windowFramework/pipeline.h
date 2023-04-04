@@ -10,6 +10,8 @@
 #include "texture.h"
 #include "sampler.h"
 
+#include "light.h"
+
 class Pipeline
 {
 public:
@@ -51,6 +53,8 @@ private:
 	};
 
 private:
+
+	Light light;
 
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;

@@ -19,13 +19,13 @@ int CALLBACK WinMain(
 	}
 	catch (const frameworkException& e)
 	{
-		std::string error = "PROGRAM ERROR\n";
-		error += e.what();
-		error += '\n';
-		error += "file:";
-		error += e.getFile();
-		error += "\nline: ";
-		error += std::to_string(e.getLine());
+		std::string error = "PROGRAM ERROR\n" +
+			(std::string)e.what() +
+			'\n' +
+			"file:" +
+			e.getFile() +
+			"\nline: " +
+			std::to_string(e.getLine());
 
 		MessageBoxA(nullptr, error.c_str(), "FRAMEWORK EXCEPTION", MB_ICONERROR);
 	}

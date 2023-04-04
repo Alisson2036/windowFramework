@@ -9,7 +9,7 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	device = _device;
 	context = _context;
 
-	
+
 	//colorBlend
 	staticBinds.push_back(StaticBind(
 		L"ColorBlendVS.cso",
@@ -25,7 +25,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 		L"texturedPS.cso",
 		{
 			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TexCoord", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "TexCoord", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+			{ "Normals", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 		}
 	));
 
@@ -56,8 +57,13 @@ void Pipeline::bind(ObjectDescriptor* desc)
 		sampler.bind();
 		desc->texture->bind();
 	}
+	
+	light.bind(1);
 
-	context->DrawIndexed(desc->indicesNum, 0, 0);
+	if (desc->indexBuffer)
+		context->DrawIndexed(desc->indicesNum, 0, 0);
+	else
+		context->Draw(desc->indicesNum, 0);
 }
 
 Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)

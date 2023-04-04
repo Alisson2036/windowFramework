@@ -57,11 +57,16 @@ void TexturedTriangle::create(Pipeline* pipe, objLoader& obj, Texture* tex)
 
 				obj.texCoord[face.textureIndex[i]-1].u,
 				obj.texCoord[face.textureIndex[i]-1].v,
+
+				obj.normals[face.normalIndex[i] - 1].x,
+				obj.normals[face.normalIndex[i] - 1].y,
+				obj.normals[face.normalIndex[i] - 1].z,
+
 			};
 			vertices.emplace_back(v);
 		}
 	}
-
+	
 	for (int i = 0; i < vertices.size(); i++)
 		indexes.emplace_back(i);
 

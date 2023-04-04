@@ -10,7 +10,7 @@ struct VS_Output
     float4 color : Color;
 };
 
-cbuffer buff
+cbuffer buff : register(b0)
 {
     row_major matrix mat;
 };
