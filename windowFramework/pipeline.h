@@ -12,6 +12,7 @@
 
 #include "light.h"
 #include "Instance.h"
+#include "Camera.h"
 
 class Pipeline
 {
@@ -38,6 +39,7 @@ public:
 	void bind(ObjectDescriptor* desc);
 
 	void setLight(Light* _light);
+	void setCamera(Camera* _camera);
 
 private:
 
@@ -66,7 +68,8 @@ private:
 
 	Sampler sampler;
 
-	ConstantVertexBuffer projectionMatrixConstantBuffer;
+	ConstantVertexBuffer cameraConstantBuffer;
+	Camera* camera;
 
 	int lastBinded = -1;
 

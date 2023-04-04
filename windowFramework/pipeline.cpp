@@ -33,9 +33,9 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	sampler.create();
 
 	//cria projection matrix
-	DirectX::XMMATRIX mat[] = { Instance::getProjectionMatrix() };
-	projectionMatrixConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
-	projectionMatrixConstantBuffer.setSlot(1);
+	DirectX::XMMATRIX mat[] = { Camera::getProjectionMatrix() };
+	cameraConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
+	cameraConstantBuffer.setSlot(1);
 }
 
 
@@ -47,8 +47,15 @@ void Pipeline::initializeBindable(Bindable* bindable)
 
 void Pipeline::bind(ObjectDescriptor* desc)
 {
+	if (camera)
+	{
+		DirectX::XMMATRIX a[] = { camera->getMatrix() };
+		cameraConstantBuffer.update(a);
+	}
+	else
+		_throwMsg("Camera does not exist in the pipeline.");
 	//bind projection matrix
-	projectionMatrixConstantBuffer.bind();
+	cameraConstantBuffer.bind();
 
 	//static binds
 	if(lastBinded != desc->type) 
@@ -83,6 +90,11 @@ void Pipeline::bind(ObjectDescriptor* desc)
 void Pipeline::setLight(Light* _light)
 {
 	light = _light;
+}
+
+void Pipeline::setCamera(Camera* _camera)
+{
+	camera = _camera;
 }
 
 Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)

@@ -16,6 +16,8 @@ void app::start()
 
 	//coloca luz na pipeline
 	win.Gfx().getPipeline()->setLight(&light);
+	//coloca camera na pipeline
+	win.Gfx().getPipeline()->setCamera(&cam);
 
 	//cria o cubo
 	colorBlendTriangle::vertex2d v[] =
@@ -67,7 +69,6 @@ void app::start()
 	float a[3] = {0.0f,0.0f,0.0f};
 	cam.setPositionAndAngle(p, a);
 	
-	Instance::initializeCamera(&cam);
 
 
 	while (win.update()) loop();

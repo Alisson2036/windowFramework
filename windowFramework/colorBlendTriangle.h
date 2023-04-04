@@ -64,7 +64,6 @@ public:
 		//float angle = timeSinceCreation.getPassedSeconds();
 
 		DirectX::XMMATRIX finalMatrix = inst.getMatrix();
-		DirectX::XMMATRIX projectionMatrix = inst.getProjectionMatrix();
 
 		DirectX::XMMATRIX b[] = {
 			finalMatrix

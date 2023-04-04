@@ -55,7 +55,8 @@ DirectX::XMMATRIX Camera::getMatrix()
 	//DirectX::XMMatrixRotationNormal
 	return DirectX::XMMATRIX(
 		DirectX::XMMatrixTranslation(-position[0], -position[1], -position[2]) *
-		getRotationMatrix()
+		getRotationMatrix() *
+		getProjectionMatrix()
 	);
 
 }

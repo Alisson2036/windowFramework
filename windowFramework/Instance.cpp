@@ -1,6 +1,6 @@
 #include "Instance.h"
 
-static Camera* cam;
+
 
 Instance::Instance(float _position[3], float _angle[3])
 {
@@ -14,10 +14,6 @@ Instance::Instance(float _position[3], float _angle[3])
 
 }
 
-void Instance::initializeCamera(Camera* _cam)
-{
-	cam = _cam;
-}
 
 void Instance::update(float _position[3], float _angle[3])
 {
@@ -49,13 +45,9 @@ DirectX::XMMATRIX Instance::getMatrix()
 		DirectX::XMMatrixRotationX(angle[0]) *
 		DirectX::XMMatrixRotationY(angle[1]) *
 		DirectX::XMMatrixRotationZ(angle[2]) *
-		DirectX::XMMatrixTranslation(position[0], position[1], position[2]) *
-		cam->getMatrix()
+		DirectX::XMMatrixTranslation(position[0], position[1], position[2])
+		//cam->getMatrix()
 	);
 
 }
 
-DirectX::XMMATRIX Instance::getProjectionMatrix()
-{
-	return cam->getProjectionMatrix();
-}

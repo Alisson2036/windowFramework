@@ -11,6 +11,7 @@ struct VS_Output
     float2 tex : TexCoord;
     float3 normals : Normals;
     float3 vertexPos : Position;
+    matrix mat : matrixx;
 };
 
 cbuffer buff : register(b0)
@@ -37,6 +38,8 @@ VS_Output main(VS_Input input)
     output.normals = input.normals;
 
     output.vertexPos = input.pos;
+
+    output.mat = mat;
 
     return output;
 }
