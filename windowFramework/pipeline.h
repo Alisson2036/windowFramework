@@ -69,6 +69,7 @@ private:
 	Sampler sampler;
 
 	ConstantVertexBuffer cameraConstantBuffer;
+	ConstantPixelBuffer cameraPositionBuffer;
 	Camera* camera;
 
 	int lastBinded = -1;

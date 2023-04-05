@@ -16,7 +16,10 @@ public:
 	void moveAngle(float x, float y);
 	
 	DirectX::XMMATRIX getMatrix();
+	DirectX::XMVECTOR getPositionVector();
+
 	static DirectX::XMMATRIX getProjectionMatrix();
+
 
 
 private:
