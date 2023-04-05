@@ -105,8 +105,8 @@ void app::loop()
 
 
 
-	float pos[3] = { 0.0f,-2.0f,0.0f };
-	float angle[3] = { 0.0f, timeSinceCreation.getPassedSeconds(), 0.0f};
+	float pos[3] = { 0.0f,-0.0f,0.0f };
+	float angle[3] = { 0.0f, 0.0f, 0.0f};
 
 
 
