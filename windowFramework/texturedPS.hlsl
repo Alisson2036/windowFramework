@@ -30,16 +30,20 @@ float4 main(VS_Output input) : SV_TARGET
 
     //calcula especular 
     float3 refraction = reflect(cameraVertexDif, input.normals);
-    specular = max(0.0f, dot(refraction, -directionLight)) / 2;
+    specular = max(0.0f, dot(refraction, -directionLight));
 
 
     if (dot(input.normals, directionLight) < 0.0f)
         specular = 0.0f;
+    else
+    {
+        specular = specular * specular * specular;
+        specular /= 2;
+    }
 
 
     //calcula brilho da face
     factor = max(0.0f, dot(directionLight, input.normals));
-
 
     return saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
 }
