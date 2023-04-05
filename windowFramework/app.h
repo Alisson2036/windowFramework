@@ -34,6 +34,7 @@ private:
 
 	Texture tex;
 
+	float a = 0.0f;
 
 	window win;
 	Timer timeSinceCreation;

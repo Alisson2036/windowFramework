@@ -11,7 +11,6 @@ struct VS_Output
     float2 tex : TexCoord;
     float3 normals : Normals;
     float3 vertexPos : Position;
-    matrix mat : matrixx;
 };
 
 cbuffer buff : register(b0)
@@ -34,12 +33,12 @@ VS_Output main(VS_Input input)
     output.position = mul(float4(input.pos, 1.0f), transpose(a));
 
 
+    float3x3 b = transpose(mat);
     output.tex = input.tex;
-    output.normals = input.normals;
+    output.normals = mul(input.normals, b);
 
-    output.vertexPos = input.pos;
-
-    output.mat = mat;
+    output.vertexPos = mul(float4(input.pos,1.0f), transpose(mat));
+    
 
     return output;
 }

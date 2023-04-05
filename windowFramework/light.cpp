@@ -9,7 +9,7 @@ Light::Light()
 		float z;
 	}; 
 	DirectX::XMVECTOR b[] = {
-		DirectX::XMVECTOR{0.0f,2.0f,0.0f}
+		DirectX::XMVECTOR{0.0f,0.0f,0.0f}
 	};
 	buf.create(
 		b,

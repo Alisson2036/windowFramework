@@ -97,6 +97,8 @@ void app::loop()
 	if (kb->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
 	if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
+	if (kb->isKeyPressed('Z')) a+=0.1;
+	if (kb->isKeyPressed('X')) a-= 0.1;
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
@@ -119,7 +121,7 @@ void app::loop()
 
 
 	//muda posicao da luz 
-	float pos1[3] = { 2.0f,-2.0f,0.0f };
+	float pos1[3] = { 2.0f,a,0.0f };
 	light.updatePos(pos1);
 	cubeLight.update(Instance(pos1, angle));
 	cubeLight.draw();
