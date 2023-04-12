@@ -28,6 +28,9 @@
     <Filter Include="Arquivos de Cabeçalho\Object">
       <UniqueIdentifier>{e3b251c8-06f5-4681-8a3f-726aad08c768}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objetos">
+      <UniqueIdentifier>{bddb19ee-c888-48af-95ff-063d79b227ae}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -190,5 +193,15 @@
     <FxCompile Include="texturedPS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="a.png">
+      <Filter>Objetos</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="cube.obj">
+      <Filter>Objetos</Filter>
+    </Object>
   </ItemGroup>
 </Project>

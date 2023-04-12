@@ -116,8 +116,22 @@ void app::loop()
 
 	//desenha o objeto texturizado no meio da tela
 	cubeTex.update(inst);
-	cubeTex.draw();
 
+	for (int y = -10; y < 10; y++)
+	{
+		for (int x = -10; x < 10; x++)
+		{
+			pos[0] = x * 2;
+			pos[1] = -3 + cos(x) + cos(y);
+			pos[2] = y*2;
+
+
+			inst.update(pos, angle);
+
+			cubeTex.update(inst);
+			cubeTex.draw();
+		}
+	}
 
 
 	//muda posicao da luz 
@@ -127,8 +141,8 @@ void app::loop()
 	cubeLight.draw();
 
 
-	//cria e desenha todos os cubos
-	for (int n = -5; n < -1; n++)
+	//cria e desenha todos os cubos coloridos
+	for (int n = 1; n < 5; n++)
 	{
 		for (int j = -5; j < 5; j++)
 		{
