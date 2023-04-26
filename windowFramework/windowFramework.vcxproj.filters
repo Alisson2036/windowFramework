@@ -102,6 +102,9 @@
     <ClCompile Include="texturedTriangle.cpp">
       <Filter>Arquivos de Origem\Object</Filter>
     </ClCompile>
+    <ClCompile Include="shaderDesc.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -178,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="pixelConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="shaderDesc.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
