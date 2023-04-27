@@ -15,8 +15,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 		L"ColorBlendVS.cso",
 		L"ColorBlendPS.cso",
 		{
-			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Color", 0, DXGI_FORMAT_R8G8B8A8_UNORM, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "Position", DXGI_FORMAT_R32G32B32_FLOAT },
+			{ "Color", DXGI_FORMAT_R8G8B8A8_UNORM }
 		}
 	));
 
@@ -24,9 +24,9 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 		L"texturedVS.cso",
 		L"texturedPS.cso",
 		{
-			{ "Position", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "TexCoord", 0, DXGI_FORMAT_R32G32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 },
-			{ "Normals", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+			{ "Position", DXGI_FORMAT_R32G32B32_FLOAT },
+			{ "TexCoord", DXGI_FORMAT_R32G32_FLOAT },
+			{ "Normals", DXGI_FORMAT_R32G32B32_FLOAT }
 		}
 	));
 
@@ -105,7 +105,7 @@ void Pipeline::setCamera(Camera* _camera)
 	camera = _camera;
 }
 
-Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC> elementDescription)
+Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<elementDesc> elementDescription)
 {
 	//CRIA PIXEL SHADER
 	vs.create(vertexShader);
@@ -113,8 +113,14 @@ Pipeline::StaticBind::StaticBind(const wchar_t* vertexShader, const wchar_t* pix
 	//CRIA PIXEL SHADER
 	ps.create(pixelShader);
 
+	std::vector<D3D11_INPUT_ELEMENT_DESC> desc;
+	for(auto& i : elementDescription)
+	{
+		desc.push_back({ i.semantic, 0, i.format, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+	}
+
 	//CRIA INPUT LAYOUT
-	il.create(&vs, elementDescription, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	il.create(&vs, desc, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 }
 
 void Pipeline::StaticBind::bind()

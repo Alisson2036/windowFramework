@@ -47,8 +47,13 @@ private:
 	class StaticBind
 	{
 	public:
+		struct elementDesc
+		{
+			const char* semantic;
+			DXGI_FORMAT format;
+		};
 		//construtor para inicializar com VS, PS e IL
-		StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<D3D11_INPUT_ELEMENT_DESC>elementDescription);
+		StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<elementDesc>elementDescription);
 		//coloca na pipeline
 		void bind();
 	private:
