@@ -35,6 +35,7 @@ public:
 	Image(Image&) = default;
 
 	void loadFile(std::wstring fileName);
+	void fromRenderText(std::wstring text, std::wstring font);
 
 	data& getData();
 
