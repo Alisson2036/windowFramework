@@ -6,6 +6,11 @@ class ConstantPixelBuffer : public ConstantVertexBuffer
 public:
 	void bind() override
 	{
-		getContext()->PSSetConstantBuffers(bufferSlot, 1, constantBuffer.GetAddressOf());
+		static ConstantPixelBuffer* last = nullptr;
+		if (last != this)
+		{
+			last = this;
+			getContext()->PSSetConstantBuffers(bufferSlot, 1, constantBuffer.GetAddressOf());
+		}
 	}
 };

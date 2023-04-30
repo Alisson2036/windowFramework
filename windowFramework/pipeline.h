@@ -68,7 +68,8 @@ private:
 			{ "Position",  DXGI_FORMAT_R32G32B32_FLOAT       },
 			{ "TexCoord",  DXGI_FORMAT_R32G32_FLOAT          },
 			{ "Normals",   DXGI_FORMAT_R32G32B32_FLOAT       },
-			{ "Color",     DXGI_FORMAT_R8G8B8A8_UNORM        }
+			{ "Color",     DXGI_FORMAT_R8G8B8A8_UNORM        },
+			{ "Position2d",DXGI_FORMAT_R32G32_FLOAT          }
 		};
 	};
 

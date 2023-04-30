@@ -17,7 +17,12 @@ void PixelShader::create(const wchar_t* _shaderFile)
 
 void PixelShader::bind()
 {
-	getContext()->PSSetShader(pixelShader.Get(), nullptr, 0);
+	static PixelShader* last = nullptr;
+	if (last != this)
+	{
+		last = this;
+		getContext()->PSSetShader(pixelShader.Get(), nullptr, 0);
+	}
 }
 
 Microsoft::WRL::ComPtr<ID3DBlob> PixelShader::getBlob()

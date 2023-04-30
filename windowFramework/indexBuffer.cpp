@@ -22,5 +22,10 @@ void IndexBuffer::create(const void* data, int arraySize)
 
 void IndexBuffer::bind()
 {
-	getContext()->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+	static IndexBuffer* last = nullptr;
+	if (last != this)
+	{
+		last = this;
+		getContext()->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+	}
 }

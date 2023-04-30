@@ -40,5 +40,10 @@ void ConstantVertexBuffer::setSlot(int n)
 
 void ConstantVertexBuffer::bind()
 {
-	getContext()->VSSetConstantBuffers(bufferSlot, 1, constantBuffer.GetAddressOf());
+	static ConstantVertexBuffer* last = nullptr;
+	if (last != this)
+	{
+		last = this;
+		getContext()->VSSetConstantBuffers(bufferSlot, 1, constantBuffer.GetAddressOf());
+	}
 }

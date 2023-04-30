@@ -49,7 +49,11 @@ void Texture::create(Image& img)
 
 void Texture::bind()
 {
-	
-	getContext()->PSSetShaderResources(0u, 1u, textureView.GetAddressOf());
 
+	static Texture* last = nullptr;
+	if (last != this)
+	{
+		last = this;
+		getContext()->PSSetShaderResources(0u, 1u, textureView.GetAddressOf());
+	}
 }

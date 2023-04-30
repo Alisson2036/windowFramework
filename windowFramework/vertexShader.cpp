@@ -17,7 +17,11 @@ void VertexShader::create(const wchar_t* _shaderFile)
 
 void VertexShader::bind()
 {
-	getContext()->VSSetShader(vertexShader.Get(), nullptr, 0);
+	static VertexShader* last = nullptr;
+	if (last != this)
+	{
+		getContext()->VSSetShader(vertexShader.Get(), nullptr, 0);
+	}
 }
 
 Microsoft::WRL::ComPtr<ID3DBlob> VertexShader::getBlob()

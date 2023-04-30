@@ -19,5 +19,10 @@ void VertexBuffer::create(const void* data, int arraySize, int objectSize)
 
 void VertexBuffer::bind()
 {
-	getContext()->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+	static VertexBuffer* last = nullptr;
+	if (last != this)
+	{
+		last = this;
+		getContext()->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+	}
 }

@@ -18,6 +18,11 @@ void InputLayout::create(VertexShader* vs,std::vector<D3D11_INPUT_ELEMENT_DESC>e
 
 void InputLayout::bind()
 {
-	getContext()->IASetPrimitiveTopology(topology);
-	getContext()->IASetInputLayout(pInputLayout.Get());
+	static InputLayout* last = nullptr;
+	if (last != this)
+	{
+		getContext()->IASetPrimitiveTopology(topology);
+		getContext()->IASetInputLayout(pInputLayout.Get());
+		last = this;
+	}
 }

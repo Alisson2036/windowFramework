@@ -20,5 +20,10 @@ void Sampler::create()
 
 void Sampler::bind()
 {
-	getContext()->PSSetSamplers(0u, 1u, samplerState.GetAddressOf());
+	static Sampler* last = nullptr;
+	if (last != this)
+	{
+		last = this;
+		getContext()->PSSetSamplers(0u, 1u, samplerState.GetAddressOf());
+	}
 }
