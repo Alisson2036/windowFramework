@@ -6,7 +6,11 @@ struct VS_Output
 };
 
 
+
+Texture2D tex : register(t0);
+SamplerState samp;
+
 float4 main(VS_Output input) : SV_TARGET
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    return tex.Sample(samp, input.texCoord);
 }

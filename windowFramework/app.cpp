@@ -88,11 +88,11 @@ void app::loop()
 		win.Gfx().getPipeline(),
 		{
 			{xPos,yPos},
-			{0.2f,0.2f},
+			{0.5f,0.5f},
 			{0.0f,0.0f},
-			{0.2f,0.0f}
+			{1.0f,1.0f}
 		},
-		nullptr
+		&tex
 	);
 
 	//movimento da camera

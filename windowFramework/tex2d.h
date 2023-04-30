@@ -39,7 +39,7 @@ public:
 		desc.indexBuffer = &ib;
 		desc.vertexBuffer = &vb;
 		desc.indicesNum = 6;
-		//desc.texture = { tex };
+		desc.texture = { tex };
 
 		//criando os vertices para o vertexBuffer
 		vertex2d vertices[4] =
@@ -47,40 +47,31 @@ public:
 			//vertice cima esquerda
 			vertex2d(
 				objDesc.pos.x,
-				objDesc.pos.y + objDesc.size.y,
-				objDesc.downRightTexCoord.x,
+				objDesc.pos.y,
+				objDesc.upLeftTexCoord.x,
 				objDesc.upLeftTexCoord.y
 			),
 			//vertice cima direita
 			vertex2d(
 				objDesc.pos.x + objDesc.size.x,
-				objDesc.pos.y + objDesc.size.y,
+				objDesc.pos.y,
 				objDesc.downRightTexCoord.x,
 				objDesc.upLeftTexCoord.y
 			),
 			//vertice baixo esquerda
 			vertex2d(
 				objDesc.pos.x,
-				objDesc.pos.y,
-				objDesc.downRightTexCoord.x,
-				objDesc.upLeftTexCoord.y
+				objDesc.pos.y - objDesc.size.y,
+				objDesc.upLeftTexCoord.x,
+				objDesc.downRightTexCoord.y
 			),
 			//vertice baixo direita
 			vertex2d(
 				objDesc.pos.x + objDesc.size.x,
-				objDesc.pos.y,
+				objDesc.pos.y - objDesc.size.y,
 				objDesc.downRightTexCoord.x,
-				objDesc.upLeftTexCoord.y
+				objDesc.downRightTexCoord.y
 			),
-		};
-		//pos = (-1, -1)
-		//size = (2, 2)
-		vertex2d v[] =
-		{
-			vertex2d(-1.0f,1.0f  , 0.0f, 0.0f),
-			vertex2d(1.0f,1.0f   , 0.0f, 0.0f),
-			vertex2d(-1.0f,-1.0f , 0.0f, 0.0f),
-			vertex2d(1.0f,-1.0f  , 0.0f, 0.0f),
 		};
 
 		//criando o array para o IndexBuffer
