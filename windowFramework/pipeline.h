@@ -38,7 +38,7 @@ public:
 		IndexBuffer* indexBuffer;
 		VertexBuffer* vertexBuffer;
 		ConstantVertexBuffer* constantVertexBuffer;
-		Texture* texture;
+		std::vector<Texture*> texture;
 		int indicesNum;
 	};
 
@@ -63,7 +63,7 @@ private:
 		PixelShader ps;
 		InputLayout il;
 
-		std::map<std::string, DXGI_FORMAT> layouts =
+		const std::map<std::string, DXGI_FORMAT> layouts =
 		{
 			{ "Position",  DXGI_FORMAT_R32G32B32_FLOAT       },
 			{ "TexCoord",  DXGI_FORMAT_R32G32_FLOAT          },

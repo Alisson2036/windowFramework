@@ -67,10 +67,11 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	if(desc->vertexBuffer) desc->vertexBuffer->bind();
 
 	//texture
-	if (desc->texture)
+	if (!desc->texture.empty())
 	{
 		sampler.bind();
-		desc->texture->bind();
+		for (auto i : desc->texture)
+			i->bind();
 	}
 	
 

@@ -9,7 +9,7 @@ void TexturedTriangle::create(Pipeline* pipe, vertex3d vertices[], int vertexCou
 	desc.vertexBuffer = &vb;
 	desc.constantVertexBuffer = &cvb;
 	desc.indicesNum = vertexCount;
-	desc.texture = tex;
+	desc.texture = { tex };
 
 
 	//CRIA VERTEX BUFFER
