@@ -13,8 +13,8 @@ public:
 	ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob);
 
 
+	std::vector<std::string> inputParams;
 private:
 
-	std::vector<std::string> inputParams;
 
 };

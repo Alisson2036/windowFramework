@@ -167,6 +167,7 @@
     <ClInclude Include="graphics.h" />
     <ClInclude Include="indexBuffer.h" />
     <ClInclude Include="inputLayout.h" />
+    <ClInclude Include="shaderInputLayouts.h" />
     <ClInclude Include="Instance.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />

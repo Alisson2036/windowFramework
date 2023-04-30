@@ -1,5 +1,6 @@
 #pragma once
 #include <wrl.h>
+#include <map>
 
 #include "vertexShader.h"
 #include "pixelShader.h"
@@ -9,10 +10,16 @@
 #include "vertexConstantBuffer.h"
 #include "texture.h"
 #include "sampler.h"
+#include "shaderDesc.h"
 
 #include "light.h"
 #include "Instance.h"
 #include "Camera.h"
+
+
+
+
+
 
 class Pipeline
 {
@@ -47,19 +54,22 @@ private:
 	class StaticBind
 	{
 	public:
-		struct elementDesc
-		{
-			const char* semantic;
-			DXGI_FORMAT format;
-		};
 		//construtor para inicializar com VS, PS e IL
-		StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader, std::vector<elementDesc>elementDescription);
+		StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader);
 		//coloca na pipeline
 		void bind();
 	private:
 		VertexShader vs;
 		PixelShader ps;
 		InputLayout il;
+
+		std::map<std::string, DXGI_FORMAT> layouts =
+		{
+			{ "Position",  DXGI_FORMAT_R32G32B32_FLOAT       },
+			{ "TexCoord",  DXGI_FORMAT_R32G32_FLOAT          },
+			{ "Normals",   DXGI_FORMAT_R32G32B32_FLOAT       },
+			{ "Color",     DXGI_FORMAT_R8G8B8A8_UNORM        }
+		};
 	};
 
 private:
