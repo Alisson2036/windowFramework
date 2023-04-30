@@ -25,7 +25,7 @@ ShaderDesc::ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob)
 		D3D11_SHADER_BUFFER_DESC bufDesc = {};
 		buf->GetDesc(&bufDesc);
 		ID3D11ShaderReflectionVariable* var = buf->GetVariableByIndex(0);
-
+		
 
 	}
 

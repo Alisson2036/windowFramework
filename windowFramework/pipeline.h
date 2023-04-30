@@ -29,7 +29,8 @@ public:
 	enum ObjectType
 	{
 		ColorBlend,
-		Textured
+		Textured,
+		Texture2d
 	};
 
 	struct ObjectDescriptor

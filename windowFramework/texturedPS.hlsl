@@ -11,7 +11,7 @@ cbuffer light : register(b0)
 {
     float3 lightPos;
 };
-cbuffer cam : register(b1)
+cbuffer cameraPosition : register(b1)
 {
     float3 cameraPos;
 };

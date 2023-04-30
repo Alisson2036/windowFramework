@@ -5,6 +5,7 @@
 
 #include "colorBlendTriangle.h"
 #include "texturedTriangle.h"
+#include "tex2d.h"
 #include "Camera.h"
 #include "light.h"
 
@@ -31,6 +32,7 @@ private:
 	colorBlendTriangle cube;
 	colorBlendTriangle cubeLight;
 	TexturedTriangle cubeTex;
+	Tex2d plane;
 
 	Texture tex;
 

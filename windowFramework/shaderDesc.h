@@ -5,6 +5,7 @@
 #include <d3dcompiler.h>
 #include <string>
 #include <vector>
+#include <map>
 #include "exception.h"
 
 class ShaderDesc

@@ -21,6 +21,11 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 		L"texturedPS.cso"
 	));
 
+	staticBinds.push_back(StaticBind(
+		L"tex2dVS.cso",
+		L"tex2dPS.cso"
+	));
+
 	sampler.create();
 
 	//cria projection matrix

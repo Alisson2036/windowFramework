@@ -69,7 +69,7 @@ void app::start()
 	float a[3] = {0.0f,0.0f,0.0f};
 	cam.setPositionAndAngle(p, a);
 	
-
+	
 
 	while (win.update()) loop();
 
@@ -82,6 +82,18 @@ void app::loop()
 
 	float xPos = ((float)x - 400.0f) / 400.0f;
 	float yPos = -((float)y - 300.0f) / 300.0f;
+
+	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
+	plane.create(
+		win.Gfx().getPipeline(),
+		{
+			{xPos,yPos},
+			{0.2f,0.2f},
+			{0.0f,0.0f},
+			{0.2f,0.0f}
+		},
+		nullptr
+	);
 
 	//movimento da camera
 	auto kb = win.getKeyboarPointer();
@@ -159,5 +171,5 @@ void app::loop()
 			}
 		}
 	}
-	
+	plane.draw();
 }

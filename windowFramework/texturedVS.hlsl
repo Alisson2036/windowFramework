@@ -17,7 +17,7 @@ cbuffer buff : register(b0)
 {
     matrix mat;
 };
-cbuffer buff2 : register(b1)
+cbuffer projectionMatrix : register(b1)
 {
     matrix projectionMat;
 };
