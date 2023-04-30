@@ -6,6 +6,8 @@ void ConstantVertexBuffer::create(const void* data, int _arraySize, int _objectS
 {
 	arraySize = (UINT)_arraySize;
 	objectSize = (UINT)_objectSize;
+	if ((arraySize * objectSize) % 16 != 0)
+		_throwMsg("constant buffer should have a size that is a multiple of 16");
 	offset = 0;
 
 	D3D11_SUBRESOURCE_DATA subresource = { data };

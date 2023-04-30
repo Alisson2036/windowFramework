@@ -16,6 +16,10 @@ private:
 		float texX;
 		float texY;
 	};
+	struct vertexBufferLayout
+	{
+		float pos[2];
+	};
 
 public:
 	struct vec2
@@ -39,6 +43,7 @@ public:
 		desc.indexBuffer = &ib;
 		desc.vertexBuffer = &vb;
 		desc.indicesNum = 6;
+		desc.constantVertexBuffer = &cvb;
 		desc.texture = { tex };
 
 		//criando os vertices para o vertexBuffer
@@ -88,11 +93,37 @@ public:
 			sizeof(vertex2d)
 		);
 
+		//CRIA CONSTANT VERTEX BUFFER
+		float b[] = {
+			0.0f,
+			0.0f,
+			0.0f,
+			0.0f
+		};
+
+		cvb.create(
+			b,
+			ARRAYSIZE(b),
+			sizeof(float)
+		);
+
+
 		//CRIA INDEX BUFFER
 		ib.create(
 			indexes,
 			6
 		);
+	}
+
+	void update(float posOffsetX, float posOffsetY, float texOffsetX, float texOffsetY)
+	{
+		float b[] = {
+			posOffsetX,
+			posOffsetY,
+			texOffsetX,
+			texOffsetY
+		};
+		cvb.update(b);
 	}
 
 	void draw()
