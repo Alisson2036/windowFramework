@@ -1,11 +1,14 @@
 #include "sampler.h"
 
-void Sampler::create()
+void Sampler::create(bool isAntialiased)
 {
 	
 	
 	D3D11_SAMPLER_DESC sampDesc = {};
-	sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	if(isAntialiased)
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+	else
+		sampDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_POINT;
 	//linear deixa mais suavizado, para um estilo mais
 	//pixel art, usar point
 

@@ -83,6 +83,7 @@ private:
 
 	std::vector<StaticBind> staticBinds;
 
+	Sampler aliasedSampler;
 	Sampler sampler;
 
 	ConstantVertexBuffer cameraConstantBuffer;

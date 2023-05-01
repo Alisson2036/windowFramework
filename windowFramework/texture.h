@@ -11,11 +11,14 @@ class Texture : public Bindable
 {
 public:
 
-	void create(Image& img);
+	void create(Image& img, bool hasAntiAliasing=true);
+
+	bool isAntialiased();
 
 	void bind() override;
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
+	bool antialiased;
 
 };

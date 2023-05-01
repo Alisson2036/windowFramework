@@ -9,7 +9,7 @@ class Sampler : public Bindable
 {
 public:
 
-	void create();
+	void create(bool isAntialiased);
 
 	void bind() override;
 

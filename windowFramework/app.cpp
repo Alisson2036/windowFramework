@@ -76,7 +76,7 @@ void app::start()
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
 	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, Image::pixel(255, 255, 255, 255), 40);
 	Texture ab;
-	ab.create(img);
+	ab.create(img,false);
 	plane.create(
 		win.Gfx().getPipeline(),
 		{

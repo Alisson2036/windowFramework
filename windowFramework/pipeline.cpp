@@ -26,7 +26,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 		L"tex2dPS.cso"
 	));
 
-	sampler.create();
+	aliasedSampler.create(true);
+	sampler.create(false);
 
 	//cria projection matrix
 	DirectX::XMMATRIX mat[] = { Camera::getProjectionMatrix() };
@@ -74,9 +75,14 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	//texture
 	if (!desc->texture.empty())
 	{
-		sampler.bind();
 		for (auto i : desc->texture)
+		{
+			if (i->isAntialiased())
+				aliasedSampler.bind();
+			else
+				sampler.bind();
 			i->bind();
+		}
 	}
 	
 

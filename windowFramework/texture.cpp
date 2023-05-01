@@ -1,7 +1,9 @@
 #include "texture.h"
 
-void Texture::create(Image& img)
+void Texture::create(Image& img, bool hasAntiAliasing)
 {
+	antialiased = hasAntiAliasing;
+
 	Image::data d = img.getData();
 
 	//configurando a texture
@@ -45,6 +47,11 @@ void Texture::create(Image& img)
 
 
 
+}
+
+bool Texture::isAntialiased()
+{
+	return antialiased;
 }
 
 void Texture::bind()
