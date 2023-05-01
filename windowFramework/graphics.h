@@ -18,7 +18,7 @@ class Graphics
 public:
 	
 public:
-	Graphics(HWND _hwnd);
+	Graphics(HWND _hwnd, int _windowSizeX, int _windowSizeY);
 	Graphics(Graphics&) = delete;
 	Graphics operator=(Graphics&) = delete;
 	~Graphics();
@@ -33,6 +33,9 @@ public:
 
 
 private:
+	int windowSizeX;
+	int windowSizeY;
+
 	Microsoft::WRL::ComPtr<ID3D11Device>           d3dDevice;
 	Microsoft::WRL::ComPtr<IDXGISwapChain>         swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>    deviceContext;

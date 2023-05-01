@@ -2,7 +2,7 @@
 
 app::app()
 	:
-	win(L"Jojo fofo", 800, 600),
+	win(L"Jojo fofo", 400, 300),
 	timeSinceCreation()
 {
 

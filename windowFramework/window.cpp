@@ -51,7 +51,7 @@ window::window(const LPCWSTR name, int _width, int _height):
 	//mostra a janela
 	ShowWindow(hwnd, 1);
 
-	pGfx = std::make_unique<Graphics>(hwnd);
+	pGfx = std::make_unique<Graphics>(hwnd, windowWidth, windowHeight);
 
 }
 
