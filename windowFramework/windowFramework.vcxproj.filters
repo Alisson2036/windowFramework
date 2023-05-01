@@ -185,6 +185,9 @@
     <ClInclude Include="shaderDesc.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
+    <ClInclude Include="tex2d.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="colorBlendVS.hlsl">
@@ -197,6 +200,12 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="texturedPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="tex2dPS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="tex2dVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

@@ -13,6 +13,6 @@ SamplerState samp;
 float4 main(VS_Output input) : SV_TARGET
 {
     float4 color = tex.Sample(samp, input.texCoord);
-    clip(color.a - 0.5f);
+    clip(color.a - 0.1f);
     return color;
 }

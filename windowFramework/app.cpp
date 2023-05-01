@@ -12,6 +12,10 @@ void app::start()
 {
 	//carregando imagem
 	Image img(L"a.png");
+
+	for (int i = 50; i < 200; i++)
+		img.drawPixel(i, 50, Image::pixel(255, 0, 255, 255));
+
 	tex.create(img);
 
 	//coloca luz na pipeline
@@ -70,6 +74,9 @@ void app::start()
 	cam.setPositionAndAngle(p, a);
 	
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
+	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, Image::pixel(255, 255, 255, 255), 40);
+	Texture ab;
+	ab.create(img);
 	plane.create(
 		win.Gfx().getPipeline(),
 		{
@@ -77,8 +84,8 @@ void app::start()
 			{0.5f,0.5f},
 			{0.0f,0.0f},
 			{1.0f,1.0f}
-		},
-		&tex
+		}
+		,&ab
 	);
 
 	while (win.update()) loop();

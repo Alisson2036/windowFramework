@@ -29,6 +29,8 @@ Image::~Image()
 {
 	if (img)
 		delete img;
+	if (imageData.data)
+		delete imageData.data;
 }
 
 Image::Image(std::wstring fileName)
@@ -38,6 +40,12 @@ Image::Image(std::wstring fileName)
 
 void Image::loadFile(std::wstring fileName)
 {
+	//apagando imgem, se exisitr
+	if (img)
+		delete img;
+	if (imageData.data)
+		delete imageData.data;
+
 	//criando bitmap no heap
 	Gdiplus::Bitmap img(fileName.c_str());
 	if (img.GetLastStatus())
@@ -64,23 +72,33 @@ void Image::loadFile(std::wstring fileName)
 	
 }
 
-void Image::fromRenderText(std::wstring text, std::wstring font)
+void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, int fontSize)
 {
-	Gdiplus::Bitmap* img = new Gdiplus::Bitmap(100,100);
+	//apagando imagem anterior, se existir
+	if (img)
+		delete img;
+	if (imageData.data)
+		delete imageData.data;
+
+
+	img = new Gdiplus::Bitmap(texSizeX, texSizeY);
 
 	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
 
 	Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
+	Gdiplus::RectF rect(0.0f, 0.0f, texSizeX, texSizeY);
+	
 
 	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
 
 	gfx->DrawString(
 		text.c_str(),
 		-1,
-		new Gdiplus::Font(&fontFamily, 22, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel),
-		Gdiplus::PointF(0, 0),
-		new Gdiplus::SolidBrush(Gdiplus::Color(255, 0, 0, 255))
+		new Gdiplus::Font(&fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel),
+		rect,
+		nullptr,
+		new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor))//...funciona KASKSAKSAK
 	);
 
 	//colocando a imagem no buffer
@@ -104,6 +122,14 @@ void Image::fromRenderText(std::wstring text, std::wstring font)
 		);
 	}
 
+}
+
+void Image::drawPixel(unsigned int x, unsigned int y, pixel color)
+{
+	if (x < imageData.width && y < imageData.height)
+	{
+		imageData.data[y * imageData.width + x] = color;
+	}
 }
 
 Image::data& Image::getData()
