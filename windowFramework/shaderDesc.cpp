@@ -19,7 +19,7 @@ ShaderDesc::ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob)
 	reflect->GetDesc(&desc);
 
 	//lendo todos os constantBuffers do shader
-	for (int i = 0; i < desc.ConstantBuffers; i++)
+	for (unsigned int i = 0; i < desc.ConstantBuffers; i++)
 	{
 		ID3D11ShaderReflectionConstantBuffer* buf = reflect->GetConstantBufferByIndex(i);
 		D3D11_SHADER_BUFFER_DESC bufDesc = {};
@@ -30,7 +30,7 @@ ShaderDesc::ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob)
 	}
 
 	//lendo inputLayout
-	for (int i = 0; i < desc.InputParameters; i++)
+	for (unsigned int i = 0; i < desc.InputParameters; i++)
 	{
 		D3D11_SIGNATURE_PARAMETER_DESC parDesc;
 		reflect->GetInputParameterDesc(i, &parDesc);

@@ -8,7 +8,7 @@ void InputLayout::create(VertexShader* vs,std::vector<D3D11_INPUT_ELEMENT_DESC>e
 
 	getDevice()->CreateInputLayout(
 		elementDescription.data(),
-		elementDescription.size(),
+		(UINT)elementDescription.size(),
 		vs->getBlob()->GetBufferPointer(),
 		vs->getBlob()->GetBufferSize(),
 		&pInputLayout

@@ -30,17 +30,18 @@ public:
 	{
 		ColorBlend,
 		Textured,
-		Texture2d
+		Texture2d,
+		empty
 	};
 
 	struct ObjectDescriptor
 	{
-		ObjectType type;
-		IndexBuffer* indexBuffer;
-		VertexBuffer* vertexBuffer;
-		ConstantVertexBuffer* constantVertexBuffer;
-		std::vector<Texture*> texture;
-		int indicesNum;
+		ObjectType type = ObjectType::empty;
+		IndexBuffer* indexBuffer = nullptr;
+		VertexBuffer* vertexBuffer = nullptr;
+		ConstantVertexBuffer* constantVertexBuffer = nullptr;
+		std::vector<Texture*> texture = {};
+		int indicesNum = 0;
 	};
 
 	void initializeBindable(Bindable* bindable);
@@ -90,6 +91,6 @@ private:
 	ConstantPixelBuffer cameraPositionBuffer;
 	Camera* camera;
 
-	int lastBinded = -1;
+	int lastBinded = ObjectType::empty;
 
 };

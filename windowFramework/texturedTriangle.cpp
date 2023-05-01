@@ -62,7 +62,7 @@ void TexturedTriangle::create(Pipeline* pipe, objLoader& obj, Texture* tex)
 	
 
 
-	create(pipe, vertices.data(), vertices.size(), tex);
+	create(pipe, vertices.data(), (int)vertices.size(), tex);
 
 }
 

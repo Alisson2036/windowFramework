@@ -19,6 +19,6 @@ public:
 
 private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
-	bool antialiased;
+	bool antialiased = true;
 
 };

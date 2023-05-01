@@ -14,7 +14,7 @@ void app::start()
 	Image img(L"a.png");
 
 	for (int i = 50; i < 200; i++)
-		img.drawPixel(i, 50, Image::pixel(255, 0, 255, 255));
+		img.drawPixel(i, 50, Image::pixel(255u, 0u, 255u, 255u));
 
 	tex.create(img);
 
@@ -74,7 +74,7 @@ void app::start()
 	cam.setPositionAndAngle(p, a);
 	
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, Image::pixel(255, 255, 255, 255), 40);
+	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, Image::pixel(255u, 255u, 255u, 255u), 40);
 	Texture ab;
 	ab.create(img,false);
 	plane.create(
@@ -116,8 +116,8 @@ void app::loop()
 	if (kb->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
 	if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
-	if (kb->isKeyPressed('Z')) a+=0.1;
-	if (kb->isKeyPressed('X')) a-= 0.1;
+	if (kb->isKeyPressed('Z')) a+=0.1f;
+	if (kb->isKeyPressed('X')) a-= 0.1f;
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
@@ -140,9 +140,9 @@ void app::loop()
 	{
 		for (int x = -10; x < 10; x++)
 		{
-			pos[0] = x * 2;
-			pos[1] = -3 + cos(x) + cos(y);
-			pos[2] = y*2;
+			pos[0] = x * 2.0f;
+			pos[1] = -3.0f + (float)cos(x) + (float)cos(y);
+			pos[2] = y*2.0f;
 
 
 			inst.update(pos, angle);
@@ -167,7 +167,7 @@ void app::loop()
 		{
 			for (int i = -20; i < 20; i++)
 			{
-				pos[0] = i * 4;
+				pos[0] = i * 4.0f;
 				pos[1] = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
 				pos[2] = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 

@@ -33,11 +33,11 @@ VS_Output main(VS_Input input)
     output.position = mul(float4(input.pos, 1.0f), transpose(a));
 
 
-    float3x3 b = transpose(mat);
+    float3x3 b = transpose((float3x3)mat);
     output.tex = input.tex;
     output.normals = mul(input.normals, b);
 
-    output.vertexPos = mul(float4(input.pos,1.0f), transpose(mat));
+    output.vertexPos = (float3)mul(float4(input.pos,1.0f), transpose(mat));
     
 
     return output;

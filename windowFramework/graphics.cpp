@@ -54,7 +54,7 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	else _throw;
 
 	//configura viewport
-	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, windowSizeX, windowSizeY, 0.0f, 1.0f };
+	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)windowSizeX, (float)windowSizeY, 0.0f, 1.0f };
 	
 	deviceContext->RSSetViewports(1, &viewport);
 

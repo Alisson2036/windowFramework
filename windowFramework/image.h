@@ -35,7 +35,7 @@ public:
 	Image(Image&) = default;
 
 	void loadFile(std::wstring fileName);
-	void fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, int fontSize);
+	void fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, float fontSize);
 
 	void drawPixel(unsigned int x, unsigned int y, pixel color);
 

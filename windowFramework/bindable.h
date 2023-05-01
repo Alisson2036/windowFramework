@@ -20,6 +20,6 @@ protected:
 	Microsoft::WRL::ComPtr<ID3D11Device> getDevice();
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> getContext();
 
-	bool initialized;
+	bool initialized = false;
 
 };

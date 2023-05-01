@@ -72,7 +72,7 @@ void Image::loadFile(std::wstring fileName)
 	
 }
 
-void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, int fontSize)
+void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, float fontSize)
 {
 	//apagando imagem anterior, se existir
 	if (img)
@@ -87,7 +87,7 @@ void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, i
 
 	Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
-	Gdiplus::RectF rect(0.0f, 0.0f, texSizeX, texSizeY);
+	Gdiplus::RectF rect(0.0f, 0.0f, (float)texSizeX, (float)texSizeY);
 	
 
 	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
@@ -126,7 +126,7 @@ void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, i
 
 void Image::drawPixel(unsigned int x, unsigned int y, pixel color)
 {
-	if (x < imageData.width && y < imageData.height)
+	if (x < (unsigned int)imageData.width && y < (unsigned int)imageData.height)
 	{
 		imageData.data[y * imageData.width + x] = color;
 	}

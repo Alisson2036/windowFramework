@@ -137,7 +137,7 @@ private:
 	ConstantVertexBuffer cvb;
 	IndexBuffer ib;
 
-	Pipeline* pipeline;
+	Pipeline* pipeline = nullptr;
 
 	Pipeline::ObjectDescriptor desc;
 

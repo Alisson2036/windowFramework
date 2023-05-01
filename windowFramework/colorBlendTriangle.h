@@ -84,6 +84,6 @@ private:
 
 	Pipeline::ObjectDescriptor desc;
 
-	Pipeline* pipeline;
+	Pipeline* pipeline = nullptr;
 
 };
