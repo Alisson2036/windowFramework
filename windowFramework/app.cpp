@@ -94,12 +94,24 @@ void app::start()
 
 void app::loop()
 {
+	//posicao do mouse na tela 
 	float x = (float)win.getMousePointer()->getX();
 	float y = (float)win.getMousePointer()->getY();
 
+	//posicao do mouse de acordo com as coordenadas no d3d
 	float xPos = ((float)x - 400.0f) / 400.0f;
 	float yPos = -((float)y - 300.0f) / 300.0f;
-	win.setTitle(std::to_string(xPos) + " " + std::to_string(yPos));
+
+	//codigo para mecher a tela 
+	if (win.getMousePointer()->rightButtonPressed())
+	{
+		win.showMouse(false);
+		cam.moveAngle(yPos, -xPos);
+
+
+		win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
+	}
+	else win.showMouse(true);
 
 
 	//movimento da camera
@@ -110,25 +122,10 @@ void app::loop()
 	if (kb->isKeyPressed('D')) cam.movePosition(0.1f, 0.0f, 0.0f);
 	if (kb->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
 	if (kb->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
-	//olhar para outros angulos
-	//if (kb->isKeyPressed('I')) cam.moveAngle( 0.1f, 0.0f);
-	//if (kb->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f);
-	//if (kb->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
-	//if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
-	//win.setMousePosition(win.getWindowSizeX()/2, win.getWindowSizeY()/2);
-	if (win.getMousePointer()->rightButtonPressed())
-	{
-		win.showMouse(false);
-		cam.moveAngle(yPos, -xPos);
-
-
-		win.setMousePosition(win.getWindowSizeX()/2, win.getWindowSizeY()/2);
-	}
-	else win.showMouse(true);
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
@@ -146,7 +143,7 @@ void app::loop()
 
 	//desenha o objeto texturizado no meio da tela
 	cubeTex.update(inst);
-
+	
 	for (int y = -10; y < 10; y++)
 	{
 		for (int x = -10; x < 10; x++)
@@ -170,7 +167,7 @@ void app::loop()
 	cubeLight.update(Instance(pos1, angle));
 	cubeLight.draw();
 
-
+	
 	//cria e desenha todos os cubos coloridos
 	for (int n = 1; n < 5; n++)
 	{
