@@ -99,6 +99,7 @@ void app::loop()
 
 	float xPos = ((float)x - 400.0f) / 400.0f;
 	float yPos = -((float)y - 300.0f) / 300.0f;
+	win.setTitle(std::to_string((int)x) + " " + std::to_string((int)y));
 
 	plane.update(xPos, yPos, 0.0f, 0.0f);
 

@@ -26,7 +26,7 @@ window::window(const LPCWSTR name, int _width, int _height):
 	RegisterClassEx(&wc);
 
 	//calculando o tamanho da janela
-	RECT windowRect = { 0,0,_width, _height };
+	windowRect = { 0,0,_width, _height };
 	AdjustWindowRect(&windowRect, WS_CAPTION | WS_SYSMENU | WS_MINIMIZEBOX, FALSE);
 	_width = windowRect.right - windowRect.left;
 	_height = windowRect.bottom - windowRect.top;
@@ -116,7 +116,7 @@ void window::setMousePosition(int x, int y)
 	GetWindowRect(hwnd, rect);
 	if (rect)
 	{
-		SetCursorPos(x + rect->left, y + rect->top);
+		SetCursorPos(x + rect->left - windowRect.left, y + rect->top - windowRect.top);
 		delete rect;
 	}
 

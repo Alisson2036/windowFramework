@@ -36,6 +36,8 @@ private:
 private:
 	int windowWidth;
 	int windowHeight;
+	//RECT que armazena tamanho da janela em relacao ao client region
+	RECT windowRect;
 
 	HWND hwnd;//window handle
 	HINSTANCE hInstance;
