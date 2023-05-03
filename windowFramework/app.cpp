@@ -119,6 +119,10 @@ void app::loop()
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
+	//win.setMousePosition(win.getWindowSizeX()/2, win.getWindowSizeY()/2);
+	if (kb->isKeyPressed('Q'))
+	win.setMousePosition(400, 300);
+
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
 

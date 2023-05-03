@@ -110,6 +110,18 @@ void window::setTitle(std::string newTitle)
 	SetWindowTextA(hwnd, newTitle.c_str());
 }
 
+void window::setMousePosition(int x, int y)
+{
+	LPRECT rect = new RECT();
+	GetWindowRect(hwnd, rect);
+	if (rect)
+	{
+		SetCursorPos(x + rect->left, y + rect->top);
+		delete rect;
+	}
+
+}
+
 int window::getWindowSizeX()
 {
 	return windowWidth;

@@ -23,6 +23,8 @@ public:
 
 	void setTitle(std::string newTitle);
 
+	void setMousePosition(int x, int y);
+
 	int getWindowSizeX();
 	int getWindowSizeY();
 
