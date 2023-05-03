@@ -122,6 +122,14 @@ void window::setMousePosition(int x, int y)
 
 }
 
+void window::showMouse(bool show)
+{
+	CURSORINFO ci = { sizeof(CURSORINFO) };
+	GetCursorInfo(&ci);
+	if(ci.flags != show)
+	ShowCursor(show);
+}
+
 int window::getWindowSizeX()
 {
 	return windowWidth;

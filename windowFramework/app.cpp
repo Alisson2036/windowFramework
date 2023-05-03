@@ -80,7 +80,7 @@ void app::start()
 	plane.create(
 		win.Gfx().getPipeline(),
 		{
-			{0.0f,0.0f},
+			{-1.0f,-1.0f},
 			{0.5f,0.5f},
 			{0.0f,0.0f},
 			{1.0f,1.0f}
@@ -99,9 +99,8 @@ void app::loop()
 
 	float xPos = ((float)x - 400.0f) / 400.0f;
 	float yPos = -((float)y - 300.0f) / 300.0f;
-	win.setTitle(std::to_string((int)x) + " " + std::to_string((int)y));
+	win.setTitle(std::to_string(xPos) + " " + std::to_string(yPos));
 
-	plane.update(xPos, yPos, 0.0f, 0.0f);
 
 	//movimento da camera
 	auto kb = win.getKeyboarPointer();
@@ -112,17 +111,24 @@ void app::loop()
 	if (kb->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
 	if (kb->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
 	//olhar para outros angulos
-	if (kb->isKeyPressed('I')) cam.moveAngle( 0.1f, 0.0f);
-	if (kb->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f);
-	if (kb->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
-	if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
+	//if (kb->isKeyPressed('I')) cam.moveAngle( 0.1f, 0.0f);
+	//if (kb->isKeyPressed('K')) cam.moveAngle(-0.1f, 0.0f);
+	//if (kb->isKeyPressed('J')) cam.moveAngle( 0.0f, 0.1f);
+	//if (kb->isKeyPressed('L')) cam.moveAngle( 0.0f,-0.1f);
 
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
 	//win.setMousePosition(win.getWindowSizeX()/2, win.getWindowSizeY()/2);
-	if (kb->isKeyPressed('Q'))
-	win.setMousePosition(400, 300);
+	if (win.getMousePointer()->rightButtonPressed())
+	{
+		win.showMouse(false);
+		cam.moveAngle(yPos, -xPos);
+
+
+		win.setMousePosition(win.getWindowSizeX()/2, win.getWindowSizeY()/2);
+	}
+	else win.showMouse(true);
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);

@@ -24,6 +24,7 @@ public:
 	void setTitle(std::string newTitle);
 
 	void setMousePosition(int x, int y);
+	void showMouse(bool show);
 
 	int getWindowSizeX();
 	int getWindowSizeY();
