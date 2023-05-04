@@ -8,7 +8,9 @@ bool Keyboard::isKeyPressed(char key)
 
 char Keyboard::getLastKey()
 {
+    if(keysPressed.size())
     return keysPressed.back();
+    return 0;
 }
 
 void Keyboard::keyDown(char key)
