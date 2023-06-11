@@ -65,7 +65,7 @@ void Image::loadFile(std::wstring fileName)
 		Gdiplus::Color c;
 		img.GetPixel(
 			i % imageData.width,
-			int(i / imageData.height),
+			int(i / imageData.width),
 			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
 		);
 	}

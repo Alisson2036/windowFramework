@@ -40,7 +40,7 @@ float4 main(VS_Output input) : SV_TARGET
         specular = 0.0f;
     else
     {
-        specular = pow(specular, 10);
+        specular = pow(specular, 100);
         specular /= 2;
     }
 
