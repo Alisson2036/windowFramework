@@ -22,7 +22,7 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 
 	D3D11_SUBRESOURCE_DATA sd = {};
 	sd.pSysMem = d.data;
-	sd.SysMemPitch = d.width * sizeof(Image::pixel);
+	sd.SysMemPitch = d.width * sizeof(color);
 
 	//criando a texture
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;

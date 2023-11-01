@@ -4,22 +4,16 @@
 #include <Windows.h>
 #include <gdiplus.h>
 #include "exception.h"
+#include "color.h"
 
 
 class Image
 {
 public:
 
-	struct pixel
-	{
-		char r;
-		char g;
-		char b;
-		char a;
-	};
 	struct data
 	{
-		pixel* data;
+		color* data;
 		int pixelCount;
 		int width;
 		int height;
@@ -35,9 +29,9 @@ public:
 	Image(Image&) = default;
 
 	void loadFile(std::wstring fileName);
-	void fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, float fontSize);
+	void fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, color textColor, float fontSize);
 
-	void drawPixel(unsigned int x, unsigned int y, pixel color);
+	void drawPixel(unsigned int x, unsigned int y, color color);
 
 	data& getData();
 

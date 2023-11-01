@@ -1,60 +1,60 @@
 #include "Camera.h"
 
-Camera::Camera(float _position[3], float _angle[2])
+Camera::Camera(vec3 Position, vec2 Angle)
 {
-	position[0] = _position[0];
-	position[1] = _position[1];
-	position[2] = _position[2];
+	position.x = Position.x;
+	position.y = Position.y;
+	position.z = Position.z;
 
-	angle[0] = _angle[0];
-	angle[1] = _angle[1];
+	angle.x = Angle.x;
+	angle.y = Angle.y;
 }
 
-void Camera::setPositionAndAngle(float _position[3], float _angle[2])
+void Camera::setPositionAndAngle(vec3 Position, vec2 Angle)
 {
-	position[0] = _position[0];
-	position[1] = _position[1];
-	position[2] = _position[2];
+	position.x = Position.x;
+	position.y = Position.y;
+	position.z = Position.z;
 
-	angle[0] = _angle[0];
-	angle[1] = _angle[1];
+	angle.x = Angle.x;
+	angle.y = Angle.y;
 }
 
-void Camera::move(float _position[3], float _angle[2])
+void Camera::move(vec3 Position, vec2 Angle)
 {
-	position[0] += _position[0];
-	position[1] += _position[1];
-	position[2] += _position[2];
+	position.x += Position.x;
+	position.y += Position.y;
+	position.z += Position.z;
 
-	angle[0] += _angle[0];
-	angle[1] += _angle[1];
+	angle.x += Angle.x;
+	angle.y += Angle.y;
 }
 
-void Camera::movePosition(float x, float y, float z)
+void Camera::movePosition(vec3 Position)
 {
-	DirectX::XMVECTOR cameraDirection = DirectX::XMVectorSet(x, y, z, 1.0f);
+	DirectX::XMVECTOR cameraDirection = DirectX::XMVectorSet(Position.x, Position.y, Position.z, 1.0f);
 
 	cameraDirection = DirectX::XMVector3Transform(
 		cameraDirection,
 		DirectX::XMMatrixTranspose(getRotationMatrix())
 	);
 
-	position[0] += DirectX::XMVectorGetX(cameraDirection);
-	position[1] += DirectX::XMVectorGetY(cameraDirection);
-	position[2] += DirectX::XMVectorGetZ(cameraDirection);
+	position.x += DirectX::XMVectorGetX(cameraDirection);
+	position.y += DirectX::XMVectorGetY(cameraDirection);
+	position.z += DirectX::XMVectorGetZ(cameraDirection);
 }
 
-void Camera::moveAngle(float x, float y)
+void Camera::moveAngle(vec2 Angle)
 {
-	angle[0] += x;
-	angle[1] += y;
+	angle.x += Angle.x;
+	angle.y += Angle.y;
 }
 
 DirectX::XMMATRIX Camera::getMatrix()
 {
 	//DirectX::XMMatrixRotationNormal
 	return DirectX::XMMATRIX(
-		DirectX::XMMatrixTranslation(-position[0], -position[1], -position[2]) *
+		DirectX::XMMatrixTranslation(-position.x, -position.y, -position.z) *
 		getRotationMatrix() *
 		getProjectionMatrix()
 	);
@@ -63,7 +63,7 @@ DirectX::XMMATRIX Camera::getMatrix()
 
 DirectX::XMVECTOR Camera::getPositionVector()
 {
-	return DirectX::XMVECTOR({ position[0],position[1],position[2], 1.0f });
+	return DirectX::XMVECTOR({ position.x,position.y,position.z, 1.0f });
 }
 
 DirectX::XMMATRIX Camera::getProjectionMatrix()
@@ -74,7 +74,7 @@ DirectX::XMMATRIX Camera::getProjectionMatrix()
 DirectX::XMMATRIX Camera::getRotationMatrix()
 {
 	return DirectX::XMMATRIX(
-		DirectX::XMMatrixRotationY(angle[1]) *
-		DirectX::XMMatrixRotationX(angle[0])
+		DirectX::XMMatrixRotationY(angle.y) *
+		DirectX::XMMatrixRotationX(angle.x)
 	);
 }

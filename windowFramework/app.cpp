@@ -14,7 +14,7 @@ void app::start()
 	Image img(L"a.png");
 
 	for (int i = 50; i < 200; i++)
-		img.drawPixel(i, 50, Image::pixel(255u, 0u, 255u, 255u));
+		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
 	tex.create(img);
 
@@ -69,12 +69,10 @@ void app::start()
 	cubeTex.create(win.Gfx().getPipeline(), obj, &tex);
 
 
-	float p[3] = {0.0f,0.0f,-4.0f};
-	float a[3] = {0.0f,0.0f,0.0f};
-	cam.setPositionAndAngle(p, a);
+	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
 	
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, Image::pixel(255u, 255u, 255u, 255u), 40);
+	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, color(255u, 255u, 255u, 255u), 40);
 	Texture ab;
 	ab.create(img,false);
 	plane.create(
@@ -106,7 +104,7 @@ void app::loop()
 	if (win.getMousePointer()->rightButtonPressed())
 	{
 		win.showMouse(false);
-		cam.moveAngle(yPos, -xPos);
+		cam.moveAngle({ yPos, -xPos });
 
 
 		win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
@@ -116,12 +114,12 @@ void app::loop()
 
 	//movimento da camera
 	auto kb = win.getKeyboarPointer();
-	if (kb->isKeyPressed('W')) cam.movePosition(0.0f, 0.0f, 0.1f);
-	if (kb->isKeyPressed('S')) cam.movePosition(0.0f, 0.0f,-0.1f);
-	if (kb->isKeyPressed('A')) cam.movePosition(-0.1f, 0.0f, 0.0f);
-	if (kb->isKeyPressed('D')) cam.movePosition(0.1f, 0.0f, 0.0f);
-	if (kb->isKeyPressed('R')) cam.movePosition(0.0f, 0.1f, 0.0f);
-	if (kb->isKeyPressed('F')) cam.movePosition(0.0f,-0.1f, 0.0f);
+	if (kb->isKeyPressed('W')) cam.movePosition({0.0f, 0.0f, 0.1f});
+	if (kb->isKeyPressed('S')) cam.movePosition({0.0f, 0.0f,-0.1f});
+	if (kb->isKeyPressed('A')) cam.movePosition({-0.1f, 0.0f, 0.0f});
+	if (kb->isKeyPressed('D')) cam.movePosition({0.1f, 0.0f, 0.0f});
+	if (kb->isKeyPressed('R')) cam.movePosition({0.0f, 0.1f, 0.0f});
+	if (kb->isKeyPressed('F')) cam.movePosition({ 0.0f,-0.1f, 0.0f });
 
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;

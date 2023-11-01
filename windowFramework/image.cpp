@@ -57,7 +57,7 @@ void Image::loadFile(std::wstring fileName)
 	imageData.height = img.GetHeight();
 
 	//alocando espaço na memoria para armazenar a imagem
-	imageData.data = new pixel[imageData.pixelCount];
+	imageData.data = new color[imageData.pixelCount];
 
 	//guardando os pixeis
 	for (int i = 0; i < imageData.pixelCount; i++)
@@ -72,7 +72,7 @@ void Image::loadFile(std::wstring fileName)
 	
 }
 
-void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, pixel textColor, float fontSize)
+void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, color textColor, float fontSize)
 {
 	//apagando imagem anterior, se existir
 	if (img)
@@ -109,7 +109,7 @@ void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, i
 	imageData.height = img->GetHeight();
 
 	//alocando espaço na memoria para armazenar a imagem
-	imageData.data = new pixel[imageData.pixelCount];
+	imageData.data = new color[imageData.pixelCount];
 
 	//guardando os pixeis
 	for (int i = 0; i < imageData.pixelCount; i++)
@@ -124,7 +124,7 @@ void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, i
 
 }
 
-void Image::drawPixel(unsigned int x, unsigned int y, pixel color)
+void Image::drawPixel(unsigned int x, unsigned int y, color color)
 {
 	if (x < (unsigned int)imageData.width && y < (unsigned int)imageData.height)
 	{

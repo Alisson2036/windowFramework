@@ -1,5 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
+#include "vec2.h"
+#include "vec3.h"
 
 
 class Camera
@@ -7,13 +9,13 @@ class Camera
 public:
 	Camera() = default;
 
-	Camera(float _position[3], float _angle[2]);
+	Camera(vec3 Position, vec2 Angle);
 
-	void setPositionAndAngle(float _position[3], float _angle[2]);
+	void setPositionAndAngle(vec3 Position, vec2 Angle);
 
-	void move(float _position[3], float _angle[2]);
-	void movePosition(float x, float y, float z);
-	void moveAngle(float x, float y);
+	void move(vec3 Position, vec2 Angle);
+	void movePosition(vec3 Position);
+	void moveAngle(vec2 Angle);
 	
 	DirectX::XMMATRIX getMatrix();
 	DirectX::XMVECTOR getPositionVector();
@@ -25,8 +27,8 @@ public:
 private:
 	DirectX::XMMATRIX getRotationMatrix();
 
-	float position[3];
-	float angle[2];
+	vec3 position;
+	vec2 angle;
 
 
 };
