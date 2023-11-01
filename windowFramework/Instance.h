@@ -1,18 +1,19 @@
 #pragma once
 #include <DirectXMath.h>
+#include "vec3.h"
 
 class Instance
 {
 public:
-	Instance(float _position[3], float _angle[3]);
+	Instance(vec3 Position, vec3 Angle);
 
-	void update(float _position[3], float _angle[3]);
+	void update(vec3 Position, vec3 Angle);
 	
-	void move(float _position[3], float _angle[3]);
+	void move(vec3 Position, vec3 Angle);
 
 	DirectX::XMMATRIX getMatrix();
 
 private:
-	float position[3];
-	float angle[3];
+	vec3 position;
+	vec3 angle;
 };

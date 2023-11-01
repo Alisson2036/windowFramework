@@ -2,50 +2,50 @@
 
 
 
-Instance::Instance(float _position[3], float _angle[3])
+Instance::Instance(vec3 Position, vec3 Angle)
 {
-	position[0] = _position[0];
-	position[1] = _position[1];
-	position[2] = _position[2];
+	position.x = Position.x;
+	position.y = Position.y;
+	position.z = Position.z;
 
-	angle[0] = _angle[0];
-	angle[1] = _angle[1];
-	angle[2] = _angle[2];
+	angle.x = Angle.x;
+	angle.y = Angle.y;
+	angle.z = Angle.z;
 
 }
 
 
-void Instance::update(float _position[3], float _angle[3])
+void Instance::update(vec3 Position, vec3 Angle)
 {
-	position[0] = _position[0];
-	position[1] = _position[1];
-	position[2] = _position[2];
+	position.x = Position.x;
+	position.y = Position.y;
+	position.z = Position.z;
 
-	angle[0] = _angle[0];
-	angle[1] = _angle[1];
-	angle[2] = _angle[2];
+	angle.x = Angle.x;
+	angle.y = Angle.y;
+	angle.z = Angle.z;
 }
 
-void Instance::move(float _position[3], float _angle[3])
+void Instance::move(vec3 Position, vec3 Angle)
 {
 
-	position[0] += _position[0];
-	position[1] += _position[1];
-	position[2] += _position[2];
+	position.x += Position.x;
+	position.y += Position.y;
+	position.z += Position.z;
 
-	angle[0] += _angle[0];
-	angle[1] += _angle[1];
-	angle[2] += _angle[2];
+	angle.x += Angle.x;
+	angle.y += Angle.y;
+	angle.z += Angle.z;
 }
 
 DirectX::XMMATRIX Instance::getMatrix()
 {
 
 	return DirectX::XMMATRIX(
-		DirectX::XMMatrixRotationX(angle[0]) *
-		DirectX::XMMatrixRotationY(angle[1]) *
-		DirectX::XMMatrixRotationZ(angle[2]) *
-		DirectX::XMMatrixTranslation(position[0], position[1], position[2])
+		DirectX::XMMatrixRotationX(angle.x) *
+		DirectX::XMMatrixRotationY(angle.y) *
+		DirectX::XMMatrixRotationZ(angle.z) *
+		DirectX::XMMatrixTranslation(position.x, position.y, position.z)
 		//cam->getMatrix()
 	);
 

@@ -130,8 +130,8 @@ void app::loop()
 
 
 
-	float pos[3] = { 0.0f,-0.0f,0.0f };
-	float angle[3] = { 0.0f, 0.0f, 0.0f};
+	vec3 pos = { 0.0f, 0.0f, 0.0f };
+	vec3 angle = { 0.0f, 0.0f, 0.0f};
 
 
 
@@ -146,9 +146,9 @@ void app::loop()
 	{
 		for (int x = -10; x < 10; x++)
 		{
-			pos[0] = x * 2.0f;
-			pos[1] = -3.0f + (float)cos(x) + (float)cos(y);
-			pos[2] = y*2.0f;
+			pos.x = x * 2.0f;
+			pos.y = -3.0f + (float)cos(x) + (float)cos(y);
+			pos.z = y*2.0f;
 
 
 			inst.update(pos, angle);
@@ -160,9 +160,8 @@ void app::loop()
 
 
 	//muda posicao da luz 
-	float pos1[3] = { 2.0f,a,0.0f };
-	light.updatePos(pos1);
-	cubeLight.update(Instance(pos1, angle));
+	light.updatePos({2.0f, a, 0.0f});
+	cubeLight.update({ { 2.0f,a,0.0f }, angle });
 	cubeLight.draw();
 
 	
@@ -173,9 +172,9 @@ void app::loop()
 		{
 			for (int i = -20; i < 20; i++)
 			{
-				pos[0] = i * 4.0f;
-				pos[1] = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
-				pos[2] = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
+				pos.x = i * 4.0f;
+				pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
+				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
 				inst.update(pos, angle);
 
