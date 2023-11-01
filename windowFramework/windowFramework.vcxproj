@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClInclude Include="bindable.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="color.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="indexBuffer.h" />
@@ -184,6 +185,8 @@
     <ClInclude Include="texturedTriangle.h" />
     <ClInclude Include="timer.h" />
     <ClInclude Include="colorBlendTriangle.h" />
+    <ClInclude Include="vec2.h" />
+    <ClInclude Include="vec3.h" />
     <ClInclude Include="vertexBuffer.h" />
     <ClInclude Include="vertexConstantBuffer.h" />
     <ClInclude Include="vertexShader.h" />
