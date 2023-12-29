@@ -2,6 +2,11 @@
 
 inputBuffer::inputBuffer(std::vector<type> types)
 {
+	create(types);
+}
+
+void inputBuffer::create(std::vector<type> types)
+{
 	buffer = {};
 
 	elementSize = 0;
@@ -13,15 +18,20 @@ inputBuffer::inputBuffer(std::vector<type> types)
 		elementSize += t.size;
 	}
 
+	initialized = true;
 }
 
 std::unique_ptr<unsigned char*> inputBuffer::data()
 {
+	if (!initialized) _throwMsg("Class not initialized");
 	return std::make_unique<unsigned char*>(buffer.data());
 }
 
 std::vector<char> inputBuffer::getElement(const int index, const std::string type) const
 {
+	if (!initialized) _throwMsg("Class not initialized");
+	if (!containsType(type)) return {};
+
 	std::vector<char> data;
 
 	typeInfo inf = typeToOffset.at(type);
@@ -42,6 +52,7 @@ bool inputBuffer::containsType(const std::string type) const
 
 int inputBuffer::getElementCount()
 {
+	if (!initialized) _throwMsg("Class not initialized");
 	return (int)buffer.size() / elementSize;
 }
 
@@ -52,11 +63,16 @@ int inputBuffer::getSizeBytes()
 
 void inputBuffer::push()
 {
+	if (!initialized) _throwMsg("Class not initialized");
+
 	buffer.resize(buffer.size() + elementSize, 0);
 }
 
 void inputBuffer::set(const void* data, int index, const std::string type)
 {
+	if (!initialized) _throwMsg("Class not initialized");
+	if (!containsType(type)) return;
+
 	typeInfo inf = typeToOffset.at(type);
 	int bufferIndex = index * elementSize + inf.offset;
 
@@ -74,6 +90,8 @@ void inputBuffer::setLast(const void* const data, const std::string type)
 
 void inputBuffer::createVertexBuffer(VertexBuffer& vb)
 {
+	if (!initialized) _throwMsg("Class not initialized");
+
 	vb.create(
 		buffer.data(),
 		getElementCount(),

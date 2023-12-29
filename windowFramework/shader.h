@@ -14,13 +14,18 @@ public:
 	shader(shader&) = delete;
  	
 	//construtor para inicializar com VS, PS e IL
+	shader() = default;
 	shader(const wchar_t* vertexShader, const wchar_t* pixelShader);
+	void create(const wchar_t* vertexShader, const wchar_t* pixelShader);
+
 	//coloca na pipeline
 	void bind();
 
 
 	std::vector<inputBuffer::type> inputParams;
 private:
+	bool initialized = false;
+
 	VertexShader vs;
 	PixelShader ps;
 	InputLayout il;

@@ -118,8 +118,19 @@ void Pipeline::bind(object& obj)
 	obj.pShader->bind();
 
 	//dynamic binds
-	obj.cvb.bind();
+	obj.getVertexBuffer()->bind();
 	obj.vb.bind();
+
+	//texturas
+	//atualmente nao suporta sistema de slots, implementar no futuro
+	for (auto current : obj.textures)
+	{
+		if (current.second->isAntialiased())
+			aliasedSampler.bind();
+		else
+			sampler.bind();
+		current.second->bind();
+	}
 
 
 

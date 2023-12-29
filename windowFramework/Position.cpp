@@ -2,6 +2,17 @@
 
 
 
+Position3d::Position3d()
+{
+	position.x = 0.0f;
+	position.y = 0.0f;
+	position.z = 0.0f;
+
+	angle.x = 0.0f;
+	angle.y = 0.0f;
+	angle.z = 0.0f;
+}
+
 Position3d::Position3d(vec3 Position, vec3 Angle)
 {
 	position.x = Position.x;

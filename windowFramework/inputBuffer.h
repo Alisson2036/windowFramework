@@ -26,9 +26,11 @@ public:
 		char size;
 	};
 
-	//construtor principal
+	//construtores padroes
+	inputBuffer() = default;
 	inputBuffer(std::vector<type> types);
-
+	void create(std::vector<type> types);
+	
 	//getters
 	std::unique_ptr<unsigned char*> data();
 	std::vector<char> getElement(const int index, const std::string type) const;
@@ -48,6 +50,7 @@ public:
 
 
 private:
+	bool initialized = false;
 
 	//array para armazenar todos os dados
 	std::vector<unsigned char> buffer;

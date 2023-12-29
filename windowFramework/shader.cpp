@@ -2,6 +2,11 @@
 
 shader::shader(const wchar_t* vertexShader, const wchar_t* pixelShader)
 {
+	create(vertexShader, pixelShader);
+}
+
+void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
+{
 	//CRIA PIXEL SHADER
 	vs.create(vertexShader);
 
@@ -16,7 +21,7 @@ shader::shader(const wchar_t* vertexShader, const wchar_t* pixelShader)
 	for (std::string& semantic : sd.inputParams)
 	{
 		format current = layouts.at(semantic);
-		inputParams.push_back({semantic, current.size});
+		inputParams.push_back({ semantic, current.size });
 
 		try
 		{
@@ -32,10 +37,14 @@ shader::shader(const wchar_t* vertexShader, const wchar_t* pixelShader)
 
 	//CRIA INPUT LAYOUT
 	il.create(&vs, desc, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+
+	initialized = true;
 }
 
 void shader::bind()
 {
+	if (!initialized) _throwMsg("Class not initialized");
+
 	if (vs.isInitialized()) vs.bind();
 	if (ps.isInitialized()) ps.bind();
 	if (il.isInitialized()) il.bind();

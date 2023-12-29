@@ -5,6 +5,7 @@
 class Position3d
 {
 public:
+	Position3d();
 	Position3d(vec3 Position, vec3 Angle);
 
 	void set(vec3 Position, vec3 Angle);
