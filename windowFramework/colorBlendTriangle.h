@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include "Instance.h"
+#include "Position.h"
 #include "pipeline.h"
 
 
@@ -59,7 +59,7 @@ public:
 	}
 
 
-	void update(Instance inst)
+	void update(Position3d inst)
 	{
 		//float angle = timeSinceCreation.getPassedSeconds();
 

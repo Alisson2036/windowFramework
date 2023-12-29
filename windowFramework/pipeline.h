@@ -14,7 +14,7 @@
 #include "object.h"
 
 #include "light.h"
-#include "Instance.h"
+#include "Position.h"
 #include "Camera.h"
 
 

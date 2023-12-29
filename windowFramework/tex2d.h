@@ -1,7 +1,7 @@
 #pragma once
 #pragma once
 #include <DirectXMath.h>
-#include "Instance.h"
+#include "Position.h"
 #include "pipeline.h"
 #include "texture.h"
 

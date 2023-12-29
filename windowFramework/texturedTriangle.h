@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include "Instance.h"
+#include "Position.h"
 #include "pipeline.h"
 #include "texture.h"
 #include "objLoader.h"
@@ -26,7 +26,7 @@ public:
 	void create(Pipeline* pipe, objLoader& obj, Texture* tex);
 
 
-	void update(Instance inst);
+	void update(Position3d inst);
 
 	void draw();
 private:

@@ -66,7 +66,7 @@ void TexturedTriangle::create(Pipeline* pipe, objLoader& obj, Texture* tex)
 
 }
 
-void TexturedTriangle::update(Instance inst)
+void TexturedTriangle::update(Position3d inst)
 {
 	//float angle = timeSinceCreation.getPassedSeconds();
 

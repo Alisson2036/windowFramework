@@ -140,7 +140,7 @@ void app::loop()
 
 
 
-	Instance inst(pos, angle);
+	Position3d inst(pos, angle);
 
 
 
@@ -156,7 +156,7 @@ void app::loop()
 			pos.z = y*2.0f;
 
 
-			inst.update(pos, angle);
+			inst.set(pos, angle);
 
 			cubeTex.update(inst);
 			cubeTex.draw();
@@ -181,7 +181,7 @@ void app::loop()
 				pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
 				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
-				inst.update(pos, angle);
+				inst.set(pos, angle);
 
 				cube.update(inst);
 				cube.draw();
