@@ -3,7 +3,9 @@
 app::app()
 	:
 	win(L"Jojo fofo", 800, 600),
-	timeSinceCreation()
+	timeSinceCreation(),
+	shh(L"ColorBlendVS.cso", L"ColorBlendPS.cso"),
+	jj(shh)
 {
 
 }
@@ -67,6 +69,8 @@ void app::start()
 	objLoader obj;
 	obj.fromFile("cube.obj");
 	cubeTex.create(win.Gfx().getPipeline(), obj, &tex);
+	jj.loadFromObj(obj);
+	jj.lock();
 
 
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
@@ -85,6 +89,7 @@ void app::start()
 		}
 		,&ab
 	);
+
 
 	while (win.update()) loop();
 
@@ -184,4 +189,6 @@ void app::loop()
 		}
 	}
 	plane.draw();
+	win.Gfx().getPipeline()->bind(jj);
+	
 }

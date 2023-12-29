@@ -98,6 +98,40 @@ void Pipeline::bind(ObjectDescriptor* desc)
 		context->Draw(desc->indicesNum, 0);
 }
 
+void Pipeline::bind(object& obj)
+{
+	if (camera)
+	{
+		DirectX::XMMATRIX a[] = { camera->getMatrix() };
+		cameraConstantBuffer.update(a);
+		DirectX::XMVECTOR b[] = { camera->getPositionVector() };
+		cameraPositionBuffer.update(b);
+	}
+	else
+		_throwMsg("Camera does not exist in the pipeline.");
+	//bind projection matrix
+	cameraConstantBuffer.bind();
+	//bind camera position
+	cameraPositionBuffer.bind();
+
+	//static binds
+	obj.pShader->bind();
+
+	//dynamic binds
+	obj.cvb.bind();
+	obj.vb.bind();
+
+
+
+	//luzes..caso existirem
+	if (light)
+		light->bind(0);
+
+
+
+	context->Draw(obj.getVertexCount(), 0);
+}
+
 void Pipeline::setLight(Light* _light)
 {
 	light = _light;

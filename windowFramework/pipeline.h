@@ -11,6 +11,7 @@
 #include "texture.h"
 #include "sampler.h"
 #include "shaderDesc.h"
+#include "object.h"
 
 #include "light.h"
 #include "Instance.h"
@@ -46,6 +47,7 @@ public:
 
 	void initializeBindable(Bindable* bindable);
 	void bind(ObjectDescriptor* desc);
+	void bind(object& obj);
 
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);

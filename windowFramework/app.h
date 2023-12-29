@@ -11,6 +11,9 @@
 
 #include "texture.h"
 
+//apenas para teste
+#include "shader.h"
+
 
 class app
 {
@@ -40,6 +43,9 @@ private:
 
 	window win;
 	Timer timeSinceCreation;
+
+	shader shh;
+	object jj;
 
 
 	Light light;//precisa ser inicializado depois do win se nao da erro
