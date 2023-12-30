@@ -3,9 +3,7 @@
 app::app()
 	:
 	win(L"Jojo fofo", 800, 600),
-	timeSinceCreation(),
-	shh(L"texturedVS.cso", L"texturedPS.cso"),
-	jj(shh)
+	timeSinceCreation()
 {
 
 }
@@ -37,7 +35,7 @@ void app::start()
 		colorBlendTriangle::vertex2d(-1.0f, 1.0f, 1.0f, 0u  , 255u, 0u  , 255u),
 		colorBlendTriangle::vertex2d( 1.0f, 1.0f, 1.0f, 255u, 0u  , 255u, 255u),
 	};
-	short i[] =
+	unsigned int i[] =
 	{
 		0,2,1, 2,3,1,
 		1,3,5, 3,7,5,
@@ -68,13 +66,15 @@ void app::start()
 
 	objLoader obj;
 	obj.fromFile("cube.obj");
-	cubeTex.create(win.Gfx().getPipeline(), obj, &tex);
 
-	jj.loadFromObj(obj);
-	jj.setTexture(&tex, 0);
-	jj.lock();
+	//cria o cubo texturizado
+	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
+	texturedCube.create(texturedShader);
+	texturedCube.loadFromObj(obj);
+	texturedCube.setTexture(&tex, 0);
+	texturedCube.lock();
 
-
+	//move camera para posicao inicial
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
 	
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
@@ -147,7 +147,7 @@ void app::loop()
 
 
 	//desenha o objeto texturizado no meio da tela
-	cubeTex.update(inst);
+	//cubeTex.update(inst);
 	
 	for (int y = -10; y < 10; y++)
 	{
@@ -158,10 +158,11 @@ void app::loop()
 			pos.z = y*2.0f;
 
 
-			inst.set(pos, angle);
+			texturedCube.set(pos, angle);
 
-			cubeTex.update(inst);
-			cubeTex.draw();
+			//texturedCube.update(inst);
+			//texturedCube.draw();
+			win.Gfx().getPipeline()->bind(texturedCube);
 		}
 	}
 
@@ -191,6 +192,5 @@ void app::loop()
 		}
 	}
 	plane.draw();
-	win.Gfx().getPipeline()->bind(jj);
 	
 }

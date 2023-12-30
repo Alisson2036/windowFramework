@@ -117,6 +117,9 @@ void object::lock()
 	if (!initialized) _throwMsg("Class not initialized");
 
 	dataBuffer.createVertexBuffer(vb);
+
+	if (indexes.size() > 0)
+		ib.create(indexes.data(), indexes.size());
 }
 
 void object::set(vec3 position, vec3 angle)

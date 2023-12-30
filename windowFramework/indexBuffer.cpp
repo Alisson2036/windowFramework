@@ -5,7 +5,7 @@ void IndexBuffer::create(const void* data, int arraySize)
 	D3D11_SUBRESOURCE_DATA subresource = { data };
 
 	D3D11_BUFFER_DESC bufferDesc = {};
-	bufferDesc.ByteWidth = sizeof(short) * arraySize;
+	bufferDesc.ByteWidth = sizeof(int) * arraySize;
 	bufferDesc.Usage = D3D11_USAGE_IMMUTABLE;
 	bufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
@@ -26,6 +26,6 @@ void IndexBuffer::bind()
 	if (last != this)
 	{
 		last = this;
-		getContext()->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R16_UINT, 0);
+		getContext()->IASetIndexBuffer(indexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
 	}
 }

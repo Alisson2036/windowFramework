@@ -8,6 +8,7 @@
 #include "vec3.h"
 #include "vec2.h"
 #include "color.h"
+#include "indexBuffer.h"
 
 class object
 {
@@ -47,6 +48,7 @@ private:
 
 	shader* pShader;
 	inputBuffer dataBuffer;
+	IndexBuffer ib;
 	VertexBuffer vb;
 
 	//posicao do objeto

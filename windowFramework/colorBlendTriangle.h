@@ -20,7 +20,7 @@ public:
 		char a;
 	};
 
-	void create(Pipeline* pipe, vertex2d vertices[], int vertexCount, short indexes[], int indexCount)
+	void create(Pipeline* pipe, vertex2d vertices[], int vertexCount, unsigned int indexes[], int indexCount)
 	{
 		pipeline = pipe;
 

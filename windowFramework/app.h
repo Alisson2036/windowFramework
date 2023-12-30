@@ -34,7 +34,6 @@ private:
 
 	colorBlendTriangle cube;
 	colorBlendTriangle cubeLight;
-	TexturedTriangle cubeTex;
 	Tex2d plane;
 
 	Texture tex;
@@ -44,8 +43,11 @@ private:
 	window win;
 	Timer timeSinceCreation;
 
-	shader shh;
-	object jj;
+
+	shader colorBlendShader;
+	object colorBlendCube;
+	shader texturedShader;
+	object texturedCube;
 
 
 	Light light;//precisa ser inicializado depois do win se nao da erro

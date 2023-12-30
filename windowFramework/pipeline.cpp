@@ -114,10 +114,10 @@ void Pipeline::bind(object& obj)
 	//bind camera position
 	cameraPositionBuffer.bind();
 
-	//static binds
+	//faz o bind dos shaders
 	obj.pShader->bind();
 
-	//dynamic binds
+	//faz o bind do vertex buffer e constant vertex buffer
 	obj.getVertexBuffer()->bind();
 	obj.vb.bind();
 
