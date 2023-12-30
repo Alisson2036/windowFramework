@@ -75,8 +75,8 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	//criando a textura do depth buffer
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthTexture;
 	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
-	depthTextureDesc.Width = 800;
-	depthTextureDesc.Height = 600;
+	depthTextureDesc.Width = windowSizeX;
+	depthTextureDesc.Height = windowSizeX;
 	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthTextureDesc.MipLevels = 1u;
 	depthTextureDesc.ArraySize = 1u;

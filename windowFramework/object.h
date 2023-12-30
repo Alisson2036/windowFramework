@@ -5,6 +5,9 @@
 #include "vertexConstantBuffer.h"
 #include "Position.h"
 #include "texture.h"
+#include "vec3.h"
+#include "vec2.h"
+#include "color.h"
 
 class object
 {
@@ -20,6 +23,10 @@ public:
 
 	//loaders
 	void loadFromObj(objLoader& obj);
+	void loadFromVertexArray(std::vector<vec3> vertexArray);
+	void loadFromVertexArray(std::vector<vec2> vertexArray);
+	void loadFromColorArray(std::vector<color> ColorArray);
+	void setVertexIndices(std::vector<int>& vertexIndices);
 
 	//getters
 	int getVertexCount();
@@ -34,6 +41,8 @@ public:
 	void setTexture(Texture* text, int slot);
 
 private:
+	void reserveVertexBuffer(int vertexCount);
+
 	bool initialized = false;
 
 	shader* pShader;
@@ -48,6 +57,9 @@ private:
 
 	//texturas
 	std::map<int, Texture*> textures;
+
+	//vertexIndex
+	std::vector<int> indexes;
 
 
 

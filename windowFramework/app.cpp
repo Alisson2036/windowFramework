@@ -4,7 +4,7 @@ app::app()
 	:
 	win(L"Jojo fofo", 800, 600),
 	timeSinceCreation(),
-	shh(L"ColorBlendVS.cso", L"ColorBlendPS.cso"),
+	shh(L"texturedVS.cso", L"texturedPS.cso"),
 	jj(shh)
 {
 
@@ -69,7 +69,9 @@ void app::start()
 	objLoader obj;
 	obj.fromFile("cube.obj");
 	cubeTex.create(win.Gfx().getPipeline(), obj, &tex);
+
 	jj.loadFromObj(obj);
+	jj.setTexture(&tex, 0);
 	jj.lock();
 
 

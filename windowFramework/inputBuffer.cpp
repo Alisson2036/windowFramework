@@ -61,11 +61,13 @@ int inputBuffer::getSizeBytes()
 	return buffer.size();
 }
 
-void inputBuffer::push()
+void inputBuffer::reserve(int dataSize)
 {
 	if (!initialized) _throwMsg("Class not initialized");
-
-	buffer.resize(buffer.size() + elementSize, 0);
+	int diff = dataSize - getElementCount();
+	if (diff < 0) _throwMsg("Trying to erase data");
+	
+	buffer.resize(buffer.size() + (elementSize * diff), 0);
 }
 
 void inputBuffer::set(const void* data, int index, const std::string type)
@@ -74,7 +76,7 @@ void inputBuffer::set(const void* data, int index, const std::string type)
 	if (!containsType(type)) return;
 
 	typeInfo inf = typeToOffset.at(type);
-	int bufferIndex = index * elementSize + inf.offset;
+	int bufferIndex = (index * elementSize) + inf.offset;
 
 	for (unsigned char i = 0; i < inf.size; i++)
 	{

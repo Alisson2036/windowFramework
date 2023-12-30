@@ -10,6 +10,7 @@ class objLoader
 public:
 
 	void fromFile(std::string fileName);
+	int getVertexCount();
 
 	struct vertex
 	{

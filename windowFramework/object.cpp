@@ -30,33 +30,81 @@ void object::loadFromObj(objLoader& obj)
 
 	bool pos = dataBuffer.containsType("Position");
 	bool normals = dataBuffer.containsType("Normals");
-	bool texture = dataBuffer.containsType("TexCoord");
+	bool textureCoords = dataBuffer.containsType("TexCoord");
 
-	if ( (!pos) && (!normals) && (!texture) ) return;
+	if ( (!pos) && (!normals) && (!textureCoords) ) return;
+
+	reserveVertexBuffer(obj.faces.size() * 3);
+	int index = 0;
 
 	for (objLoader::face& face : obj.faces)
 	{
 		for (int i = 0; i < 3; i++)
 		{
-			dataBuffer.push();
-
 			std::vector<float> temp;
+			if (pos)
+			{
+				temp.push_back(obj.vertices[face.vertexIndex[i] - 1].x);
+				temp.push_back(obj.vertices[face.vertexIndex[i] - 1].y);
+				temp.push_back(obj.vertices[face.vertexIndex[i] - 1].z);
+				dataBuffer.set(temp.data(), index, "Position");
+				temp.clear();
+			}
 
-			temp.push_back(obj.vertices[face.vertexIndex[i] - 1].x);
-			temp.push_back(obj.vertices[face.vertexIndex[i] - 1].y);
-			temp.push_back(obj.vertices[face.vertexIndex[i] - 1].z);
+			if (textureCoords)
+			{
+				temp.push_back(obj.texCoord[face.textureIndex[i] - 1].u);
+				temp.push_back(obj.texCoord[face.textureIndex[i] - 1].v);
+				dataBuffer.set(temp.data(), index, "TexCoord");
+				temp.clear();
+			}
 
-			dataBuffer.setLast(temp.data(), "Position");
-
-			//obj.texCoord[face.textureIndex[i] - 1].u;
-			//obj.texCoord[face.textureIndex[i] - 1].v;
-			//
-			//obj.normals[face.normalIndex[i] - 1].x;
-			//obj.normals[face.normalIndex[i] - 1].y;
-			//obj.normals[face.normalIndex[i] - 1].z;
-
+			if (normals)
+			{
+				temp.push_back(obj.normals[face.normalIndex[i] - 1].x);
+				temp.push_back(obj.normals[face.normalIndex[i] - 1].y);
+				temp.push_back(obj.normals[face.normalIndex[i] - 1].z);
+				dataBuffer.set(temp.data(), index, "Normals");
+				temp.clear();
+			}
+			index++;
 		}
 	}
+}
+
+void object::loadFromVertexArray(std::vector<vec3> vertexArray)
+{
+	if (!initialized) _throwMsg("Class not initialized");
+	if(!dataBuffer.containsType("Position")) return;
+
+	reserveVertexBuffer(vertexArray.size());
+	for (int i = 0; i < vertexArray.size(); i++)
+		dataBuffer.set(&(vertexArray[i]), i, "Position");
+}
+
+void object::loadFromVertexArray(std::vector<vec2> vertexArray)
+{
+	if (!initialized) _throwMsg("Class not initialized");
+	if (!dataBuffer.containsType("Position2d")) return;
+
+	reserveVertexBuffer(vertexArray.size());
+	for (int i = 0; i < vertexArray.size(); i++)
+		dataBuffer.set(&(vertexArray[i]), i, "Position2d");
+}
+
+void object::loadFromColorArray(std::vector<color> ColorArray)
+{
+	if (!initialized) _throwMsg("Class not initialized");
+	if (!dataBuffer.containsType("Color")) return;
+
+	reserveVertexBuffer(ColorArray.size());
+	for (int i = 0; i < ColorArray.size(); i++)
+		dataBuffer.set(&(ColorArray[i]), i, "Color");
+}
+
+void object::setVertexIndices(std::vector<int>& vertexIndices)
+{
+	indexes = vertexIndices;
 }
 
 int object::getVertexCount()
@@ -92,6 +140,15 @@ void object::rotate(vec3 angle)
 void object::setTexture(Texture* text, int slot)
 {
 	textures[slot] = text;
+}
+
+void object::reserveVertexBuffer(int vertexCount)
+{
+	if (!initialized) _throwMsg("Class not initialized");
+	if (vertexCount < getVertexCount()) _throwMsg("Not enough vertex data");
+
+	dataBuffer.reserve(vertexCount);
+
 }
 
 ConstantVertexBuffer* object::getVertexBuffer()

@@ -38,8 +38,8 @@ public:
 	int getElementCount();
 	int getSizeBytes();
 
-	//adiciona mais um elemento, sem nenhuma informação
-	void push();
+	//reserva mais espaço, sem nenhuma informação
+	void reserve(int dataSize);
 
 	//setters
 	void set(const void* data, int index, const std::string type);

@@ -188,3 +188,8 @@ void objLoader::fromFile(std::string fileName)
 		}
 	}
 }
+
+int objLoader::getVertexCount()
+{
+	return vertices.size();
+}
