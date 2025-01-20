@@ -68,7 +68,7 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	lastBinded = desc->type;
 
 	//dynamic binds
-	if(desc->indexBuffer) desc->indexBuffer->bind();
+	//if(desc->indexBuffer) desc->indexBuffer->bind();
 	if(desc->constantVertexBuffer) desc->constantVertexBuffer->bind();
 	if(desc->vertexBuffer) desc->vertexBuffer->bind();
 
@@ -139,7 +139,10 @@ void Pipeline::bind(object& obj)
 		light->bind(0);
 
 	if (obj.ib.isInitialized())
+	{
+		obj.ib.bind();
 		context->DrawIndexed(obj.indexes.size(), 0, 0);
+	}
 	else
 		context->Draw(obj.getVertexCount(), 0);
 }
