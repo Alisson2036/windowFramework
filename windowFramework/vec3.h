@@ -5,13 +5,13 @@ class vec3
 public:
 	//construtores padrao
 	vec3() = default;
-	vec3(float X, float Y, float Z)
+	vec3(const float X, const float Y, const float Z)
 	{
 		x = X;
 		y = Y;
 		z = Z;
 	}
-	vec3(vec3& rhs)
+	vec3(const vec3& rhs)
 	{
 		x = rhs.x;
 		y = rhs.y;

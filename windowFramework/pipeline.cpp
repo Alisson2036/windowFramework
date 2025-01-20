@@ -138,9 +138,10 @@ void Pipeline::bind(object& obj)
 	if (light)
 		light->bind(0);
 
-
-
-	context->Draw(obj.getVertexCount(), 0);
+	if (obj.ib.isInitialized())
+		context->DrawIndexed(obj.indexes.size(), 0, 0);
+	else
+		context->Draw(obj.getVertexCount(), 0);
 }
 
 void Pipeline::setLight(Light* _light)

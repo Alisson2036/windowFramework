@@ -7,12 +7,12 @@ class vec2
 public:
 	//construtores padrao
 	vec2() = default;
-	vec2(float X, float Y)
+	vec2(const float X, const float Y)
 	{
 		x = X;
 		y = Y;
 	}
-	vec2(vec2& rhs)
+	vec2(const vec2& rhs)
 	{
 		x = rhs.x;
 		y = rhs.y;

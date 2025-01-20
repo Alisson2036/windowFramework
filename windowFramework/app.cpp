@@ -67,8 +67,51 @@ void app::start()
 	objLoader obj;
 	obj.fromFile("cube.obj");
 
-	//cria o cubo texturizado
+	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
+
+	//cria o cubo teste
+	std::vector<vec3> verArr =
+	{
+		vec3(-1.0f,-1.0f,-1.0f),
+		vec3(1.0f,-1.0f,-1.0f),
+		vec3(-1.0f, 1.0f,-1.0f),
+		vec3(1.0f, 1.0f,-1.0f),
+		vec3(-1.0f,-1.0f, 1.0f),
+		vec3(1.0f,-1.0f, 1.0f),
+		vec3(-1.0f, 1.0f, 1.0f),
+		vec3(1.0f, 1.0f, 1.0f),
+	};
+	std::vector<color> colors =
+	{
+		color(255u, 0, 0, 255u),
+		color(0, 255u, 0, 255u),
+		color(0, 0, 255u, 255u),
+		color(255u, 0, 255u, 255u),
+		color(255u, 255u, 0, 255u),
+		color(0, 255u, 255u, 255u),
+		color(255u, 255u, 0, 255u),
+		color(0, 255u, 255u, 255u)
+	};
+	std::vector<int> ind =
+	{
+		0,2,1, 2,3,1,
+		1,3,5, 3,7,5,
+		2,6,3, 3,6,7,
+		4,5,7, 4,7,6,
+		0,4,2, 2,4,6,
+		0,1,4, 1,5,4
+	};
+
+
+	colorBlendShader.create(L"colorBlendVS.cso", L"colorBlendPS.cso");
+	colorBlendCube.create(colorBlendShader);
+	colorBlendCube.loadFromVertexArray(verArr);
+	colorBlendCube.loadFromColorArray(colors);
+	colorBlendCube.setVertexIndices(ind);
+	colorBlendCube.lock();
+
+	//cria o cubo texturizado
 	texturedCube.create(texturedShader);
 	texturedCube.loadFromObj(obj);
 	texturedCube.setTexture(&tex, 0);
@@ -171,6 +214,10 @@ void app::loop()
 	light.updatePos({2.0f, a, 0.0f});
 	cubeLight.update({ { 2.0f,a,0.0f }, angle });
 	cubeLight.draw();
+
+	//desenha o cubo teste
+	colorBlendCube.set({ 5.f,5.f,5.f }, { 0.f,0.f,0.f });
+	win.Gfx().getPipeline()->bind(colorBlendCube);
 
 	
 	//cria e desenha todos os cubos coloridos
