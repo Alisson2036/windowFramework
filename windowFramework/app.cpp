@@ -104,16 +104,6 @@ void app::start()
 	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, color(255u, 255u, 255u, 255u), 40);
 	Texture ab;
 	ab.create(img,false);
-	plane.create(
-		win.Gfx().getPipeline(),
-		{
-			{-1.0f,-1.0f},
-			{0.5f,0.5f},
-			{0.0f,0.0f},
-			{1.0f,1.0f}
-		}
-		,&ab
-	);
 
 
 	while (win.update()) loop();
@@ -157,7 +147,6 @@ void app::loop()
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
-
 
 
 	vec3 pos = { 0.0f, 0.0f, 0.0f };
@@ -213,6 +202,5 @@ void app::loop()
 			}
 		}
 	}
-	plane.draw();
 	
 }

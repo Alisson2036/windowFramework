@@ -3,9 +3,6 @@
 #include "exception.h"
 #include "timer.h"
 
-#include "colorBlendTriangle.h"
-#include "texturedTriangle.h"
-#include "tex2d.h"
 #include "Camera.h"
 #include "light.h"
 
@@ -31,8 +28,6 @@ private:
 
 private:
 	Camera cam;
-
-	Tex2d plane;
 
 	Texture tex;
 
