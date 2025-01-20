@@ -8,8 +8,7 @@
 
 #include "texture.h"
 
-//apenas para teste
-#include "shader.h"
+#include "hudElement.h"
 
 
 class app
@@ -36,6 +35,8 @@ private:
 	window win;
 	Timer timeSinceCreation;
 
+
+	hudElement plane;
 
 	shader colorBlendShader;
 	shader texturedShader;

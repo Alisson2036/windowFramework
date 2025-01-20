@@ -102,6 +102,16 @@ void object::loadFromColorArray(std::vector<color> ColorArray)
 		dataBuffer.set(&(ColorArray[i]), i, "Color");
 }
 
+void object::loadFromTexCoordArray(std::vector<vec2> texCoordArray)
+{
+	if (!initialized) _throwMsg("Class not initialized");
+	if (!dataBuffer.containsType("TexCoord")) return;
+
+	reserveVertexBuffer(texCoordArray.size());
+	for (int i = 0; i < texCoordArray.size(); i++)
+		dataBuffer.set(&(texCoordArray[i]), i, "TexCoord");
+}
+
 void object::setVertexIndices(std::vector<int>& vertexIndices)
 {
 	indexes = vertexIndices;

@@ -27,6 +27,7 @@ public:
 	void loadFromVertexArray(std::vector<vec3> vertexArray);
 	void loadFromVertexArray(std::vector<vec2> vertexArray);
 	void loadFromColorArray(std::vector<color> ColorArray);
+	void loadFromTexCoordArray(std::vector<vec2> texCoordArray);
 	void setVertexIndices(std::vector<int>& vertexIndices);
 
 	//getters

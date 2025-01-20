@@ -101,9 +101,10 @@ void app::start()
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
 	
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"teste de texto", L"fonte", 200, 200, color(255u, 255u, 255u, 255u), 40);
+	img.fromRenderText(L"teste de texto", L"fonte", 800, 600, color(255u, 255u, 255u, 255u), 160);
 	Texture ab;
 	ab.create(img,false);
+	plane.create(ab);
 
 
 	while (win.update()) loop();
@@ -194,13 +195,19 @@ void app::loop()
 			for (int i = -20; i < 20; i++)
 			{
 				pos.x = i * 4.0f;
-				pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
-				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
+				//pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
+				//pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
+				pos.y = cos(i) + n * 10;
+				pos.z = sin(i) + j * 10;
 
 				colorBlendCube.set(pos, { 0.f,0.f,0.f });
 				win.Gfx().getPipeline()->bind(colorBlendCube);
 			}
 		}
 	}
+
+
+	plane.obj.set({ 0.f,0.f,0.f }, { 0.f,0.f,0.f });
+	win.Gfx().getPipeline()->bind(plane.obj);
 	
 }

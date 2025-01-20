@@ -12,16 +12,20 @@ struct VS_Output
 
 cbuffer buff : register(b0)
 {
-    float2 posOffset;
-    float2 texOffset;
+    matrix mat;
+};
+cbuffer projectionMatrix : register(b1)
+{
+    matrix projectionMat;
 };
 
 VS_Output main( VS_Input input)
 {
     VS_Output output;
-
-    output.position = float4(input.pos + posOffset, 0.0f,1.0f);
-    output.texCoord = input.texCoord + texOffset;
+    
+    output.texCoord = input.texCoord;
+    
+    output.position = float4(input.pos, 0.0f, 1.0f);
 
 	return output;
 }
