@@ -23,18 +23,10 @@ void app::start()
 	//coloca camera na pipeline
 	win.Gfx().getPipeline()->setCamera(&cam);
 
-	//cria o cubo
-	colorBlendTriangle::vertex2d v[] =
-	{
-		colorBlendTriangle::vertex2d(-1.0f,-1.0f,-1.0f, 255u, 0u  , 0u  , 255u),
-		colorBlendTriangle::vertex2d( 1.0f,-1.0f,-1.0f, 0u  , 0u  , 255u, 255u),
-		colorBlendTriangle::vertex2d(-1.0f, 1.0f,-1.0f, 0u  , 255u, 0u  , 255u),
-		colorBlendTriangle::vertex2d( 1.0f, 1.0f,-1.0f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d(-1.0f,-1.0f, 1.0f, 70u , 0u  , 200u, 255u),
-		colorBlendTriangle::vertex2d( 1.0f,-1.0f, 1.0f, 0u  , 0u  , 255u, 255u),
-		colorBlendTriangle::vertex2d(-1.0f, 1.0f, 1.0f, 0u  , 255u, 0u  , 255u),
-		colorBlendTriangle::vertex2d( 1.0f, 1.0f, 1.0f, 255u, 0u  , 255u, 255u),
-	};
+
+	
+	
+	//cria o cubo para mostrar a luz
 	unsigned int i[] =
 	{
 		0,2,1, 2,3,1,
@@ -44,11 +36,6 @@ void app::start()
 		0,4,2, 2,4,6,
 		0,1,4, 1,5,4
 	};
-	
-	cube.create(win.Gfx().getPipeline(), v, ARRAYSIZE(v), i, ARRAYSIZE(i));
-	
-	//cria o cubo para mostrar a luz
-	//cria o cubo
 	colorBlendTriangle::vertex2d v2[] =
 	{
 		colorBlendTriangle::vertex2d(-0.1f,-0.1f,-0.1f, 255u, 255u, 255u, 255u),
@@ -84,14 +71,14 @@ void app::start()
 	};
 	std::vector<color> colors =
 	{
-		color(255u, 0, 0, 255u),
-		color(0, 255u, 0, 255u),
-		color(0, 0, 255u, 255u),
-		color(255u, 0, 255u, 255u),
-		color(255u, 255u, 0, 255u),
-		color(0, 255u, 255u, 255u),
-		color(255u, 255u, 0, 255u),
-		color(0, 255u, 255u, 255u)
+		color(255u, 0u  , 0u  , 255u),
+		color(0u  , 0u  , 255u, 255u),
+		color(0u  , 255u, 0u  , 255u),
+		color(255u, 255u, 255u, 255u),
+		color(70u , 0u  , 200u, 255u),
+		color(0u  , 0u  , 255u, 255u),
+		color(0u  , 255u, 0u  , 255u),
+		color(255u, 0u  , 255u, 255u),
 	};
 	std::vector<int> ind =
 	{
@@ -215,9 +202,6 @@ void app::loop()
 	cubeLight.update({ { 2.0f,a,0.0f }, angle });
 	cubeLight.draw();
 
-	//desenha o cubo teste
-	colorBlendCube.set({ 5.f,5.f,5.f }, { 0.f,0.f,0.f });
-	win.Gfx().getPipeline()->bind(colorBlendCube);
 
 	
 	//cria e desenha todos os cubos coloridos
@@ -231,10 +215,8 @@ void app::loop()
 				pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
 				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
-				inst.set(pos, angle);
-
-				cube.update(inst);
-				cube.draw();
+				colorBlendCube.set(pos, { 0.f,0.f,0.f });
+				win.Gfx().getPipeline()->bind(colorBlendCube);
 			}
 		}
 	}

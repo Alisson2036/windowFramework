@@ -32,7 +32,6 @@ private:
 private:
 	Camera cam;
 
-	colorBlendTriangle cube;
 	colorBlendTriangle cubeLight;
 	Tex2d plane;
 
