@@ -27,55 +27,13 @@ class Pipeline
 public:
 	Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context);
 
-	enum ObjectType
-	{
-		ColorBlend,
-		Textured,
-		Texture2d,
-		empty
-	};
-
-	struct ObjectDescriptor
-	{
-		ObjectType type = ObjectType::empty;
-		IndexBuffer* indexBuffer = nullptr;
-		VertexBuffer* vertexBuffer = nullptr;
-		ConstantVertexBuffer* constantVertexBuffer = nullptr;
-		std::vector<Texture*> texture = {};
-		int indicesNum = 0;
-	};
 
 	void initializeBindable(Bindable* bindable);
-	void bind(ObjectDescriptor* desc);
 	void bind(object& obj);
 
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);
 
-private:
-
-
-	class StaticBind
-	{
-	public:
-		//construtor para inicializar com VS, PS e IL
-		StaticBind(const wchar_t* vertexShader, const wchar_t* pixelShader);
-		//coloca na pipeline
-		void bind();
-	private:
-		VertexShader vs;
-		PixelShader ps;
-		InputLayout il;
-
-		const std::map<std::string, DXGI_FORMAT> layouts =
-		{
-			{ "Position",  DXGI_FORMAT_R32G32B32_FLOAT       },
-			{ "TexCoord",  DXGI_FORMAT_R32G32_FLOAT          },
-			{ "Normals",   DXGI_FORMAT_R32G32B32_FLOAT       },
-			{ "Color",     DXGI_FORMAT_R8G8B8A8_UNORM        },
-			{ "Position2d",DXGI_FORMAT_R32G32_FLOAT          }
-		};
-	};
 
 private:
 
@@ -84,7 +42,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
-	std::vector<StaticBind> staticBinds;
 
 	Sampler aliasedSampler;
 	Sampler sampler;
@@ -93,6 +50,5 @@ private:
 	ConstantPixelBuffer cameraPositionBuffer;
 	Camera* camera;
 
-	int lastBinded = ObjectType::empty;
 
 };

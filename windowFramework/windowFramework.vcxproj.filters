@@ -75,9 +75,6 @@
     <ClCompile Include="Camera.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="Instance.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="image.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -99,9 +96,6 @@
     <ClCompile Include="light.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="texturedTriangle.cpp">
-      <Filter>Arquivos de Origem\Object</Filter>
-    </ClCompile>
     <ClCompile Include="shaderDesc.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -112,6 +106,9 @@
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="Position.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
@@ -152,9 +149,6 @@
     <ClInclude Include="vertexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="colorBlendTriangle.h">
-      <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
     <ClInclude Include="vertexConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
@@ -162,9 +156,6 @@
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
-    <ClInclude Include="Instance.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="image.h">
@@ -179,9 +170,6 @@
     <ClInclude Include="pipeline.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="texturedTriangle.h">
-      <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
     <ClInclude Include="objLoader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -193,9 +181,6 @@
     </ClInclude>
     <ClInclude Include="shaderDesc.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="tex2d.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="vec2.h">
       <Filter>Arquivos de Cabeçalho</Filter>
@@ -214,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="object.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Position.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
