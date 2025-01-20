@@ -14,9 +14,12 @@ public:
 
 	void rotate(vec3 Angle);
 
+	void setScale(vec3 Scale);
+
 	DirectX::XMMATRIX getMatrix();
 
 private:
+	vec3 scale;
 	vec3 position;
 	vec3 angle;
 };

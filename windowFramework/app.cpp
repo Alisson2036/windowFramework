@@ -22,32 +22,6 @@ void app::start()
 	win.Gfx().getPipeline()->setLight(&light);
 	//coloca camera na pipeline
 	win.Gfx().getPipeline()->setCamera(&cam);
-
-
-	
-	
-	//cria o cubo para mostrar a luz
-	unsigned int i[] =
-	{
-		0,2,1, 2,3,1,
-		1,3,5, 3,7,5,
-		2,6,3, 3,6,7,
-		4,5,7, 4,7,6,
-		0,4,2, 2,4,6,
-		0,1,4, 1,5,4
-	};
-	colorBlendTriangle::vertex2d v2[] =
-	{
-		colorBlendTriangle::vertex2d(-0.1f,-0.1f,-0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d( 0.1f,-0.1f,-0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d(-0.1f, 0.1f,-0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d( 0.1f, 0.1f,-0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d(-0.1f,-0.1f, 0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d( 0.1f,-0.1f, 0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d(-0.1f, 0.1f, 0.1f, 255u, 255u, 255u, 255u),
-		colorBlendTriangle::vertex2d( 0.1f, 0.1f, 0.1f, 255u, 255u, 255u, 255u)
-	};
-	cubeLight.create(win.Gfx().getPipeline(), v2, ARRAYSIZE(v2), i, ARRAYSIZE(i));
 	
 	//-----------------------------
 
@@ -80,6 +54,17 @@ void app::start()
 		color(0u  , 255u, 0u  , 255u),
 		color(255u, 0u  , 255u, 255u),
 	};
+	std::vector<color> colorsWhite =
+	{
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+		color(255u, 255u, 255u, 255u),
+	};
 	std::vector<int> ind =
 	{
 		0,2,1, 2,3,1,
@@ -92,11 +77,19 @@ void app::start()
 
 
 	colorBlendShader.create(L"colorBlendVS.cso", L"colorBlendPS.cso");
+
 	colorBlendCube.create(colorBlendShader);
 	colorBlendCube.loadFromVertexArray(verArr);
 	colorBlendCube.loadFromColorArray(colors);
 	colorBlendCube.setVertexIndices(ind);
 	colorBlendCube.lock();
+
+	cubeLight.create(colorBlendShader);
+	cubeLight.loadFromVertexArray(verArr);
+	cubeLight.loadFromColorArray(colorsWhite);
+	cubeLight.setVertexIndices(ind);
+	cubeLight.lock();
+	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
 	texturedCube.create(texturedShader);
@@ -199,8 +192,8 @@ void app::loop()
 
 	//muda posicao da luz 
 	light.updatePos({2.0f, a, 0.0f});
-	cubeLight.update({ { 2.0f,a,0.0f }, angle });
-	cubeLight.draw();
+	cubeLight.set({ 2.0f,a,0.0f }, angle);
+	win.Gfx().getPipeline()->bind(cubeLight);
 
 
 	

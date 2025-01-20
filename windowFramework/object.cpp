@@ -140,6 +140,12 @@ void object::rotate(vec3 angle)
 	needUpdate = true;
 }
 
+void object::setScale(vec3 Scale)
+{
+	pos.setScale(Scale);
+	needUpdate = true;
+}
+
 void object::setTexture(Texture* text, int slot)
 {
 	textures[slot] = text;

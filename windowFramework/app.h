@@ -32,7 +32,6 @@ private:
 private:
 	Camera cam;
 
-	colorBlendTriangle cubeLight;
 	Tex2d plane;
 
 	Texture tex;
@@ -44,9 +43,10 @@ private:
 
 
 	shader colorBlendShader;
-	object colorBlendCube;
 	shader texturedShader;
+	object colorBlendCube;
 	object texturedCube;
+	object cubeLight;
 
 
 	Light light;//precisa ser inicializado depois do win se nao da erro

@@ -11,6 +11,10 @@ Position3d::Position3d()
 	angle.x = 0.0f;
 	angle.y = 0.0f;
 	angle.z = 0.0f;
+
+	scale.x = 1.0f;
+	scale.y = 1.0f;
+	scale.z = 1.0f;
 }
 
 Position3d::Position3d(vec3 Position, vec3 Angle)
@@ -23,6 +27,9 @@ Position3d::Position3d(vec3 Position, vec3 Angle)
 	angle.y = Angle.y;
 	angle.z = Angle.z;
 
+	scale.x = 1.0f;
+	scale.y = 1.0f;
+	scale.z = 1.0f;
 }
 
 
@@ -53,10 +60,16 @@ void Position3d::rotate(vec3 Angle)
 	angle.z += Angle.z;
 }
 
+void Position3d::setScale(vec3 Scale)
+{
+	scale = Scale;
+}
+
 DirectX::XMMATRIX Position3d::getMatrix()
 {
 
 	return DirectX::XMMATRIX(
+		DirectX::XMMatrixScaling(scale.x, scale.y, scale.z) *
 		DirectX::XMMatrixRotationX(angle.x) *
 		DirectX::XMMatrixRotationY(angle.y) *
 		DirectX::XMMatrixRotationZ(angle.z) *

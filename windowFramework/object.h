@@ -37,6 +37,7 @@ public:
 	void set(vec3 position, vec3 angle);
 	void move(vec3 vector);
 	void rotate(vec3 angle);
+	void setScale(vec3 Scale);
 
 	//texturas
 	void setTexture(Texture* text, int slot);

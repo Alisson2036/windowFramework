@@ -68,7 +68,7 @@ void Pipeline::bind(ObjectDescriptor* desc)
 	lastBinded = desc->type;
 
 	//dynamic binds
-	//if(desc->indexBuffer) desc->indexBuffer->bind();
+	if(desc->indexBuffer) desc->indexBuffer->bind();
 	if(desc->constantVertexBuffer) desc->constantVertexBuffer->bind();
 	if(desc->vertexBuffer) desc->vertexBuffer->bind();
 
