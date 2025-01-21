@@ -197,9 +197,6 @@
     <ClInclude Include="inputBuffer.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
-      <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
     <ClInclude Include="object.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
@@ -207,6 +204,9 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="hudElement.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

@@ -4,7 +4,7 @@
 
 
 
-Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context)
+Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context, vec2 _windowResolution)
 {
 	device = _device;
 	context = _context;
@@ -20,6 +20,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	DirectX::XMVECTOR vec[] = { DirectX::XMVECTOR({0.0f,0.0f,0.0f,0.0f})};
 	cameraPositionBuffer.create(vec, 1, sizeof(DirectX::XMVECTOR));
 	cameraPositionBuffer.setSlot(1);
+
+	windowResolution = _windowResolution;
 }
 
 
@@ -86,4 +88,9 @@ void Pipeline::setLight(Light* _light)
 void Pipeline::setCamera(Camera* _camera)
 {
 	camera = _camera;
+}
+
+vec2 Pipeline::getWindowResolution() const
+{
+	return windowResolution;
 }

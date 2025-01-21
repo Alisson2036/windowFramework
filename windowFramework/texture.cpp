@@ -45,7 +45,7 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 		getDevice()->CreateShaderResourceView(texture.Get(), &viewDesc, textureView.GetAddressOf())
 	);
 
-
+	resolution = vec2(d.width, d.height);
 
 }
 
@@ -63,4 +63,9 @@ void Texture::bind()
 		last = this;
 		getContext()->PSSetShaderResources(0u, 1u, textureView.GetAddressOf());
 	}
+}
+
+vec2 Texture::getResolution()
+{
+	return resolution;
 }

@@ -16,6 +16,7 @@
 #include "light.h"
 #include "Position.h"
 #include "Camera.h"
+#include "vec2.h"
 
 
 
@@ -25,7 +26,7 @@
 class Pipeline
 {
 public:
-	Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context);
+	Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context, vec2 _windowResolution);
 
 
 	void initializeBindable(Bindable* bindable);
@@ -33,6 +34,8 @@ public:
 
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);
+
+	vec2 getWindowResolution() const;
 
 
 private:
@@ -49,6 +52,8 @@ private:
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
 	Camera* camera;
+
+	vec2 windowResolution;
 
 
 };

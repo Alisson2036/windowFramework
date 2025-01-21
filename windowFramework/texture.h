@@ -5,6 +5,7 @@
 #include "bindable.h"
 #include "image.h"
 #include "exception.h"
+#include "vec2.h"
 
 
 class Texture : public Bindable
@@ -17,8 +18,11 @@ public:
 
 	void bind() override;
 
+	vec2 getResolution();
+
 private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 	bool antialiased = true;
+	vec2 resolution;
 
 };

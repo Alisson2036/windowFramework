@@ -106,7 +106,7 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	Bindable::setDevice(d3dDevice.Get());
 	Bindable::setContext(deviceContext.Get());
 	//inicia pipeline
-	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get());
+	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get(), {(float)windowSizeX, (float)windowSizeY});
 	
 	Image::initialize();
 }

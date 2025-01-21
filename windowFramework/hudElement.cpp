@@ -4,10 +4,10 @@ void hudElement::create(Texture& tex)
 {
 	std::vector<vec2> vertices =
 	{
+		vec2(0.0f, -1.0f),
+		vec2(1.0f, -1.0f),
 		vec2(0.0f, 0.0f),
 		vec2(1.0f, 0.0f),
-		vec2(0.0f, 1.0f),
-		vec2(1.0f, 1.0f),
 	}; 
 	std::vector<vec2> coords =
 	{
@@ -30,4 +30,16 @@ void hudElement::create(Texture& tex)
 	obj.loadFromTexCoordArray(coords);
 	obj.setVertexIndices(indices);
 	obj.lock();
+
+	resolution = tex.getResolution();
+}
+
+void hudElement::setPosition(vec2 pos)
+{
+	obj.set({pos.x, pos.y, 0.f}, {0.f, 0.f, 0.f});
+}
+
+void hudElement::draw(Pipeline& pipeline)
+{
+	pipeline.bind(obj);
 }

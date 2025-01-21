@@ -104,7 +104,7 @@ void app::start()
 	img.fromRenderText(L"teste de texto", L"fonte", 800, 600, color(255u, 255u, 255u, 255u), 160);
 	Texture ab;
 	ab.create(img,false);
-	plane.create(ab);
+	plane.create(tex);
 
 
 	while (win.update()) loop();
@@ -195,10 +195,8 @@ void app::loop()
 			for (int i = -20; i < 20; i++)
 			{
 				pos.x = i * 4.0f;
-				//pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
-				//pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
-				pos.y = cos(i) + n * 10;
-				pos.z = sin(i) + j * 10;
+				pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
+				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
 				colorBlendCube.set(pos, { 0.f,0.f,0.f });
 				win.Gfx().getPipeline()->bind(colorBlendCube);
@@ -206,8 +204,6 @@ void app::loop()
 		}
 	}
 
-
-	plane.obj.set({ 0.f,0.f,0.f }, { 0.f,0.f,0.f });
-	win.Gfx().getPipeline()->bind(plane.obj);
-	
+	plane.setPosition({ timeSinceCreation.getPassedSeconds()/10, 0.0f });
+	plane.draw(*win.Gfx().getPipeline());
 }

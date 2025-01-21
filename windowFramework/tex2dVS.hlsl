@@ -12,7 +12,7 @@ struct VS_Output
 
 cbuffer buff : register(b0)
 {
-    matrix mat;
+    row_major matrix mat;
 };
 cbuffer projectionMatrix : register(b1)
 {
@@ -25,7 +25,7 @@ VS_Output main( VS_Input input)
     
     output.texCoord = input.texCoord;
     
-    output.position = float4(input.pos, 0.0f, 1.0f);
+    output.position = mul(float4(input.pos, 0.0f, 1.0f), mat);
 
 	return output;
 }
