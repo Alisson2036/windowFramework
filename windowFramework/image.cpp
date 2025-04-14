@@ -104,7 +104,7 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	Gdiplus::RectF rect(0.0f, 0.0f, (float)texSizeX, (float)texSizeY);
 	
 
-	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
+	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
 
 	Gdiplus::SolidBrush* brush = new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor));
 	

@@ -101,10 +101,10 @@ void app::start()
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
 	
 	//carrega a fonte
-	fonte = new Image::font(L"Times New Roman", 40.0f);
+	fonte = new Image::font(L"Times New Roman", 80.0f);
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	img.fromRenderText(L"oi tudo bem?", *fonte, 400, 300, color(255u, 255u, 255u, 255u));
 	Texture ab;
 	ab.create(img,false);
 	plane.create(ab);
@@ -207,12 +207,7 @@ void app::loop()
 		}
 	}
 
-	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	std::wstring text = std::to_wstring(timeSinceCreation.getPassedSeconds());
-	imgTemp.fromRenderText(text, *fonte, 400, 300, color(255u, 255u, 255u, 255u));
-	Texture ab;
-	ab.create(imgTemp, false);
-	plane.changeTexture(ab);
+	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
 	
 	plane.setPosition({ -1.0f, 1.0f });
 	plane.draw(*win.Gfx().getPipeline());
