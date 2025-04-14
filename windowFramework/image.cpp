@@ -60,15 +60,28 @@ void Image::loadFile(std::wstring fileName)
 	imageData.data = new color[imageData.pixelCount];
 	
 	//guardando os pixeis
-	for (int i = 0; i < imageData.pixelCount; i++)
-	{
-		Gdiplus::Color c;
-		img.GetPixel(
-			i % imageData.width,
-			int(i / imageData.width),
-			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
-		);
-	}
+	Gdiplus::Rect imgRect(
+		0,
+		0,
+		imageData.width,
+		imageData.height
+	);
+	Gdiplus::PixelFormat pixelFormat = PixelFormat32bppARGB;
+	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
+
+	img.LockBits(
+		&imgRect,
+		Gdiplus::ImageLockModeRead,
+		pixelFormat,
+		bitmapData
+	);
+
+	color* start = reinterpret_cast<color*>(bitmapData->Scan0);
+	color* end = start + imageData.pixelCount;
+	std::copy<color*, color*>(start, end, imageData.data);
+
+	//liberando memoria
+	img.UnlockBits(bitmapData);
 
 	
 }
@@ -98,10 +111,10 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	gfx->DrawString(
 		text.c_str(),
 		-1,
-		textFont.fontLoaded,//new Gdiplus::Font(&textFont.fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel),
+		textFont.fontLoaded,
 		rect,
 		nullptr,
-		brush//...funciona KASKSAKSAK
+		brush
 	);
 
 	
@@ -127,7 +140,7 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	
 	img->LockBits(
 		&imgRect,
-		0x0,
+		Gdiplus::ImageLockModeRead,
 		pixelFormat,
 		bitmapData
 	);
