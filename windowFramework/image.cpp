@@ -72,7 +72,7 @@ void Image::loadFile(std::wstring fileName)
 	
 }
 
-void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, color textColor, float fontSize)
+void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int texSizeY, color textColor)
 {
 	//apagando imagem anterior, se existir
 	if (img)
@@ -80,37 +80,37 @@ void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, i
 	if (imageData.data)
 		delete imageData.data;
 
-
+	
 	img = new Gdiplus::Bitmap(texSizeX, texSizeY);
-
+	
 	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
-
-	Gdiplus::FontFamily fontFamily(L"Times New Roman");
+	
+	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
 	Gdiplus::RectF rect(0.0f, 0.0f, (float)texSizeX, (float)texSizeY);
 	
 
 	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
-
+	
 	gfx->DrawString(
 		text.c_str(),
 		-1,
-		new Gdiplus::Font(&fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel),
+		textFont.fontLoaded,//new Gdiplus::Font(&textFont.fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel),
 		rect,
 		nullptr,
 		new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor))//...funciona KASKSAKSAK
 	);
-
+	
 	//colocando a imagem no buffer
 	// 
 	//configurando imageData
 	imageData.pixelCount = img->GetWidth() * img->GetHeight();
 	imageData.width = img->GetWidth();
 	imageData.height = img->GetHeight();
-
+	
 	//alocando espaço na memoria para armazenar a imagem
 	imageData.data = new color[imageData.pixelCount];
-
+	
 	//guardando os pixeis
 	for (int i = 0; i < imageData.pixelCount; i++)
 	{
@@ -121,7 +121,8 @@ void Image::fromRenderText(std::wstring text, std::wstring font, int texSizeX, i
 			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
 		);
 	}
-
+	
+	delete gfx;
 }
 
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
@@ -135,4 +136,10 @@ void Image::drawPixel(unsigned int x, unsigned int y, color color)
 Image::data& Image::getData()
 {
 	return imageData;//mudar para enviar por referencia depois
+}
+
+Image::font::font(std::wstring fontName, float fontSize)
+{
+	Gdiplus::FontFamily fontFamily(fontName.c_str());
+	fontLoaded = new Gdiplus::Font(&fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel);
 }

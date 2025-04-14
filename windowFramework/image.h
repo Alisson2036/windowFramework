@@ -19,6 +19,16 @@ public:
 		int height;
 	};
 
+	class font
+	{
+	public:
+		font(std::wstring fontName, float fontSize);
+
+	private:
+		friend Image;
+		Gdiplus::Font* fontLoaded;
+	};
+
 	static void initialize();
 	static void uninitialize();
 
@@ -29,7 +39,7 @@ public:
 	Image(Image&) = default;
 
 	void loadFile(std::wstring fileName);
-	void fromRenderText(std::wstring text, std::wstring font, int texSizeX, int texSizeY, color textColor, float fontSize);
+	void fromRenderText(std::wstring text, font& textFont, int texSizeX, int texSizeY, color textColor);
 
 	void drawPixel(unsigned int x, unsigned int y, color color);
 

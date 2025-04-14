@@ -12,7 +12,7 @@ void app::start()
 {
 	//carregando imagem
 	Image img(L"a.png");
-
+	
 	for (int i = 50; i < 200; i++)
 		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
@@ -100,11 +100,14 @@ void app::start()
 	//move camera para posicao inicial
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
 	
+	//carrega a fonte
+	fonte = new Image::font(L"Times New Roman", 160.f);
+
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"teste de texto", L"fonte", 800, 600, color(255u, 255u, 255u, 255u), 160);
+	img.fromRenderText(L"teste de texto", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
 	Texture ab;
 	ab.create(img,false);
-	plane.create(tex);
+	plane.create(ab);
 
 
 	while (win.update()) loop();
@@ -204,6 +207,13 @@ void app::loop()
 		}
 	}
 
-	plane.setPosition({ timeSinceCreation.getPassedSeconds()/10, 0.0f });
+	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
+	//std::wstring text = std::to_wstring(timeSinceCreation.getPassedSeconds());
+	//imgTemp.fromRenderText(text, *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	//Texture ab;
+	//ab.create(img, false);
+	//plane.changeTexture(ab);
+	
+	plane.setPosition({ -1.0f, 1.0f });
 	plane.draw(*win.Gfx().getPipeline());
 }

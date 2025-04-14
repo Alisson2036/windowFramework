@@ -44,6 +44,8 @@ private:
 	object texturedCube;
 	object cubeLight;
 
+	Image imgTemp;
+	Image::font* fonte;
 
 	Light light;//precisa ser inicializado depois do win se nao da erro
 };

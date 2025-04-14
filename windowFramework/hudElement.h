@@ -12,6 +12,8 @@ public:
 	void setPosition(vec2 pos);
 
 	void draw(Pipeline& pipeline);
+
+	void changeTexture(Texture& tex);
 	
 
 private:

@@ -43,3 +43,10 @@ void hudElement::draw(Pipeline& pipeline)
 {
 	pipeline.bind(obj);
 }
+
+void hudElement::changeTexture(Texture& tex)
+{
+	obj.setTexture(&tex, 0);
+	resolution = tex.getResolution();
+
+}
