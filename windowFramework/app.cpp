@@ -104,7 +104,7 @@ void app::start()
 	fonte = new Image::font(L"Times New Roman", 160.f);
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"teste de texto", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
 	Texture ab;
 	ab.create(img,false);
 	plane.create(ab);
@@ -208,8 +208,8 @@ void app::loop()
 	}
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	//std::wstring text = std::to_wstring(timeSinceCreation.getPassedSeconds());
-	//imgTemp.fromRenderText(text, *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	std::wstring text = std::to_wstring(timeSinceCreation.getPassedSeconds());
+	imgTemp.fromRenderText(text, *fonte, 800, 600, color(255u, 255u, 255u, 255u));
 	//Texture ab;
 	//ab.create(img, false);
 	//plane.changeTexture(ab);

@@ -58,7 +58,7 @@ void Image::loadFile(std::wstring fileName)
 
 	//alocando espaço na memoria para armazenar a imagem
 	imageData.data = new color[imageData.pixelCount];
-
+	
 	//guardando os pixeis
 	for (int i = 0; i < imageData.pixelCount; i++)
 	{
@@ -69,6 +69,7 @@ void Image::loadFile(std::wstring fileName)
 			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
 		);
 	}
+
 	
 }
 
@@ -91,6 +92,8 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	
 
 	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintSingleBitPerPixel);
+
+	Gdiplus::SolidBrush* brush = new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor));
 	
 	gfx->DrawString(
 		text.c_str(),
@@ -98,8 +101,9 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 		textFont.fontLoaded,//new Gdiplus::Font(&textFont.fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel),
 		rect,
 		nullptr,
-		new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor))//...funciona KASKSAKSAK
+		brush//...funciona KASKSAKSAK
 	);
+
 	
 	//colocando a imagem no buffer
 	// 
@@ -112,16 +116,31 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	imageData.data = new color[imageData.pixelCount];
 	
 	//guardando os pixeis
-	for (int i = 0; i < imageData.pixelCount; i++)
-	{
-		Gdiplus::Color c;
-		img->GetPixel(
-			i % imageData.width,
-			int(i / imageData.height),
-			reinterpret_cast<Gdiplus::Color*>(&imageData.data[i])
-		);
-	}
+	Gdiplus::Rect imgRect(
+		0,
+		0,
+		imageData.width,
+		imageData.height
+	);
+	Gdiplus::PixelFormat pixelFormat = PixelFormat32bppARGB;
+	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
 	
+	img->LockBits(
+		&imgRect,
+		0x0,
+		pixelFormat,
+		bitmapData
+	);
+
+	color* start = reinterpret_cast<color*>(bitmapData->Scan0);
+	color* end = start + imageData.pixelCount;
+	std::copy<color*, color*>(start, end, imageData.data);
+
+	//liberando memoria
+	img->UnlockBits(bitmapData);
+
+	delete bitmapData;
+	delete brush;
 	delete gfx;
 }
 
