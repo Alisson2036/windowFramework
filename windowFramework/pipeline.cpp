@@ -20,6 +20,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	DirectX::XMVECTOR vec[] = { DirectX::XMVECTOR({0.0f,0.0f,0.0f,0.0f})};
 	cameraPositionBuffer.create(vec, 1, sizeof(DirectX::XMVECTOR));
 	cameraPositionBuffer.setSlot(1);
+	//cria o blendState
+	blendState.create();
 
 	windowResolution = _windowResolution;
 }
@@ -65,6 +67,8 @@ void Pipeline::bind(object& obj)
 		current.second->bind();
 	}
 
+	//coloca o blendState
+	blendState.bind();
 
 
 	//luzes..caso existirem

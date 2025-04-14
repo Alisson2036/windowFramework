@@ -7,6 +7,7 @@
 #include "vertexBuffer.h"
 #include "inputLayout.h"
 #include "indexBuffer.h"
+#include "blendState.h"
 #include "vertexConstantBuffer.h"
 #include "texture.h"
 #include "sampler.h"
@@ -51,6 +52,7 @@ private:
 
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
+	BlendState blendState;
 	Camera* camera;
 
 	vec2 windowResolution;

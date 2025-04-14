@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="app.cpp" />
     <ClCompile Include="bindable.cpp" />
+    <ClCompile Include="blendState.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="exception.cpp" />
     <ClCompile Include="graphics.cpp" />
@@ -165,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="bindable.h" />
+    <ClInclude Include="blendState.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="color.h" />
     <ClInclude Include="exception.h" />

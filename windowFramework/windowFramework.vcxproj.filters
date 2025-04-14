@@ -114,6 +114,9 @@
     <ClCompile Include="hudElement.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="blendState.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -208,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="shader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="blendState.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
