@@ -64,6 +64,7 @@ void Pipeline::bind(object& obj)
 			aliasedSampler.bind();
 		else
 			sampler.bind();
+		current.second->setSlot(current.first);
 		current.second->bind();
 	}
 

@@ -54,6 +54,11 @@ bool Texture::isAntialiased()
 	return antialiased;
 }
 
+void Texture::setSlot(unsigned short slot)
+{
+	textureSlot = slot;
+}
+
 void Texture::bind()
 {
 
@@ -61,7 +66,7 @@ void Texture::bind()
 	if (last != this)
 	{
 		last = this;
-		getContext()->PSSetShaderResources(0u, 1u, textureView.GetAddressOf());
+		getContext()->PSSetShaderResources(textureSlot, 1u, textureView.GetAddressOf());
 	}
 }
 

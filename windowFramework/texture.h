@@ -16,6 +16,8 @@ public:
 
 	bool isAntialiased();
 
+	void setSlot(unsigned short slot);
+
 	void bind() override;
 
 	vec2 getResolution();
@@ -23,6 +25,7 @@ public:
 private:
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 	bool antialiased = true;
+	unsigned short textureSlot = 0u;
 	vec2 resolution;
 
 };
