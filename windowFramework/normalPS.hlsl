@@ -37,7 +37,7 @@ float4 main(VS_Output input) : SV_TARGET
     ); 
     normals = mul(normals, tangentSpaceTransform);
     
-    //return float4(normalize(input.tangents), 1.f);
+    return float4((normalize(input.tangents) + 1)/2, 1.f);
     
     float3 pos = input.vertexPos;
     float3 directionLight = normalize(lightPos - pos);

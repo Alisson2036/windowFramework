@@ -108,7 +108,7 @@ void app::start()
 
 	//cria o cubo bricks
 	normalCube.create(normalShader);
-	normalCube.loadFromObj(planeObj);
+	normalCube.loadFromObj(obj);
 	normalCube.setTexture(&brickTex, 0);
 	normalCube.setTexture(&brickTexNormal, 1);
 	normalCube.lock();
@@ -224,7 +224,7 @@ void app::loop()
 	}
 
 	normalCube.set({ 0.f,2.f,-3.f }, { 0.f, 0.f, 0.f });
-	normalCube.setScale({ 2.f,2.f,2.f });
+	//normalCube.setScale({ 2.f,2.f,2.f });
 	win.Gfx().getPipeline()->bind(normalCube);
 
 	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
