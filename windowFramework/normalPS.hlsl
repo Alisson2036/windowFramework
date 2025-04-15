@@ -25,10 +25,17 @@ SamplerState samp;
 float4 main(VS_Output input) : SV_TARGET
 {
     //calcula normal
+    float3 bitan = cross(input.normals, input.tangents);
     float3 normals = normal.Sample(samp, input.tex).xyz; //input.normals;
     normals.x = (normals.x * 2) - 1;
     normals.y = (normals.y * 2) - 1;
     
+    float3x3 tangentSpaceTransform = float3x3(
+        normalize(input.tangents),
+        normalize(bitan), 
+        normalize(input.normals)
+    ); 
+    normals = mul(normals, tangentSpaceTransform);
     
     
     float3 pos = input.vertexPos;

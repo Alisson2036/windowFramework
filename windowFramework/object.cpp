@@ -70,6 +70,8 @@ void object::loadFromObj(objLoader& obj)
 			}
 			if (tangent)
 			{
+				//vec3* pos1 = reinterpret_cast<vec3*>(&face.vertexIndex[0]);
+
 				temp.push_back(1.0f);
 				temp.push_back(0.0f);
 				temp.push_back(0.0f);
