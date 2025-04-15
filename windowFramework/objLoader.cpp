@@ -95,7 +95,7 @@ void objLoader::fromFile(std::string fileName)
 			//
 			if (last == '\n')
 			{
-				vertices.push_back(objLoader::vertex{ bufNum[0],bufNum[1],bufNum[2] });
+				vertices.push_back(vec3{ bufNum[0],bufNum[1],bufNum[2] });
 				bufNum.clear();
 				buf = "";
 				current = lineStart;
@@ -118,7 +118,7 @@ void objLoader::fromFile(std::string fileName)
 			//
 			if (last == '\n')
 			{
-				normals.push_back(objLoader::vertexNormal{ bufNum[0],bufNum[1],bufNum[2] });
+				normals.push_back(vec3{ bufNum[0],bufNum[1],bufNum[2] });
 				bufNum.clear();
 				buf = "";
 				current = lineStart;
@@ -142,7 +142,7 @@ void objLoader::fromFile(std::string fileName)
 			//
 			if (last == '\n')
 			{
-				texCoord.push_back(objLoader::textureCoord{ bufNum[0],bufNum[1] });
+				texCoord.push_back(vec2{ bufNum[0],bufNum[1] });
 				bufNum.clear();
 				buf = "";
 				current = lineStart;

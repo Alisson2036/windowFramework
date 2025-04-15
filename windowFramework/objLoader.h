@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include "vec3.h"
+#include "vec2.h"
 
 
 class objLoader
@@ -11,7 +13,7 @@ public:
 
 	void fromFile(std::string fileName);
 	int getVertexCount();
-
+	/*
 	struct vertex
 	{
 		float x;
@@ -28,7 +30,7 @@ public:
 	{
 		float u;
 		float v;
-	};
+	};*/
 	struct face
 	{
 		int vertexIndex[3];
@@ -38,9 +40,9 @@ public:
 
 
 
-	std::vector<vertex> vertices;
-	std::vector<vertexNormal> normals;
-	std::vector<textureCoord> texCoord;
+	std::vector<vec3> vertices;
+	std::vector<vec3> normals;
+	std::vector<vec2> texCoord;
 	std::vector<face> faces;
 
 };

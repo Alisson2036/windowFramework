@@ -54,8 +54,8 @@ void object::loadFromObj(objLoader& obj)
 
 			if (textureCoords)
 			{
-				temp.push_back(obj.texCoord[face.textureIndex[i] - 1].u);
-				temp.push_back(obj.texCoord[face.textureIndex[i] - 1].v);
+				temp.push_back(obj.texCoord[face.textureIndex[i] - 1].x);
+				temp.push_back(obj.texCoord[face.textureIndex[i] - 1].y);
 				dataBuffer.set(temp.data(), index, "TexCoord");
 				temp.clear();
 			}
@@ -71,10 +71,27 @@ void object::loadFromObj(objLoader& obj)
 			if (tangent)
 			{
 				//vec3* pos1 = reinterpret_cast<vec3*>(&face.vertexIndex[0]);
+				vec3 v0 = obj.vertices[face.vertexIndex[0] - 1];
+				vec3 v1 = obj.vertices[face.vertexIndex[1] - 1];
+				vec3 v2 = obj.vertices[face.vertexIndex[2] - 1];
 
-				temp.push_back(1.0f);
-				temp.push_back(0.0f);
-				temp.push_back(0.0f);
+				vec2 uv0 = obj.texCoord[face.vertexIndex[0] - 1];
+				vec2 uv1 = obj.texCoord[face.vertexIndex[1] - 1];
+				vec2 uv2 = obj.texCoord[face.vertexIndex[2] - 1];
+
+				vec3 deltaPos1 = v1 - v0;
+				vec3 deltaPos2 = v2 - v0;
+				vec2 deltaUV1 = uv1 - uv0;
+				vec2 deltaUV2 = uv2 - uv0;
+
+				float r = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV1.y * deltaUV2.x);
+				vec3 tangent = (deltaPos2 * deltaUV1.x - deltaPos1 * deltaUV2.x) * r;
+
+
+
+				temp.push_back(tangent.x);
+				temp.push_back(tangent.y);
+				temp.push_back(tangent.z);
 				dataBuffer.set(temp.data(), index, "Tangents");
 				temp.clear();
 			}

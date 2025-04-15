@@ -47,6 +47,14 @@ public:
 		y -= rhs.y;
 		z -= rhs.z;
 	}
+	vec3 operator*(float rhs)
+	{
+		vec3 novo(*this);
+		novo.x *= rhs;
+		novo.y *= rhs;
+		novo.z *= rhs;
+		return novo;
+	}
 	vec3 operator*=(vec3 rhs)
 	{
 		x *= rhs.x;
