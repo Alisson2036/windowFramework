@@ -13,6 +13,7 @@ class Texture : public Bindable
 public:
 
 	void create(Image& img, bool hasAntiAliasing=true);
+	void createWithMipMap(Image& img, bool hasAntiAliasing = true);
 
 	bool isAntialiased();
 

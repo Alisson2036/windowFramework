@@ -55,7 +55,7 @@ float4 main(VS_Output input) : SV_TARGET
     specular = max(0.0f, dot(refraction, -directionLight));
 
 
-    if (dot(normals, directionLight) < 0.0f)
+    if (dot(input.normals, directionLight) < 0.0f)
         specular = 0.0f;
     else
     {

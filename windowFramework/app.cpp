@@ -19,7 +19,7 @@ void app::start()
 	for (int i = 50; i < 200; i++)
 		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
-	tex.create(img);
+	tex.createWithMipMap(img);
 	brickTex.create(bricks);
 	brickTexNormal.create(bricksNormal);
 

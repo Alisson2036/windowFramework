@@ -15,6 +15,9 @@ void Sampler::create(bool isAntialiased)
 	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
 	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
 	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	sampDesc.MipLODBias = 0.0f;
+	sampDesc.MinLOD = 0.0f;
+	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
 
 	_throwHr(
 		getDevice()->CreateSamplerState(&sampDesc, samplerState.GetAddressOf())
