@@ -12,11 +12,16 @@ void app::start()
 {
 	//carregando imagem
 	Image img(L"a.png");
+	Image bricks(L"bricks.png");
+	Image bricksNormal(L"bricksNormal.png");
+
 	
 	for (int i = 50; i < 200; i++)
 		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
 	tex.create(img);
+	brickTex.create(bricks);
+	brickTexNormal.create(bricksNormal);
 
 	//coloca luz na pipeline
 	win.Gfx().getPipeline()->setLight(&light);
@@ -26,10 +31,13 @@ void app::start()
 	//-----------------------------
 
 	objLoader obj;
+	objLoader planeObj;
 	obj.fromFile("cube.obj");
+	planeObj.fromFile("plane.obj");
 
 	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
+	normalShader.create(L"texturedVS.cso", L"normalPS.cso");
 
 	//cria o cubo teste
 	std::vector<vec3> verArr =
@@ -96,6 +104,14 @@ void app::start()
 	texturedCube.loadFromObj(obj);
 	texturedCube.setTexture(&tex, 0);
 	texturedCube.lock();
+
+
+	//cria o cubo bricks
+	normalCube.create(normalShader);
+	normalCube.loadFromObj(planeObj);
+	normalCube.setTexture(&brickTex, 0);
+	normalCube.setTexture(&brickTexNormal, 1);
+	normalCube.lock();
 
 	//move camera para posicao inicial
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
@@ -206,6 +222,9 @@ void app::loop()
 			}
 		}
 	}
+
+	normalCube.set({ 0.f,0.f,-6.f }, { 0.f, 0.f, 0.f });
+	win.Gfx().getPipeline()->bind(normalCube);
 
 	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
 	

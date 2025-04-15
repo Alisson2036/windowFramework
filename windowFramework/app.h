@@ -29,6 +29,8 @@ private:
 	Camera cam;
 
 	Texture tex;
+	Texture brickTex;
+	Texture brickTexNormal;
 
 	float a = 0.0f;
 
@@ -40,8 +42,10 @@ private:
 
 	shader colorBlendShader;
 	shader texturedShader;
+	shader normalShader;
 	object colorBlendCube;
 	object texturedCube;
+	object normalCube;
 	object cubeLight;
 
 	Image imgTemp;
