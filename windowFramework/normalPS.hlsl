@@ -26,7 +26,8 @@ float4 main(VS_Output input) : SV_TARGET
     //calcula normal
     //float3 normals = tex.Sample(samp, input.tex).xyz;
     //normals = normalize(normals);
-    float3 normals = (0.0f, 0.0f, 1.0f);
+    float3 normals = normal.Sample(samp, input.tex).xyz; //input.normals;
+    normals = float3((normals * 2) - 1);
     
     
     float3 pos = input.vertexPos;
@@ -48,8 +49,8 @@ float4 main(VS_Output input) : SV_TARGET
         specular = 0.0f;
     else
     {
-        specular = pow(specular, 100);
-        specular /= 2;
+        specular = pow(specular, 10);
+        specular /= 1;
     }
 
 
@@ -62,8 +63,7 @@ float4 main(VS_Output input) : SV_TARGET
     diffuse += 0.2f; //global illumination
     float4 finalColor = saturate(color * diffuse + specularColor);
     finalColor.a = color.a;
-    normals = (0.f, 0.f, 1.f);
-    float3 tempcolor = (0.f,0,1);
-    return float4(0,0,1, 1.f); //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
+    
+    return finalColor; //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
 
 }

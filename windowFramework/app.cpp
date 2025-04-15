@@ -12,8 +12,8 @@ void app::start()
 {
 	//carregando imagem
 	Image img(L"a.png");
-	Image bricks(L"bricks.png");
-	Image bricksNormal(L"bricksNormal.png");
+	Image bricks(L"bricks.jpg");
+	Image bricksNormal(L"bricksNormal.jpg");
 
 	
 	for (int i = 50; i < 200; i++)
@@ -114,7 +114,7 @@ void app::start()
 	normalCube.lock();
 
 	//move camera para posicao inicial
-	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,0.0f });
+	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,3.14f });
 	
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 80.0f);
@@ -200,8 +200,8 @@ void app::loop()
 
 
 	//muda posicao da luz 
-	light.updatePos({2.0f, a, 0.0f});
-	cubeLight.set({ 2.0f,a,0.0f }, angle);
+	light.updatePos({ 2.0f + 3 * cos(timeSinceCreation.getPassedSeconds()), a, 0.0f});
+	cubeLight.set({ 2.0f + 3*cos(timeSinceCreation.getPassedSeconds()),a,0.0f}, angle);
 	win.Gfx().getPipeline()->bind(cubeLight);
 
 
@@ -224,6 +224,7 @@ void app::loop()
 	}
 
 	normalCube.set({ 0.f,0.f,-6.f }, { 0.f, 0.f, 0.f });
+	normalCube.setScale({ 2.f,2.f,2.f });
 	win.Gfx().getPipeline()->bind(normalCube);
 
 	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
