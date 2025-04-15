@@ -3,6 +3,7 @@ struct VS_Input
     float3 pos : Position;
     float2 tex : TexCoord;
     float3 normals : Normals;
+    float3 tangent : Tangents;
 };
 
 struct VS_Output
@@ -10,6 +11,7 @@ struct VS_Output
     float4 position : SV_POSITION;
     float2 tex : TexCoord;
     float3 normals : Normals;
+    float3 tangents : Tangents;
     float3 vertexPos : Position;
 };
 
@@ -36,6 +38,7 @@ VS_Output main(VS_Input input)
     float3x3 b = transpose((float3x3)mat);
     output.tex = input.tex;
     output.normals = mul(input.normals, b);
+    output.tangents = mul(input.tangent, b);
 
     output.vertexPos = (float3)mul(float4(input.pos,1.0f), transpose(mat));
     

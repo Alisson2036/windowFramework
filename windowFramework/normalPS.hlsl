@@ -3,6 +3,7 @@ struct VS_Output
     float4 position : SV_POSITION;
     float2 tex : TexCoord;
     float3 normals : Normals;
+    float3 tangents : Tangents;
     float3 vertexPos : Position;
 };
 

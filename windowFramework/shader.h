@@ -41,6 +41,7 @@ private:
 		{ "Position",  {DXGI_FORMAT_R32G32B32_FLOAT, 12    }},
 		{ "TexCoord",  {DXGI_FORMAT_R32G32_FLOAT   ,  8    }},
 		{ "Normals",   {DXGI_FORMAT_R32G32B32_FLOAT, 12    }},
+		{ "Tangents",   {DXGI_FORMAT_R32G32B32_FLOAT, 12    }},
 		{ "Color",     {DXGI_FORMAT_R8G8B8A8_UNORM ,  4    }},
 		{ "Position2d",{DXGI_FORMAT_R32G32_FLOAT   ,  8    }}
 	};

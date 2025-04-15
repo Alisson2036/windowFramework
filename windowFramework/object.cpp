@@ -31,6 +31,7 @@ void object::loadFromObj(objLoader& obj)
 	bool pos = dataBuffer.containsType("Position");
 	bool normals = dataBuffer.containsType("Normals");
 	bool textureCoords = dataBuffer.containsType("TexCoord");
+	bool tangent = dataBuffer.containsType("Tangents");
 
 	if ( (!pos) && (!normals) && (!textureCoords) ) return;
 
@@ -65,6 +66,14 @@ void object::loadFromObj(objLoader& obj)
 				temp.push_back(obj.normals[face.normalIndex[i] - 1].y);
 				temp.push_back(obj.normals[face.normalIndex[i] - 1].z);
 				dataBuffer.set(temp.data(), index, "Normals");
+				temp.clear();
+			}
+			if (tangent)
+			{
+				temp.push_back(1.0f);
+				temp.push_back(0.0f);
+				temp.push_back(0.0f);
+				dataBuffer.set(temp.data(), index, "Tangents");
 				temp.clear();
 			}
 			index++;
