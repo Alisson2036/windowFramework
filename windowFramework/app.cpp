@@ -20,8 +20,8 @@ void app::start()
 		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
 	tex.createWithMipMap(img);
-	brickTex.create(bricks);
-	brickTexNormal.create(bricksNormal);
+	brickTex.createWithMipMap(bricks);
+	brickTexNormal.createWithMipMap(bricksNormal);
 
 	//coloca luz na pipeline
 	win.Gfx().getPipeline()->setLight(&light);
@@ -190,11 +190,11 @@ void app::loop()
 			pos.z = y*2.0f;
 
 
-			texturedCube.set(pos, angle);
+			normalCube.set(pos, angle);
 
 			//texturedCube.update(inst);
 			//texturedCube.draw();
-			win.Gfx().getPipeline()->bind(texturedCube);
+			win.Gfx().getPipeline()->bind(normalCube);
 		}
 	}
 
@@ -223,9 +223,9 @@ void app::loop()
 		}
 	}
 
-	normalCube.set({ 0.f,2.f,-3.f }, { 0.f, 0.f, 0.f });
+	texturedCube.set({ 0.f,2.f,-3.f }, { 0.f, 0.f, 0.f });
 	//normalCube.setScale({ 2.f,2.f,2.f });
-	win.Gfx().getPipeline()->bind(normalCube);
+	win.Gfx().getPipeline()->bind(texturedCube);
 
 	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
 	
