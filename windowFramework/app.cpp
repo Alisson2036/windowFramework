@@ -143,8 +143,13 @@ void app::loop()
 	//codigo para mecher a tela 
 	if (win.getMousePointer()->rightButtonPressed())
 	{
-		//win.showMouse(false);
-		cam.moveAngle({ yPos, -xPos });
+		win.showMouse(false);
+
+		static const float sens = 0.003f;
+		float xRaw = (float)win.getMousePointer()->getRawX();
+		float yRaw = (float)win.getMousePointer()->getRawY();
+		cam.moveAngle({ -yRaw * sens, -xRaw * sens});
+		win.getMousePointer()->resetRaw();
 
 
 		win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
@@ -218,7 +223,7 @@ void app::loop()
 				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
 				colorBlendCube.set(pos, { 0.f,0.f,0.f });
-				win.Gfx().getPipeline()->bind(colorBlendCube);
+				//win.Gfx().getPipeline()->bind(colorBlendCube);
 			}
 		}
 	}
@@ -231,7 +236,7 @@ void app::loop()
 	static float dTime;
 	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
 	dTime = timeSinceCreation.getPassedSeconds();
-	imgTemp.fromRenderText(std::to_wstring(frameTime - (1000.0f/60.0f)), *fonte, 400, 300, color(255u, 255u, 255u, 255u));
+	imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 400, 300, color(255u, 255u, 255u, 255u));
 	Texture tex;
 	tex.create(imgTemp);
 	plane.changeTexture(tex);

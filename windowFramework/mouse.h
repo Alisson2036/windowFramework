@@ -13,6 +13,10 @@ public:
 	int getX() const;
 	int getY() const;
 
+	int getRawX() const;
+	int getRawY() const;
+	void resetRaw();
+
 	int getScroll() const;
 	void resetScroll();
 
@@ -21,6 +25,7 @@ public:
 
 private:
 	void updatePosition(POINTS p);
+	void updateRawPosition(int x, int y);
 	void buttonDown(const char buttonArgs);
 	void buttonUp(const char buttonArgs);
 
@@ -31,6 +36,9 @@ private:
 private:
 	int xPos = 0;
 	int yPos = 0;
+
+	int rawX = 0;
+	int rawY = 0;
 
 	char mouseButtons = 0;
 

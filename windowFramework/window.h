@@ -40,6 +40,9 @@ private:
 	//RECT que armazena tamanho da janela em relacao ao client region
 	RECT windowRect;
 
+	//buffer para raw input
+	std::vector<char> rawBuffer;
+
 	HWND hwnd;//window handle
 	HINSTANCE hInstance;
 	static constexpr const wchar_t* className = L"window class"; //nome da windowClass

@@ -53,6 +53,17 @@ window::window(const LPCWSTR name, int _width, int _height):
 
 	pGfx = std::make_unique<Graphics>(hwnd, windowWidth, windowHeight);
 
+	// ativa raw mouse input
+	RAWINPUTDEVICE rid;
+	rid.usUsagePage = 0x01;
+	rid.usUsage = 0x02;
+	rid.dwFlags = 0;
+	rid.hwndTarget = nullptr;
+	if(
+		RegisterRawInputDevices(&rid, 1u, sizeof(rid)) == FALSE
+		)
+		throw;
+
 }
 
 window::~window()
@@ -193,6 +204,43 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 	case WM_MOUSEWHEEL:
 		mouse.wheelMove(GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
+	//-------------------------------
+	//RAW MOUSE MESSAGES-------------
+	case WM_INPUT:
+	{
+		UINT size;
+		UINT out;
+		//descobre o tamanho do buffer
+		out = GetRawInputData(
+			reinterpret_cast<HRAWINPUT>(lParam),
+			RID_INPUT,
+			nullptr,
+			&size,
+			sizeof(RAWINPUTHEADER)
+		);
+		if (out == -1) break;
+
+		//le o buffer
+		rawBuffer.resize(size);
+		out = GetRawInputData(
+			reinterpret_cast<HRAWINPUT>(lParam),
+			RID_INPUT,
+			rawBuffer.data(),
+			&size,
+			sizeof(RAWINPUTHEADER)
+		);
+		if (out == -1) break;
+
+		//salva as informacoes
+		const RAWINPUT input = reinterpret_cast<const RAWINPUT&>(*rawBuffer.data());
+		if (input.header.dwType == RIM_TYPEMOUSE &&
+			(input.data.mouse.lLastX != 0 || input.data.mouse.lLastY != 0)
+			)
+		{
+			mouse.updateRawPosition(input.data.mouse.lLastX, input.data.mouse.lLastY);
+		}
+		break;
+	}
 	//------------------------------------
 	//KEYBOARD MESSAGES-------------------
 	case WM_KEYDOWN:
