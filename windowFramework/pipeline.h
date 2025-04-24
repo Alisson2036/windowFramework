@@ -15,7 +15,7 @@
 #include "object.h"
 
 #include "light.h"
-#include "Position.h"
+#include "SpatialData.h"
 #include "Camera.h"
 #include "vec2.h"
 

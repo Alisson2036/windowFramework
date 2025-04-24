@@ -174,7 +174,7 @@ void app::loop()
 
 
 
-	Position3d inst(pos, angle);
+	SpatialData inst(pos, angle);
 
 
 

@@ -3,7 +3,7 @@
 #include "shader.h"
 #include "objLoader.h"
 #include "vertexConstantBuffer.h"
-#include "Position.h"
+#include "SpatialData.h"
 #include "texture.h"
 #include "vec3.h"
 #include "vec2.h"
@@ -55,7 +55,7 @@ private:
 
 	//posicao do objeto
 	ConstantVertexBuffer* getVertexBuffer();
-	Position3d pos;
+	SpatialData pos;
 	ConstantVertexBuffer cvb;
 	bool needUpdate = false;
 

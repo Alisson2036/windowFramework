@@ -1,8 +1,8 @@
-#include "Position.h"
+#include "SpatialData.h"
 
 
 
-Position3d::Position3d()
+SpatialData::SpatialData()
 {
 	position.x = 0.0f;
 	position.y = 0.0f;
@@ -17,7 +17,7 @@ Position3d::Position3d()
 	scale.z = 1.0f;
 }
 
-Position3d::Position3d(vec3 Position, vec3 Angle)
+SpatialData::SpatialData(vec3 Position, vec3 Angle)
 {
 	position.x = Position.x;
 	position.y = Position.y;
@@ -33,7 +33,7 @@ Position3d::Position3d(vec3 Position, vec3 Angle)
 }
 
 
-void Position3d::set(vec3 Position, vec3 Angle)
+void SpatialData::set(vec3 Position, vec3 Angle)
 {
 	position.x = Position.x;
 	position.y = Position.y;
@@ -44,7 +44,7 @@ void Position3d::set(vec3 Position, vec3 Angle)
 	angle.z = Angle.z;
 }
 
-void Position3d::move(vec3 Position)
+void SpatialData::move(vec3 Position)
 {
 
 	position.x += Position.x;
@@ -52,7 +52,7 @@ void Position3d::move(vec3 Position)
 	position.z += Position.z;
 }
 
-void Position3d::rotate(vec3 Angle)
+void SpatialData::rotate(vec3 Angle)
 {
 
 	angle.x += Angle.x;
@@ -60,12 +60,12 @@ void Position3d::rotate(vec3 Angle)
 	angle.z += Angle.z;
 }
 
-void Position3d::setScale(vec3 Scale)
+void SpatialData::setScale(vec3 Scale)
 {
 	scale = Scale;
 }
 
-DirectX::XMMATRIX Position3d::getMatrix()
+DirectX::XMMATRIX SpatialData::getMatrix()
 {
 
 	return DirectX::XMMATRIX(

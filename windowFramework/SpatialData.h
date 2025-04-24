@@ -2,11 +2,11 @@
 #include <DirectXMath.h>
 #include "vec3.h"
 
-class Position3d
+class SpatialData
 {
 public:
-	Position3d();
-	Position3d(vec3 Position, vec3 Angle);
+	SpatialData();
+	SpatialData(vec3 Position, vec3 Angle);
 
 	void set(vec3 Position, vec3 Angle);
 	

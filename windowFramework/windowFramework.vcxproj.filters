@@ -99,16 +99,10 @@
     <ClCompile Include="shaderDesc.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="inputBuffer.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="shader.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="object.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
-    <ClCompile Include="Position.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="hudElement.cpp">
@@ -116,6 +110,12 @@
     </ClCompile>
     <ClCompile Include="blendState.cpp">
       <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="SpatialData.cpp">
+      <Filter>Arquivos de Origem\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="inputBuffer.cpp">
+      <Filter>Arquivos de Origem\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -203,9 +203,6 @@
     <ClInclude Include="object.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="Position.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="hudElement.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
@@ -214,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="blendState.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="SpatialData.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
