@@ -32,7 +32,7 @@ private:
 	Texture brickTex;
 	Texture brickTexNormal;
 
-	float a = 1.0f;
+	float a = 8.0f;
 
 	window win;
 	Timer timeSinceCreation;

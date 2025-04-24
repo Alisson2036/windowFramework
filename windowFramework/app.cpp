@@ -117,10 +117,10 @@ void app::start()
 	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,3.14f });
 	
 	//carrega a fonte
-	fonte = new Image::font(L"Times New Roman", 80.0f);
+	fonte = new Image::font(L"Times New Roman", 40.0f);
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"oi tudo bem?", *fonte, 400, 300, color(255u, 255u, 255u, 255u));
+	img.fromRenderText(L"oi tudo bem?", *fonte, 300, 150, color(255u, 255u, 255u, 255u));
 	Texture ab;
 	ab.create(img,false);
 	plane.create(ab);
@@ -143,7 +143,7 @@ void app::loop()
 	//codigo para mecher a tela 
 	if (win.getMousePointer()->rightButtonPressed())
 	{
-		win.showMouse(false);
+		//win.showMouse(false);
 		cam.moveAngle({ yPos, -xPos });
 
 
@@ -186,7 +186,7 @@ void app::loop()
 		for (int x = -10; x < 10; x++)
 		{
 			pos.x = x * 2.0f;
-			pos.y = -3.0f + (float)cos(x) + (float)cos(y);
+			pos.y = -1.0f; //+ (float)cos(x) + (float)cos(y);
 			pos.z = y*2.0f;
 
 
@@ -200,8 +200,8 @@ void app::loop()
 
 
 	//muda posicao da luz 
-	light.updatePos({ 2.0f + 3 * cos(timeSinceCreation.getPassedSeconds()), a, 0.0f});
-	cubeLight.set({ 2.0f + 3*cos(timeSinceCreation.getPassedSeconds()),a,0.0f}, angle);
+	light.updatePos({ 2.0f + 3, a, 0.0f});
+	cubeLight.set({ 2.0f + 3,a,0.0f}, angle);
 	win.Gfx().getPipeline()->bind(cubeLight);
 
 
@@ -223,11 +223,18 @@ void app::loop()
 		}
 	}
 
-	texturedCube.set({ 0.f,2.f,-3.f }, { 0.f, 0.f, 0.f });
+	texturedCube.set({ 0.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
 	//normalCube.setScale({ 2.f,2.f,2.f });
 	win.Gfx().getPipeline()->bind(texturedCube);
 
 	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
+	static float dTime;
+	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
+	dTime = timeSinceCreation.getPassedSeconds();
+	imgTemp.fromRenderText(std::to_wstring(frameTime - (1000.0f/60.0f)), *fonte, 400, 300, color(255u, 255u, 255u, 255u));
+	Texture tex;
+	tex.create(imgTemp);
+	plane.changeTexture(tex);
 	
 	plane.setPosition({ -1.0f, 1.0f });
 	plane.draw(*win.Gfx().getPipeline());
