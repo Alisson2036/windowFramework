@@ -114,15 +114,13 @@ void app::start()
 	normalCube.lock();
 
 	//move camera para posicao inicial
-	cam.setPositionAndAngle({ 0.0f,0.0f,-4.0f }, { 0.0f,3.14f });
+	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
 	
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
 	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
-	//Texture ab;
-	//ab.create(img,false);
 	plane.create(img);
 
 
