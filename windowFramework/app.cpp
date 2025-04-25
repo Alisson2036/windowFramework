@@ -235,7 +235,24 @@ void app::loop()
 	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
 	dTime = timeSinceCreation.getPassedSeconds();
 
-	imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	//imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	imgTemp.fromBlank(800, 600);
+
+
+	imgTemp.drawText(
+		L"Frametime:",
+		*fonte,
+		vec2(0, 0),
+		color(255u, 255u, 255u, 255u)
+	);
+
+	imgTemp.drawText(
+		std::to_wstring(frameTime),
+		*fonte,
+		vec2(100, 100),
+		color(255u, 255u, 255u, 255u)
+	);
+	
 	plane.update(imgTemp);
 	
 	plane.draw(*win.Gfx().getPipeline());
