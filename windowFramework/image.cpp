@@ -123,6 +123,13 @@ void Image::fromBlank(int sizeX, int sizeY)
 	img = new Gdiplus::Bitmap(sizeX, sizeY);
 }
 
+void Image::clear()
+{
+
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	gfx->Clear(Gdiplus::Color(0u, 0u, 0u, 0u));
+}
+
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
 {
 	img->SetPixel((INT)x, (INT)y, *reinterpret_cast<Gdiplus::Color*>(&color));

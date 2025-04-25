@@ -123,6 +123,9 @@ void app::start()
 	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
 	plane.create(img);
 
+	//inicializa a imagem do hud
+	imgTemp.fromBlank(800, 600);
+
 
 	while (win.update()) loop();
 
@@ -236,7 +239,8 @@ void app::loop()
 	dTime = timeSinceCreation.getPassedSeconds();
 
 	//imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
-	imgTemp.fromBlank(800, 600);
+	//imgTemp.fromBlank(800, 600);
+	imgTemp.clear();
 
 
 	imgTemp.drawText(

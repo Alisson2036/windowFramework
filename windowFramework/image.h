@@ -44,6 +44,8 @@ public:
 	void fromRenderText(std::wstring text, font& textFont, int texSizeX, int texSizeY, color textColor);
 	void fromBlank(int sizeX, int sizeY);
 
+	void clear();
+
 	void drawPixel(unsigned int x, unsigned int y, color color);
 	void drawText(std::wstring text, font& textFont, vec2 position, color textColor);
 
