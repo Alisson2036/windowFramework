@@ -47,6 +47,8 @@ public:
 	void clear();
 
 	void drawPixel(unsigned int x, unsigned int y, color color);
+	void drawLine(vec2 startPos, vec2 endPos, color c);
+	void drawRectangle(vec2 pos, vec2 size, color c);
 	void drawText(std::wstring text, font& textFont, vec2 position, color textColor);
 
 	data& getData();

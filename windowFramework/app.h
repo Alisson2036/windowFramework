@@ -38,7 +38,7 @@ private:
 	Timer timeSinceCreation;
 
 
-	hudElement plane;
+	hudElement hudObject;
 
 	shader colorBlendShader;
 	shader texturedShader;
@@ -48,7 +48,7 @@ private:
 	object normalCube;
 	object cubeLight;
 
-	Image imgTemp;
+	Image hud;
 	Image::font* fonte;
 
 	Light light;//precisa ser inicializado depois do win se nao da erro

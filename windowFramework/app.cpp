@@ -121,10 +121,10 @@ void app::start()
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
 	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
-	plane.create(img);
+	hudObject.create(img);
 
 	//inicializa a imagem do hud
-	imgTemp.fromBlank(800, 600);
+	hud.fromBlank(800, 600);
 
 
 	while (win.update()) loop();
@@ -137,25 +137,36 @@ void app::loop()
 	float x = (float)win.getMousePointer()->getX();
 	float y = (float)win.getMousePointer()->getY();
 
-	//posicao do mouse de acordo com as coordenadas no d3d
-	float xPos = ((float)x - 400.0f) / 400.0f;
-	float yPos = -((float)y - 300.0f) / 300.0f;
 
 	//codigo para mecher a tela 
-	if (win.getMousePointer()->rightButtonPressed())
+	static bool lastRightButtonState = false;
+	static vec2 lastMousePos;
+	if (win.getMousePointer()->rightButtonPressed() && lastRightButtonState)
 	{
 		win.showMouse(false);
 
 		static const float sens = 0.003f;
 		float xRaw = (float)win.getMousePointer()->getRawX();
 		float yRaw = (float)win.getMousePointer()->getRawY();
-		cam.moveAngle({ -yRaw * sens, -xRaw * sens});
+		cam.moveAngle({ -yRaw * sens, -xRaw * sens });
 		win.getMousePointer()->resetRaw();
 
 
-		win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
+		//win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
+		win.setMousePosition(lastMousePos.x, lastMousePos.y);
 	}
-	else win.showMouse(true);
+	else if (win.getMousePointer()->rightButtonPressed())
+	{
+		lastRightButtonState = true;
+		win.getMousePointer()->resetRaw();
+		lastMousePos.x = x;
+		lastMousePos.y = y;
+	}
+	else 
+	{
+		win.showMouse(true);
+		lastRightButtonState = false;
+	}
 
 
 	//movimento da camera
@@ -240,24 +251,25 @@ void app::loop()
 
 	//imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
 	//imgTemp.fromBlank(800, 600);
-	imgTemp.clear();
 
 
-	imgTemp.drawText(
+	hud.drawText(
 		L"Frametime:",
 		*fonte,
 		vec2(0, 0),
 		color(255u, 255u, 255u, 255u)
 	);
 
-	imgTemp.drawText(
+	hud.drawRectangle(vec2(100, 100), vec2(200, 200), color(255, 0, 0, 100));
+
+	hud.drawText(
 		std::to_wstring(frameTime),
 		*fonte,
 		vec2(100, 100),
 		color(255u, 255u, 255u, 255u)
 	);
 	
-	plane.update(imgTemp);
-	
-	plane.draw(*win.Gfx().getPipeline());
+	hudObject.update(hud);
+	hudObject.draw(*win.Gfx().getPipeline());
+	hud.clear();
 }
