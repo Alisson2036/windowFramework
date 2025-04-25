@@ -6,6 +6,7 @@
 #include <algorithm>
 #include "exception.h"
 #include "color.h"
+#include "vec2.h"
 
 
 class Image
@@ -41,8 +42,10 @@ public:
 
 	void loadFile(std::wstring fileName);
 	void fromRenderText(std::wstring text, font& textFont, int texSizeX, int texSizeY, color textColor);
+	void fromBlank(int sizeX, int sizeY);
 
 	void drawPixel(unsigned int x, unsigned int y, color color);
+	void drawText(std::wstring text, font& textFont, vec2 position, color textColor);
 
 	data& getData();
 

@@ -16,8 +16,8 @@ void app::start()
 	Image bricksNormal(L"bricksNormal.jpg");
 
 	
-	//for (int i = 50; i < 200; i++)
-	//	img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
+	for (int i = 50; i < 200; i++)
+		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
 	tex.createWithMipMap(img);
 	brickTex.createWithMipMap(bricks);

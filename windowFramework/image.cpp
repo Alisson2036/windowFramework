@@ -42,9 +42,15 @@ void Image::loadFile(std::wstring fileName)
 {
 	//apagando imgem, se exisitr
 	if (img)
+	{
 		delete img;
+		img = 0;
+	}
 	if (imageData.data)
+	{
 		delete imageData.data;
+		imageData.data = 0;
+	}
 
 	//criando bitmap no heap
 	img = new Gdiplus::Bitmap(fileName.c_str());
@@ -59,9 +65,15 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 {
 	//apagando imagem anterior, se existir
 	if (img)
+	{
 		delete img;
+		img = 0;
+	}
 	if (imageData.data)
+	{
 		delete imageData.data;
+		imageData.data = 0;
+	}
 
 	
 	img = new Gdiplus::Bitmap(texSizeX, texSizeY);
@@ -94,12 +106,58 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	delete gfx;
 }
 
+void Image::fromBlank(int sizeX, int sizeY)
+{
+	//apagando imagem anterior, se existir
+	if (img)
+	{
+		delete img;
+		img = 0;
+	}
+	if (imageData.data)
+	{
+		delete imageData.data;
+		imageData.data = 0;
+	}
+
+	img = new Gdiplus::Bitmap(sizeX, sizeY);
+}
+
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
 {
-	if (x < (unsigned int)imageData.width && y < (unsigned int)imageData.height)
-	{
-		imageData.data[y * imageData.width + x] = color;
-	}
+	img->SetPixel((INT)x, (INT)y, *reinterpret_cast<Gdiplus::Color*>(&color));
+	needsBufferUpdate = true;
+}
+
+void Image::drawText(std::wstring text, font& textFont, vec2 position, color textColor)
+{
+
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+
+	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
+
+	//Gdiplus::RectF rect(0.0f, 0.0f, (float)texSizeX, (float)texSizeY);
+	Gdiplus::PointF pos(position.x, position.y);
+
+	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+
+	Gdiplus::SolidBrush* brush = new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor));
+
+	gfx->DrawString(
+		text.c_str(),
+		-1,
+		textFont.fontLoaded,
+		pos,
+		nullptr,
+		brush
+	);
+
+
+
+	needsBufferUpdate = true;
+
+	delete brush;
+	delete gfx;
 }
 
 Image::data& Image::getData()
@@ -108,7 +166,11 @@ Image::data& Image::getData()
 		return imageData;//mudar para enviar por referencia depois
 
 	//colocando a imagem no buffer
-	// 
+	if (imageData.data)
+	{
+		delete imageData.data;
+		imageData.data = 0;
+	}
 	//configurando imageData
 	imageData.pixelCount = img->GetWidth() * img->GetHeight();
 	imageData.width = img->GetWidth();
@@ -141,6 +203,9 @@ Image::data& Image::getData()
 	//liberando memoria
 	img->UnlockBits(bitmapData);
 	delete bitmapData;
+
+	//salva que ja buffer foi atualizado
+	needsBufferUpdate = false;
 
 	return imageData;
 }
