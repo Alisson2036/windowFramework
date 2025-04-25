@@ -25,7 +25,6 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 	sd.SysMemPitch = d.width * sizeof(color);
 
 	//criando a texture
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	_throwHr
 	(
 		getDevice()->CreateTexture2D(&texDesc, &sd, texture.GetAddressOf())
@@ -73,7 +72,6 @@ void Texture::createWithMipMap(Image& img, bool hasAntiAliasing)
 
 
 	//criando a textura, sem a imagem
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	_throwHr
 	(
 		getDevice()->CreateTexture2D(&texDesc, nullptr, texture.GetAddressOf())
@@ -106,6 +104,23 @@ void Texture::createWithMipMap(Image& img, bool hasAntiAliasing)
 	getContext()->GenerateMips(textureView.Get());
 
 	resolution = vec2(d.width, d.height);
+}
+
+void Texture::update(Image& img)
+{
+	Image::data d = img.getData();
+
+	resolution = vec2(d.width, d.height);
+
+	//coloca a imagem no primeiro nivel mip
+	getContext()->UpdateSubresource(
+		texture.Get(),
+		0u,
+		nullptr,
+		d.data,
+		d.width * sizeof(color),
+		0u
+	);
 }
 
 bool Texture::isAntialiased()

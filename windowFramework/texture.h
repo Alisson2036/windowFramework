@@ -15,6 +15,8 @@ public:
 	void create(Image& img, bool hasAntiAliasing=true);
 	void createWithMipMap(Image& img, bool hasAntiAliasing = true);
 
+	void update(Image& img);
+
 	bool isAntialiased();
 
 	void setSlot(unsigned short slot);
@@ -24,6 +26,7 @@ public:
 	vec2 getResolution();
 
 private:
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 	bool antialiased = true;
 	unsigned short textureSlot = 0u;

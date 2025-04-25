@@ -120,10 +120,10 @@ void app::start()
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
 	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"oi tudo bem?", *fonte, 300, 150, color(255u, 255u, 255u, 255u));
-	Texture ab;
-	ab.create(img,false);
-	plane.create(ab);
+	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	//Texture ab;
+	//ab.create(img,false);
+	plane.create(img);
 
 
 	while (win.update()) loop();
@@ -236,11 +236,10 @@ void app::loop()
 	static float dTime;
 	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
 	dTime = timeSinceCreation.getPassedSeconds();
-	imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 400, 300, color(255u, 255u, 255u, 255u));
-	Texture tex;
-	tex.create(imgTemp);
-	plane.changeTexture(tex);
+	imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
+	//Texture tex;
+	//tex.create(imgTemp, false);
+	plane.update(imgTemp);
 	
-	plane.setPosition({ -1.0f, 1.0f });
 	plane.draw(*win.Gfx().getPipeline());
 }
