@@ -51,6 +51,7 @@ public:
 private:
 	Gdiplus::Bitmap* img = nullptr;
 	data imageData;
+	bool needsBufferUpdate = false;
 
 
 };

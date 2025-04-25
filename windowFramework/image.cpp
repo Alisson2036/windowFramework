@@ -47,42 +47,11 @@ void Image::loadFile(std::wstring fileName)
 		delete imageData.data;
 
 	//criando bitmap no heap
-	Gdiplus::Bitmap img(fileName.c_str());
-	if (img.GetLastStatus())
+	img = new Gdiplus::Bitmap(fileName.c_str());
+	if (img->GetLastStatus())
 		_throwMsg("Image does not exist");
 
-	//configurando imageData
-	imageData.pixelCount = img.GetWidth() * img.GetHeight();
-	imageData.width = img.GetWidth();
-	imageData.height = img.GetHeight();
-
-	//alocando espaço na memoria para armazenar a imagem
-	imageData.data = new color[imageData.pixelCount];
-	
-	//guardando os pixeis
-	Gdiplus::Rect imgRect(
-		0,
-		0,
-		imageData.width,
-		imageData.height
-	);
-	Gdiplus::PixelFormat pixelFormat = PixelFormat32bppARGB;
-	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
-
-	img.LockBits(
-		&imgRect,
-		Gdiplus::ImageLockModeRead,
-		pixelFormat,
-		bitmapData
-	);
-
-	color* start = reinterpret_cast<color*>(bitmapData->Scan0);
-	color* end = start + imageData.pixelCount;
-	std::copy<color*, color*>(start, end, imageData.data);
-
-	//liberando memoria
-	img.UnlockBits(bitmapData);
-
+	needsBufferUpdate = true;
 	
 }
 
@@ -117,42 +86,10 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 		brush
 	);
 
-	
-	//colocando a imagem no buffer
-	// 
-	//configurando imageData
-	imageData.pixelCount = img->GetWidth() * img->GetHeight();
-	imageData.width = img->GetWidth();
-	imageData.height = img->GetHeight();
-	
-	//alocando espaço na memoria para armazenar a imagem
-	imageData.data = new color[imageData.pixelCount];
-	
-	//guardando os pixeis
-	Gdiplus::Rect imgRect(
-		0,
-		0,
-		imageData.width,
-		imageData.height
-	);
-	Gdiplus::PixelFormat pixelFormat = PixelFormat32bppARGB;
-	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
-	
-	img->LockBits(
-		&imgRect,
-		Gdiplus::ImageLockModeRead,
-		pixelFormat,
-		bitmapData
-	);
 
-	color* start = reinterpret_cast<color*>(bitmapData->Scan0);
-	color* end = start + imageData.pixelCount;
-	std::copy<color*, color*>(start, end, imageData.data);
-
-	//liberando memoria
-	img->UnlockBits(bitmapData);
-
-	delete bitmapData;
+	
+	needsBufferUpdate = true;
+	
 	delete brush;
 	delete gfx;
 }
@@ -167,7 +104,45 @@ void Image::drawPixel(unsigned int x, unsigned int y, color color)
 
 Image::data& Image::getData()
 {
-	return imageData;//mudar para enviar por referencia depois
+	if(!needsBufferUpdate)
+		return imageData;//mudar para enviar por referencia depois
+
+	//colocando a imagem no buffer
+	// 
+	//configurando imageData
+	imageData.pixelCount = img->GetWidth() * img->GetHeight();
+	imageData.width = img->GetWidth();
+	imageData.height = img->GetHeight();
+
+	//alocando espaço na memoria para armazenar a imagem
+	imageData.data = new color[imageData.pixelCount];
+
+	//guardando os pixeis
+	Gdiplus::Rect imgRect(
+		0,
+		0,
+		imageData.width,
+		imageData.height
+	);
+	Gdiplus::PixelFormat pixelFormat = PixelFormat32bppARGB;
+	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
+
+	img->LockBits(
+		&imgRect,
+		Gdiplus::ImageLockModeRead,
+		pixelFormat,
+		bitmapData
+	);
+
+	color* start = reinterpret_cast<color*>(bitmapData->Scan0);
+	color* end = start + imageData.pixelCount;
+	std::copy<color*, color*>(start, end, imageData.data);
+
+	//liberando memoria
+	img->UnlockBits(bitmapData);
+	delete bitmapData;
+
+	return imageData;
 }
 
 Image::font::font(std::wstring fontName, float fontSize)

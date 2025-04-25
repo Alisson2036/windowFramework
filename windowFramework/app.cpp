@@ -16,8 +16,8 @@ void app::start()
 	Image bricksNormal(L"bricksNormal.jpg");
 
 	
-	for (int i = 50; i < 200; i++)
-		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
+	//for (int i = 50; i < 200; i++)
+	//	img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
 	tex.createWithMipMap(img);
 	brickTex.createWithMipMap(bricks);
@@ -223,7 +223,7 @@ void app::loop()
 				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
 				colorBlendCube.set(pos, { 0.f,0.f,0.f });
-				//win.Gfx().getPipeline()->bind(colorBlendCube);
+				win.Gfx().getPipeline()->bind(colorBlendCube);
 			}
 		}
 	}
@@ -236,9 +236,8 @@ void app::loop()
 	static float dTime;
 	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
 	dTime = timeSinceCreation.getPassedSeconds();
+
 	imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
-	//Texture tex;
-	//tex.create(imgTemp, false);
 	plane.update(imgTemp);
 	
 	plane.draw(*win.Gfx().getPipeline());
