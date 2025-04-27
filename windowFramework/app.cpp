@@ -142,9 +142,13 @@ void app::start()
 	hud.fromBlank(800, 600);
 
 	//adiciona objetos de fisica
-	phyObjs.push_back(physicsObject(vec3(0.0f,6.0f,0.0f)));
-	phyDomain.addObject(&phyObjs[0]);
-	phyDomain.setGravity(vec3(0.0f, -10.0f, 0.0f));
+	phyObjs.push_back(physicsObject(vec3(1.0f, 4.0f, 0.0f)));
+	phyObjs.push_back(physicsObject(vec3(0.0f, 6.0f, 1.0f)));
+	phyObjs.push_back(physicsObject(vec3(0.0f, 8.0f, 0.0f)));
+
+	for(auto& i : phyObjs)
+		phyDomain.addObject(&i);
+	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
 
 
 	while (win.update()) loop();
@@ -153,6 +157,7 @@ void app::start()
 
 void app::loop()
 {
+
 	//posicao do mouse na tela 
 	float x = (float)win.getMousePointer()->getX();
 	float y = (float)win.getMousePointer()->getY();
@@ -201,8 +206,18 @@ void app::loop()
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
+	//cria mais bolas
+	static float lastBallTime = timeSinceCreation.getPassedSeconds();
+	if (timeSinceCreation.getPassedSeconds() > lastBallTime + 2.0f)
+	{
+		//phyObjs.push_back(physicsObject(vec3(cos(lastBallTime), 8.0f, 0.0f)));
+		//phyDomain.addObject(&phyObjs.back());
+
+		lastBallTime = timeSinceCreation.getPassedSeconds();
+	}
+
 	//physics logics
-	phyDomain.solve(0.01);
+	phyDomain.solve(frameTime);
 
 
 	//preenche a tela
@@ -269,12 +284,12 @@ void app::loop()
 
 	//escreve texto do frametime
 	static float dTime;
-	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
+	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
 	dTime = timeSinceCreation.getPassedSeconds();
 
 
 	hud.drawText(
-		std::to_wstring(frameTime),
+		std::to_wstring(frameTime * 1000.0f),
 		*fonte,
 		vec2(0, 0),
 		color(255u, 255u, 255u, 255u)

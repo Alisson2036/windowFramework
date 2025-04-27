@@ -12,13 +12,19 @@ void physicsDomain::setGravity(vec3 grav)
 
 void physicsDomain::solve(float dt)
 {
-	const vec3 boxPos(0.f, 0.f, 0.f);
-	const vec3 boxSize(0.f, 0.f, 0.f);
+	const vec3 boxPos(-10.0f, 10.0f, -10.0f);
+	const vec3 boxSize(20.f, -10.f, 20.f);
 
 	//solve verlet for all objects
+	//and contain inside box
 	for (physicsObject* i : objects)
 	{
 		i->solveVerlet(gravity, dt);
 		i->containInBox(boxPos, boxSize);
 	}
+
+	//collisions
+	for(int i = 0; i < objects.size(); i++)
+		for (int j = i + 1; j < objects.size(); j++)
+			objects[i]->collide(objects[j]);
 }

@@ -36,6 +36,7 @@ private:
 	Texture solidWhiteTex;
 
 	float a = 8.0f;
+	float frameTime;
 
 	window win;
 	Timer timeSinceCreation;
