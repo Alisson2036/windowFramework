@@ -61,5 +61,5 @@ private:
 
 	//physics objects
 	physicsDomain phyDomain;
-	std::vector<physicsObject> phyObjs;
+	std::vector<physicsObject*> phyObjs;
 };

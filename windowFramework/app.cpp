@@ -142,12 +142,12 @@ void app::start()
 	hud.fromBlank(800, 600);
 
 	//adiciona objetos de fisica
-	phyObjs.push_back(physicsObject(vec3(1.0f, 4.0f, 0.0f)));
-	phyObjs.push_back(physicsObject(vec3(0.0f, 6.0f, 1.0f)));
-	phyObjs.push_back(physicsObject(vec3(0.0f, 8.0f, 0.0f)));
+	phyObjs.push_back(new physicsObject(vec3(1.0f, 4.0f, 0.0f)));
+	phyObjs.push_back(new physicsObject(vec3(0.0f, 6.0f, 1.0f)));
+	phyObjs.push_back(new physicsObject(vec3(0.0f, 8.0f, 0.0f)));
 
 	for(auto& i : phyObjs)
-		phyDomain.addObject(&i);
+		phyDomain.addObject(i);
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
 
 
@@ -208,13 +208,20 @@ void app::loop()
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (timeSinceCreation.getPassedSeconds() > lastBallTime + 2.0f)
+	if (phyObjs.size() < 500 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.1f)
 	{
-		//phyObjs.push_back(physicsObject(vec3(cos(lastBallTime), 8.0f, 0.0f)));
-		//phyDomain.addObject(&phyObjs.back());
+		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
+		phyDomain.addObject(phyObjs.back());
 
 		lastBallTime = timeSinceCreation.getPassedSeconds();
 	}
+
+	hud.drawText(
+		L"Objetos:" + std::to_wstring(phyObjs.size()),
+		*fonte,
+		vec2(0, 40),
+		color(255, 255, 255, 255)
+	);
 
 	//physics logics
 	phyDomain.solve(frameTime);
@@ -277,7 +284,7 @@ void app::loop()
 	//coloca as esferas
 	for (auto& i : phyObjs)
 	{
-		sphere.set(i.getPosition(), {0.f, 0.f, 0.f});
+		sphere.set(i->getPosition(), {0.f, 0.f, 0.f});
 		win.Gfx().getPipeline()->bind(sphere);
 	}
 

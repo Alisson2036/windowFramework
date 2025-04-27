@@ -12,8 +12,8 @@ void physicsDomain::setGravity(vec3 grav)
 
 void physicsDomain::solve(float dt)
 {
-	const vec3 boxPos(-10.0f, 10.0f, -10.0f);
-	const vec3 boxSize(20.f, -10.f, 20.f);
+	const vec3 boxPos(-10.0f, 20.0f, -10.0f);
+	const vec3 boxSize(20.f, -20.f, 20.f);
 
 	//solve verlet for all objects
 	//and contain inside box
