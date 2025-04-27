@@ -43,10 +43,12 @@ private:
 	shader colorBlendShader;
 	shader texturedShader;
 	shader normalShader;
+
 	object colorBlendCube;
 	object texturedCube;
 	object normalCube;
 	object cubeLight;
+	object sphere;
 
 	Image hud;
 	Image::font* fonte;

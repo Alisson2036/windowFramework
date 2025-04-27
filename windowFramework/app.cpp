@@ -16,8 +16,6 @@ void app::start()
 	Image bricksNormal(L"bricksNormal.jpg");
 
 	
-	for (int i = 50; i < 200; i++)
-		img.drawPixel(i, 50, color(255u, 0u, 255u, 255u));
 
 	tex.createWithMipMap(img);
 	brickTex.createWithMipMap(bricks);
@@ -32,8 +30,10 @@ void app::start()
 
 	objLoader obj;
 	objLoader planeObj;
+	objLoader sphereObj;
 	obj.fromFile("cube.obj");
 	planeObj.fromFile("plane.obj");
+	sphereObj.fromFile("sphere.obj");
 
 	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
@@ -113,6 +113,13 @@ void app::start()
 	normalCube.setTexture(&brickTexNormal, 1);
 	normalCube.lock();
 
+	//cria a esfera
+	sphere.create(texturedShader);
+	sphere.loadFromObj(sphereObj);
+	sphere.setTexture(&tex, 0);
+	sphere.lock();
+	
+
 	//move camera para posicao inicial
 	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
 	
@@ -189,15 +196,7 @@ void app::loop()
 	vec3 pos = { 0.0f, 0.0f, 0.0f };
 	vec3 angle = { 0.0f, 0.0f, 0.0f};
 
-
-
-	SpatialData inst(pos, angle);
-
-
-
-	//desenha o objeto texturizado no meio da tela
-	//cubeTex.update(inst);
-	
+	//cria o chao
 	for (int y = -10; y < 10; y++)
 	{
 		for (int x = -10; x < 10; x++)
@@ -240,35 +239,29 @@ void app::loop()
 		}
 	}
 
-	texturedCube.set({ 0.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
-	//normalCube.setScale({ 2.f,2.f,2.f });
+	//coloca o cubo texturizado
+	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
 	win.Gfx().getPipeline()->bind(texturedCube);
 
-	//DESENHA A IMAGEM ALEATORIA QUE FICA NA TELA
+	//coloca a esfera
+	texturedCube.set({ 0.f, 0.f, 0.f }, { 0.f, 0.f, 0.f });
+	win.Gfx().getPipeline()->bind(sphere);
+
+
+	//escreve texto do frametime
 	static float dTime;
 	float frameTime = (timeSinceCreation.getPassedSeconds() - dTime) * 1000.0f;
 	dTime = timeSinceCreation.getPassedSeconds();
 
-	//imgTemp.fromRenderText(std::to_wstring(frameTime), *fonte, 800, 600, color(255u, 255u, 255u, 255u));
-	//imgTemp.fromBlank(800, 600);
-
-
-	hud.drawText(
-		L"Frametime:",
-		*fonte,
-		vec2(0, 0),
-		color(255u, 255u, 255u, 255u)
-	);
-
-	hud.drawRectangle(vec2(100, 100), vec2(200, 200), color(255, 0, 0, 100));
 
 	hud.drawText(
 		std::to_wstring(frameTime),
 		*fonte,
-		vec2(100, 100),
+		vec2(0, 0),
 		color(255u, 255u, 255u, 255u)
 	);
 	
+	//desenha e atualiza o hud
 	hudObject.update(hud);
 	hudObject.draw(*win.Gfx().getPipeline());
 	hud.clear();
