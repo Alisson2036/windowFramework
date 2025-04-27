@@ -16,11 +16,13 @@ public:
 	void move(vec3 Position, vec2 Angle);
 	void movePosition(vec3 Position);
 	void moveAngle(vec2 Angle);
+
+	void setScreenProportion(float proportion);
 	
 	DirectX::XMMATRIX getMatrix();
 	DirectX::XMVECTOR getPositionVector();
 
-	static DirectX::XMMATRIX getProjectionMatrix();
+	DirectX::XMMATRIX getProjectionMatrix();
 
 
 
@@ -30,6 +32,7 @@ private:
 	vec3 position;
 	vec2 angle;
 
+	float screenProportion = 1.0f;
 
 };
 

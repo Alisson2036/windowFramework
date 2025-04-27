@@ -11,9 +11,9 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 
 	aliasedSampler.create(true);
 	sampler.create(false);
-
+	
 	//cria projection matrix
-	DirectX::XMMATRIX mat[] = { Camera::getProjectionMatrix() };
+	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };//camera->getProjectionMatrix() };
 	cameraConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
 	cameraConstantBuffer.setSlot(1);
 	//cria buffer para posicao da camera

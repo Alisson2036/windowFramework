@@ -50,6 +50,11 @@ void Camera::moveAngle(vec2 Angle)
 	angle.y += Angle.y;
 }
 
+void Camera::setScreenProportion(float proportion)
+{
+	screenProportion = proportion;
+}
+
 DirectX::XMMATRIX Camera::getMatrix()
 {
 	//DirectX::XMMatrixRotationNormal
@@ -68,7 +73,7 @@ DirectX::XMVECTOR Camera::getPositionVector()
 
 DirectX::XMMATRIX Camera::getProjectionMatrix()
 {
-	return DirectX::XMMatrixPerspectiveLH(1.0f, 3.0f / 4.0f, 0.5f, 100.0f);
+	return DirectX::XMMatrixPerspectiveLH(1.0f, screenProportion, 0.5f, 100.0f);
 }
 
 DirectX::XMMATRIX Camera::getRotationMatrix()

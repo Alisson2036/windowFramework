@@ -2,7 +2,7 @@
 
 app::app()
 	:
-	win(L"Jojo fofo", 800, 600),
+	win(L"Jojo fofo", 1200, 900),
 	timeSinceCreation()
 {
 
@@ -129,17 +129,15 @@ void app::start()
 	
 
 	//move camera para posicao inicial
+	cam.setScreenProportion((float)win.getWindowSizeY() / (float)win.getWindowSizeX());
 	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
 	
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
-	//CRIA A IMAGEM ALEATORIA QUE FICA NA TELA
-	img.fromRenderText(L"oi tudo bem?", *fonte, 800, 600, color(255u, 255u, 255u, 255u));
-	hudObject.create(img);
-
 	//inicializa a imagem do hud
-	hud.fromBlank(800, 600);
+	hud.fromBlank(win.getWindowSizeX(), win.getWindowSizeY());
+	hudObject.create(hud);
 
 	//adiciona objetos de fisica
 	phyObjs.push_back(new physicsObject(vec3(1.0f, 4.0f, 0.0f)));
@@ -208,7 +206,7 @@ void app::loop()
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (phyObjs.size() < 500 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.1f)
+	if (phyObjs.size() < 500 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
 	{
 		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
 		phyDomain.addObject(phyObjs.back());
@@ -261,7 +259,7 @@ void app::loop()
 
 	
 	//cria e desenha todos os cubos coloridos
-	for (int n = 1; n < 5; n++)
+	for (int n = 3; n < 4; n++)
 	{
 		for (int j = -5; j < 5; j++)
 		{
