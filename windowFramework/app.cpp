@@ -14,12 +14,20 @@ void app::start()
 	Image img(L"a.png");
 	Image bricks(L"bricks.jpg");
 	Image bricksNormal(L"bricksNormal.jpg");
+	Image solidWhite;
+	solidWhite.fromBlank(100, 100);
+	solidWhite.drawRectangle(
+		vec2(0, 0),
+		vec2(100, 100),
+		color(255u, 255u, 255u, 255u)
+	);
 
 	
 
 	tex.createWithMipMap(img);
 	brickTex.createWithMipMap(bricks);
 	brickTexNormal.createWithMipMap(bricksNormal);
+	solidWhiteTex.create(solidWhite);
 
 	//coloca luz na pipeline
 	win.Gfx().getPipeline()->setLight(&light);
@@ -116,7 +124,7 @@ void app::start()
 	//cria a esfera
 	sphere.create(texturedShader);
 	sphere.loadFromObj(sphereObj);
-	sphere.setTexture(&tex, 0);
+	sphere.setTexture(&solidWhiteTex, 0);
 	sphere.lock();
 	
 
@@ -132,6 +140,11 @@ void app::start()
 
 	//inicializa a imagem do hud
 	hud.fromBlank(800, 600);
+
+	//adiciona objetos de fisica
+	phyObjs.push_back(physicsObject(vec3(0.0f,6.0f,0.0f)));
+	phyDomain.addObject(&phyObjs[0]);
+	phyDomain.setGravity(vec3(0.0f, -10.0f, 0.0f));
 
 
 	while (win.update()) loop();
@@ -188,6 +201,9 @@ void app::loop()
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
+	//physics logics
+	phyDomain.solve(0.01);
+
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
@@ -243,9 +259,12 @@ void app::loop()
 	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
 	win.Gfx().getPipeline()->bind(texturedCube);
 
-	//coloca a esfera
-	texturedCube.set({ 0.f, 0.f, 0.f }, { 0.f, 0.f, 0.f });
-	win.Gfx().getPipeline()->bind(sphere);
+	//coloca as esferas
+	for (auto& i : phyObjs)
+	{
+		sphere.set(i.getPosition(), {0.f, 0.f, 0.f});
+		win.Gfx().getPipeline()->bind(sphere);
+	}
 
 
 	//escreve texto do frametime

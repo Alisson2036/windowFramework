@@ -145,6 +145,8 @@
     <ClCompile Include="indexBuffer.cpp" />
     <ClCompile Include="inputBuffer.cpp" />
     <ClCompile Include="inputLayout.cpp" />
+    <ClCompile Include="physicsDomain.cpp" />
+    <ClCompile Include="physicsObject.cpp" />
     <ClCompile Include="SpatialData.cpp" />
     <ClCompile Include="keyboard.cpp" />
     <ClCompile Include="light.cpp" />
@@ -175,6 +177,8 @@
     <ClInclude Include="indexBuffer.h" />
     <ClInclude Include="inputBuffer.h" />
     <ClInclude Include="inputLayout.h" />
+    <ClInclude Include="physicsDomain.h" />
+    <ClInclude Include="physicsObject.h" />
     <ClInclude Include="SpatialData.h" />
     <ClInclude Include="keyboard.h" />
     <ClInclude Include="app.h" />

@@ -10,6 +10,8 @@
 
 #include "hudElement.h"
 
+#include "physicsDomain.h"
+#include "physicsObject.h"
 
 class app
 {
@@ -31,6 +33,7 @@ private:
 	Texture tex;
 	Texture brickTex;
 	Texture brickTexNormal;
+	Texture solidWhiteTex;
 
 	float a = 8.0f;
 
@@ -54,4 +57,8 @@ private:
 	Image::font* fonte;
 
 	Light light;//precisa ser inicializado depois do win se nao da erro
+
+	//physics objects
+	physicsDomain phyDomain;
+	std::vector<physicsObject> phyObjs;
 };

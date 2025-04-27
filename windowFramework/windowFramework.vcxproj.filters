@@ -31,6 +31,12 @@
     <Filter Include="Objetos">
       <UniqueIdentifier>{bddb19ee-c888-48af-95ff-063d79b227ae}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Arquivos de Origem\Physics">
+      <UniqueIdentifier>{c818ad09-5b44-4740-990b-ab99c4711eac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Arquivos de Cabeçalho\Physics">
+      <UniqueIdentifier>{f9d46184-b93b-4a8d-a542-8b7e437825e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -116,6 +122,12 @@
     </ClCompile>
     <ClCompile Include="inputBuffer.cpp">
       <Filter>Arquivos de Origem\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="physicsObject.cpp">
+      <Filter>Arquivos de Origem\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="physicsDomain.cpp">
+      <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +226,12 @@
     </ClInclude>
     <ClInclude Include="SpatialData.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="physicsDomain.h">
+      <Filter>Arquivos de Cabeçalho\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="physicsObject.h">
+      <Filter>Arquivos de Cabeçalho\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

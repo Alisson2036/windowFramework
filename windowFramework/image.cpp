@@ -121,6 +121,8 @@ void Image::fromBlank(int sizeX, int sizeY)
 	}
 
 	img = new Gdiplus::Bitmap(sizeX, sizeY);
+
+	needsBufferUpdate = true;
 }
 
 void Image::clear()
@@ -128,6 +130,7 @@ void Image::clear()
 
 	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
 	gfx->Clear(Gdiplus::Color(0u, 0u, 0u, 0u));
+	needsBufferUpdate = true;
 }
 
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
@@ -142,6 +145,7 @@ void Image::drawLine(vec2 startPos, vec2 endPos, color c)
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	Gdiplus::Pen pen(&brush);
 	gfx->DrawLine(&pen, startPos.x, startPos.y, endPos.x, endPos.y);
+	needsBufferUpdate = true;
 }
 
 void Image::drawRectangle(vec2 pos, vec2 size, color c)
@@ -149,6 +153,7 @@ void Image::drawRectangle(vec2 pos, vec2 size, color c)
 	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	gfx->FillRectangle(&brush, pos.x, pos.y, size.x, size.y);
+	needsBufferUpdate = true;
 }
 
 void Image::drawText(std::wstring text, font& textFont, vec2 position, color textColor)
