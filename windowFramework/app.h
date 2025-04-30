@@ -2,6 +2,7 @@
 #include "window.h"
 #include "exception.h"
 #include "timer.h"
+#include "targetView.h"
 
 #include "Camera.h"
 #include "light.h"
@@ -56,6 +57,8 @@ private:
 
 	Image hud;
 	Image::font* fonte;
+
+	targetView newTarget;
 
 	Light light;//precisa ser inicializado depois do win se nao da erro
 

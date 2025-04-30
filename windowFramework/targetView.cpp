@@ -24,12 +24,26 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 		getDevice()->CreateTexture2D(&texDesc, nullptr, buffer.texture.GetAddressOf())
 	);
 
-	//criando a view da textura
+	//criando a render target da textura
 	getDevice()->CreateRenderTargetView(
 		buffer.texture.Get(),
 		nullptr,
 		renderTargetView.GetAddressOf()
 	);
+
+	//criando a view da textura
+	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
+	viewDesc.Format = texDesc.Format;
+	viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+	viewDesc.Texture2D.MipLevels = 1;
+	viewDesc.Texture2D.MostDetailedMip = 0;
+
+	_throwHr
+	(
+		getDevice()->CreateShaderResourceView(buffer.texture.Get(), &viewDesc, buffer.textureView.GetAddressOf())
+	);
+
+	buffer.resolution = vec2(targetResolution.x, targetResolution.y);
 
 	//retorna caso nao for para usar depthstencil
 	if (!enableDepthStencil) return;
@@ -69,6 +83,10 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 
 	_throwHr(getDevice()->CreateDepthStencilView(depthTexture.Get(), &depthStencilViewDesc, depthStencilView.GetAddressOf()));
 
+
+	const float f[4] = { 0.f,0.f,0.f, 1.0f };
+	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
+
 }
 
 void targetView::bind()
@@ -77,4 +95,19 @@ void targetView::bind()
 	getContext()->RSSetViewports(1, &viewport);
 
 	getContext()->OMSetDepthStencilState(depthStencilState.Get(), 1u);
+	getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+
+}
+
+Texture* targetView::getTexture()
+{
+	return &buffer;
+}
+
+void targetView::clear()
+{
+	const float f[4] = { 0.f,0.f,0.f, 1.0f };
+	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
+
+	getContext()->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }

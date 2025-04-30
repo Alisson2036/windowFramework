@@ -28,6 +28,7 @@ public:
 	//classe que armazena pointers para os objetos
 	Pipeline* getPipeline();
 
+	void drawToScreen();
 	void fillScreen(float r, float g, float b);
 	void flip();
 
@@ -40,6 +41,7 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>         swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>    deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
 
 	Pipeline* pipeline;

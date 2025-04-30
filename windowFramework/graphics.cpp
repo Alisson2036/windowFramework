@@ -53,10 +53,6 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, targetView.GetAddressOf());
 	else _throw;
 
-	//configura viewport
-	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)windowSizeX, (float)windowSizeY, 0.0f, 1.0f };
-	
-	deviceContext->RSSetViewports(1, &viewport);
 
 	
 
@@ -66,11 +62,8 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
 	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
 	
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
 	_throwHr(d3dDevice->CreateDepthStencilState(&depthStencilDesc, depthStencilState.GetAddressOf()));
 
-	//bind depth stencil state na pipeline
-	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1u);
 
 	//criando a textura do depth buffer
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthTexture;
@@ -95,12 +88,7 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 
 	_throwHr(d3dDevice->CreateDepthStencilView(depthTexture.Get(), &depthStencilViewDesc, depthStencilView.GetAddressOf()));
 
-	
-
-	//configura render target
-	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), depthStencilView.Get());
-
-
+	drawToScreen();
 
 	//inicia bindables
 	Bindable::setDevice(d3dDevice.Get());
@@ -123,6 +111,17 @@ Graphics::~Graphics()
 {
 	Image::uninitialize();
 	delete pipeline;
+}
+
+void Graphics::drawToScreen()
+{
+	//configura viewport
+	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)windowSizeX, (float)windowSizeY, 0.0f, 1.0f };
+	deviceContext->RSSetViewports(1, &viewport);
+	//bind depth stencil state na pipeline
+	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1u);
+	//configura render target
+	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), depthStencilView.Get());
 }
 
 void Graphics::fillScreen(float r, float g, float b)

@@ -10,6 +10,9 @@ app::app()
 
 void app::start()
 {
+	//criando novo target view
+	newTarget.create(vec2(1200, 900), true);
+
 	//carregando imagem
 	Image img(L"a.png");
 	Image bricks(L"bricks.jpg");
@@ -110,7 +113,8 @@ void app::start()
 	//cria o cubo texturizado
 	texturedCube.create(texturedShader);
 	texturedCube.loadFromObj(obj);
-	texturedCube.setTexture(&tex, 0);
+	//texturedCube.setTexture(&tex, 0);
+	texturedCube.setTexture(newTarget.getTexture(), 0);
 	texturedCube.lock();
 
 
@@ -148,6 +152,7 @@ void app::start()
 		phyDomain.addObject(i);
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
 
+	newTarget.clear();
 
 	while (win.update()) loop();
 
@@ -203,6 +208,12 @@ void app::loop()
 
 	if (kb->isKeyPressed('Z')) a+=0.1f;
 	if (kb->isKeyPressed('X')) a-= 0.1f;
+
+
+	if (kb->isKeyPressed('P')) newTarget.bind();
+	if (kb->isKeyPressed('O')) win.Gfx().drawToScreen();
+	//if (kb->isKeyPressed('L')) newTarget.clear();
+	newTarget.clear();
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
@@ -277,6 +288,7 @@ void app::loop()
 
 	//coloca o cubo texturizado
 	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
+	texturedCube.setTexture(newTarget.getTexture(), 0);
 	win.Gfx().getPipeline()->bind(texturedCube);
 
 	//coloca as esferas

@@ -17,7 +17,9 @@ public:
 
 	void bind() override;
 
+	Texture* getTexture();
 
+	void clear();
 
 
 private:
