@@ -129,6 +129,9 @@
     <ClCompile Include="physicsDomain.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="targetView.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -232,6 +235,9 @@
     </ClInclude>
     <ClInclude Include="physicsObject.h">
       <Filter>Arquivos de Cabeçalho\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="targetView.h">
+      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

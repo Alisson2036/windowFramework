@@ -10,6 +10,7 @@
 
 class Texture : public Bindable
 {
+	friend class targetView;
 public:
 
 	void create(Image& img, bool hasAntiAliasing=true);
