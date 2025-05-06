@@ -97,8 +97,12 @@ void targetView::bind()
 	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)targetResolution.x, (float)targetResolution.y, 0.0f, 1.0f };
 	getContext()->RSSetViewports(1, &viewport);
 
-	getContext()->OMSetDepthStencilState(depthStencilState.Get(), 1u);
-	getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	if(depthStencilState)
+		getContext()->OMSetDepthStencilState(depthStencilState.Get(), 1u);
+	if(depthStencilView)
+		getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	else
+		getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), nullptr);
 
 }
 
@@ -112,5 +116,6 @@ void targetView::clear()
 	const float f[4] = { 0.f,0.f,0.f, 1.0f };
 	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
 
-	getContext()->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
+	if(depthStencilView)
+		getContext()->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }

@@ -11,7 +11,7 @@ app::app()
 void app::start()
 {
 	//criando novo target view
-	newTarget.create(vec2(1200, 900), true);
+	newTarget.create(vec2(200, 200), false);
 
 	//carregando imagem
 	Image img(L"a.png");
