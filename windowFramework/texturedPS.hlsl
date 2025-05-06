@@ -54,7 +54,7 @@ float4 main(VS_Output input) : SV_TARGET
     float4 specularColor = float4(1.0f, 1.0f, 1.0f, 1.0f) * specular;
     diffuse += 0.2f; //global illumination
     float4 finalColor = saturate(color * diffuse + specularColor);
-    finalColor.a = color.a;
+    finalColor.a = 1.0f;
 
     return finalColor; //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
 

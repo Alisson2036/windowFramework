@@ -210,10 +210,16 @@ void app::loop()
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
 
-	if (kb->isKeyPressed('P')) newTarget.bind();
-	if (kb->isKeyPressed('O')) win.Gfx().drawToScreen();
-	//if (kb->isKeyPressed('L')) newTarget.clear();
-	newTarget.clear();
+	if (kb->isKeyPressed('P'))
+	{
+		newTarget.clear();
+		newTarget.bind();
+	}
+	else
+	{
+		win.Gfx().drawToScreen();
+	}
+	//newTarget.clear();
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();

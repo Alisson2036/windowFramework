@@ -14,7 +14,7 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 	texDesc.SampleDesc.Count = 1;
 	texDesc.SampleDesc.Quality = 0;
 	texDesc.CPUAccessFlags = 0;
-	texDesc.MiscFlags = D3D11_RESOURCE_MISC_GENERATE_MIPS;
+	texDesc.MiscFlags = 0;
 	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE | D3D11_BIND_RENDER_TARGET;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
 
@@ -25,10 +25,13 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 	);
 
 	//criando a render target da textura
-	getDevice()->CreateRenderTargetView(
-		buffer.texture.Get(),
-		nullptr,
-		renderTargetView.GetAddressOf()
+	_throwHr
+	(
+		getDevice()->CreateRenderTargetView(
+			buffer.texture.Get(),
+			nullptr,
+			renderTargetView.GetAddressOf()
+		)
 	);
 
 	//criando a view da textura
