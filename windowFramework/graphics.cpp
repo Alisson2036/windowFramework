@@ -5,6 +5,9 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	windowSizeX(_windowSizeX),
 	windowSizeY(_windowSizeY)
 {
+
+
+	
 	DXGI_MODE_DESC modeDesc = {};
 	modeDesc.Width = 0; 
 	modeDesc.Height = 0; //adquire valores da janela de saída
@@ -53,50 +56,17 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, renderTargetView.GetAddressOf());
 	else _throw;
 
-
-	
-
-	//configura depth buffer
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-	depthStencilDesc.DepthEnable = TRUE;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-	
-	_throwHr(d3dDevice->CreateDepthStencilState(&depthStencilDesc, depthStencilState.GetAddressOf()));
-
-
-	//criando a textura do depth buffer
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthTexture;
-	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
-	depthTextureDesc.Width = windowSizeX;
-	depthTextureDesc.Height = windowSizeX;
-	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthTextureDesc.MipLevels = 1u;
-	depthTextureDesc.ArraySize = 1u;
-	depthTextureDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	depthTextureDesc.SampleDesc.Count = 1u;
-	depthTextureDesc.SampleDesc.Quality = 0u;
-	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-
-	_throwHr(d3dDevice->CreateTexture2D(&depthTextureDesc, nullptr, depthTexture.GetAddressOf()));
-	
-
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
-	depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depthStencilViewDesc.Texture2D.MipSlice = 0u;
-
-	_throwHr(d3dDevice->CreateDepthStencilView(depthTexture.Get(), &depthStencilViewDesc, depthStencilView.GetAddressOf()));
-
-	drawToScreen();
-
 	//inicia bindables
 	Bindable::setDevice(d3dDevice.Get());
 	Bindable::setContext(deviceContext.Get());
 	//inicia pipeline
-	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get(), {(float)windowSizeX, (float)windowSizeY});
-	
+	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get(), { (float)windowSizeX, (float)windowSizeY });
+	//inicia GDI
 	Image::initialize();
+
+	depthStencilBuffer.create(vec2(windowSizeX, windowSizeY));
+
+	drawToScreen();
 }
 
 
@@ -119,9 +89,9 @@ void Graphics::drawToScreen()
 	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)windowSizeX, (float)windowSizeY, 0.0f, 1.0f };
 	deviceContext->RSSetViewports(1, &viewport);
 	//bind depth stencil state na pipeline
-	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1u);
+	depthStencilBuffer.bind();
 	//configura render target
-	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilBuffer.getViewPointer());
 }
 
 void Graphics::drawToTarget(targetView target)
@@ -133,11 +103,11 @@ void Graphics::fillScreen(float r, float g, float b)
 {
 	const float f[4] = { r, g, b, 1.0f};
 	deviceContext->ClearRenderTargetView(renderTargetView.Get(), f);
+	depthStencilBuffer.clear();
 }
 
 void Graphics::flip()
 {
-	deviceContext->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 
 	if (FAILED(swapChain->Present(1, 0)))
 	{

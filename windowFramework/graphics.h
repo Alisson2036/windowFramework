@@ -10,6 +10,7 @@
 #include "bindable.h"
 #include "pipeline.h"
 #include "image.h"
+#include "depthStencil.h"
 #include "targetView.h"
 
 
@@ -43,8 +44,7 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>          swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>     deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  renderTargetView;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  depthStencilView;
+	depthStencil depthStencilBuffer;
 
 	Pipeline* pipeline;
 
