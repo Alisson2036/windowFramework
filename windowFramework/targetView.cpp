@@ -48,48 +48,14 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 
 	buffer.resolution = vec2(targetResolution.x, targetResolution.y);
 
-	//retorna caso nao for para usar depthstencil
-	if (!enableDepthStencil) return;
-
-	//configura depth buffer
-	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};
-	depthStencilDesc.DepthEnable = TRUE;
-	depthStencilDesc.DepthFunc = D3D11_COMPARISON_LESS_EQUAL;
-	depthStencilDesc.DepthWriteMask = D3D11_DEPTH_WRITE_MASK_ALL;
-
-	
-	_throwHr(getDevice()->CreateDepthStencilState(&depthStencilDesc, depthStencilState.GetAddressOf()));
-
-	//bind depth stencil state na pipeline
-	getContext()->OMSetDepthStencilState(depthStencilState.Get(), 1u);
-
-	//criando a textura do depth buffer
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> depthTexture;
-	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
-	depthTextureDesc.Width = targetSize.x;
-	depthTextureDesc.Height = targetSize.y;
-	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
-	depthTextureDesc.MipLevels = 1u;
-	depthTextureDesc.ArraySize = 1u;
-	depthTextureDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	depthTextureDesc.SampleDesc.Count = 1u;
-	depthTextureDesc.SampleDesc.Quality = 0u;
-	depthTextureDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
-
-	_throwHr(getDevice()->CreateTexture2D(&depthTextureDesc, nullptr, depthTexture.GetAddressOf()));
-
-
-	D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
-	depthStencilViewDesc.Format = DXGI_FORMAT_D32_FLOAT;
-	depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
-	depthStencilViewDesc.Texture2D.MipSlice = 0u;
-
-	_throwHr(getDevice()->CreateDepthStencilView(depthTexture.Get(), &depthStencilViewDesc, depthStencilView.GetAddressOf()));
 
 
 	const float f[4] = { 0.f,0.f,0.f, 1.0f };
 	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
 
+	//retorna caso nao for para usar depthstencil
+	if (!enableDepthStencil) return;
+	depthStencilBuffer.create(targetResolution);
 }
 
 void targetView::bind()
@@ -97,12 +63,9 @@ void targetView::bind()
 	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)targetResolution.x, (float)targetResolution.y, 0.0f, 1.0f };
 	getContext()->RSSetViewports(1, &viewport);
 
-	if(depthStencilState)
-		getContext()->OMSetDepthStencilState(depthStencilState.Get(), 1u);
-	if(depthStencilView)
-		getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
-	else
-		getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), nullptr);
+	if (depthStencilBuffer.isInitialized())
+		depthStencilBuffer.bind();
+	getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilBuffer.getViewPointer());
 
 }
 
@@ -116,6 +79,6 @@ void targetView::clear()
 	const float f[4] = { 0.f,0.f,0.f, 1.0f };
 	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
 
-	if(depthStencilView)
-		getContext()->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
+	if (depthStencilBuffer.isInitialized())
+		depthStencilBuffer.clear();
 }

@@ -4,7 +4,7 @@
 #include <vector>
 #include <wrl.h>
 #include "bindable.h"
-#include "vertexShader.h"
+#include "depthStencil.h"
 #include "exception.h"
 #include "texture.h"
 #include "vec2.h"
@@ -27,8 +27,7 @@ private:
 	void bind() override;
 	Texture buffer;
 
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
+	depthStencil depthStencilBuffer;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
 
 	vec2 targetResolution;
