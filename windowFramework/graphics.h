@@ -10,6 +10,7 @@
 #include "bindable.h"
 #include "pipeline.h"
 #include "image.h"
+#include "targetView.h"
 
 
 
@@ -29,6 +30,7 @@ public:
 	Pipeline* getPipeline();
 
 	void drawToScreen();
+	void drawToTarget(targetView target);
 	void fillScreen(float r, float g, float b);
 	void flip();
 
@@ -37,12 +39,12 @@ private:
 	int windowSizeX;
 	int windowSizeY;
 
-	Microsoft::WRL::ComPtr<ID3D11Device>           d3dDevice;
-	Microsoft::WRL::ComPtr<IDXGISwapChain>         swapChain;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext>    deviceContext;
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> targetView;
+	Microsoft::WRL::ComPtr<ID3D11Device>            d3dDevice;
+	Microsoft::WRL::ComPtr<IDXGISwapChain>          swapChain;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext>     deviceContext;
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  renderTargetView;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
-	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
+	Microsoft::WRL::ComPtr<ID3D11DepthStencilView>  depthStencilView;
 
 	Pipeline* pipeline;
 

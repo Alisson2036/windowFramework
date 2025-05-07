@@ -213,7 +213,7 @@ void app::loop()
 	if (kb->isKeyPressed('P'))
 	{
 		newTarget.clear();
-		newTarget.bind();
+		win.Gfx().drawToTarget(newTarget);
 	}
 	else
 	{

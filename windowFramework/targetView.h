@@ -10,12 +10,13 @@
 #include "vec2.h"
 
 
-class targetView : public Bindable
+class targetView : private Bindable
 {
+	friend class Graphics;
+
 public:
 	void create(vec2 targetSize, bool enableDepthStencil);
 
-	void bind() override;
 
 	Texture* getTexture();
 
@@ -23,6 +24,7 @@ public:
 
 
 private:
+	void bind() override;
 	Texture buffer;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;

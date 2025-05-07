@@ -50,7 +50,7 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pBackBuffer;
 	hr = swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), &pBackBuffer);
 	_throwHr(hr);
-	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, targetView.GetAddressOf());
+	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, renderTargetView.GetAddressOf());
 	else _throw;
 
 
@@ -121,13 +121,18 @@ void Graphics::drawToScreen()
 	//bind depth stencil state na pipeline
 	deviceContext->OMSetDepthStencilState(depthStencilState.Get(), 1u);
 	//configura render target
-	deviceContext->OMSetRenderTargets(1, targetView.GetAddressOf(), depthStencilView.Get());
+	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilView.Get());
+}
+
+void Graphics::drawToTarget(targetView target)
+{
+	target.bind();
 }
 
 void Graphics::fillScreen(float r, float g, float b)
 {
 	const float f[4] = { r, g, b, 1.0f};
-	deviceContext->ClearRenderTargetView(targetView.Get(), f);
+	deviceContext->ClearRenderTargetView(renderTargetView.Get(), f);
 }
 
 void Graphics::flip()
