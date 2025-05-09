@@ -48,12 +48,15 @@ private:
 	shader colorBlendShader;
 	shader texturedShader;
 	shader normalShader;
+	shader waterShader;
 
 	object colorBlendCube;
 	object texturedCube;
 	object normalCube;
 	object cubeLight;
 	object sphere;
+
+	object water;
 
 	Image hud;
 	Image::font* fonte;

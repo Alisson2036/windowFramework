@@ -49,6 +49,7 @@ void app::start()
 	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
 	normalShader.create(L"texturedVS.cso", L"normalPS.cso");
+	waterShader.create(L"texturedVS.cso", L"waterPS.cso");
 
 	//cria o cubo teste
 	std::vector<vec3> verArr =
@@ -124,6 +125,14 @@ void app::start()
 	normalCube.setTexture(&brickTex, 0);
 	normalCube.setTexture(&brickTexNormal, 1);
 	normalCube.lock();
+
+
+	//cria a water
+	water.create(waterShader);
+	water.loadFromObj(obj);
+	water.lock();
+	water.set(vec3(0.0f, -2.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
+	water.setScale(vec3(100, 1, 100));
 
 	//cria a esfera
 	sphere.create(texturedShader);
@@ -223,7 +232,7 @@ void app::loop()
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (phyObjs.size() < 500 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
+	if (phyObjs.size() < 20 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
 	{
 		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
 		phyDomain.addObject(phyObjs.back());
@@ -310,6 +319,8 @@ void app::loop()
 	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
 	dTime = timeSinceCreation.getPassedSeconds();
 
+	//desenha agua
+	win.Gfx().getPipeline()->bind(water);
 
 	hud.drawText(
 		std::to_wstring(frameTime * 1000.0f),
