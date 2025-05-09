@@ -52,6 +52,7 @@ private:
 
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
+
 	BlendState blendState;
 	Camera* camera;
 

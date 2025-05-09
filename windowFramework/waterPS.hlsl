@@ -16,6 +16,10 @@ cbuffer cameraPosition : register(b1)
 {
     float3 cameraPos;
 };
+cbuffer cameraPosition : register(b2)
+{
+    float iTime;
+};
 
 Texture2D tex : register(t0);
 Texture2D normal : register(t1);
@@ -44,7 +48,7 @@ float4 main(VS_Output input) : SV_TARGET
     float saida = 0.0f;
     float zoom = 0.1f;
     float2 uv = float2(input.vertexPos.x, input.vertexPos.z);
-    float iTime = cameraPos.x / 3.0f;
+    //float iTime = cameraPos.x / 3.0f;
     float2 normal2d = float2(0.0f, 0.0f);
     float dx = 0.0f;
     float dy = 0.0f;

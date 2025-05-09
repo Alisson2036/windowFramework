@@ -133,6 +133,10 @@ void app::start()
 	water.lock();
 	water.set(vec3(0.0f, -2.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 	water.setScale(vec3(100, 1, 100));
+	{
+		float a = 0.0f;
+		timerBuffer.create(&a, 1, sizeof(float) * 8);
+	}
 
 	//cria a esfera
 	sphere.create(texturedShader);
@@ -320,6 +324,10 @@ void app::loop()
 	dTime = timeSinceCreation.getPassedSeconds();
 
 	//desenha agua
+	float time = timeSinceCreation.getPassedSeconds();
+	timerBuffer.update(&time);
+	timerBuffer.setSlot(2);
+	timerBuffer.bind();
 	win.Gfx().getPipeline()->bind(water);
 
 	hud.drawText(

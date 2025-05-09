@@ -57,6 +57,7 @@ private:
 	object sphere;
 
 	object water;
+	ConstantPixelBuffer timerBuffer;
 
 	Image hud;
 	Image::font* fonte;

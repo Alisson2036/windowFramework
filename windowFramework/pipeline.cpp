@@ -37,8 +37,8 @@ void Pipeline::bind(object& obj)
 {
 	if (camera)
 	{
-		DirectX::XMMATRIX a[] = { camera->getMatrix() };
-		cameraConstantBuffer.update(a);
+		DirectX::XMMATRIX a = camera->getMatrix();
+		cameraConstantBuffer.update(&a);
 		DirectX::XMVECTOR b[] = { camera->getPositionVector() };
 		cameraPositionBuffer.update(b);
 	}
