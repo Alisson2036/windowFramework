@@ -67,7 +67,7 @@ float4 main(VS_Output input) : SV_TARGET
         
         //modifica distribuição
         hash1 = pow(hash1, 2.0f);//hash o resto
-        hash2 = pow(hash2, 8.0f);//hash para tamanho
+        hash2 = pow(hash2, 12.0f);//hash para tamanho
         //cria mais um hash
         float hash3 = frac(hash1 * 5.0f);
         
@@ -104,9 +104,9 @@ float4 main(VS_Output input) : SV_TARGET
     saida /= 2.0f;
     
     float4 color = lerp(
-        float4(0.06f, 0.37f, 0.61f, 1.0f),
+        float4(0.06f, 0.27f, 0.71f, 1.0f),
         float4(0.45f, 0.80f, 0.95f, 1.0f),
-        //float4(1.0f,1.0f,1.0f,1.0f),
+        //float4(1.0f,0.0f,0.0f,1.0f),
         pow(saida, 3)
     );
     color.a = 1.0f;
@@ -159,7 +159,7 @@ float4 main(VS_Output input) : SV_TARGET
     
     //float4 color = tex.Sample(samp, input.tex);
     float4 specularColor = float4(1.0f, 1.0f, 1.0f, 1.0f) * specular;
-    diffuse += 0.6f; //global illumination
+    diffuse += 0.5f; //global illumination
     float4 finalColor = saturate(color * diffuse + specularColor);
     finalColor.a = 1.0f;
     
