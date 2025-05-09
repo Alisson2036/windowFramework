@@ -16,7 +16,7 @@ cbuffer cameraPosition : register(b1)
 {
     float3 cameraPos;
 };
-cbuffer cameraPosition : register(b2)
+cbuffer timer : register(b2)
 {
     float iTime;
 };
@@ -67,7 +67,7 @@ float4 main(VS_Output input) : SV_TARGET
         
         //modifica distribuição
         hash1 = pow(hash1, 2.0f);//hash o resto
-        hash2 = pow(hash2, 12.0f);//hash para tamanho
+        hash2 = pow(hash2, 8.0f);//hash para tamanho
         //cria mais um hash
         float hash3 = frac(hash1 * 5.0f);
         

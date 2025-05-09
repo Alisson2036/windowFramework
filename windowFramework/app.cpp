@@ -42,14 +42,16 @@ void app::start()
 	objLoader obj;
 	objLoader planeObj;
 	objLoader sphereObj;
+	objLoader waterObj;
 	obj.fromFile("cube.obj");
 	planeObj.fromFile("plane.obj");
 	sphereObj.fromFile("sphere.obj");
+	waterObj.fromFile("waterPlane.obj");
 
 	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
 	normalShader.create(L"texturedVS.cso", L"normalPS.cso");
-	waterShader.create(L"texturedVS.cso", L"waterPS.cso");
+	waterShader.create(L"waterVS.cso", L"waterPS.cso");
 
 	//cria o cubo teste
 	std::vector<vec3> verArr =
@@ -129,13 +131,14 @@ void app::start()
 
 	//cria a water
 	water.create(waterShader);
-	water.loadFromObj(obj);
+	water.loadFromObj(waterObj);
 	water.lock();
-	water.set(vec3(0.0f, -2.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
+	water.set(vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 	water.setScale(vec3(100, 1, 100));
 	{
 		float a = 0.0f;
 		timerBuffer.create(&a, 1, sizeof(float) * 8);
+		timerVertexBuffer.create(&a, 1, sizeof(float) * 8);
 	}
 
 	//cria a esfera
@@ -328,6 +331,9 @@ void app::loop()
 	timerBuffer.update(&time);
 	timerBuffer.setSlot(2);
 	timerBuffer.bind();
+	timerVertexBuffer.update(&time);
+	timerVertexBuffer.setSlot(2);
+	timerVertexBuffer.bind();
 	win.Gfx().getPipeline()->bind(water);
 
 	hud.drawText(

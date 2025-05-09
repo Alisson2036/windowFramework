@@ -58,6 +58,7 @@ private:
 
 	object water;
 	ConstantPixelBuffer timerBuffer;
+	ConstantVertexBuffer timerVertexBuffer;
 
 	Image hud;
 	Image::font* fonte;
