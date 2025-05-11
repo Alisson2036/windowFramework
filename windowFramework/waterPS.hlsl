@@ -3,7 +3,6 @@ struct VS_Output
     float4 position : SV_POSITION;
     float2 tex : TexCoord;
     float3 normals : Normals;
-    float3 tangents : Tangents;
     float3 vertexPos : Position;
 };
 
@@ -48,7 +47,7 @@ float4 main(VS_Output input) : SV_TARGET
     
     //WATER CALCS
     float saida = 0.0f;
-    float zoom = 5.f;
+    float zoom = 100.f;
     float2 uv = float2(input.vertexPos.x, input.vertexPos.z);
     float2 normal2d = float2(0.0f, 0.0f);
     float dx = 0.0f;
@@ -71,22 +70,32 @@ float4 main(VS_Output input) : SV_TARGET
         //cria mais um hash
         float hash3 = frac(hash1 * 5.0f);
         
-        float2 speed = float2((hash1 * 2.0f) - 1.0f, (hash3 * 2.0f) - 1.0f) * 3.0f;
+        float2 speed = normalize(float2((hash1 * 2.0f) - 1.0f, (hash3 * 2.0f) - 1.0f)) * 1 / (hash2+0.3f);
         
         //newUv += vec2(hash1 * iTime, hash2 * iTime) * 0.05f ;
         
-        float xVal = newUv.x * hash2 * zoom + 100.0f * sin(hash3 * 4.0f) + speed.x * iTime;
-        float yVal = newUv.y * hash2 * zoom + 100.0f * sin(hash3 * 4.0f) + speed.y * iTime;
+        float xVal = (newUv.x * hash2 * zoom) + (100.0f * sin(hash3 * 4.0f) + speed.x * iTime);
+        float yVal = (newUv.y * hash2 * zoom) + (100.0f * sin(hash3 * 4.0f) + speed.y * iTime);
         
         //cor principal
         saida +=
-            cos(xVal) * (1.0f - hash2) +
-            sin(yVal) * (1.0f - hash2);
+            cos(xVal) * pow(1.0f - hash2,3) +
+            sin(yVal) * pow(1.0f - hash2,3);
         
         //derivada para calcular normal
         //note q o X ta invertido (nao sei pq mas assim fica correto)
-        dx += sin(xVal) * (1.0f - hash2) * hash2 * zoom;
-        dy += cos(yVal) * (1.0f - hash2) * hash2 * zoom;
+        
+        float2 d = float2(
+            -sin(xVal) * pow(1.0f - hash2, 5) * hash2 * zoom,
+            cos(yVal) * pow(1.0f - hash2, 5) * hash2 * zoom
+        );
+        d = mul(d, transpose(rotMat));
+        
+        dx += d.x;
+        dy += d.y;
+        
+        //dx += -sin(xVal) * (1.0f - hash2) * hash2 * zoom;
+        //dy += cos(yVal) * (1.0f - hash2) * hash2 * zoom;
         
     }
     saida /= float(nWaves);
@@ -94,41 +103,30 @@ float4 main(VS_Output input) : SV_TARGET
     dy /= float(nWaves);
     
     float3 normals = cross(
-        normalize(float3(1.0f, 0.0f, dx)),
-        normalize(float3(0.0f, 1.0f, dy))
+        normalize(float3(1.0f, dx, 0.0f)),
+        normalize(float3(0.0f, dy, 1.0f))
     );
-    normals = normalize(normals);
+    normals = normalize(-normals);
     
     //saida agora varia entre (0~1) e nao entre (-1~1)
     saida += 1.0f;
     saida /= 2.0f;
     
     float4 color = lerp(
-        float4(0.06f, 0.27f, 0.71f, 1.0f),
-        float4(0.45f, 0.80f, 0.95f, 1.0f),
+        float4(0.18f, 0.30f, 0.7f, 1.0f),
+        float4(0.24f, 0.43f, 0.8f, 1.0f),
         //float4(1.0f,0.0f,0.0f,1.0f),
         pow(saida, 3)
     );
+    color += float4(1.f, 1.f, 1.f, 1.f) * pow(saida, 7) * 3;
     color.a = 1.0f;
-    
-    
-    //calcula normal
-    float3 bitan = cross(input.normals, input.tangents);
-    //float3 normals = normal.Sample(samp, input.tex).xyz; //input.normals;
-    //normals.x = (normals.x * 2) - 1;
-    //normals.y = (normals.y * 2) - 1;
-    
-    float3x3 tangentSpaceTransform = float3x3(
-        normalize(input.tangents),
-        normalize(bitan),
-        normalize(input.normals)
-    );
-    normals = mul(normals, tangentSpaceTransform);
+   
     
     
     //PHONG SHADER
     float3 pos = input.vertexPos;
     float3 directionLight = normalize(lightPos - pos);
+    //float3 directionLight = float3(0.0f, 0.5f, 0.85f);
     float3 cameraVertexDif = normalize(cameraPos - input.vertexPos);
     
     float diffuse = 0.0f;
@@ -152,17 +150,17 @@ float4 main(VS_Output input) : SV_TARGET
 
 
     //calcula brilho da face
-    diffuse = att * max(0.0f, dot(directionLight, normals));
+    //diffuse = att * max(0.0f, dot(directionLight, normals));
     //diffuse = dot(normals, float3(3.f/5.f,4.f/5.f,0.f));
-    //diffuse = 1.0f; //TIRAR ISSO AQUI
+    diffuse = 1.0f; //TIRAR ISSO AQUI
     //specular *= att;
     
     //float4 color = tex.Sample(samp, input.tex);
     float4 specularColor = float4(1.0f, 1.0f, 1.0f, 1.0f) * specular;
-    diffuse += 0.5f; //global illumination
     float4 finalColor = saturate(color * diffuse + specularColor);
     finalColor.a = 1.0f;
     
-    return finalColor; //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
+    return finalColor;
+    //return float4(saida, 0.0f, specular*8.f, 1.0f); //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
 
 }

@@ -3,7 +3,6 @@ struct VS_Input
     float3 pos : Position;
     float2 tex : TexCoord;
     float3 normals : Normals;
-    float3 tangent : Tangents;
 };
 
 struct VS_Output
@@ -11,7 +10,6 @@ struct VS_Output
     float4 position : SV_POSITION;
     float2 tex : TexCoord;
     float3 normals : Normals;
-    float3 tangents : Tangents;
     float3 vertexPos : Position;
 };
 
@@ -53,7 +51,7 @@ VS_Output main(VS_Input input)
     
     //WATER CALCS
     float saida = 0.0f;
-    float zoom = 5.f;
+    float zoom = 100.f;
     float2 uv = float2(output.position.x, output.position.z);
     float2 normal2d = float2(0.0f, 0.0f);
     float dx = 0.0f;
@@ -76,7 +74,7 @@ VS_Output main(VS_Input input)
         //cria mais um hash
         float hash3 = frac(hash1 * 5.0f);
         
-        float2 speed = float2((hash1 * 2.0f) - 1.0f, (hash3 * 2.0f) - 1.0f) * 3.0f;
+        float2 speed = normalize(float2((hash1 * 2.0f) - 1.0f, (hash3 * 2.0f) - 1.0f)) * 1 / (hash2 + 0.3f);
         
         //newUv += vec2(hash1 * iTime, hash2 * iTime) * 0.05f ;
         
@@ -85,14 +83,14 @@ VS_Output main(VS_Input input)
         
         //cor principal
         saida +=
-            cos(xVal) * (1.0f - hash2) +
-            sin(yVal) * (1.0f - hash2);
+            cos(xVal) * pow(1.0f - hash2, 3) +
+            sin(yVal) * pow(1.0f - hash2, 3);
         
     }
     saida /= float(nWaves);
     
     //output.position.y += cos(output.position.x) * cos(output.position.z);
-    output.position.y += saida * 2.0f;
+    output.position.y += saida * 3.0f;
     
     output.position = mul(output.position, transpose(projectionMat));
 
@@ -100,7 +98,6 @@ VS_Output main(VS_Input input)
     float3x3 b = transpose((float3x3) mat);
     output.tex = input.tex;
     output.normals = mul(input.normals, b);
-    output.tangents = mul(input.tangent, b);
 
     output.vertexPos = (float3) mul(float4(input.pos, 1.0f), transpose(mat));
     
