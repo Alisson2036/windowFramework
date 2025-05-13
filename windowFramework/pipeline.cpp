@@ -82,14 +82,14 @@ void Pipeline::bind(object& obj)
 	if (obj.ib.isInitialized())
 	{
 		obj.ib.bind();
-		if (obj.vbInstance.isInitialized())
-			context->DrawIndexedInstanced(obj.indexes.size(),1u, 0u,0u,0u);
+		if (obj.instanceCount)
+			context->DrawIndexedInstanced(obj.indexes.size(), obj.instanceCount, 0u, 0u, 0u);
 		else
 			context->DrawIndexed(obj.indexes.size(), 0u, 0u);
 	}
 	else
-		if (obj.vbInstance.isInitialized())
-			context->DrawInstanced(obj.getVertexCount(),2u, 0u, 0u);
+		if (obj.instanceCount)
+			context->DrawInstanced(obj.getVertexCount(), obj.instanceCount, 0u, 0u);
 		else
 			context->Draw(obj.getVertexCount(), 0);
 }

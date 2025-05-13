@@ -67,6 +67,8 @@ private:
 
 	//vertexIndex
 	std::vector<int> indexes;
+	//instance count 
+	unsigned int instanceCount = 0u;
 
 
 

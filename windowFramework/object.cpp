@@ -17,8 +17,9 @@ void object::create(shader& shader)
 			vec3(1.0f,1.0f,1.0f),
 			vec3(4.0f,1.0f,2.0f),
 		};
-		vbInstance.create(d.data(), d.size(), d.size() * sizeof(vec3));
+		vbInstance.create(d.data(), d.size(), sizeof(vec3));
 		vbInstance.setSlot(1);
+		instanceCount = d.size();
 	}
 
 	//CRIA CONSTANT BUFFER
