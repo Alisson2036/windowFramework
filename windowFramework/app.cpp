@@ -120,6 +120,13 @@ void app::start()
 	//texturedCube.setTexture(&tex, 0);
 	texturedCube.setTexture(newTarget.getTexture(), 0);
 	texturedCube.lock();
+	std::vector<vec3> positions =
+	{
+		vec3(1.f,1.f,1.f),
+		vec3(2.f,4.f,1.f),
+		vec3(3.f,1.f,3.f),
+	};
+	texturedCube.setInstancesPos(positions);
 
 
 	//cria o cubo bricks

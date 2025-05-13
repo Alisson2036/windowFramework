@@ -29,6 +29,7 @@ public:
 	void loadFromColorArray(std::vector<color> ColorArray);
 	void loadFromTexCoordArray(std::vector<vec2> texCoordArray);
 	void setVertexIndices(std::vector<int>& vertexIndices);
+	void setInstancesPos(std::vector<vec3>& positions);
 
 	//getters
 	int getVertexCount();

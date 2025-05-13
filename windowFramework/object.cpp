@@ -159,6 +159,16 @@ void object::setVertexIndices(std::vector<int>& vertexIndices)
 	indexes = vertexIndices;
 }
 
+void object::setInstancesPos(std::vector<vec3>& positions)
+{
+	if (pShader->hasPerInstanceData())
+	{
+		vbInstance.create(positions.data(), positions.size(), sizeof(vec3));
+		vbInstance.setSlot(1);
+		instanceCount = positions.size();
+	}
+}
+
 int object::getVertexCount()
 {
 	return dataBuffer.getElementCount();
