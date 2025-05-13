@@ -51,7 +51,7 @@ void app::start()
 	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
 	texturedInstancedShader.create(L"texturedInstancedVS.cso", L"texturedPS.cso");
-	normalShader.create(L"texturedVS.cso", L"normalPS.cso");
+	normalShader.create(L"texturedInstancedVS.cso", L"normalPS.cso");
 	waterShader.create(L"waterVS.cso", L"waterPS.cso");
 
 	//cria o cubo teste
@@ -127,15 +127,34 @@ void app::start()
 		vec3(3.f,1.f,3.f),
 	};
 	texturedCube.setInstancesPos(positions);
-
+	positions = {};
 
 	//cria o cubo bricks
-	normalCube.create(normalShader);
-	normalCube.loadFromObj(obj);
-	normalCube.setTexture(&brickTex, 0);
-	normalCube.setTexture(&brickTexNormal, 1);
-	normalCube.lock();
+	{
+		normalCube.create(normalShader);
+		normalCube.loadFromObj(obj);
+		normalCube.setTexture(&brickTex, 0);
+		normalCube.setTexture(&brickTexNormal, 1);
+		normalCube.lock();
+		vec3 pos;
+		for (int y = -10; y < 10; y++)
+		{
+			for (int x = -10; x < 10; x++)
+			{
+				pos.x = x * 2.0f;
+				pos.y = -1.0f; //+ (float)cos(x) + (float)cos(y);
+				pos.z = y * 2.0f;
 
+
+				//normalCube.set(pos, vec3(0.f,0.f,0.f));
+				positions.push_back(pos);
+				//texturedCube.update(inst);
+				//texturedCube.draw();
+				//win.Gfx().getPipeline()->bind(normalCube);
+			}
+		}
+		normalCube.setInstancesPos(positions);
+	}
 
 	//cria a water
 	water.create(waterShader);
@@ -282,23 +301,7 @@ void app::loop()
 	vec3 angle = { 0.0f, 0.0f, 0.0f};
 
 	//cria o chao
-	for (int y = -10; y < 10; y++)
-	{
-		for (int x = -10; x < 10; x++)
-		{
-			pos.x = x * 2.0f;
-			pos.y = -1.0f; //+ (float)cos(x) + (float)cos(y);
-			pos.z = y*2.0f;
-
-
-			normalCube.set(pos, angle);
-
-			//texturedCube.update(inst);
-			//texturedCube.draw();
-			win.Gfx().getPipeline()->bind(normalCube);
-		}
-	}
-
+	win.Gfx().getPipeline()->bind(normalCube);
 
 	//muda posicao da luz 
 	light.updatePos({ 2.0f + 3, a, 0.0f});
@@ -359,7 +362,7 @@ void app::loop()
 		color(255u, 255u, 255u, 255u)
 	);
 	
-	//desenha e atualiza o hud
+	////desenha e atualiza o hud
 	hudObject.update(hud);
 	hudObject.draw(*win.Gfx().getPipeline());
 	hud.clear();
