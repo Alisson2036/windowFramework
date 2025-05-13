@@ -126,14 +126,14 @@
     <ClCompile Include="physicsObject.cpp">
       <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="physicsDomain.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="targetView.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="depthStencil.cpp">
       <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
+    <ClCompile Include="physicsDomain.cpp">
+      <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

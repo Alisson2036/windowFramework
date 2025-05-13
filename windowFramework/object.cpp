@@ -10,18 +10,6 @@ void object::create(shader& shader)
 	pShader = &shader;
 	dataBuffer.create(shader.inputParams);
 
-	if (shader.hasPerInstanceData())
-	{
-		std::vector<vec3> d =
-		{
-			vec3(1.0f,1.0f,1.0f),
-			vec3(4.0f,1.0f,2.0f),
-		};
-		vbInstance.create(d.data(), d.size(), sizeof(vec3));
-		vbInstance.setSlot(1);
-		instanceCount = d.size();
-	}
-
 	//CRIA CONSTANT BUFFER
 	DirectX::XMMATRIX b[] = {
 		DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
@@ -161,11 +149,19 @@ void object::setVertexIndices(std::vector<int>& vertexIndices)
 
 void object::setInstancesPos(std::vector<vec3>& positions)
 {
-	if (pShader->hasPerInstanceData())
+	if (!pShader->hasPerInstanceData())
+		_throwMsg("Object does not support instance data");
+
+	UINT size = positions.size();
+	if (instanceCount == size && vbInstance.isInitialized())
 	{
-		vbInstance.create(positions.data(), positions.size(), sizeof(vec3));
+		vbInstance.update(positions.data());
+	}
+	else
+	{
+		instanceCount = size;
+		vbInstance.create(positions.data(), size, sizeof(vec3));
 		vbInstance.setSlot(1);
-		instanceCount = positions.size();
 	}
 }
 
