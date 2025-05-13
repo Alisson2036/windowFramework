@@ -8,6 +8,7 @@ class hudElement
 {
 public:
 	void create(Image& tex);
+	void create(Image& img, vec2 position, vec2 size);
 
 
 
