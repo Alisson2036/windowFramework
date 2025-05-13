@@ -12,21 +12,26 @@
 
 class targetView : private Bindable
 {
-	friend class Graphics;
 
 public:
 	void create(vec2 targetSize, bool enableDepthStencil);
 
 
 	Texture* getTexture();
+	vec2 getResolution();
 
 	void clear();
+	void fill(float r, float g, float b);
+
+
+	void bind() override;
 
 
 private:
-	void bind() override;
-	Texture buffer;
-
+	Texture texInterface;
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
+	
 	depthStencil depthStencilBuffer;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
 

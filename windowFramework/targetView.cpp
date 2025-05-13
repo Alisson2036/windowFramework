@@ -21,14 +21,14 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 	//criando a textura vazia
 	_throwHr
 	(
-		getDevice()->CreateTexture2D(&texDesc, nullptr, buffer.texture.GetAddressOf())
+		getDevice()->CreateTexture2D(&texDesc, nullptr, texture.GetAddressOf())
 	);
 
 	//criando a render target da textura
 	_throwHr
 	(
 		getDevice()->CreateRenderTargetView(
-			buffer.texture.Get(),
+			texture.Get(),
 			nullptr,
 			renderTargetView.GetAddressOf()
 		)
@@ -40,18 +40,18 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 	viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	viewDesc.Texture2D.MipLevels = 1;
 	viewDesc.Texture2D.MostDetailedMip = 0;
-
+	
 	_throwHr
 	(
-		getDevice()->CreateShaderResourceView(buffer.texture.Get(), &viewDesc, buffer.textureView.GetAddressOf())
+		getDevice()->CreateShaderResourceView(texture.Get(), &viewDesc, textureView.GetAddressOf())
 	);
-
-	buffer.resolution = vec2(targetResolution.x, targetResolution.y);
-
 
 
 	const float f[4] = { 0.f,0.f,0.f, 1.0f };
 	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
+
+	//cria a textura
+	texInterface.create(texture.Get(), textureView.Get());
 
 	//retorna caso nao for para usar depthstencil
 	if (!enableDepthStencil) return;
@@ -71,7 +71,12 @@ void targetView::bind()
 
 Texture* targetView::getTexture()
 {
-	return &buffer;
+	return &texInterface;
+}
+
+vec2 targetView::getResolution()
+{
+	return targetResolution;
 }
 
 void targetView::clear()
@@ -81,4 +86,10 @@ void targetView::clear()
 
 	if (depthStencilBuffer.isInitialized())
 		depthStencilBuffer.clear();
+}
+
+void targetView::fill(float r, float g, float b)
+{
+	const float f[4] = { r, g, b, 1.0f };
+	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
 }

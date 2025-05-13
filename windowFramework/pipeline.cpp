@@ -33,7 +33,7 @@ void Pipeline::initializeBindable(Bindable* bindable)
 	bindable->setDevice(device.Get());
 }
 
-void Pipeline::bind(object& obj)
+void Pipeline::drawObject(object& obj)
 {
 	if (camera)
 	{

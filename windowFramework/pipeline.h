@@ -31,7 +31,7 @@ public:
 
 
 	void initializeBindable(Bindable* bindable);
-	void bind(object& obj);
+	void drawObject(object& obj);
 
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);

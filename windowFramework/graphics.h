@@ -31,7 +31,6 @@ public:
 	Pipeline* getPipeline();
 
 	void drawToScreen();
-	void drawToTarget(targetView target);
 	void fillScreen(float r, float g, float b);
 	void flip();
 

@@ -4,6 +4,7 @@
 #include <Windows.h>
 #include <gdiplus.h>
 #include <algorithm>
+#include <memory>
 #include "exception.h"
 #include "color.h"
 #include "vec2.h"
@@ -28,7 +29,7 @@ public:
 
 	private:
 		friend Image;
-		Gdiplus::Font* fontLoaded;
+		std::unique_ptr<Gdiplus::Font> fontLoaded;
 	};
 
 	static void initialize();

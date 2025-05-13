@@ -36,7 +36,7 @@ void hudElement::create(Image& img)
 
 void hudElement::draw(Pipeline& pipeline)
 {
-	pipeline.bind(obj);
+	pipeline.drawObject(obj);
 }
 
 void hudElement::update(Image& img)

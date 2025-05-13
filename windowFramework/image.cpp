@@ -28,9 +28,9 @@ void Image::uninitialize()
 Image::~Image()
 {
 	if (img)
-		delete img;
+		delete[] img;
 	if (imageData.data)
-		delete imageData.data;
+		delete[] imageData.data;
 }
 
 Image::Image(std::wstring fileName)
@@ -43,12 +43,12 @@ void Image::loadFile(std::wstring fileName)
 	//apagando imgem, se exisitr
 	if (img)
 	{
-		delete img;
+		delete[] img;
 		img = 0;
 	}
 	if (imageData.data)
 	{
-		delete imageData.data;
+		delete[] imageData.data;
 		imageData.data = 0;
 	}
 
@@ -66,12 +66,12 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	//apagando imagem anterior, se existir
 	if (img)
 	{
-		delete img;
+		delete[] img;
 		img = 0;
 	}
 	if (imageData.data)
 	{
-		delete imageData.data;
+		delete[] imageData.data;
 		imageData.data = 0;
 	}
 
@@ -92,7 +92,7 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	gfx->DrawString(
 		text.c_str(),
 		-1,
-		textFont.fontLoaded,
+		textFont.fontLoaded.get(),
 		rect,
 		nullptr,
 		brush
@@ -111,12 +111,12 @@ void Image::fromBlank(int sizeX, int sizeY)
 	//apagando imagem anterior, se existir
 	if (img)
 	{
-		delete img;
+		delete[] img;
 		img = 0;
 	}
 	if (imageData.data)
 	{
-		delete imageData.data;
+		delete[] imageData.data;
 		imageData.data = 0;
 	}
 
@@ -173,7 +173,7 @@ void Image::drawText(std::wstring text, font& textFont, vec2 position, color tex
 	gfx->DrawString(
 		text.c_str(),
 		-1,
-		textFont.fontLoaded,
+		textFont.fontLoaded.get(),
 		pos,
 		nullptr,
 		brush
@@ -195,7 +195,7 @@ Image::data& Image::getData()
 	//colocando a imagem no buffer
 	if (imageData.data)
 	{
-		delete imageData.data;
+		delete[] imageData.data;
 		imageData.data = 0;
 	}
 	//configurando imageData
@@ -240,5 +240,5 @@ Image::data& Image::getData()
 Image::font::font(std::wstring fontName, float fontSize)
 {
 	Gdiplus::FontFamily fontFamily(fontName.c_str());
-	fontLoaded = new Gdiplus::Font(&fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel);
+	fontLoaded = std::make_unique<Gdiplus::Font>( &fontFamily, fontSize, Gdiplus::FontStyleRegular, Gdiplus::UnitPixel);
 }

@@ -19,7 +19,7 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 	texDesc.MiscFlags = 0;
 	texDesc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
 	texDesc.Usage = D3D11_USAGE_DEFAULT;
-
+	
 	D3D11_SUBRESOURCE_DATA sd = {};
 	sd.pSysMem = d.data;
 	sd.SysMemPitch = d.width * sizeof(color);
@@ -45,6 +45,19 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 	);
 
 	resolution = vec2(d.width, d.height);
+
+}
+
+void Texture::create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView)
+{
+	texture = pTex;
+	textureView = pView;
+
+	D3D11_TEXTURE2D_DESC desc;
+	texture.Get()->GetDesc(&desc);
+	resolution.x = desc.Width;
+	resolution.y = desc.Height;
+	antialiased = false;
 
 }
 

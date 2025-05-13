@@ -102,7 +102,7 @@ void object::loadFromObj(objLoader& obj)
 	}
 }
 
-void object::loadFromVertexArray(std::vector<vec3> vertexArray)
+void object::loadFromVertexArray(std::vector<vec3>& vertexArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if(!dataBuffer.containsType("Position")) return;
@@ -112,7 +112,7 @@ void object::loadFromVertexArray(std::vector<vec3> vertexArray)
 		dataBuffer.set(&(vertexArray[i]), i, "Position");
 }
 
-void object::loadFromVertexArray(std::vector<vec2> vertexArray)
+void object::loadFromVertexArray(std::vector<vec2>& vertexArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (!dataBuffer.containsType("Position2d")) return;
@@ -122,7 +122,7 @@ void object::loadFromVertexArray(std::vector<vec2> vertexArray)
 		dataBuffer.set(&(vertexArray[i]), i, "Position2d");
 }
 
-void object::loadFromColorArray(std::vector<color> ColorArray)
+void object::loadFromColorArray(std::vector<color>& ColorArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (!dataBuffer.containsType("Color")) return;
@@ -132,7 +132,7 @@ void object::loadFromColorArray(std::vector<color> ColorArray)
 		dataBuffer.set(&(ColorArray[i]), i, "Color");
 }
 
-void object::loadFromTexCoordArray(std::vector<vec2> texCoordArray)
+void object::loadFromTexCoordArray(std::vector<vec2>& texCoordArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (!dataBuffer.containsType("TexCoord")) return;

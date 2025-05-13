@@ -94,10 +94,6 @@ void Graphics::drawToScreen()
 	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilBuffer.getViewPointer());
 }
 
-void Graphics::drawToTarget(targetView target)
-{
-	target.bind();
-}
 
 void Graphics::fillScreen(float r, float g, float b)
 {
@@ -109,7 +105,7 @@ void Graphics::fillScreen(float r, float g, float b)
 void Graphics::flip()
 {
 
-	if (FAILED(swapChain->Present(0, 0)))
+	if (FAILED(swapChain->Present(1, 0)))
 	{
 		_throwHr(d3dDevice->GetDeviceRemovedReason());
 	}

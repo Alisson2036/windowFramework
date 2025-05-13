@@ -10,10 +10,10 @@
 
 class Texture : public Bindable
 {
-	friend class targetView;
 public:
 
 	void create(Image& img, bool hasAntiAliasing=true);
+	void create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView);
 	void createWithMipMap(Image& img, bool hasAntiAliasing = true);
 
 	void update(Image& img);

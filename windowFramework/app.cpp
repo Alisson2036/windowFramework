@@ -5,11 +5,6 @@ app::app()
 	win(L"Jojo fofo", 1200, 900),
 	timeSinceCreation()
 {
-
-}
-
-void app::start()
-{
 	//criando novo target view
 	newTarget.create(vec2(200, 200), true);
 
@@ -25,7 +20,7 @@ void app::start()
 		color(255u, 255u, 255u, 255u)
 	);
 
-	
+
 
 	tex.createWithMipMap(img);
 	brickTex.createWithMipMap(bricks);
@@ -36,7 +31,7 @@ void app::start()
 	win.Gfx().getPipeline()->setLight(&light);
 	//coloca camera na pipeline
 	win.Gfx().getPipeline()->setCamera(&cam);
-	
+
 	//-----------------------------
 
 	objLoader obj;
@@ -173,12 +168,12 @@ void app::start()
 	sphere.loadFromObj(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
 	sphere.lock();
-	
+
 
 	//move camera para posicao inicial
 	cam.setScreenProportion((float)win.getWindowSizeY() / (float)win.getWindowSizeX());
 	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
-	
+
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
@@ -191,15 +186,14 @@ void app::start()
 	phyObjs.push_back(new physicsObject(vec3(0.0f, 6.0f, 1.0f)));
 	phyObjs.push_back(new physicsObject(vec3(0.0f, 8.0f, 0.0f)));
 
-	for(auto& i : phyObjs)
+	for (auto& i : phyObjs)
 		phyDomain.addObject(i);
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
 
 	newTarget.clear();
 
-	while (win.update()) loop();
-
 }
+
 
 void app::loop()
 {
@@ -264,7 +258,7 @@ void app::loop()
 	if (kb->isKeyPressed('P'))
 	{
 		newTarget.clear();
-		win.Gfx().drawToTarget(newTarget);
+		newTarget.bind();
 	}
 	else
 	{
@@ -301,12 +295,12 @@ void app::loop()
 	vec3 angle = { 0.0f, 0.0f, 0.0f};
 
 	//cria o chao
-	win.Gfx().getPipeline()->bind(normalCube);
+	win.Gfx().getPipeline()->drawObject(normalCube);
 
 	//muda posicao da luz 
 	light.updatePos({ 2.0f + 3, a, 0.0f});
 	cubeLight.set({ 2.0f + 3,a,0.0f}, angle);
-	win.Gfx().getPipeline()->bind(cubeLight);
+	win.Gfx().getPipeline()->drawObject(cubeLight);
 
 
 	
@@ -322,7 +316,7 @@ void app::loop()
 				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
 				colorBlendCube.set(pos, { 0.f,0.f,0.f });
-				win.Gfx().getPipeline()->bind(colorBlendCube);
+				win.Gfx().getPipeline()->drawObject(colorBlendCube);
 			}
 		}
 	}
@@ -330,13 +324,13 @@ void app::loop()
 	//coloca o cubo texturizado
 	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
 	texturedCube.setTexture(newTarget.getTexture(), 0);
-	win.Gfx().getPipeline()->bind(texturedCube);
+	win.Gfx().getPipeline()->drawObject(texturedCube);
 
 	//coloca as esferas
 	for (auto& i : phyObjs)
 	{
 		sphere.set(i->getPosition(), {0.f, 0.f, 0.f});
-		win.Gfx().getPipeline()->bind(sphere);
+		win.Gfx().getPipeline()->drawObject(sphere);
 	}
 
 
@@ -353,7 +347,7 @@ void app::loop()
 	timerVertexBuffer.update(&time);
 	timerVertexBuffer.setSlot(2);
 	timerVertexBuffer.bind();
-	win.Gfx().getPipeline()->bind(water);
+	win.Gfx().getPipeline()->drawObject(water);
 
 	hud.drawText(
 		std::to_wstring(frameTime * 1000.0f),
@@ -366,4 +360,14 @@ void app::loop()
 	hudObject.update(hud);
 	hudObject.draw(*win.Gfx().getPipeline());
 	hud.clear();
+}
+
+
+
+void app::start()
+{
+
+
+	while (win.update()) loop();
+
 }
