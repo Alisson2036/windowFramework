@@ -276,12 +276,12 @@ void app::loop()
 		lastBallTime = timeSinceCreation.getPassedSeconds();
 	}
 
-	hud.drawText(
+	/*hud.drawText(
 		L"Objetos:" + std::to_wstring(phyObjs.size()),
 		*fonte,
 		vec2(0, 40),
 		color(255, 255, 255, 255)
-	);
+	);*/
 
 	//physics logics
 	phyDomain.solve(frameTime);
@@ -334,12 +334,12 @@ void app::loop()
 	}
 
 
-	//escreve texto do frametime
+	////escreve texto do frametime
 	static float dTime;
 	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
 	dTime = timeSinceCreation.getPassedSeconds();
 
-	//desenha agua
+	////desenha agua
 	float time = timeSinceCreation.getPassedSeconds();
 	timerBuffer.update(&time);
 	timerBuffer.setSlot(2);
@@ -356,7 +356,7 @@ void app::loop()
 		color(255u, 255u, 255u, 255u)
 	);
 	
-	////desenha e atualiza o hud
+	//desenha e atualiza o hud
 	hudObject.update(hud);
 	hudObject.draw(*win.Gfx().getPipeline());
 	hud.clear();

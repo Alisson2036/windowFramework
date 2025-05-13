@@ -131,6 +131,8 @@ void Image::clear()
 	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
 	gfx->Clear(Gdiplus::Color(0u, 0u, 0u, 0u));
 	needsBufferUpdate = true;
+
+	delete gfx;
 }
 
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
@@ -146,6 +148,8 @@ void Image::drawLine(vec2 startPos, vec2 endPos, color c)
 	Gdiplus::Pen pen(&brush);
 	gfx->DrawLine(&pen, startPos.x, startPos.y, endPos.x, endPos.y);
 	needsBufferUpdate = true;
+
+	delete gfx;
 }
 
 void Image::drawRectangle(vec2 pos, vec2 size, color c)
