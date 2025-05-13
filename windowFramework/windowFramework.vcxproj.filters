@@ -224,9 +224,6 @@
     <ClInclude Include="hudElement.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
-      <Filter>Arquivos de Cabeçalho</Filter>
-    </ClInclude>
     <ClInclude Include="blendState.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
@@ -244,6 +241,9 @@
     </ClInclude>
     <ClInclude Include="depthStencil.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
+    </ClInclude>
+    <ClInclude Include="shader.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -272,6 +272,9 @@
       <Filter>Shaders</Filter>
     </FxCompile>
     <FxCompile Include="waterVS.hlsl">
+      <Filter>Shaders</Filter>
+    </FxCompile>
+    <FxCompile Include="texturedInstancedVS.hlsl">
       <Filter>Shaders</Filter>
     </FxCompile>
   </ItemGroup>

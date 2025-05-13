@@ -49,6 +49,7 @@ private:
 	shader texturedShader;
 	shader normalShader;
 	shader waterShader;
+	shader texturedInstancedShader;
 
 	object colorBlendCube;
 	object texturedCube;

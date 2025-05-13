@@ -17,12 +17,17 @@ void VertexBuffer::create(const void* data, int arraySize, int objectSize)
 	initialized = true;
 }
 
+void VertexBuffer::setSlot(unsigned int n)
+{
+	slot = n;
+}
+
 void VertexBuffer::bind()
 {
 	static VertexBuffer* last = nullptr;
 	if (last != this)
 	{
 		last = this;
-		getContext()->IASetVertexBuffers(0, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
+		getContext()->IASetVertexBuffers(slot, 1, vertexBuffer.GetAddressOf(), &stride, &offset);
 	}
 }

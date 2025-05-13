@@ -53,8 +53,11 @@ void Pipeline::bind(object& obj)
 	obj.pShader->bind();
 
 	//faz o bind do vertex buffer e constant vertex buffer
-	obj.getVertexBuffer()->bind();
+	obj.getConstantVertexBuffer()->bind();
 	obj.vb.bind();
+	if (obj.vbInstance.isInitialized())
+		obj.vbInstance.bind();
+	
 
 	//texturas
 	//atualmente nao suporta sistema de slots, implementar no futuro
@@ -75,14 +78,20 @@ void Pipeline::bind(object& obj)
 	//luzes..caso existirem
 	if (light)
 		light->bind(0);
-
+	
 	if (obj.ib.isInitialized())
 	{
 		obj.ib.bind();
-		context->DrawIndexed(obj.indexes.size(), 0, 0);
+		if (obj.vbInstance.isInitialized())
+			context->DrawIndexedInstanced(obj.indexes.size(),1u, 0u,0u,0u);
+		else
+			context->DrawIndexed(obj.indexes.size(), 0u, 0u);
 	}
 	else
-		context->Draw(obj.getVertexCount(), 0);
+		if (obj.vbInstance.isInitialized())
+			context->DrawInstanced(obj.getVertexCount(),2u, 0u, 0u);
+		else
+			context->Draw(obj.getVertexCount(), 0);
 }
 
 void Pipeline::setLight(Light* _light)

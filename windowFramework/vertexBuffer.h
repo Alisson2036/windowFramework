@@ -10,6 +10,8 @@ class VertexBuffer : public Bindable
 public:
 	void create(const void* data, int arraySize, int objectSize);
 
+	void setSlot(unsigned int n);
+
 	void bind() override;
 
 private:
@@ -17,6 +19,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer> vertexBuffer;
 
 	//tamanho de cada vertice em bytes
+	UINT slot = 0;
 	UINT stride = 0;
 	UINT offset = 0;
 

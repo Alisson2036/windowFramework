@@ -44,7 +44,10 @@ public:
 	void setTexture(Texture* text, int slot);
 
 private:
+	ConstantVertexBuffer* getConstantVertexBuffer();
 	void reserveVertexBuffer(int vertexCount);
+
+private:
 
 	bool initialized = false;
 
@@ -52,9 +55,9 @@ private:
 	inputBuffer dataBuffer;
 	IndexBuffer ib;
 	VertexBuffer vb;
+	VertexBuffer vbInstance;
 
 	//posicao do objeto
-	ConstantVertexBuffer* getVertexBuffer();
 	SpatialData pos;
 	ConstantVertexBuffer cvb;
 	bool needUpdate = false;

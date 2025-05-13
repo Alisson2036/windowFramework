@@ -21,11 +21,23 @@ void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 	for (std::string& semantic : sd.inputParams)
 	{
 		format current = layouts.at(semantic);
-		inputParams.push_back({ semantic, current.size });
+		
+		if (current.perVertex)
+			inputParams.push_back({ semantic, current.size });
+		else
+			hasInstancedData = true;
 
 		try
 		{
-			desc.push_back({ semantic.c_str(), 0, current.format, 0, D3D11_APPEND_ALIGNED_ELEMENT, D3D11_INPUT_PER_VERTEX_DATA, 0 });
+			desc.push_back({ 
+				semantic.c_str(), 
+				0, 
+				current.format, 
+				current.perVertex ? 0u : 1u,
+				current.perVertex ? D3D11_APPEND_ALIGNED_ELEMENT : 0u,
+				current.perVertex ? D3D11_INPUT_PER_VERTEX_DATA : D3D11_INPUT_PER_INSTANCE_DATA, 
+				current.perVertex ? 0u : 1u
+			});
 		}
 		catch (...)
 		{
@@ -48,4 +60,9 @@ void shader::bind()
 	if (vs.isInitialized()) vs.bind();
 	if (ps.isInitialized()) ps.bind();
 	if (il.isInitialized()) il.bind();
+}
+
+bool shader::hasPerInstanceData()
+{
+	return hasInstancedData;
 }

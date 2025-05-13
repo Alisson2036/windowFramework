@@ -50,6 +50,7 @@ void app::start()
 
 	//carrega o shader
 	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
+	texturedInstancedShader.create(L"texturedInstancedVS.cso", L"texturedPS.cso");
 	normalShader.create(L"texturedVS.cso", L"normalPS.cso");
 	waterShader.create(L"waterVS.cso", L"waterPS.cso");
 
@@ -114,7 +115,7 @@ void app::start()
 	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
-	texturedCube.create(texturedShader);
+	texturedCube.create(texturedInstancedShader);
 	texturedCube.loadFromObj(obj);
 	//texturedCube.setTexture(&tex, 0);
 	texturedCube.setTexture(newTarget.getTexture(), 0);
@@ -259,7 +260,7 @@ void app::loop()
 
 
 	//preenche a tela
-	win.Gfx().fillScreen(0.1f, 0.4f, 0.7f);
+	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
 
 
 	vec3 pos = { 0.0f, 0.0f, 0.0f };

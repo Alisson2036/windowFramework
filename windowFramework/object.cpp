@@ -10,6 +10,17 @@ void object::create(shader& shader)
 	pShader = &shader;
 	dataBuffer.create(shader.inputParams);
 
+	if (shader.hasPerInstanceData())
+	{
+		std::vector<vec3> d =
+		{
+			vec3(1.0f,1.0f,1.0f),
+			vec3(4.0f,1.0f,2.0f),
+		};
+		vbInstance.create(d.data(), d.size(), d.size() * sizeof(vec3));
+		vbInstance.setSlot(1);
+	}
+
 	//CRIA CONSTANT BUFFER
 	DirectX::XMMATRIX b[] = {
 		DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
@@ -200,7 +211,7 @@ void object::reserveVertexBuffer(int vertexCount)
 
 }
 
-ConstantVertexBuffer* object::getVertexBuffer()
+ConstantVertexBuffer* object::getConstantVertexBuffer()
 {
 	if (!initialized) _throwMsg("Class not initialized");
 
