@@ -190,6 +190,14 @@ void app::loop()
 	float y = (float)win.getMousePointer()->getY();
 
 
+	std::vector<vec3> positions =
+	{
+		vec3(1.f,1.f,1.f),
+		vec3(2.f,-1.f,1.f),
+		vec3(3.f,1.f,3.f),
+	};
+	texturedCube.setInstancesPos(positions);
+
 	//codigo para mecher a tela 
 	static bool lastRightButtonState = false;
 	static vec2 lastMousePos;

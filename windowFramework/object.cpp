@@ -160,7 +160,7 @@ void object::setInstancesPos(std::vector<vec3>& positions)
 	else
 	{
 		instanceCount = size;
-		vbInstance.create(positions.data(), size, sizeof(vec3));
+		vbInstance.create(positions.data(), size, sizeof(vec3), true);
 		vbInstance.setSlot(1);
 	}
 }
