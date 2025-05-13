@@ -38,12 +38,13 @@ VS_Output main(VS_Input input)
     output.position = mul(output.position, projectionMat);
 
 
-    float3x3 b = transpose((float3x3) mat);
+    float3x3 b = (float3x3) mat;
     output.tex = input.tex;
     output.normals = mul(input.normals, b);
     output.tangents = mul(input.tangent, b);
 
-    output.vertexPos = (float3) mul(float4(input.pos, 1.0f), transpose(mat));
+    output.vertexPos = (float3) mul(float4(input.pos, 1.0f), mat);
+    output.vertexPos += input.instancePos;
     
 
     return output;
