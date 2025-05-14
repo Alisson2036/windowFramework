@@ -181,6 +181,7 @@ app::app()
 	lightCam.setViewSize(vec2(30, 30));
 	lightCam.setPerspective(false);
 	lightCam.setPositionAndAngle(vec3(0.f, 10.f, 0.f), vec2(-DirectX::XM_PIDIV2, 0.0f));
+	light.setLightCam(&lightCam);
 
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 40.0f);

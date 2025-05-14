@@ -60,7 +60,6 @@ void Pipeline::drawObject(object& obj)
 	
 
 	//texturas
-	//atualmente nao suporta sistema de slots, implementar no futuro
 	for (auto current : obj.textures)
 	{
 		if (current.second->isAntialiased())
