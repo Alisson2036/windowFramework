@@ -2,7 +2,8 @@
 #include "window.h"
 #include "exception.h"
 #include "timer.h"
-#include "targetView.h"
+#include "renderTarget.h"
+#include "depthStencil.h"
 
 #include "Camera.h"
 #include "light.h"
@@ -29,6 +30,7 @@ private:
 
 
 private:
+	Pipeline* pipeline;
 	Camera cam;
 
 	Texture tex;
@@ -64,7 +66,9 @@ private:
 	Image hud;
 	Image::font* fonte;
 
-	targetView newTarget;
+	//render target secundario para o cubo
+	renderTarget newTarget;
+	depthStencil newDTTarget;
 
 	Light light;//precisa ser inicializado depois do win se nao da erro
 

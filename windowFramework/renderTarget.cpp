@@ -1,6 +1,6 @@
-#include "targetView.h"
+#include "renderTarget.h"
 
-void targetView::create(vec2 targetSize, bool enableDepthStencil)
+void renderTarget::create(vec2 targetSize)
 {
 	targetResolution = targetSize;
 
@@ -53,42 +53,39 @@ void targetView::create(vec2 targetSize, bool enableDepthStencil)
 	//cria a textura
 	texInterface.create(texture.Get(), textureView.Get());
 
-	//retorna caso nao for para usar depthstencil
-	if (!enableDepthStencil) return;
-	depthStencilBuffer.create(targetResolution);
 }
 
-void targetView::bind()
+ID3D11RenderTargetView** renderTarget::getViewPointer()
+{
+	return renderTargetView.GetAddressOf();
+}
+
+void renderTarget::bind()
 {
 	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)targetResolution.x, (float)targetResolution.y, 0.0f, 1.0f };
 	getContext()->RSSetViewports(1, &viewport);
 
-	if (depthStencilBuffer.isInitialized())
-		depthStencilBuffer.bind();
-	getContext()->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilBuffer.getViewPointer());
 
 }
 
-Texture* targetView::getTexture()
+Texture* renderTarget::getTexture()
 {
 	return &texInterface;
 }
 
-vec2 targetView::getResolution()
+vec2 renderTarget::getResolution()
 {
 	return targetResolution;
 }
 
-void targetView::clear()
+void renderTarget::clear()
 {
 	const float f[4] = { 0.f,0.f,0.f, 1.0f };
 	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
 
-	if (depthStencilBuffer.isInitialized())
-		depthStencilBuffer.clear();
 }
 
-void targetView::fill(float r, float g, float b)
+void renderTarget::fill(float r, float g, float b)
 {
 	const float f[4] = { r, g, b, 1.0f };
 	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);

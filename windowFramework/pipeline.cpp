@@ -104,6 +104,23 @@ void Pipeline::setCamera(Camera* _camera)
 	camera = _camera;
 }
 
+void Pipeline::setRenderTarget(renderTarget* target, depthStencil* dtTarget)
+{
+	currentRenderTarget = target;
+
+	if(target)
+		target->bind();
+	if (dtTarget)
+		dtTarget->bind();
+
+	if(target && dtTarget)
+		context->OMSetRenderTargets(1, target->getViewPointer(), dtTarget->getViewPointer());
+	else if(target)
+		context->OMSetRenderTargets(1, target->getViewPointer(), NULL);
+	else
+		context->OMSetRenderTargets(0, NULL, dtTarget->getViewPointer());
+}
+
 vec2 Pipeline::getWindowResolution() const
 {
 	return windowResolution;

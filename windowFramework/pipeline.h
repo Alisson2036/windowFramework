@@ -13,6 +13,8 @@
 #include "sampler.h"
 #include "shaderDesc.h"
 #include "object.h"
+#include "renderTarget.h"
+#include "depthStencil.h"
 
 #include "light.h"
 #include "SpatialData.h"
@@ -36,6 +38,8 @@ public:
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);
 
+	void setRenderTarget(renderTarget* target, depthStencil* dtTarget);
+
 	vec2 getWindowResolution() const;
 
 
@@ -55,6 +59,8 @@ private:
 
 	BlendState blendState;
 	Camera* camera;
+
+	renderTarget* currentRenderTarget;
 
 	vec2 windowResolution;
 

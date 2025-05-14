@@ -10,11 +10,11 @@
 #include "vec2.h"
 
 
-class targetView : private Bindable
+class renderTarget : private Bindable
 {
 
 public:
-	void create(vec2 targetSize, bool enableDepthStencil);
+	void create(vec2 targetSize);
 
 
 	Texture* getTexture();
@@ -23,7 +23,7 @@ public:
 	void clear();
 	void fill(float r, float g, float b);
 
-
+	ID3D11RenderTargetView** getViewPointer();
 	void bind() override;
 
 
@@ -32,7 +32,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> texture;
 	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 	
-	depthStencil depthStencilBuffer;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
 
 	vec2 targetResolution;

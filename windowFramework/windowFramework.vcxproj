@@ -140,7 +140,7 @@
     <ClCompile Include="blendState.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="depthStencil.cpp" />
-    <ClCompile Include="targetView.cpp" />
+    <ClCompile Include="renderTarget.cpp" />
     <ClCompile Include="exception.cpp" />
     <ClCompile Include="graphics.cpp" />
     <ClCompile Include="hudElement.cpp" />
@@ -174,7 +174,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="color.h" />
     <ClInclude Include="depthStencil.h" />
-    <ClInclude Include="targetView.h" />
+    <ClInclude Include="renderTarget.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
     <ClInclude Include="hudElement.h" />

@@ -5,8 +5,11 @@ app::app()
 	win(L"Jojo fofo", 1200, 900),
 	timeSinceCreation()
 {
+	pipeline = win.Gfx().getPipeline();
+
 	//criando novo target view
-	newTarget.create(vec2(200, 200), true);
+	newTarget.create(vec2(200, 200));
+	newDTTarget.create(vec2(200, 200));
 
 	//carregando imagem
 	Image img(L"a.png");
@@ -28,9 +31,9 @@ app::app()
 	solidWhiteTex.create(solidWhite);
 
 	//coloca luz na pipeline
-	win.Gfx().getPipeline()->setLight(&light);
+	pipeline->setLight(&light);
 	//coloca camera na pipeline
-	win.Gfx().getPipeline()->setCamera(&cam);
+	pipeline->setCamera(&cam);
 
 	//-----------------------------
 
@@ -258,7 +261,8 @@ void app::loop()
 	if (kb->isKeyPressed('P'))
 	{
 		newTarget.clear();
-		newTarget.bind();
+		newDTTarget.clear();
+		pipeline->setRenderTarget(&newTarget, &newDTTarget);
 	}
 	else
 	{

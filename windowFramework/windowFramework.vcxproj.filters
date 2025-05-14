@@ -126,7 +126,7 @@
     <ClCompile Include="physicsObject.cpp">
       <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="targetView.cpp">
+    <ClCompile Include="renderTarget.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="depthStencil.cpp">
@@ -233,7 +233,7 @@
     <ClInclude Include="physicsObject.h">
       <Filter>Arquivos de Cabeçalho\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="targetView.h">
+    <ClInclude Include="renderTarget.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="depthStencil.h">
