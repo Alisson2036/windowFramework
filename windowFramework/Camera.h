@@ -18,6 +18,8 @@ public:
 	void moveAngle(vec2 Angle);
 
 	void setScreenProportion(float proportion);
+	void setViewSize(vec2 _viewSize);
+	void setPerspective(bool enable);
 	
 	DirectX::XMMATRIX getMatrix();
 	DirectX::XMVECTOR getPositionVector();
@@ -31,8 +33,10 @@ private:
 
 	vec3 position;
 	vec2 angle;
+	vec2 viewSize;
 
 	float screenProportion = 1.0f;
+	bool perspectiveEnable = true;
 
 };
 

@@ -32,6 +32,7 @@ private:
 private:
 	Pipeline* pipeline;
 	Camera cam;
+	Camera lightCam;
 
 	Texture tex;
 	Texture brickTex;

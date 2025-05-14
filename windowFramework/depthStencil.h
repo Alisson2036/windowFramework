@@ -3,6 +3,7 @@
 #include <d3d11.h>
 #include "vec2.h"
 #include "exception.h"
+#include "texture.h"
 #include "bindable.h"
 
 
@@ -16,8 +17,15 @@ public:
 	void clear();
 
 	ID3D11DepthStencilView* getViewPointer();
+	Texture* getTexture();
+	vec2 getResolution();
 
 private:
+	Texture texInterface;
+
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
+
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;
 

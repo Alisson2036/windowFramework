@@ -55,6 +55,16 @@ void Camera::setScreenProportion(float proportion)
 	screenProportion = proportion;
 }
 
+void Camera::setViewSize(vec2 _viewSize)
+{
+	viewSize = _viewSize;
+}
+
+void Camera::setPerspective(bool enable)
+{
+	perspectiveEnable = enable;
+}
+
 DirectX::XMMATRIX Camera::getMatrix()
 {
 	//DirectX::XMMatrixRotationNormal
@@ -73,7 +83,9 @@ DirectX::XMVECTOR Camera::getPositionVector()
 
 DirectX::XMMATRIX Camera::getProjectionMatrix()
 {
-	return DirectX::XMMatrixPerspectiveLH(1.0f, screenProportion, 0.5f, 400.0f);
+	return perspectiveEnable ? 
+		DirectX::XMMatrixPerspectiveLH(1.0f, screenProportion, 0.5f, 400.0f) :
+		DirectX::XMMatrixOrthographicLH(viewSize.x, viewSize.y,0.5f,30.0f);
 }
 
 DirectX::XMMATRIX Camera::getRotationMatrix()

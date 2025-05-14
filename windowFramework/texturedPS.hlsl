@@ -17,7 +17,7 @@ cbuffer cameraPosition : register(b1)
     float3 cameraPos;
 };
 
-Texture2D tex : register(t0);
+Texture2D<float> tex : register(t0);
 SamplerState samp;
 
 float4 main(VS_Output input) : SV_TARGET

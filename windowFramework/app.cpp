@@ -9,7 +9,7 @@ app::app()
 
 	//criando novo target view
 	newTarget.create(vec2(200, 200));
-	newDTTarget.create(vec2(200, 200));
+	newDTTarget.create(vec2(600, 600));
 
 	//carregando imagem
 	Image img(L"a.png");
@@ -177,6 +177,11 @@ app::app()
 	cam.setScreenProportion((float)win.getWindowSizeY() / (float)win.getWindowSizeX());
 	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
 
+	//CAMERA LUZ
+	lightCam.setViewSize(vec2(30, 30));
+	lightCam.setPerspective(false);
+	lightCam.setPositionAndAngle(vec3(0.f, 10.f, 0.f), vec2(-DirectX::XM_PIDIV2, 0.0f));
+
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
@@ -258,21 +263,21 @@ void app::loop()
 	if (kb->isKeyPressed('X')) a-= 0.1f;
 
 
-	if (kb->isKeyPressed('P'))
-	{
-		newTarget.clear();
-		newDTTarget.clear();
-		pipeline->setRenderTarget(&newTarget, &newDTTarget);
-	}
-	else
-	{
-		win.Gfx().drawToScreen();
-	}
+	//if (kb->isKeyPressed('P'))
+	//{
+	//	newTarget.clear();
+	//	newDTTarget.clear();
+	//	pipeline->setRenderTarget(nullptr, &newDTTarget);
+	//}
+	//else
+	//{
+	//	win.Gfx().drawToScreen();
+	//}
 	//newTarget.clear();
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (phyObjs.size() < 80 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
+	if (phyObjs.size() < 200 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
 	{
 		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
 		phyDomain.addObject(phyObjs.back());
@@ -280,12 +285,12 @@ void app::loop()
 		lastBallTime = timeSinceCreation.getPassedSeconds();
 	}
 
-	/*hud.drawText(
+	hud.drawText(
 		L"Objetos:" + std::to_wstring(phyObjs.size()),
 		*fonte,
 		vec2(0, 40),
 		color(255, 255, 255, 255)
-	);*/
+	);
 
 	//physics logics
 	phyDomain.solve(frameTime);
@@ -293,6 +298,26 @@ void app::loop()
 
 	//preenche a tela
 	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
+
+	//depth render das esferas
+	newDTTarget.clear();
+	pipeline->setRenderTarget(nullptr, &newDTTarget);
+	pipeline->setCamera(&lightCam);
+	for (auto& i : phyObjs)
+	{
+		sphere.set(i->getPosition(), { 0.f, 0.f, 0.f });
+		win.Gfx().getPipeline()->drawObject(sphere);
+	}
+
+	//render normal das esferas
+	win.Gfx().drawToScreen();
+	pipeline->setCamera(&cam);
+	for (auto& i : phyObjs)
+	{
+		sphere.set(i->getPosition(), { 0.f, 0.f, 0.f });
+		win.Gfx().getPipeline()->drawObject(sphere);
+	}
+
 
 
 	vec3 pos = { 0.0f, 0.0f, 0.0f };
@@ -327,15 +352,9 @@ void app::loop()
 
 	//coloca o cubo texturizado
 	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
-	texturedCube.setTexture(newTarget.getTexture(), 0);
+	texturedCube.setTexture(newDTTarget.getTexture(), 0);
 	win.Gfx().getPipeline()->drawObject(texturedCube);
 
-	//coloca as esferas
-	for (auto& i : phyObjs)
-	{
-		sphere.set(i->getPosition(), {0.f, 0.f, 0.f});
-		win.Gfx().getPipeline()->drawObject(sphere);
-	}
 
 
 	////escreve texto do frametime
