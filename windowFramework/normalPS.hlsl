@@ -19,6 +19,7 @@ cbuffer cameraPosition : register(b1)
 
 Texture2D tex : register(t0);
 Texture2D normal : register(t1);
+Texture2D<float> shadowMap : register(t1);
 
 SamplerState samp;
 

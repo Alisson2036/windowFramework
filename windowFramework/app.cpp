@@ -133,6 +133,7 @@ app::app()
 		normalCube.loadFromObj(obj);
 		normalCube.setTexture(&brickTex, 0);
 		normalCube.setTexture(&brickTexNormal, 1);
+		normalCube.setTexture(newDTTarget.getTexture(), 2);
 		normalCube.lock();
 		vec3 pos;
 		for (int y = -10; y < 10; y++)
@@ -354,7 +355,7 @@ void app::loop()
 	//coloca o cubo texturizado
 	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
 	texturedCube.setTexture(newDTTarget.getTexture(), 0);
-	win.Gfx().getPipeline()->drawObject(texturedCube);
+	pipeline->drawObject(texturedCube);
 
 
 

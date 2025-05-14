@@ -150,9 +150,11 @@ void Texture::bind()
 {
 
 	static Texture* last = nullptr;
-	if (last != this)
+	static unsigned short lastSlot = 0;
+	if (last != this || lastSlot != textureSlot)
 	{
 		last = this;
+		lastSlot = textureSlot;
 		getContext()->PSSetShaderResources(textureSlot, 1u, textureView.GetAddressOf());
 	}
 }
