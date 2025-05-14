@@ -16,10 +16,15 @@ cbuffer cameraPosition : register(b1)
 {
     float3 cameraPos;
 };
+cbuffer lightMatBuf : register(b2)
+{
+    matrix lightMat;
+};
+
 
 Texture2D tex : register(t0);
 Texture2D normal : register(t1);
-Texture2D<float> shadowMap : register(t1);
+Texture2D<float> shadowMap : register(t2);
 
 SamplerState samp;
 
@@ -64,15 +69,30 @@ float4 main(VS_Output input) : SV_TARGET
         specular /= 4;
     }
 
+    //calcula shadow
+    float4 shadowPos = mul(float4(input.vertexPos, 1.0f), transpose(lightMat));
+    shadowPos = (shadowPos + 1) / 2;
+    shadowPos.y = -shadowPos.y;
+    float shadowDist = shadowMap.Sample(samp, float2(shadowPos.x, shadowPos.y) );
+    float shadow = 1.0f;
+    if (shadowPos.z > shadowDist)
+        shadow = 0.0f;
+    //shadow = shadowPos.y;
 
     //calcula brilho da face
     diffuse = att * max(0.0f, dot(directionLight, normals));
     specular *= att;
     
+    //tira iluminação nas sombras
+    diffuse *= shadow;
+    specular *= shadow;
+    
     float4 color = tex.Sample(samp, input.tex);
     float4 specularColor = float4(1.0f, 1.0f, 1.0f, 1.0f) * specular;
     diffuse += 0.2f; //global illumination
     float4 finalColor = saturate(color * diffuse + specularColor);
+    
+    
     finalColor.a = color.a;
     
     return finalColor; //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);

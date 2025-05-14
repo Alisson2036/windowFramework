@@ -279,7 +279,7 @@ void app::loop()
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (phyObjs.size() < 200 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
+	if (phyObjs.size() < 5 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
 	{
 		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
 		phyDomain.addObject(phyObjs.back());

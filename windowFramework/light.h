@@ -16,14 +16,10 @@ public:
 	void bind(int bufferSlot);
 
 private:
-	struct alignas(16) bufferStruct
-	{
-		DirectX::XMVECTOR pos;
-		DirectX::XMMATRIX mat;
-	};
 
 private:
 	Camera* cam;
 	vec3 pos = { 0.0f, 1.0f, 0.0f };
 	ConstantPixelBuffer buf;
+	ConstantPixelBuffer matBuf;
 };
