@@ -168,7 +168,7 @@ app::app()
 	}
 
 	//cria a esfera
-	sphere.create(texturedShader);
+	sphere.create(texturedInstancedShader);
 	sphere.loadFromObj(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
 	sphere.setTexture(newDTTarget.getTexture(), 2);
@@ -206,21 +206,11 @@ app::app()
 }
 
 
-void app::loop()
+void app::input()
 {
-
 	//posicao do mouse na tela 
 	float x = (float)win.getMousePointer()->getX();
 	float y = (float)win.getMousePointer()->getY();
-
-
-	std::vector<vec3> positions =
-	{
-		vec3(1.f,1.f,1.f),
-		vec3(2.f,-1.f,1.f),
-		vec3(3.f,1.f,3.f),
-	};
-	texturedCube.setInstancesPos(positions);
 
 	//codigo para mecher a tela 
 	static bool lastRightButtonState = false;
@@ -246,7 +236,7 @@ void app::loop()
 		lastMousePos.x = x;
 		lastMousePos.y = y;
 	}
-	else 
+	else
 	{
 		win.showMouse(true);
 		lastRightButtonState = false;
@@ -255,47 +245,39 @@ void app::loop()
 
 	//movimento da camera
 	auto kb = win.getKeyboarPointer();
-	if (kb->isKeyPressed('W')) cam.movePosition({0.0f, 0.0f, 0.1f});
-	if (kb->isKeyPressed('S')) cam.movePosition({0.0f, 0.0f,-0.1f});
-	if (kb->isKeyPressed('A')) cam.movePosition({-0.1f, 0.0f, 0.0f});
-	if (kb->isKeyPressed('D')) cam.movePosition({0.1f, 0.0f, 0.0f});
-	if (kb->isKeyPressed('R')) cam.movePosition({0.0f, 0.1f, 0.0f});
+	if (kb->isKeyPressed('W')) cam.movePosition({ 0.0f, 0.0f, 0.1f });
+	if (kb->isKeyPressed('S')) cam.movePosition({ 0.0f, 0.0f,-0.1f });
+	if (kb->isKeyPressed('A')) cam.movePosition({ -0.1f, 0.0f, 0.0f });
+	if (kb->isKeyPressed('D')) cam.movePosition({ 0.1f, 0.0f, 0.0f });
+	if (kb->isKeyPressed('R')) cam.movePosition({ 0.0f, 0.1f, 0.0f });
 	if (kb->isKeyPressed('F')) cam.movePosition({ 0.0f,-0.1f, 0.0f });
 
-	if (kb->isKeyPressed('Z')) a+=0.1f;
-	if (kb->isKeyPressed('X')) a-= 0.1f;
+	if (kb->isKeyPressed('Z')) a += 0.1f;
+	if (kb->isKeyPressed('X')) a -= 0.1f;
+}
 
+void app::logic()
+{
+	std::vector<vec3> positions =
+	{
+		vec3(1.f,1.f,1.f),
+		vec3(2.f,-1.f,1.f),
+		vec3(3.f,1.f,3.f),
+	};
+	texturedCube.setInstancesPos(positions);
 
-	//if (kb->isKeyPressed('P'))
-	//{
-	//	newTarget.clear();
-	//	newDTTarget.clear();
-	//	pipeline->setRenderTarget(nullptr, &newDTTarget);
-	//}
-	//else
-	//{
-	//	win.Gfx().drawToScreen();
-	//}
-	//newTarget.clear();
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if ((phyObjs.size() < 10 || kb->isKeyPressed('C')) && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
+	if (phyObjs.size() < 10 || win.getKeyboarPointer()->isKeyPressed('C'))
 	{
-		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
+		phyObjs.push_back(new physicsObject(vec3(4 * cos(lastBallTime * 1234.f), 15.0f, 4 * sin(lastBallTime * 78347.f))));
 		phyDomain.addObject(phyObjs.back());
 
 		lastBallTime = timeSinceCreation.getPassedSeconds();
 	}
 
-	hud.drawText(
-		L"Objetos:" + std::to_wstring(phyObjs.size()),
-		*fonte,
-		vec2(0, 40),
-		color(255, 255, 255, 255)
-	);
-
-	//physics logics
+	//physics solve
 	const float pdt = 0.01f;
 	while (physicsTime + pdt < timeSinceCreation.getPassedSeconds())
 	{
@@ -303,75 +285,21 @@ void app::loop()
 		phyDomain.solve(pdt);
 	}
 
-
-	//preenche a tela
-	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
-
-	//depth render das esferas
-	newDTTarget.clear();
-	pipeline->setRenderTarget(nullptr, &newDTTarget);
-	pipeline->setCamera(&lightCam);
-	for (auto& i : phyObjs)
+	//atualiza as posições da bola
+	std::vector<vec3> ballPositions = {};
+	ballPositions.reserve(phyObjs.size());
+	for (auto i : phyObjs)
 	{
-		sphere.set(i->getPosition(), { 0.f, 0.f, 0.f });
-		win.Gfx().getPipeline()->drawObject(sphere);
+		ballPositions.push_back(i->getPosition());
 	}
-	win.Gfx().getPipeline()->drawObject(normalCube);
+	sphere.setInstancesPos(ballPositions);
 
-	//render normal das esferas
-	win.Gfx().drawToScreen();
-	pipeline->setCamera(&cam);
-	for (auto& i : phyObjs)
-	{
-		sphere.set(i->getPosition(), { 0.f, 0.f, 0.f });
-		win.Gfx().getPipeline()->drawObject(sphere);
-	}
-
-
-
-	vec3 pos = { 0.0f, 0.0f, 0.0f };
-	vec3 angle = { 0.0f, 0.0f, 0.0f};
-
-	//cria o chao
-	win.Gfx().getPipeline()->drawObject(normalCube);
 
 	//muda posicao da luz 
-	light.updatePos({ 2.0f + 3, a, 0.0f});
-	cubeLight.set({ 2.0f + 3,a,0.0f}, angle);
-	win.Gfx().getPipeline()->drawObject(cubeLight);
+	light.updatePos({ 2.0f + 3, a, 0.0f });
+	cubeLight.set({ 2.0f + 3,a,0.0f }, {0.f,0.f,0.f});
 
-
-	
-	//cria e desenha todos os cubos coloridos
-	for (int n = 3; n < 4; n++)
-	{
-		for (int j = -5; j < 5; j++)
-		{
-			for (int i = -20; i < 20; i++)
-			{
-				pos.x = i * 4.0f;
-				pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + n * 10;
-				pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
-
-				colorBlendCube.set(pos, { 0.f,0.f,0.f });
-				win.Gfx().getPipeline()->drawObject(colorBlendCube);
-			}
-		}
-	}
-
-	//coloca o cubo texturizado
-	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
-	texturedCube.setTexture(newDTTarget.getTexture(), 0);
-	pipeline->drawObject(texturedCube);
-
-
-
-	////escreve texto do frametime
-	static float dTime;
-	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
-	dTime = timeSinceCreation.getPassedSeconds();
-
-	////desenha agua
+	//update timer buffers for water
 	float time = timeSinceCreation.getPassedSeconds();
 	timerBuffer.update(&time);
 	timerBuffer.setSlot(2);
@@ -379,15 +307,80 @@ void app::loop()
 	timerVertexBuffer.update(&time);
 	timerVertexBuffer.setSlot(2);
 	timerVertexBuffer.bind();
+}
+
+void app::draw()
+{
+	hud.drawText(
+		L"Objetos:" + std::to_wstring(phyObjs.size()),
+		*fonte,
+		vec2(0, 40),
+		color(255, 255, 255, 255)
+	);
+
+
+	//preenche a tela
+	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
+
+	//depth render pass
+	newDTTarget.clear();
+	pipeline->setRenderTarget(nullptr, &newDTTarget);
+	pipeline->setCamera(&lightCam);
+	win.Gfx().getPipeline()->drawObject(sphere);
+	win.Gfx().getPipeline()->drawObject(normalCube);
+
+
+	//forward render pass
+	win.Gfx().drawToScreen();
+	pipeline->setCamera(&cam);
+
+	//render normal das esferas
+	win.Gfx().getPipeline()->drawObject(sphere);
+
+
+	//renderiza o chao
+	win.Gfx().getPipeline()->drawObject(normalCube);
+
+	//desenha todos os cubos coloridos
+	vec3 pos;
+	for (int j = -5; j < 5; j++)
+	{
+		for (int i = -20; i < 20; i++)
+		{
+			pos.x = i * 4.0f;
+			pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + 3 * 10;
+			pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
+
+			colorBlendCube.set(pos, { 0.f,0.f,0.f });
+			win.Gfx().getPipeline()->drawObject(colorBlendCube);
+		}
+	}
+
+	//desenha a luz
+	win.Gfx().getPipeline()->drawObject(cubeLight);
+
+
+	//coloca o cubo texturizado
+	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
+	texturedCube.setTexture(newDTTarget.getTexture(), 0);
+	pipeline->drawObject(texturedCube);
+
+
+	//desenha agua
 	win.Gfx().getPipeline()->drawObject(water);
 
+	//escreve texto do frametime
+	static float dTime;
+	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
+	dTime = timeSinceCreation.getPassedSeconds();
 	hud.drawText(
 		std::to_wstring(frameTime * 1000.0f),
 		*fonte,
 		vec2(0, 0),
 		color(255u, 255u, 255u, 255u)
 	);
-	
+
+
 	//desenha e atualiza o hud
 	hudObject.update(hud);
 	hudObject.draw(*win.Gfx().getPipeline());
@@ -396,10 +389,16 @@ void app::loop()
 
 
 
+
 void app::start()
 {
 
 
-	while (win.update()) loop();
+	while (win.update())
+	{
+		input();
+		logic();
+		draw();
+	}
 
 }

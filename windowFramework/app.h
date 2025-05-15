@@ -26,7 +26,9 @@ public:
 
 private:
 
-	void loop();
+	void input();
+	void logic();
+	void draw();
 
 
 private:
