@@ -1,6 +1,6 @@
 #include "sampler.h"
 
-void Sampler::create(bool isAntialiased)
+void Sampler::create(bool isAntialiased, bool wrap)
 {
 	
 	
@@ -12,13 +12,23 @@ void Sampler::create(bool isAntialiased)
 	//linear deixa mais suavizado, para um estilo mais
 	//pixel art, usar point
 
-	sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-	sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	if(wrap)
+	{
+		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+	}
+	else
+	{
+		sampDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
+		sampDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
+		sampDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+	}
 	sampDesc.MaxAnisotropy = D3D11_MAX_MAXANISOTROPY;
 	sampDesc.MipLODBias = 0.0f;
 	sampDesc.MinLOD = 0.0f;
 	sampDesc.MaxLOD = D3D11_FLOAT32_MAX;
+
 
 	_throwHr(
 		getDevice()->CreateSamplerState(&sampDesc, samplerState.GetAddressOf())

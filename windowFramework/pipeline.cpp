@@ -9,8 +9,8 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	device = _device;
 	context = _context;
 
-	aliasedSampler.create(true);
-	sampler.create(false);
+	aliasedSampler.create(true, false);
+	sampler.create(false, false);
 	
 	//cria projection matrix
 	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };//camera->getProjectionMatrix() };
