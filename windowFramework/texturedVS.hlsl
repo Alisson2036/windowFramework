@@ -13,6 +13,7 @@ struct VS_Output
     float3 normals : Normals;
     float3 tangents : Tangents;
     float3 vertexPos : Position;
+    float4 shadowPos : shadowPos;
 };
 
 cbuffer buff : register(b0)
@@ -23,6 +24,10 @@ cbuffer projectionMatrix : register(b1)
 {
     matrix projectionMat;
 };
+cbuffer lightMatBuf : register(b2)
+{
+    matrix lightMat;
+};
 
 
 
@@ -32,7 +37,9 @@ VS_Output main(VS_Input input)
     
     //matriz final
     matrix a = mul(projectionMat, mat);
+    matrix c = mul(lightMat, mat);
     output.position = mul(float4(input.pos, 1.0f), transpose(a));
+    output.shadowPos = mul(float4(input.pos, 1.0f), transpose(c));
 
 
     float3x3 b = transpose((float3x3)mat);

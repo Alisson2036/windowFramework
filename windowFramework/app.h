@@ -75,5 +75,6 @@ private:
 
 	//physics objects
 	physicsDomain phyDomain;
+	float physicsTime;
 	std::vector<physicsObject*> phyObjs;
 };

@@ -9,7 +9,7 @@ app::app()
 
 	//criando novo target view
 	newTarget.create(vec2(200, 200));
-	newDTTarget.create(vec2(600, 600));
+	newDTTarget.create(vec2(1200, 1200));
 
 	//carregando imagem
 	Image img(L"a.png");
@@ -171,6 +171,7 @@ app::app()
 	sphere.create(texturedShader);
 	sphere.loadFromObj(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
+	sphere.setTexture(newDTTarget.getTexture(), 2);
 	sphere.lock();
 
 
@@ -181,7 +182,7 @@ app::app()
 	//CAMERA LUZ
 	lightCam.setViewSize(vec2(30, 30));
 	lightCam.setPerspective(false);
-	lightCam.setPositionAndAngle(vec3(0.f, 10.f, 0.f), vec2(-DirectX::XM_PIDIV2, 0.0f));
+	lightCam.setPositionAndAngle(vec3(0.f, 18.f, 0.f), vec2(-DirectX::XM_PIDIV2, 0.0f));
 	light.setLightCam(&lightCam);
 
 	//carrega a fonte
@@ -279,7 +280,7 @@ void app::loop()
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (phyObjs.size() < 5 && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
+	if ((phyObjs.size() < 10 || kb->isKeyPressed('C')) && timeSinceCreation.getPassedSeconds() > lastBallTime + 0.0f)
 	{
 		phyObjs.push_back(new physicsObject(vec3(4*cos(lastBallTime*1234.f), 15.0f, 4*sin(lastBallTime*78347.f))));
 		phyDomain.addObject(phyObjs.back());
@@ -295,7 +296,12 @@ void app::loop()
 	);
 
 	//physics logics
-	phyDomain.solve(frameTime);
+	const float pdt = 0.01f;
+	while (physicsTime + pdt < timeSinceCreation.getPassedSeconds())
+	{
+		physicsTime += pdt;
+		phyDomain.solve(pdt);
+	}
 
 
 	//preenche a tela
@@ -310,6 +316,7 @@ void app::loop()
 		sphere.set(i->getPosition(), { 0.f, 0.f, 0.f });
 		win.Gfx().getPipeline()->drawObject(sphere);
 	}
+	win.Gfx().getPipeline()->drawObject(normalCube);
 
 	//render normal das esferas
 	win.Gfx().drawToScreen();

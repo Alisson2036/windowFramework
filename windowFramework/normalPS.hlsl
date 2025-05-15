@@ -5,6 +5,7 @@ struct VS_Output
     float3 normals : Normals;
     float3 tangents : Tangents;
     float3 vertexPos : Position;
+    float4 shadowPos : shadowPos;
 };
 
 
@@ -15,10 +16,6 @@ cbuffer light : register(b0)
 cbuffer cameraPosition : register(b1)
 {
     float3 cameraPos;
-};
-cbuffer lightMatBuf : register(b2)
-{
-    matrix lightMat;
 };
 
 
@@ -70,12 +67,15 @@ float4 main(VS_Output input) : SV_TARGET
     }
 
     //calcula shadow
-    float4 shadowPos = mul(float4(input.vertexPos, 1.0f), transpose(lightMat));
-    shadowPos = (shadowPos + 1) / 2;
-    shadowPos.y = -shadowPos.y;
-    float shadowDist = shadowMap.Sample(samp, float2(shadowPos.x, shadowPos.y) );
+    float4 shadowPos = input.shadowPos; //mul(float4(input.vertexPos, 1.0f), transpose(lightMat));
+    shadowPos /= shadowPos.w;
+    //shadowPos = (shadowPos + 1) / 2;
+    //shadowPos.y = -shadowPos.y;
+    float2 shadowSamplePos = float2(shadowPos.x, -shadowPos.y);
+    shadowSamplePos = (shadowSamplePos + 1) / 2;
+    float shadowDist = shadowMap.Sample(samp, shadowSamplePos );
     float shadow = 1.0f;
-    if (shadowPos.z > shadowDist)
+    if (shadowPos.z - shadowDist > 0.005f)
         shadow = 0.0f;
     //shadow = shadowPos.y;
 
@@ -95,6 +95,7 @@ float4 main(VS_Output input) : SV_TARGET
     
     finalColor.a = color.a;
     
+    //return float4(shadowPos.z, 0.0f, 0.0f, 1.0f);
     return finalColor; //saturate((tex.Sample(samp, input.tex) * (factor+0.2)) + float4(1.0f,1.0f,1.0f,1.0f)*specular);
 
 }

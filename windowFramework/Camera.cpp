@@ -85,7 +85,7 @@ DirectX::XMMATRIX Camera::getProjectionMatrix()
 {
 	return perspectiveEnable ? 
 		DirectX::XMMatrixPerspectiveLH(1.0f, screenProportion, 0.5f, 400.0f) :
-		DirectX::XMMatrixOrthographicLH(viewSize.x, viewSize.y,0.5f,30.0f);
+		DirectX::XMMatrixOrthographicLH(viewSize.x, viewSize.y,0.5f,20.0f);
 }
 
 DirectX::XMMATRIX Camera::getRotationMatrix()
