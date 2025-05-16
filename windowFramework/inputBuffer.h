@@ -28,15 +28,15 @@ public:
 
 	//construtores padroes
 	inputBuffer() = default;
-	inputBuffer(std::vector<type> types);
-	void create(std::vector<type> types);
+	inputBuffer(const std::vector<type>& types);
+	void create(const std::vector<type>& types);
 	
 	//getters
 	std::unique_ptr<unsigned char*> data();
 	std::vector<char> getElement(const int index, const std::string type) const;
 	bool containsType(const std::string type) const;
-	int getElementCount();
-	int getSizeBytes();
+	int getElementCount() const;
+	int getSizeBytes() const;
 
 	//reserva mais espaço, sem nenhuma informação
 	void reserve(int dataSize);

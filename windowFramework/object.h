@@ -24,25 +24,24 @@ public:
 
 	//loaders
 	void loadFromObj(objLoader& obj);
-	void loadFromVertexArray(std::vector<vec3>& vertexArray);
-	void loadFromVertexArray(std::vector<vec2>& vertexArray);
-	void loadFromColorArray(std::vector<color>& ColorArray);
-	void loadFromTexCoordArray(std::vector<vec2>& texCoordArray);
-	void setVertexIndices(std::vector<int>& vertexIndices);
-	void setInstancesPos(std::vector<vec3>& positions);
+	void loadFromVertexArray(const std::vector<vec3>& vertexArray);
+	void loadFromVertexArray(const std::vector<vec2>& vertexArray);
+	void loadFromColorArray(const std::vector<color>& ColorArray);
+	void loadFromTexCoordArray(const std::vector<vec2>& texCoordArray);
+	void setVertexIndices(const std::vector<int>& vertexIndices);
+	void setInstancesPos(const std::vector<vec3>& positions);
 
 	//getters
 	int getVertexCount();
-	void lock();
 
-	//cuida da posicao
+	//setters
 	void set(vec3 position, vec3 angle);
 	void move(vec3 vector);
 	void rotate(vec3 angle);
 	void setScale(vec3 Scale);
-
-	//texturas
 	void setTexture(Texture* text, int slot);
+
+	void lock();
 
 private:
 	ConstantVertexBuffer* getConstantVertexBuffer();

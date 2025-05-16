@@ -1,11 +1,11 @@
 #include "inputBuffer.h"
 
-inputBuffer::inputBuffer(std::vector<type> types)
+inputBuffer::inputBuffer(const std::vector<type>& types)
 {
 	create(types);
 }
 
-void inputBuffer::create(std::vector<type> types)
+void inputBuffer::create(const std::vector<type>& types)
 {
 	buffer = {};
 
@@ -50,13 +50,13 @@ bool inputBuffer::containsType(const std::string type) const
 	return typeToOffset.contains(type);
 }
 
-int inputBuffer::getElementCount()
+int inputBuffer::getElementCount() const
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	return (int)buffer.size() / elementSize;
 }
 
-int inputBuffer::getSizeBytes()
+int inputBuffer::getSizeBytes() const
 {
 	return buffer.size();
 }
