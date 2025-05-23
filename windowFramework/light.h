@@ -12,9 +12,9 @@ public:
 	Light();
 
 	void updatePos(vec3 Position);
-	void setLightCam(Camera* _cam);
+	void setShadowMapProjectionCam(Camera* _cam);
 
-	void bind(int bufferSlot);
+	void bind(int pixelBufferSlote, int vertexBufferSlot);
 
 private:
 

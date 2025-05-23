@@ -23,41 +23,46 @@ Light::Light()
 	buf.setSlot(0);
 
 	//cria light projection matrix
-	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };//camera->getProjectionMatrix() };
+	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };
 	matBuf.create(mat, 1, sizeof(DirectX::XMMATRIX));
-	matBuf.setSlot(2);
+	matBuf.setSlot(0);
 	
 }
 
 void Light::updatePos(vec3 Position)
 {
-	DirectX::XMMATRIX mat;
 	if (cam)
+	{
+		//atualiza shadowmap projection matrix
+		DirectX::XMMATRIX mat;
 		mat = cam->getMatrix();
-	else
-		mat = DirectX::XMMatrixIdentity();
+		DirectX::XMMATRIX pMat[] = { mat };
+		matBuf.update(pMat);
+	}
 
 
 	DirectX::XMVECTOR b[] =
 	{
 		DirectX::XMVECTOR{Position.x, Position.y, Position.z,1.0f},
 	};
-	DirectX::XMMATRIX pMat[] = { mat };
 
 	buf.update(b);
-	matBuf.update(pMat);
 }
 
-void Light::setLightCam(Camera* _cam)
+void Light::setShadowMapProjectionCam(Camera* _cam)
 {
 	cam = _cam;
 }
 
-void Light::bind(int bufferSlot)
+void Light::bind(int pixelBufferSlote, int vertexBufferSlot)
 {
-	buf.setSlot(bufferSlot);
+	buf.setSlot(pixelBufferSlote);
 	buf.bind();
 
 	//mudar depois
-	matBuf.bind();
+	if (cam)
+	{
+		matBuf.setSlot(vertexBufferSlot);
+		matBuf.bind();
+	}
 }

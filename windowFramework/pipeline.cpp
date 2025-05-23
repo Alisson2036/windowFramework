@@ -77,7 +77,7 @@ void Pipeline::drawObject(object& obj)
 
 	//luzes..caso existirem
 	if (light)
-		light->bind(0);
+		light->bind(0, 2);
 	
 	if (obj.ib.isInitialized())
 	{
