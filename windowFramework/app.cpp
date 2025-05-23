@@ -299,14 +299,6 @@ void app::logic()
 	light.updatePos({ 2.0f + 3, a, 0.0f });
 	cubeLight.set({ 2.0f + 3,a,0.0f }, {0.f,0.f,0.f});
 
-	//update timer buffers for water
-	float time = timeSinceCreation.getPassedSeconds();
-	timerBuffer.update(&time);
-	timerBuffer.setSlot(2);
-	timerBuffer.bind();
-	timerVertexBuffer.update(&time);
-	timerVertexBuffer.setSlot(2);
-	timerVertexBuffer.bind();
 }
 
 void app::draw()
@@ -366,6 +358,14 @@ void app::draw()
 	pipeline->drawObject(texturedCube);
 
 
+	//atualiza timer buffers para a agua
+	float time = timeSinceCreation.getPassedSeconds();
+	timerBuffer.update(&time);
+	timerBuffer.setSlot(2);
+	timerBuffer.bind();
+	timerVertexBuffer.update(&time);
+	timerVertexBuffer.setSlot(3);
+	timerVertexBuffer.bind();
 	//desenha agua
 	win.Gfx().getPipeline()->drawObject(water);
 
