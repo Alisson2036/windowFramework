@@ -4,11 +4,12 @@
 #include "pipeline.h"
 
 
-class hudElement
+class sprite
 {
 public:
 	void create(Image& tex);
 	void create(Image& img, vec2 position, vec2 size);
+	void create(Texture* img, vec2 position, vec2 size);
 
 
 
@@ -18,7 +19,7 @@ public:
 	
 
 private:
-	Texture tex;
+	Texture* tex;
 	object obj;
 	shader shader2d;
 	vec2 resolution;

@@ -2,14 +2,26 @@
 
 app::app()
 	:
-	win(L"Jojo fofo", 1200, 900),
+	win(L"Jojo fofo", 1400, 900),
 	timeSinceCreation()
 {
 	pipeline = win.Gfx().getPipeline();
 
 	//criando novo target view
-	newTarget.create(vec2(200, 200));
-	newDTTarget.create(vec2(1200, 1200));
+	{
+		//resolucao com -200 no x por causa do painel
+		resolution3d = vec2(
+			win.getWindowSizeX() - 200.0f, //
+			win.getWindowSizeY()
+		);
+		target.create(resolution3d);
+		targetDS.create(resolution3d);
+		target.clear();
+		targetDS.clear();
+	}
+
+	//criacao do shadowmap
+	shadowMap.create(vec2(1200, 1200));
 
 	//carregando imagem
 	Image img(L"a.png");
@@ -24,7 +36,7 @@ app::app()
 	);
 
 
-
+	//cria texturas
 	tex.createWithMipMap(img);
 	brickTex.createWithMipMap(bricks);
 	brickTexNormal.createWithMipMap(bricksNormal);
@@ -116,7 +128,7 @@ app::app()
 	texturedCube.create(texturedInstancedShader);
 	texturedCube.loadFromObj(obj);
 	//texturedCube.setTexture(&tex, 0);
-	texturedCube.setTexture(newTarget.getTexture(), 0);
+	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
 	std::vector<vec3> positions =
 	{
@@ -133,7 +145,7 @@ app::app()
 		normalCube.loadFromObj(obj);
 		normalCube.setTexture(&brickTex, 0);
 		normalCube.setTexture(&brickTexNormal, 1);
-		normalCube.setTexture(newDTTarget.getTexture(), 2);
+		normalCube.setTexture(shadowMap.getTexture(), 2);
 		normalCube.lock();
 		vec3 pos;
 		for (int y = -10; y < 10; y++)
@@ -171,12 +183,12 @@ app::app()
 	sphere.create(texturedInstancedShader);
 	sphere.loadFromObj(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
-	sphere.setTexture(newDTTarget.getTexture(), 2);
+	sphere.setTexture(shadowMap.getTexture(), 2);
 	sphere.lock();
 
 
 	//move camera para posicao inicial
-	cam.setScreenProportion((float)win.getWindowSizeY() / (float)win.getWindowSizeX());
+	cam.setScreenProportion(resolution3d.y / resolution3d.x);
 	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
 
 	//CAMERA LUZ
@@ -189,8 +201,7 @@ app::app()
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
 	//inicializa a imagem do hud
-	hud.fromBlank(win.getWindowSizeX(), win.getWindowSizeY());
-	hudObject.create(hud);
+	targetSprite.create(target.getTexture(), vec2(-0.5f,0.0f), vec2(0.5f,0.5f));
 
 	//inicializa guipanel
 	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
@@ -203,8 +214,6 @@ app::app()
 	for (auto& i : phyObjs)
 		phyDomain.addObject(i);
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
-
-	newTarget.clear();
 
 }
 
@@ -306,27 +315,22 @@ void app::logic()
 
 void app::draw()
 {
-	hud.drawText(
-		L"Objetos:" + std::to_wstring(phyObjs.size()),
-		*fonte,
-		vec2(0, 40),
-		color(255, 255, 255, 255)
-	);
-
-
 	//preenche a tela
 	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
+	target.clear();
+	targetDS.clear();
 
 	//depth render pass
-	newDTTarget.clear();
-	pipeline->setRenderTarget(nullptr, &newDTTarget);
+	shadowMap.clear();
+	pipeline->setRenderTarget(nullptr, &shadowMap);
 	pipeline->setCamera(&lightCam);
 	win.Gfx().getPipeline()->drawObject(sphere);
 	win.Gfx().getPipeline()->drawObject(normalCube);
 
 
 	//forward render pass
-	win.Gfx().drawToScreen();
+	//win.Gfx().drawToScreen();
+	pipeline->setRenderTarget(&target, &targetDS);
 	pipeline->setCamera(&cam);
 
 	//render normal das esferas
@@ -357,7 +361,7 @@ void app::draw()
 
 	//coloca o cubo texturizado
 	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
-	texturedCube.setTexture(newDTTarget.getTexture(), 0);
+	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	pipeline->drawObject(texturedCube);
 
 
@@ -375,7 +379,7 @@ void app::draw()
 
 
 	//escreve texto do frametime
-	static float dTime;
+	/*static float dTime;
 	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
 	dTime = timeSinceCreation.getPassedSeconds();
 	hud.drawText(
@@ -383,13 +387,14 @@ void app::draw()
 		*fonte,
 		vec2(0, 0),
 		color(255u, 255u, 255u, 255u)
-	);
+	);*/
 
+	win.Gfx().drawToScreen();
 
 	//desenha e atualiza o hud
-	hudObject.update(hud);
-	hudObject.draw(*win.Gfx().getPipeline());
-	hud.clear();
+	//targetSprite.update(hud);
+	targetSprite.draw(*win.Gfx().getPipeline());
+	//hud.clear();
 
 	//desenha o gui
 	gui.draw(*win.Gfx().getPipeline());

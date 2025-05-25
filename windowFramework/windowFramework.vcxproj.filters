@@ -111,7 +111,7 @@
     <ClCompile Include="object.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="hudElement.cpp">
+    <ClCompile Include="sprite.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="blendState.cpp">
@@ -245,7 +245,7 @@
     <ClInclude Include="shader.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="hudElement.h">
+    <ClInclude Include="sprite.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
     <ClInclude Include="guiPanel.h">

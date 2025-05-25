@@ -144,7 +144,7 @@
     <ClCompile Include="renderTarget.cpp" />
     <ClCompile Include="exception.cpp" />
     <ClCompile Include="graphics.cpp" />
-    <ClCompile Include="hudElement.cpp" />
+    <ClCompile Include="sprite.cpp" />
     <ClCompile Include="indexBuffer.cpp" />
     <ClCompile Include="inputBuffer.cpp" />
     <ClCompile Include="inputLayout.cpp" />
@@ -179,7 +179,7 @@
     <ClInclude Include="renderTarget.h" />
     <ClInclude Include="exception.h" />
     <ClInclude Include="graphics.h" />
-    <ClInclude Include="hudElement.h" />
+    <ClInclude Include="sprite.h" />
     <ClInclude Include="indexBuffer.h" />
     <ClInclude Include="inputBuffer.h" />
     <ClInclude Include="inputLayout.h" />

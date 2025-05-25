@@ -11,10 +11,11 @@ void guiPanel::create(vec2 windowSize)
 
 	//calcula posições e resoluções
 	resolution = windowSize;
-	panelRes = vec2(windowSize.x / 4, windowSize.y);
+	panelRes = vec2(200, windowSize.y);
 
-	const vec2 position(0.5f, -1.0f);
-	const vec2 size(0.5f, 2.f);
+	const float xFactor = ((windowSize.x - 200.0f) / windowSize.x);
+	const vec2 position((xFactor * 2) - 1.0f, -1.0f);
+	const vec2 size(1.0f - position.x, 2.f);
 	
 	vec2 secPos = position + size;
 	std::vector<vec2> vertices =

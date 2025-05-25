@@ -1,11 +1,22 @@
-#include "hudElement.h"
+#include "sprite.h"
 
-void hudElement::create(Image& img)
+void sprite::create(Image& img)
 {
 	create(img, vec2(-1.f, -1.f), vec2(2.f, 2.f));
 }
 
-void hudElement::create(Image& img, vec2 position, vec2 size)
+void sprite::create(Image& img, vec2 position, vec2 size)
+{
+	Texture* pTex = new Texture();
+	pTex->create(img, false);
+	create(
+		pTex,
+		position,
+		size
+	);
+}
+
+void sprite::create(Texture* img, vec2 position, vec2 size)
 {
 	vec2 secPos = position + size;
 	std::vector<vec2> vertices =
@@ -28,29 +39,29 @@ void hudElement::create(Image& img, vec2 position, vec2 size)
 		1, 2, 3
 	};
 
-	tex.create(img, false);
+	tex = img;
 	shader2d.create(L"tex2dVS.cso", L"tex2dPS.cso");
 	obj.create(shader2d);
-	obj.setTexture(&tex, 0);
+	obj.setTexture(tex, 0);
 	obj.loadFromVertexArray(vertices);
 	obj.loadFromTexCoordArray(coords);
 	obj.setVertexIndices(indices);
 	obj.lock();
 
-	resolution = tex.getResolution();
+	resolution = tex->getResolution();
 }
 
-void hudElement::draw(Pipeline& pipeline)
+void sprite::draw(Pipeline& pipeline)
 {
 	pipeline.drawObject(obj);
 }
 
-void hudElement::update(Image& img)
+void sprite::update(Image& img)
 {
-	tex.update(img);
+	tex->update(img);
 
 
-	resolution = tex.getResolution();
+	resolution = tex->getResolution();
 	
 	// resolution = tex.getResolution();
 

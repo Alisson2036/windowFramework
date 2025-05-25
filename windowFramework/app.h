@@ -10,7 +10,7 @@
 
 #include "texture.h"
 
-#include "hudElement.h"
+#include "sprite.h"
 #include "guiPanel.h"
 
 #include "physicsDomain.h"
@@ -49,7 +49,7 @@ private:
 	Timer timeSinceCreation;
 
 
-	hudElement hudObject;
+	sprite targetSprite;
 	guiPanel gui;
 
 	shader colorBlendShader;
@@ -68,12 +68,15 @@ private:
 	ConstantPixelBuffer timerBuffer;
 	ConstantVertexBuffer timerVertexBuffer;
 
-	Image hud;
 	Image::font* fonte;
 
-	//render target secundario para o cubo
-	renderTarget newTarget;
-	depthStencil newDTTarget;
+	//render target para a area 3d
+	renderTarget target;
+	depthStencil targetDS;
+	vec2 resolution3d;
+
+
+	depthStencil shadowMap;
 
 	Light light;//precisa ser inicializado depois do win se nao da erro
 
