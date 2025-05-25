@@ -46,6 +46,7 @@ public:
 	void fromBlank(int sizeX, int sizeY);
 
 	void clear();
+	void fill(color c);
 
 	void drawPixel(unsigned int x, unsigned int y, color color);
 	void drawLine(vec2 startPos, vec2 endPos, color c);

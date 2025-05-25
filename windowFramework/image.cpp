@@ -135,6 +135,16 @@ void Image::clear()
 	delete gfx;
 }
 
+void Image::fill(color c)
+{
+
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	gfx->Clear(Gdiplus::Color(c.a, c.r, c.g, c.b));
+	needsBufferUpdate = true;
+
+	delete gfx;
+}
+
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
 {
 	img->SetPixel((INT)x, (INT)y, *reinterpret_cast<Gdiplus::Color*>(&color));

@@ -56,9 +56,23 @@ void guiPanel::create(vec2 windowSize)
 
 }
 
+void guiPanel::addValue(std::wstring name, float* value)
+{
+	data.push_back(info{ name, value });
+}
+
 void guiPanel::draw(Pipeline& pipeline)
 {
-	gfx.drawText(L"oi tudo bem?", font, vec2(0, 0), color(255, 255, 255, 255));
+	gfx.fill(color(30, 30, 30, 255));
+	//gfx.drawText(L"oi tudo bem?", font, vec2(0, 0), color(255, 255, 255, 255));
+	float cursor = 0.0f;
+	for (info& i : data)
+	{
+		gfx.drawText(i.name, font, vec2(0, cursor), color(255, 255, 255, 255));
+		cursor += fontSize;
+		gfx.drawText(std::to_wstring(*i.value), font, vec2(20, cursor), color(255, 255, 255, 255));
+		cursor += fontSize;
+	}
 
 	//draws image
 	tex.update(gfx);

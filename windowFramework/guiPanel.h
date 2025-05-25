@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+#include <string>
 #include "object.h"
 #include "image.h"
 #include "pipeline.h"
@@ -11,9 +13,16 @@ public:
 
 	void create(vec2 windowSize);
 
-
+	void addValue(std::wstring name, float* value);
 
 	void draw(Pipeline& pipeline);
+
+private:
+	struct info
+	{
+		std::wstring name;
+		float* value;
+	};
 
 private:
 	const float fontSize = 15.0f;
@@ -25,5 +34,7 @@ private:
 	vec2 panelRes;
 	Image gfx;
 	Image::font font;
+
+	std::vector<info> data;
 
 };

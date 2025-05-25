@@ -209,8 +209,6 @@ app::app()
 		targetSprite.create(target.getTexture(), pos, size);
 	}
 
-	//inicializa guipanel
-	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
 
 	//adiciona objetos de fisica
 	phyObjs.push_back(new physicsObject(vec3(1.0f, 4.0f, 0.0f)));
@@ -220,6 +218,12 @@ app::app()
 	for (auto& i : phyObjs)
 		phyDomain.addObject(i);
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
+
+
+	//inicializa guipanel
+	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
+	gui.addValue(L"frametime", &frameTime);
+	gui.addValue(L"número um", new float(1.0f));
 
 }
 
@@ -323,7 +327,7 @@ void app::draw()
 {
 	//preenche a tela
 	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
-	target.clear();
+	target.fill(0.2f, 0.6f, 0.9f);
 	targetDS.clear();
 
 	//depth render pass
@@ -385,15 +389,9 @@ void app::draw()
 
 
 	//escreve texto do frametime
-	/*static float dTime;
+	static float dTime;
 	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
 	dTime = timeSinceCreation.getPassedSeconds();
-	hud.drawText(
-		std::to_wstring(frameTime * 1000.0f),
-		*fonte,
-		vec2(0, 0),
-		color(255u, 255u, 255u, 255u)
-	);*/
 
 	win.Gfx().drawToScreen();
 
