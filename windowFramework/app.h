@@ -11,6 +11,7 @@
 #include "texture.h"
 
 #include "hudElement.h"
+#include "guiPanel.h"
 
 #include "physicsDomain.h"
 #include "physicsObject.h"
@@ -49,6 +50,7 @@ private:
 
 
 	hudElement hudObject;
+	guiPanel gui;
 
 	shader colorBlendShader;
 	shader texturedShader;

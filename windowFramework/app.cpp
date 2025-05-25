@@ -192,6 +192,9 @@ app::app()
 	hud.fromBlank(win.getWindowSizeX(), win.getWindowSizeY());
 	hudObject.create(hud);
 
+	//inicializa guipanel
+	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
+
 	//adiciona objetos de fisica
 	phyObjs.push_back(new physicsObject(vec3(1.0f, 4.0f, 0.0f)));
 	phyObjs.push_back(new physicsObject(vec3(0.0f, 6.0f, 1.0f)));
@@ -369,6 +372,8 @@ void app::draw()
 	//desenha agua
 	win.Gfx().getPipeline()->drawObject(water);
 
+
+
 	//escreve texto do frametime
 	static float dTime;
 	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
@@ -385,6 +390,9 @@ void app::draw()
 	hudObject.update(hud);
 	hudObject.draw(*win.Gfx().getPipeline());
 	hud.clear();
+
+	//desenha o gui
+	gui.draw(*win.Gfx().getPipeline());
 }
 
 

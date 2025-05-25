@@ -135,6 +135,9 @@
     <ClCompile Include="physicsDomain.cpp">
       <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="guiPanel.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="window.h">
@@ -243,6 +246,9 @@
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
     <ClInclude Include="hudElement.h">
+      <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="guiPanel.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
   </ItemGroup>
