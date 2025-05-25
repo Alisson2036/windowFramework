@@ -1,9 +1,16 @@
 #include "guiPanel.h"
 
+guiPanel::guiPanel()
+	:
+	font(L"arial", fontSize)
+{
+}
+
 void guiPanel::create(vec2 windowSize)
 {
 
 	//calcula posições e resoluções
+	resolution = windowSize;
 	panelRes = vec2(windowSize.x / 4, windowSize.y);
 
 	const vec2 position(0.5f, -1.0f);
@@ -43,10 +50,16 @@ void guiPanel::create(vec2 windowSize)
 	obj.setVertexIndices(indices);
 	obj.lock();
 
-	resolution = tex.getResolution();
+	//cria fonte
+	
+
 }
 
 void guiPanel::draw(Pipeline& pipeline)
 {
+	gfx.drawText(L"oi tudo bem?", font, vec2(0, 0), color(255, 255, 255, 255));
+
+	//draws image
+	tex.update(gfx);
 	pipeline.drawObject(obj);
 }
