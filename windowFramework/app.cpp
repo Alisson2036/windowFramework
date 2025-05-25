@@ -201,7 +201,13 @@ app::app()
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
 	//inicializa a imagem do hud
-	targetSprite.create(target.getTexture(), vec2(-0.5f,0.0f), vec2(0.5f,0.5f));
+	{
+		vec2 pos(-1.f, -1.0f);
+
+		const float xFactor = ((win.getWindowSizeX() - 200.0f) / win.getWindowSizeX());
+		vec2 size(xFactor*2.f, 2.0f);
+		targetSprite.create(target.getTexture(), pos, size);
+	}
 
 	//inicializa guipanel
 	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
