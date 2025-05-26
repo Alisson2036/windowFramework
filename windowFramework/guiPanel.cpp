@@ -69,16 +69,38 @@ void guiPanel::addValue(std::wstring name, int* value, bool readOnly)
 
 bool guiPanel::handleInput(int mouseX, int mouseY, bool clicking)
 {
+	void* mouseOverValue = nullptr;
+	type mouseOverValueType = type::NONE;
 	float cursor = 0.0f;
 	float xStart = resolution.x - panelRes.x;
 	for (panelValue& i : data)
 	{
 		float cursorNext = cursor + fontSize + (fontSize + 6.f) * i.arraySize;
 		if (i.readOnly == false && mouseY < cursorNext && cursor < mouseY && mouseX > xStart)
-			return true;
+		{
+			mouseOverValue = i.pValue;
+			mouseOverValueType = i.valueType;
+			break;
+		}
 		cursor = cursorNext;
 	}
-	return false;
+
+	if (mouseOverValue && clicking)
+	{
+		if (lastXMouse != 0)
+		{
+			lastXMouse += changeValue(
+				mouseX - lastXMouse,
+				mouseOverValue,
+				mouseOverValueType
+			);
+		}
+		else
+			lastXMouse = mouseX;
+	}
+	if (!mouseOverValue || !clicking) lastXMouse = 0;
+
+	return mouseOverValue;
 }
 
 void guiPanel::draw(Pipeline& pipeline)
@@ -136,4 +158,25 @@ float guiPanel::drawElement(panelValue& val, float cursor)
 	}
 	
 	return cursor;
+}
+
+int guiPanel::changeValue(int mouseDiff, void* value, type valueType)
+{
+	switch (valueType)
+	{
+	case guiPanel::type::NONE:
+		return 0;
+		break;
+	case guiPanel::type::FLOAT:
+		*reinterpret_cast<float*>(value) += float(mouseDiff) / 10.0f;
+		return mouseDiff;
+		break;
+	case guiPanel::type::INTEGER:
+		*reinterpret_cast<int*>(value) += mouseDiff;
+		return mouseDiff;
+		break;
+	default:
+		return 0;
+	}
+	return 0;
 }

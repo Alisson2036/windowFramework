@@ -25,9 +25,9 @@ public:
 private:
 	enum class type
 	{
+		NONE = 0,
 		FLOAT,
 		INTEGER,
-
 	};
 	struct panelValue
 	{
@@ -38,9 +38,12 @@ private:
 		bool readOnly;
 	};
 	float drawElement(panelValue& val, float cursor);
+	int changeValue(int mouseDiff, void* value, type valueType);
 
 private:
 	const float fontSize = 15.0f;
+
+	int lastXMouse = 0;
 
 	Texture tex;
 	object obj;
