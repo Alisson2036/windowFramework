@@ -59,12 +59,26 @@ void guiPanel::create(vec2 windowSize)
 void guiPanel::addValue(std::wstring name, float* value, bool readOnly)
 {
 	
-	data.push_back(panelValue{ name, value, type::FLOAT, readOnly });
+	data.push_back(panelValue{ name, value, type::FLOAT, 1u, readOnly });
 }
 
 void guiPanel::addValue(std::wstring name, int* value, bool readOnly)
 {
-	data.push_back(panelValue{ name, value, type::INTEGER, readOnly });
+	data.push_back(panelValue{ name, value, type::INTEGER, 1u,readOnly });
+}
+
+bool guiPanel::handleInput(int mouseX, int mouseY, bool clicking)
+{
+	float cursor = 0.0f;
+	float xStart = resolution.x - panelRes.x;
+	for (panelValue& i : data)
+	{
+		float cursorNext = cursor + fontSize + (fontSize + 6.f) * i.arraySize;
+		if (i.readOnly == false && mouseY < cursorNext && cursor < mouseY && mouseX > xStart)
+			return true;
+		cursor = cursorNext;
+	}
+	return false;
 }
 
 void guiPanel::draw(Pipeline& pipeline)

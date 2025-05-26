@@ -16,6 +16,8 @@ public:
 	void addValue(std::wstring name, float* value, bool readOnly = true);
 	void addValue(std::wstring name, int* value, bool readOnly = true);
 
+	bool handleInput(int mouseX, int mouseY, bool clicking);
+
 	void draw(Pipeline& pipeline);
 	
 
@@ -32,6 +34,7 @@ private:
 		std::wstring name;
 		void* pValue;
 		type valueType;
+		char arraySize = 1u;
 		bool readOnly;
 	};
 	float drawElement(panelValue& val, float cursor);

@@ -232,7 +232,6 @@ app::app()
 
 void app::input()
 {
-	win.setCursor(window::cursorType::normal);
 	//posicao do mouse na tela 
 	float x = (float)win.getMousePointer()->getX();
 	float y = (float)win.getMousePointer()->getY();
@@ -279,6 +278,11 @@ void app::input()
 
 	if (kb->isKeyPressed('Z')) a += 0.1f;
 	if (kb->isKeyPressed('X')) a -= 0.1f;
+
+	//gui input handling
+	bool guiStatus = gui.handleInput(x, y, win.getMousePointer()->leftButtonPressed());
+	if (guiStatus) win.setCursor(window::cursorType::dragHorizontal);
+	else win.setCursor(window::cursorType::normal);
 }
 
 void app::logic()
