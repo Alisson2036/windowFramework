@@ -64,6 +64,9 @@ window::window(const LPCWSTR name, int _width, int _height):
 		)
 		throw;
 
+	//carrega o cursor padrao
+	currentCursor = LoadCursor(NULL, IDC_ARROW);
+
 }
 
 window::~window()
@@ -138,7 +141,35 @@ void window::showMouse(bool show)
 	CURSORINFO ci = { sizeof(CURSORINFO) };
 	GetCursorInfo(&ci);
 	if(ci.flags != show)
-	ShowCursor(show);
+		ShowCursor(show);
+}
+
+void window::setCursor(cursorType cursor)
+{
+	//HCURSOR hCur = LoadCursor(NULL, IDC_CROSS);
+	switch (cursor)
+	{
+	case window::cursorType::normal:
+		currentCursor = LoadCursor(NULL, IDC_ARROW);
+		break;
+	case window::cursorType::hand:
+		currentCursor = LoadCursor(NULL, IDC_HAND);
+		break;
+	case window::cursorType::dragAll:
+		currentCursor = LoadCursor(NULL, IDC_SIZEALL);
+		break;
+	case window::cursorType::dragHorizontal:
+		currentCursor = LoadCursor(NULL, IDC_SIZEWE);
+		break;
+	case window::cursorType::dragVertical:
+		currentCursor = LoadCursor(NULL, IDC_SIZENS);
+		break;
+	case window::cursorType::wait:
+		currentCursor = LoadCursor(NULL, IDC_WAIT);
+		break;
+	default:
+		break;
+	}
 }
 
 int window::getWindowSizeX()
@@ -204,6 +235,11 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 	case WM_MOUSEWHEEL:
 		mouse.wheelMove(GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
+	case WM_SETCURSOR:
+        if (LOWORD(lParam) == HTCLIENT) {
+            SetCursor(currentCursor);
+            return TRUE;
+        }
 	//-------------------------------
 	//RAW MOUSE MESSAGES-------------
 	case WM_INPUT:

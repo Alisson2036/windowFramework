@@ -23,8 +23,10 @@ public:
 
 	void setTitle(std::string newTitle);
 
+	enum class cursorType { normal, hand, dragAll, dragVertical, dragHorizontal, wait};
 	void setMousePosition(int x, int y);
 	void showMouse(bool show);
+	void setCursor(cursorType cursor);
 
 	int getWindowSizeX();
 	int getWindowSizeY();
@@ -50,6 +52,7 @@ private:
 	MSG lastMessage;//variavel para guardar a ultima mensagem
 
 	Mouse mouse;
+	HCURSOR currentCursor;
 	Keyboard keyboard;
 	std::unique_ptr<Graphics> pGfx;
 	

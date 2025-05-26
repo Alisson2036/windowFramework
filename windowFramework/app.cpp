@@ -232,6 +232,7 @@ app::app()
 
 void app::input()
 {
+	win.setCursor(window::cursorType::normal);
 	//posicao do mouse na tela 
 	float x = (float)win.getMousePointer()->getX();
 	float y = (float)win.getMousePointer()->getY();
