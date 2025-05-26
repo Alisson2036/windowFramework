@@ -222,8 +222,10 @@ app::app()
 
 	//inicializa guipanel
 	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
-	gui.addValue(L"frametime", &frameTime);
-	gui.addValue(L"número um", new float(1.0f));
+	gui.addValue(L"Frametime", &frameTime);
+	gui.addValue(L"FPS", &FPS);
+	gui.addValue(L"Quantidade de bolas", &nBolas);
+	gui.addValue(L"Altura da luz", &a, false);
 
 }
 
@@ -287,17 +289,19 @@ void app::logic()
 		vec3(3.f,1.f,3.f),
 	};
 	texturedCube.setInstancesPos(positions);
-
+	
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
-	if (phyObjs.size() < 10 || win.getKeyboarPointer()->isKeyPressed('C'))
+	nBolas = phyObjs.size();
+	if (nBolas < 10 || win.getKeyboarPointer()->isKeyPressed('C'))
 	{
 		phyObjs.push_back(new physicsObject(vec3(4 * cos(lastBallTime * 1234.f), 15.0f, 4 * sin(lastBallTime * 78347.f))));
 		phyDomain.addObject(phyObjs.back());
 
 		lastBallTime = timeSinceCreation.getPassedSeconds();
 	}
+	
 
 	//physics solve
 	const float pdt = 0.01f;
@@ -391,6 +395,7 @@ void app::draw()
 	//escreve texto do frametime
 	static float dTime;
 	frameTime = (timeSinceCreation.getPassedSeconds() - dTime);
+	FPS = 1.0f / frameTime;
 	dTime = timeSinceCreation.getPassedSeconds();
 
 	win.Gfx().drawToScreen();

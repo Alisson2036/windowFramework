@@ -56,25 +56,70 @@ void guiPanel::create(vec2 windowSize)
 
 }
 
-void guiPanel::addValue(std::wstring name, float* value)
+void guiPanel::addValue(std::wstring name, float* value, bool readOnly)
 {
-	data.push_back(info{ name, value });
+	
+	data.push_back(panelValue{ name, value, type::FLOAT, readOnly });
+}
+
+void guiPanel::addValue(std::wstring name, int* value, bool readOnly)
+{
+	data.push_back(panelValue{ name, value, type::INTEGER, readOnly });
 }
 
 void guiPanel::draw(Pipeline& pipeline)
 {
-	gfx.fill(color(30, 30, 30, 255));
+	gfx.fill(color(40, 40, 40, 255));
 	//gfx.drawText(L"oi tudo bem?", font, vec2(0, 0), color(255, 255, 255, 255));
 	float cursor = 0.0f;
-	for (info& i : data)
+	for (panelValue& i : data)
 	{
 		gfx.drawText(i.name, font, vec2(0, cursor), color(255, 255, 255, 255));
 		cursor += fontSize;
-		gfx.drawText(std::to_wstring(*i.value), font, vec2(20, cursor), color(255, 255, 255, 255));
-		cursor += fontSize;
+		//gfx.drawText(std::to_wstring(*i.value), font, vec2(20, cursor), color(255, 255, 255, 255));
+		cursor = drawElement(i, cursor);
 	}
 
 	//draws image
 	tex.update(gfx);
 	pipeline.drawObject(obj);
+}
+
+float guiPanel::drawElement(panelValue& val, float cursor)
+{
+	switch (val.valueType)
+	{
+	case type::FLOAT:
+		if (val.readOnly == false)
+			gfx.drawRectangle(
+				vec2(20, cursor),
+				vec2(100.f, fontSize + 6.f),
+				color(30, 30, 30, 255)
+			);
+		gfx.drawText(
+			std::to_wstring(*reinterpret_cast<float*>(val.pValue)), 
+			font, 
+			vec2(20, cursor + 3.f), 
+			color(200, 200, 200, 255)
+		);
+		cursor += fontSize + 6.f;
+		break;
+	case type::INTEGER:
+		if (val.readOnly == false)
+			gfx.drawRectangle(
+				vec2(20, cursor),
+				vec2(100.f, fontSize + 6.f),
+				color(30, 30, 30, 255)
+			);
+		gfx.drawText(
+			std::to_wstring(*reinterpret_cast<int*>(val.pValue)),
+			font,
+			vec2(20, cursor + 3.f),
+			color(200, 200, 200, 255)
+		);
+		cursor += fontSize + 6.f;
+		break;
+	}
+	
+	return cursor;
 }

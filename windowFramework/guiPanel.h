@@ -13,16 +13,28 @@ public:
 
 	void create(vec2 windowSize);
 
-	void addValue(std::wstring name, float* value);
+	void addValue(std::wstring name, float* value, bool readOnly = true);
+	void addValue(std::wstring name, int* value, bool readOnly = true);
 
 	void draw(Pipeline& pipeline);
+	
+
 
 private:
-	struct info
+	enum class type
+	{
+		FLOAT,
+		INTEGER,
+
+	};
+	struct panelValue
 	{
 		std::wstring name;
-		float* value;
+		void* pValue;
+		type valueType;
+		bool readOnly;
 	};
+	float drawElement(panelValue& val, float cursor);
 
 private:
 	const float fontSize = 15.0f;
@@ -35,6 +47,6 @@ private:
 	Image gfx;
 	Image::font font;
 
-	std::vector<info> data;
+	std::vector<panelValue> data;
 
 };

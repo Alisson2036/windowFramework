@@ -44,6 +44,7 @@ private:
 
 	float a = 8.0f;
 	float frameTime;
+	float FPS;
 
 	window win;
 	Timer timeSinceCreation;
@@ -84,4 +85,5 @@ private:
 	physicsDomain phyDomain;
 	float physicsTime;
 	std::vector<physicsObject*> phyObjs;
+	int nBolas = 0;
 };
