@@ -240,6 +240,7 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
             SetCursor(currentCursor);
             return TRUE;
         }
+		break;
 	//-------------------------------
 	//RAW MOUSE MESSAGES-------------
 	case WM_INPUT:
