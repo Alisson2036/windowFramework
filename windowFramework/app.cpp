@@ -125,22 +125,15 @@ app::app()
 	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
-	texturedCube.create(texturedInstancedShader);
+	texturedCube.create(texturedShader);
 	texturedCube.loadFromObj(obj);
 	//texturedCube.setTexture(&tex, 0);
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
-	std::vector<vec3> positions =
-	{
-		vec3(1.f,1.f,1.f),
-		vec3(2.f,4.f,1.f),
-		vec3(3.f,1.f,3.f),
-	};
-	texturedCube.setInstancesPos(positions);
-	positions = {};
 
 	//cria o cubo bricks
 	{
+		std::vector<vec3> positions = {};
 		normalCube.create(normalShader);
 		normalCube.loadFromObj(obj);
 		normalCube.setTexture(&brickTex, 0);
@@ -225,7 +218,8 @@ app::app()
 	gui.addValue(L"Frametime", &frameTime);
 	gui.addValue(L"FPS", &FPS);
 	gui.addValue(L"Quantidade de bolas", &nBolas);
-	gui.addValue(L"Vetor teste", &vetorTeste, false);
+	gui.addValue(L"Posição cubo", &cubePos, false);
+	gui.addValue(L"Rotação cubo", &cubeRot, false);
 	gui.addValue(L"Altura da luz", &a, false);
 
 }
@@ -288,14 +282,6 @@ void app::input()
 
 void app::logic()
 {
-	std::vector<vec3> positions =
-	{
-		vec3(1.f,1.f,1.f),
-		vec3(2.f,-1.f,1.f),
-		vec3(3.f,1.f,3.f),
-	};
-	texturedCube.setInstancesPos(positions);
-	
 
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
@@ -331,6 +317,9 @@ void app::logic()
 	light.updatePos({ 2.0f + 3, a, 0.0f });
 	cubeLight.set({ 2.0f + 3,a,0.0f }, {0.f,0.f,0.f});
 
+	//muda posicao do cubo texturizado
+	texturedCube.set(cubePos, cubeRot);
+
 }
 
 void app::draw()
@@ -346,6 +335,7 @@ void app::draw()
 	pipeline->setCamera(&lightCam);
 	win.Gfx().getPipeline()->drawObject(sphere);
 	win.Gfx().getPipeline()->drawObject(normalCube);
+	win.Gfx().getPipeline()->drawObject(texturedCube);
 
 
 	//forward render pass
@@ -380,8 +370,6 @@ void app::draw()
 
 
 	//coloca o cubo texturizado
-	texturedCube.set({ 10.f,1.f,-3.f }, { 0.f, 0.f, 0.f });
-	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	pipeline->drawObject(texturedCube);
 
 

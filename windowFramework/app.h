@@ -87,6 +87,7 @@ private:
 	std::vector<physicsObject*> phyObjs;
 	int nBolas = 0;
 
-	//teste gui
-	vec3 vetorTeste = { 1.f,1.f,1.f };
+	//teste fisica
+	vec3 cubePos = { 1.f,1.f,1.f };
+	vec3 cubeRot = { 0.f,0.f,0.f };
 };
