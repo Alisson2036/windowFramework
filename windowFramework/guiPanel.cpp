@@ -67,19 +67,29 @@ void guiPanel::addValue(std::wstring name, int* value, bool readOnly)
 	data.push_back(panelValue{ name, value, type::INTEGER, 1u,readOnly });
 }
 
+void guiPanel::addValue(std::wstring name, vec3* value, bool readOnly)
+{
+	data.push_back(panelValue{ name, value, type::FLOAT, 3u,readOnly });
+}
+
 bool guiPanel::handleInput(int mouseX, int mouseY, bool clicking)
 {
 	void* mouseOverValue = nullptr;
 	type mouseOverValueType = type::NONE;
 	float cursor = 0.0f;
 	float xStart = resolution.x - panelRes.x;
+	int offset = 0;
+
+	if (mouseX < xStart) return false;
+
 	for (panelValue& i : data)
 	{
 		float cursorNext = cursor + fontSize + (fontSize + 6.f) * i.arraySize;
-		if (i.readOnly == false && mouseY < cursorNext && cursor < mouseY && mouseX > xStart)
+		if (i.readOnly == false && mouseY < cursorNext && cursor < mouseY)
 		{
 			mouseOverValue = i.pValue;
 			mouseOverValueType = i.valueType;
+			offset = (mouseY - cursor - fontSize) / int(fontSize + 6.0f);
 			break;
 		}
 		cursor = cursorNext;
@@ -92,7 +102,8 @@ bool guiPanel::handleInput(int mouseX, int mouseY, bool clicking)
 			lastXMouse += changeValue(
 				mouseX - lastXMouse,
 				mouseOverValue,
-				mouseOverValueType
+				mouseOverValueType,
+				offset
 			);
 		}
 		else
@@ -113,7 +124,8 @@ void guiPanel::draw(Pipeline& pipeline)
 		gfx.drawText(i.name, font, vec2(0, cursor), color(255, 255, 255, 255));
 		cursor += fontSize;
 		//gfx.drawText(std::to_wstring(*i.value), font, vec2(20, cursor), color(255, 255, 255, 255));
-		cursor = drawElement(i, cursor);
+		for(int offset = 0; offset < i.arraySize; offset++)
+			cursor = drawElement(i, cursor, offset);
 	}
 
 	//draws image
@@ -121,23 +133,23 @@ void guiPanel::draw(Pipeline& pipeline)
 	pipeline.drawObject(obj);
 }
 
-float guiPanel::drawElement(panelValue& val, float cursor)
+float guiPanel::drawElement(panelValue& val, float cursor, int pointerOffset)
 {
 	switch (val.valueType)
 	{
 	case type::FLOAT:
-		if (val.readOnly == false)
-			gfx.drawRectangle(
-				vec2(20, cursor),
-				vec2(100.f, fontSize + 6.f),
-				color(30, 30, 30, 255)
+			if (val.readOnly == false)
+				gfx.drawRectangle(
+					vec2(20, cursor),
+					vec2(100.f, fontSize + 6.f),
+					color(30, 30, 30, 255)
+				);
+			gfx.drawText(
+			std::to_wstring(reinterpret_cast<float*>(val.pValue)[pointerOffset]),
+				font,
+				vec2(20, cursor + 3.f),
+				color(200, 200, 200, 255)
 			);
-		gfx.drawText(
-			std::to_wstring(*reinterpret_cast<float*>(val.pValue)), 
-			font, 
-			vec2(20, cursor + 3.f), 
-			color(200, 200, 200, 255)
-		);
 		cursor += fontSize + 6.f;
 		break;
 	case type::INTEGER:
@@ -147,12 +159,12 @@ float guiPanel::drawElement(panelValue& val, float cursor)
 				vec2(100.f, fontSize + 6.f),
 				color(30, 30, 30, 255)
 			);
-		gfx.drawText(
-			std::to_wstring(*reinterpret_cast<int*>(val.pValue)),
-			font,
-			vec2(20, cursor + 3.f),
-			color(200, 200, 200, 255)
-		);
+			gfx.drawText(
+			std::to_wstring(reinterpret_cast<int*>(val.pValue)[pointerOffset]),
+				font,
+				vec2(20, cursor + 3.f),
+				color(200, 200, 200, 255)
+			);
 		cursor += fontSize + 6.f;
 		break;
 	}
@@ -160,7 +172,7 @@ float guiPanel::drawElement(panelValue& val, float cursor)
 	return cursor;
 }
 
-int guiPanel::changeValue(int mouseDiff, void* value, type valueType)
+int guiPanel::changeValue(int mouseDiff, void* value, type valueType, int offset)
 {
 	switch (valueType)
 	{
@@ -168,11 +180,11 @@ int guiPanel::changeValue(int mouseDiff, void* value, type valueType)
 		return 0;
 		break;
 	case guiPanel::type::FLOAT:
-		*reinterpret_cast<float*>(value) += float(mouseDiff) / 10.0f;
+		reinterpret_cast<float*>(value)[offset] += float(mouseDiff) / 10.0f;
 		return mouseDiff;
 		break;
 	case guiPanel::type::INTEGER:
-		*reinterpret_cast<int*>(value) += mouseDiff;
+		reinterpret_cast<int*>(value)[offset] += mouseDiff;
 		return mouseDiff;
 		break;
 	default:

@@ -225,6 +225,7 @@ app::app()
 	gui.addValue(L"Frametime", &frameTime);
 	gui.addValue(L"FPS", &FPS);
 	gui.addValue(L"Quantidade de bolas", &nBolas);
+	gui.addValue(L"Vetor teste", &vetorTeste, false);
 	gui.addValue(L"Altura da luz", &a, false);
 
 }

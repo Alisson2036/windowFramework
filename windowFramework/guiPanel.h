@@ -3,6 +3,7 @@
 #include <string>
 #include "object.h"
 #include "image.h"
+#include "vec3.h"
 #include "pipeline.h"
 
 
@@ -15,6 +16,7 @@ public:
 
 	void addValue(std::wstring name, float* value, bool readOnly = true);
 	void addValue(std::wstring name, int* value, bool readOnly = true);
+	void addValue(std::wstring name, vec3* value, bool readOnly = true);
 
 	bool handleInput(int mouseX, int mouseY, bool clicking);
 
@@ -37,8 +39,8 @@ private:
 		char arraySize = 1u;
 		bool readOnly;
 	};
-	float drawElement(panelValue& val, float cursor);
-	int changeValue(int mouseDiff, void* value, type valueType);
+	float drawElement(panelValue& val, float cursor, int pointerOffset);
+	int changeValue(int mouseDiff, void* value, type valueType, int offset);
 
 private:
 	const float fontSize = 15.0f;

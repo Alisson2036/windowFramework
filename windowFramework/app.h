@@ -86,4 +86,7 @@ private:
 	float physicsTime;
 	std::vector<physicsObject*> phyObjs;
 	int nBolas = 0;
+
+	//teste gui
+	vec3 vetorTeste = { 1.f,1.f,1.f };
 };
