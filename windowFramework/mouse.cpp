@@ -67,7 +67,7 @@ void Mouse::buttonDown(const char buttonArgs)
 
 void Mouse::buttonUp(const char buttonArgs)
 {
-	mouseButtons = mouseButtons - buttonArgs;
+	mouseButtons = mouseButtons - (mouseButtons & buttonArgs);
 }
 
 void Mouse::wheelMove(int delta)

@@ -298,8 +298,10 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 		mouse.emptyButtonList();
 		keyboard.emptyKeys();
 		break;
+	case WM_NCMOUSELEAVE:
+		mouse.emptyButtonList();
+		break;
 	}
-	
 	
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
