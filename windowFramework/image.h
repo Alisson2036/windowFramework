@@ -53,6 +53,8 @@ public:
 	void drawRectangle(vec2 pos, vec2 size, color c);
 	void drawText(std::wstring text, font& textFont, vec2 position, color textColor);
 
+
+	vec2 getResolution();
 	data& getData();
 
 

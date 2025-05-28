@@ -193,13 +193,16 @@ app::app()
 	//carrega a fonte
 	fonte = new Image::font(L"Times New Roman", 40.0f);
 
-	//inicializa a imagem do hud
+	//inicializa as sprites para desenho(hud e target)
 	{
 		vec2 pos(-1.f, -1.0f);
 
 		const float xFactor = ((win.getWindowSizeX() - 200.0f) / win.getWindowSizeX());
 		vec2 size(xFactor*2.f, 2.0f);
 		targetSprite.create(target.getTexture(), pos, size);
+
+		HUD.fromBlank(win.getWindowSizeX() - 200, win.getWindowSizeY());
+		HUDsprite.create(HUD, pos, size);
 	}
 
 
@@ -313,6 +316,26 @@ void app::logic()
 	);
 	cubePos += move;
 	cubesColliding = std::sqrt(move.lengthSquared());
+	//draw cube position on hud
+	{
+		DirectX::XMMATRIX projMat = cam.getMatrix();
+		DirectX::XMVECTOR pos = {cubePos.x, cubePos.y, cubePos.z, 1.0f};
+		DirectX::XMVECTOR scrPos = DirectX::XMVector4Transform(pos, projMat);
+		float w = scrPos.m128_f32[3];
+		scrPos = DirectX::XMVectorScale(scrPos, 1.0f / w);
+		vec2 vecScrPos(
+			scrPos.m128_f32[0],
+			scrPos.m128_f32[1]
+		);
+		vec2 hudRes = HUD.getResolution();
+		vecScrPos.y = -vecScrPos.y;
+		vecScrPos = (vecScrPos + vec2(1.0f, 1.0f)) / vec2(2.0f,2.0f) * hudRes;
+		HUD.drawRectangle(
+			vecScrPos,
+			vec2(10, 10),
+			color(255, 0, 0, 255)
+		);
+	}
 
 	//atualiza as posições da bola
 	std::vector<vec3> ballPositions = {};
@@ -414,6 +437,10 @@ void app::draw()
 	//desenha e atualiza o hud
 	//targetSprite.update(hud);
 	targetSprite.draw(*win.Gfx().getPipeline());
+
+	HUDsprite.update(HUD);
+	HUDsprite.draw(*win.Gfx().getPipeline());
+	HUD.clear();
 	//hud.clear();
 
 	//desenha o gui

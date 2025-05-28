@@ -201,6 +201,11 @@ void Image::drawText(std::wstring text, font& textFont, vec2 position, color tex
 	delete gfx;
 }
 
+vec2 Image::getResolution()
+{
+	return vec2(img->GetWidth(), img->GetHeight());
+}
+
 Image::data& Image::getData()
 {
 	if(!needsBufferUpdate)

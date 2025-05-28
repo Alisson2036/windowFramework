@@ -53,6 +53,9 @@ private:
 	sprite targetSprite;
 	guiPanel gui;
 
+	Image HUD;
+	sprite HUDsprite;
+
 	shader colorBlendShader;
 	shader texturedShader;
 	shader normalShader;
