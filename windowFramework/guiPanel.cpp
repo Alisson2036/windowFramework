@@ -145,7 +145,7 @@ float guiPanel::drawElement(panelValue& val, float cursor, int pointerOffset)
 					color(30, 30, 30, 255)
 				);
 			gfx.drawText(
-			std::to_wstring(reinterpret_cast<float*>(val.pValue)[pointerOffset]),
+				std::to_wstring(reinterpret_cast<float*>(val.pValue)[pointerOffset]),
 				font,
 				vec2(20, cursor + 3.f),
 				color(200, 200, 200, 255)

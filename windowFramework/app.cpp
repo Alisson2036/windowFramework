@@ -221,6 +221,7 @@ app::app()
 	gui.addValue(L"Posição cubo", &cubePos, false);
 	gui.addValue(L"Rotação cubo", &cubeRot, false);
 	gui.addValue(L"Altura da luz", &a, false);
+	gui.addValue(L"Cubos colidindo", &cubesColliding);
 
 }
 
@@ -303,6 +304,16 @@ void app::logic()
 		phyDomain.solve(pdt);
 	}
 
+	//testa colisao dos dois cubos
+	vec3 move = phyDomain.cubeColliding(
+		cubePos - vec3(0.f, 1.f, 0.f), 
+		cubeRot,
+		vec3(2.f, 1.f, 1.f),
+		vec3(1.f, 1.f, 1.f)
+	);
+	cubePos += move;
+	cubesColliding = std::sqrt(move.lengthSquared());
+
 	//atualiza as posições da bola
 	std::vector<vec3> ballPositions = {};
 	ballPositions.reserve(phyObjs.size());
@@ -370,6 +381,12 @@ void app::draw()
 
 
 	//coloca o cubo texturizado
+	texturedCube.setScale(vec3(1.f, 1.f, 1.f));
+	pipeline->drawObject(texturedCube);
+
+	//posiciona e renderiza segundo cubo texturizado
+	texturedCube.set({ 0.0f,1.0f,0.0f }, { 0.0f,0.0f,0.0f });
+	texturedCube.setScale(vec3(2.f, 1.f, 1.f));
 	pipeline->drawObject(texturedCube);
 
 

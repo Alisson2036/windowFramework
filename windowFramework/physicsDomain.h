@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <DirectXMath.h>
 #include "physicsObject.h"
 #include "vec3.h"
 
@@ -15,6 +16,9 @@ public:
 	//setter functions
 	void addObject(physicsObject* obj);
 	void setGravity(vec3 grav);
+
+	//temp function for cube collision test
+	vec3 cubeColliding(vec3 pos, vec3 rot, vec3 scale1, vec3 scale2);
 
 
 	//solving functions

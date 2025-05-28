@@ -86,8 +86,9 @@ private:
 	float physicsTime;
 	std::vector<physicsObject*> phyObjs;
 	int nBolas = 0;
+	float cubesColliding = 0;
 
 	//teste fisica
-	vec3 cubePos = { 1.f,1.f,1.f };
+	vec3 cubePos = { 3.f,2.f,3.f };
 	vec3 cubeRot = { 0.f,0.f,0.f };
 };
