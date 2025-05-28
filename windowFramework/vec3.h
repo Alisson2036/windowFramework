@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 
 class vec3
 {
@@ -75,6 +76,12 @@ public:
 		y /= rhs.y;
 		z /= rhs.z;
 	}
+	void operator/=(float f)
+	{
+		x /= f;
+		y /= f;
+		z /= f;
+	}
 
 	//dot product
 	float operator*(const vec3& a) {
@@ -95,6 +102,15 @@ public:
 	float lengthSquared()
 	{
 		return x * x + y * y + z * z;
+	}
+	float length()
+	{
+		return std::sqrt(lengthSquared());
+	}
+	//normalize
+	void normalize()
+	{
+		*this /= length();
 	}
 
 

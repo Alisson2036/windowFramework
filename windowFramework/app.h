@@ -90,5 +90,5 @@ private:
 
 	//teste fisica
 	vec3 cubePos = { 3.f,2.f,3.f };
-	vec3 cubeRot = { 0.f,0.f,0.f };
+	vec3 cubeRot = { -1.4f,-1.6f,-1.f };
 };

@@ -56,6 +56,7 @@ vec3 physicsDomain::cubeColliding(vec3 pos, vec3 rot, vec3 scale1, vec3 scale2)
         for (int j = 0; j < 3; ++j) {
             vec3 crossProd = vec3::cross(worldAxes[i], obbAxes[j]);
             if (crossProd.lengthSquared() > 1e-6f) { // Skip zero vectors
+                crossProd.normalize();
                 axes.push_back(crossProd);
             }
         }
