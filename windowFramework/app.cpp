@@ -404,13 +404,13 @@ void app::draw()
 
 
 	//coloca o cubo texturizado
-	texturedCube.setScale(vec3(1.f, 1.f, 1.f));
 	pipeline->drawObject(texturedCube);
 
 	//posiciona e renderiza segundo cubo texturizado
 	texturedCube.set({ 0.0f,1.0f,0.0f }, { 0.0f,0.0f,0.0f });
 	texturedCube.setScale(vec3(2.f, 1.f, 1.f));
 	pipeline->drawObject(texturedCube);
+	texturedCube.setScale(vec3(1.f, 1.f, 1.f));
 
 
 	//atualiza timer buffers para a agua
