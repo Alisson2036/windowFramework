@@ -1,8 +1,8 @@
 #pragma once
 #include <wrl.h>
 #include <d3d11.h>
-#include "vec2.h"
-#include "exception.h"
+#include "..\..\Math\vec2.h"
+#include "..\..\Core\exception.h"
 #include "texture.h"
 #include "bindable.h"
 

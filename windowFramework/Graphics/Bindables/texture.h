@@ -3,9 +3,9 @@
 #include <d3d11.h>
 #include <wrl.h>
 #include "bindable.h"
-#include "image.h"
-#include "exception.h"
-#include "vec2.h"
+#include "..\..\Resources\image.h"
+#include "..\..\Core\exception.h"
+#include "..\..\Math\vec2.h"
 
 
 class Texture : public Bindable

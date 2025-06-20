@@ -1,8 +1,8 @@
 #pragma once
 #include <map>
-#include "vertexShader.h"
-#include "pixelShader.h"
-#include "inputLayout.h"
+#include "..\Bindables\vertexShader.h"
+#include "..\Bindables\pixelShader.h"
+#include "..\Bindables\inputLayout.h"
 #include "inputBuffer.h"
 #include "shaderDesc.h"
 

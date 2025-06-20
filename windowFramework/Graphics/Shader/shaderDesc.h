@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "exception.h"
+#include "..\..\Core\exception.h"
 
 class ShaderDesc
 {

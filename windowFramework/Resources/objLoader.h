@@ -3,8 +3,8 @@
 #include <string>
 #include <vector>
 #include <iostream>
-#include "vec3.h"
-#include "vec2.h"
+#include "..\Math\vec3.h"
+#include "..\Math\vec2.h"
 
 
 class objLoader

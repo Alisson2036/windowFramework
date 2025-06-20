@@ -1,6 +1,6 @@
 #pragma once
 #include <cmath>
-#include "vec3.h"
+#include "..\Math\vec3.h"
 
 class physicsObject
 {

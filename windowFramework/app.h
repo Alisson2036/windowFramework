@@ -1,20 +1,20 @@
 #pragma once
-#include "window.h"
-#include "exception.h"
-#include "timer.h"
-#include "renderTarget.h"
-#include "depthStencil.h"
+#include "Core\window.h"
+#include "Core\exception.h"
+#include "Utils\timer.h"
+#include "Graphics\Bindables\renderTarget.h"
+#include "Graphics\Bindables\depthStencil.h"
 
-#include "Camera.h"
-#include "light.h"
+#include "Graphics\Camera.h"
+#include "Graphics\light.h"
 
-#include "texture.h"
+#include "Graphics\Bindables\texture.h"
 
-#include "sprite.h"
-#include "guiPanel.h"
+#include "Graphics\sprite.h"
+#include "UI\guiPanel.h"
 
-#include "physicsDomain.h"
-#include "physicsObject.h"
+#include "Physics\physicsDomain.h"
+#include "Physics\physicsObject.h"
 
 class app
 {

@@ -5,7 +5,7 @@
 #include <wrl.h>
 #include "bindable.h"
 #include "vertexShader.h"
-#include "exception.h"
+#include "..\..\Core\exception.h"
 
 
 

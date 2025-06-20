@@ -1,7 +1,7 @@
 #pragma once
 #include <DirectXMath.h>
-#include "vec2.h"
-#include "vec3.h"
+#include "..\Math\vec2.h"
+#include "..\Math\vec3.h"
 
 
 class Camera

@@ -42,213 +42,213 @@
     <ClCompile Include="main.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="window.cpp">
+    <ClCompile Include="Core\window.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="mouse.cpp">
+    <ClCompile Include="Input\mouse.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="keyboard.cpp">
+    <ClCompile Include="Input\keyboard.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
     <ClCompile Include="app.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="exception.cpp">
+    <ClCompile Include="Core\exception.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.cpp">
+    <ClCompile Include="Core\graphics.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="inputLayout.cpp">
+    <ClCompile Include="Graphics\Bindables\inputLayout.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="vertexShader.cpp">
+    <ClCompile Include="Graphics\Bindables\vertexShader.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="pixelShader.cpp">
+    <ClCompile Include="Graphics\Bindables\pixelShader.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="vertexBuffer.cpp">
+    <ClCompile Include="Graphics\Bindables\vertexBuffer.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="vertexConstantBuffer.cpp">
+    <ClCompile Include="Graphics\Bindables\vertexConstantBuffer.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="indexBuffer.cpp">
+    <ClCompile Include="Graphics\Bindables\indexBuffer.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="Camera.cpp">
+    <ClCompile Include="Graphics\Camera.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="image.cpp">
+    <ClCompile Include="Resources\image.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="pipeline.cpp">
+    <ClCompile Include="Graphics\pipeline.cpp">
       <Filter>Arquivos de Origem\Object</Filter>
     </ClCompile>
-    <ClCompile Include="bindable.cpp">
+    <ClCompile Include="Graphics\Bindables\bindable.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="sampler.cpp">
+    <ClCompile Include="Graphics\Bindables\sampler.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="texture.cpp">
+    <ClCompile Include="Graphics\Bindables\texture.cpp">
       <Filter>Arquivos de Origem\Bindable</Filter>
     </ClCompile>
-    <ClCompile Include="objLoader.cpp">
+    <ClCompile Include="Resources\objLoader.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="light.cpp">
+    <ClCompile Include="Graphics\light.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="shaderDesc.cpp">
+    <ClCompile Include="Graphics\Shader\shaderDesc.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="shader.cpp">
+    <ClCompile Include="Graphics\Shader\shader.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="object.cpp">
+    <ClCompile Include="Graphics\object.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="sprite.cpp">
+    <ClCompile Include="Graphics\sprite.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="blendState.cpp">
+    <ClCompile Include="Graphics\Bindables\blendState.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="SpatialData.cpp">
+    <ClCompile Include="Math\SpatialData.cpp">
       <Filter>Arquivos de Origem\Object</Filter>
     </ClCompile>
-    <ClCompile Include="inputBuffer.cpp">
+    <ClCompile Include="Graphics\Shader\inputBuffer.cpp">
       <Filter>Arquivos de Origem\Object</Filter>
     </ClCompile>
-    <ClCompile Include="physicsObject.cpp">
+    <ClCompile Include="Physics\physicsObject.cpp">
       <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="renderTarget.cpp">
+    <ClCompile Include="Graphics\Bindables\renderTarget.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="depthStencil.cpp">
+    <ClCompile Include="Graphics\Bindables\depthStencil.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
-    <ClCompile Include="physicsDomain.cpp">
+    <ClCompile Include="Physics\physicsDomain.cpp">
       <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="guiPanel.cpp">
+    <ClCompile Include="UI\guiPanel.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="window.h">
+    <ClInclude Include="Core\window.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="mouse.h">
+    <ClInclude Include="Input\mouse.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="keyboard.h">
+    <ClInclude Include="Input\keyboard.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="app.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="exception.h">
+    <ClInclude Include="Core\exception.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="graphics.h">
+    <ClInclude Include="Core\graphics.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="timer.h">
+    <ClInclude Include="Utils\timer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="bindable.h">
+    <ClInclude Include="Graphics\Bindables\bindable.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="inputLayout.h">
+    <ClInclude Include="Graphics\Bindables\inputLayout.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="vertexShader.h">
+    <ClInclude Include="Graphics\Bindables\vertexShader.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="pixelShader.h">
+    <ClInclude Include="Graphics\Bindables\pixelShader.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="vertexBuffer.h">
+    <ClInclude Include="Graphics\Bindables\vertexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="vertexConstantBuffer.h">
+    <ClInclude Include="Graphics\Bindables\vertexConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="indexBuffer.h">
+    <ClInclude Include="Graphics\Bindables\indexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Camera.h">
+    <ClInclude Include="Graphics\Camera.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="image.h">
+    <ClInclude Include="Resources\image.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="texture.h">
+    <ClInclude Include="Graphics\Bindables\texture.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="sampler.h">
+    <ClInclude Include="Graphics\Bindables\sampler.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="pipeline.h">
+    <ClInclude Include="Graphics\pipeline.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="objLoader.h">
+    <ClInclude Include="Resources\objLoader.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="light.h">
+    <ClInclude Include="Graphics\light.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="pixelConstantBuffer.h">
+    <ClInclude Include="Graphics\Bindables\pixelConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="shaderDesc.h">
+    <ClInclude Include="Graphics\Shader\shaderDesc.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="vec2.h">
+    <ClInclude Include="Math\vec2.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="vec3.h">
+    <ClInclude Include="Math\vec3.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="color.h">
+    <ClInclude Include="Math\color.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
-    <ClInclude Include="inputBuffer.h">
+    <ClInclude Include="Graphics\Shader\inputBuffer.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="object.h">
+    <ClInclude Include="Graphics\object.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="blendState.h">
+    <ClInclude Include="Graphics\Bindables\blendState.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="SpatialData.h">
+    <ClInclude Include="Math\SpatialData.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="physicsDomain.h">
+    <ClInclude Include="Physics\physicsDomain.h">
       <Filter>Arquivos de Cabeçalho\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="physicsObject.h">
+    <ClInclude Include="Physics\physicsObject.h">
       <Filter>Arquivos de Cabeçalho\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="renderTarget.h">
+    <ClInclude Include="Graphics\Bindables\renderTarget.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="depthStencil.h">
+    <ClInclude Include="Graphics\Bindables\depthStencil.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="shader.h">
+    <ClInclude Include="Graphics\Shader\shader.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="sprite.h">
+    <ClInclude Include="Graphics\sprite.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
-    <ClInclude Include="guiPanel.h">
+    <ClInclude Include="UI\guiPanel.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
   </ItemGroup>

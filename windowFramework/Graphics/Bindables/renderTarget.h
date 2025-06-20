@@ -5,9 +5,9 @@
 #include <wrl.h>
 #include "bindable.h"
 #include "depthStencil.h"
-#include "exception.h"
+#include "..\..\Core\exception.h"
 #include "texture.h"
-#include "vec2.h"
+#include "..\..\Math\vec2.h"
 
 
 class renderTarget : private Bindable

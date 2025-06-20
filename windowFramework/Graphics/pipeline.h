@@ -2,24 +2,24 @@
 #include <wrl.h>
 #include <map>
 
-#include "vertexShader.h"
-#include "pixelShader.h"
-#include "vertexBuffer.h"
-#include "inputLayout.h"
-#include "indexBuffer.h"
-#include "blendState.h"
-#include "vertexConstantBuffer.h"
-#include "texture.h"
-#include "sampler.h"
-#include "shaderDesc.h"
+#include "Bindables\vertexShader.h"
+#include "Bindables\pixelShader.h"
+#include "Bindables\vertexBuffer.h"
+#include "Bindables\inputLayout.h"
+#include "Bindables\indexBuffer.h"
+#include "Bindables\blendState.h"
+#include "Bindables\vertexConstantBuffer.h"
+#include "Bindables\texture.h"
+#include "Bindables\sampler.h"
+#include "Shader\shaderDesc.h"
 #include "object.h"
-#include "renderTarget.h"
-#include "depthStencil.h"
+#include "Bindables\renderTarget.h"
+#include "Bindables\depthStencil.h"
 
 #include "light.h"
-#include "SpatialData.h"
+#include "..\Math\SpatialData.h"
 #include "Camera.h"
-#include "vec2.h"
+#include "..\Math\vec2.h"
 
 
 

@@ -5,9 +5,9 @@
 #include <gdiplus.h>
 #include <algorithm>
 #include <memory>
-#include "exception.h"
-#include "color.h"
-#include "vec2.h"
+#include "..\Core\exception.h"
+#include "..\Math\color.h"
+#include "..\Math\vec2.h"
 
 
 class Image

@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include <d3dcompiler.h>
-#include "exception.h"
+#include "..\..\Core\exception.h"
 #include "bindable.h"
 
 class PixelShader : public Bindable

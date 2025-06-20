@@ -1,6 +1,6 @@
 #pragma once
 #include <wrl.h>
-#include "exception.h"
+#include "..\..\Core\exception.h"
 #include <d3d11.h>
 
 

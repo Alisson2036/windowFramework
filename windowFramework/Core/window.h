@@ -2,8 +2,8 @@
 #include <Windows.h>
 #include <string>
 #include <memory>
-#include "mouse.h"
-#include "keyboard.h"
+#include "..\Input\mouse.h"
+#include "..\Input\keyboard.h"
 #include "graphics.h"
 
 class window

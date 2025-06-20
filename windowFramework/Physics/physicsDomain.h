@@ -2,7 +2,7 @@
 #include <vector>
 #include <DirectXMath.h>
 #include "physicsObject.h"
-#include "vec3.h"
+#include "..\Math\vec3.h"
 
 
 class physicsDomain

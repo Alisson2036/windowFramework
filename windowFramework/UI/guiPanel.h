@@ -1,10 +1,9 @@
 #pragma once
 #include <vector>
 #include <string>
-#include "object.h"
-#include "image.h"
-#include "vec3.h"
-#include "pipeline.h"
+#include "..\Resources\image.h"
+#include "..\Math\vec3.h"
+#include "..\Graphics\pipeline.h"
 
 
 class guiPanel

@@ -1,14 +1,14 @@
 #pragma once
 #include <DirectXMath.h>
-#include "shader.h"
-#include "objLoader.h"
-#include "vertexConstantBuffer.h"
-#include "SpatialData.h"
-#include "texture.h"
-#include "vec3.h"
-#include "vec2.h"
-#include "color.h"
-#include "indexBuffer.h"
+#include "..\Resources\objLoader.h"
+#include "..\Math\SpatialData.h"
+#include "..\Math\vec3.h"
+#include "..\Math\vec2.h"
+#include "..\Math\color.h"
+#include "Shader\shader.h"
+#include "Bindables\vertexConstantBuffer.h"
+#include "Bindables\texture.h"
+#include "Bindables\indexBuffer.h"
 
 class object
 {

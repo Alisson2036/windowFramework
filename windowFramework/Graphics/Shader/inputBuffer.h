@@ -3,7 +3,7 @@
 #include <string>
 #include <memory>
 #include <map>
-#include "vertexBuffer.h"
+#include "..\Bindables\vertexBuffer.h"
 
 //classe para armazenar um array composto por elementos 
 // de tamanhos variados, sendo que cada elemento pode ser 

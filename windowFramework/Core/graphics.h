@@ -7,10 +7,10 @@
 #include <wrl.h>
 #include <d3d11.h>
 #include "exception.h"
-#include "bindable.h"
-#include "pipeline.h"
-#include "image.h"
-#include "depthStencil.h"
+#include "..\Graphics\Bindables\bindable.h"
+#include "..\Graphics\pipeline.h"
+#include "..\Resources\image.h"
+#include "..\Graphics\Bindables\depthStencil.h"
 
 
 

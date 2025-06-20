@@ -2,7 +2,7 @@
 #include <string>
 #include <exception>
 #include "app.h"
-#include "exception.h"
+#include "Core/exception.h"
 
 int CALLBACK WinMain(
 	_In_      HINSTANCE hInstance,

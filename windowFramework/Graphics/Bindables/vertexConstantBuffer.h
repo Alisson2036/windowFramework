@@ -1,7 +1,7 @@
 #pragma once
 #include <wrl.h>
 #include <d3d11.h>
-#include "exception.h"
+#include "..\..\Core\exception.h"
 #include "bindable.h"
 
 

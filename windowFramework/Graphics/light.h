@@ -1,8 +1,8 @@
 #pragma once
 #include <DirectXMath.h>
-#include "pixelConstantBuffer.h"
-#include "vertexConstantBuffer.h"
-#include "vec3.h"
+#include "Bindables\pixelConstantBuffer.h"
+#include "Bindables\vertexConstantBuffer.h"
+#include "..\Math\vec3.h"
 #include "Camera.h"
 
 
