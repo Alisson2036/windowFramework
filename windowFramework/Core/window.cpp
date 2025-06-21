@@ -3,8 +3,6 @@
 window::window(const LPCWSTR name, int _width, int _height):
 	hInstance(GetModuleHandle(NULL)),
 	lastMessage(MSG()),
-	mouse(),
-	keyboard(),
 	windowWidth(_width),
 	windowHeight(_height)
 {
@@ -103,12 +101,12 @@ HINSTANCE window::get_hInstance() const
 
 Mouse* window::getMousePointer()
 {
-	return &mouse;
+	return mouse;
 }
 
 Keyboard* window::getKeyboarPointer()
 {
-	return &keyboard;
+	return keyboard;
 }
 
 HWND window::getWindowHandle() const
@@ -116,14 +114,20 @@ HWND window::getWindowHandle() const
 	return hwnd;
 }
 
-Graphics& window::Gfx()
-{
-	return Gfx();
-}
 
-void window::setTitle(std::string newTitle)
+void window::setTitle(const std::string& newTitle)
 {
 	SetWindowTextA(hwnd, newTitle.c_str());
+}
+
+void window::setMouse(Mouse* pMouse)
+{
+	mouse = pMouse;
+}
+
+void window::setKeyboard(Keyboard* pKeyboard)
+{
+	keyboard = pKeyboard;
 }
 
 void window::setMousePosition(int x, int y)
@@ -220,22 +224,22 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 	//-------------------------------
 	//MOUSE MESSAGES-----------------
 	case WM_MOUSEMOVE:
-		mouse.updatePosition(MAKEPOINTS(lParam));
+		mouse->updatePosition(MAKEPOINTS(lParam));
 		break;
 	case WM_LBUTTONDOWN:
-		mouse.buttonDown(mouse.leftButton);
+		mouse->buttonDown(mouse->leftButton);
 		break;
 	case WM_LBUTTONUP:
-		mouse.buttonUp(mouse.leftButton);
+		mouse->buttonUp(mouse->leftButton);
 		break;
 	case WM_RBUTTONDOWN:
-		mouse.buttonDown(mouse.rightButton);
+		mouse->buttonDown(mouse->rightButton);
 		break;
 	case WM_RBUTTONUP:
-		mouse.buttonUp(mouse.rightButton);
+		mouse->buttonUp(mouse->rightButton);
 		break;
 	case WM_MOUSEWHEEL:
-		mouse.wheelMove(GET_WHEEL_DELTA_WPARAM(wParam));
+		mouse->wheelMove(GET_WHEEL_DELTA_WPARAM(wParam));
 		break;
 	case WM_SETCURSOR:
         if (LOWORD(lParam) == HTCLIENT) {
@@ -276,32 +280,32 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 			(input.data.mouse.lLastX != 0 || input.data.mouse.lLastY != 0)
 			)
 		{
-			mouse.updateRawPosition(input.data.mouse.lLastX, input.data.mouse.lLastY);
+			mouse->updateRawPosition(input.data.mouse.lLastX, input.data.mouse.lLastY);
 		}
 		break;
 	}
 	//------------------------------------
 	//KEYBOARD MESSAGES-------------------
 	case WM_KEYDOWN:
-		if (!(lParam & 0x40000000)) keyboard.keyDown((char)wParam);
+		if (!(lParam & 0x40000000)) keyboard->keyDown((char)wParam);
 		break;
 	case WM_KEYUP:
-		keyboard.keyUp((char)wParam);
+		keyboard->keyUp((char)wParam);
 		break;
 	case WM_SYSKEYDOWN:
-		if (!(lParam & 0x40000000)) keyboard.keyDown((char)wParam);
+		if (!(lParam & 0x40000000)) keyboard->keyDown((char)wParam);
 		break;
 	case WM_SYSKEYUP:
-		keyboard.keyUp((char)wParam);
+		keyboard->keyUp((char)wParam);
 		break;
 	//------------------------------------
 	//KILL FOCUS MESSAGE------------------
 	case WM_KILLFOCUS:
-		mouse.emptyButtonList();
-		keyboard.emptyKeys();
+		mouse->emptyButtonList();
+		keyboard->emptyKeys();
 		break;
 	case WM_NCMOUSELEAVE:
-		mouse.emptyButtonList();
+		mouse->emptyButtonList();
 		break;
 	}
 	

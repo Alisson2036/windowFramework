@@ -230,27 +230,27 @@ app::app()
 void app::input()
 {
 	//posicao do mouse na tela 
-	float x = (float)eng.getWindow()->getMousePointer()->getX();
-	float y = (float)eng.getWindow()->getMousePointer()->getY();
+	float x = (float)eng.getMouse()->getX();
+	float y = (float)eng.getMouse()->getY();
 
 	//codigo para mecher a tela 
 	static bool lastRightButtonState = false;
 	static vec2 lastMousePos;
-	if (eng.getWindow()->getMousePointer()->rightButtonPressed() && lastRightButtonState)
+	if (eng.getMouse()->rightButtonPressed() && lastRightButtonState)
 	{
 		eng.getWindow()->showMouse(false);
 
 		static const float sens = 0.003f;
-		float xRaw = (float)eng.getWindow()->getMousePointer()->getRawX();
-		float yRaw = (float)eng.getWindow()->getMousePointer()->getRawY();
+		float xRaw = (float)eng.getMouse()->getRawX();
+		float yRaw = (float)eng.getMouse()->getRawY();
 		cam.moveAngle({ -yRaw * sens, -xRaw * sens });
-		eng.getWindow()->getMousePointer()->resetRaw();
+		eng.getMouse()->resetRaw();
 
 
 		//win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
 		eng.getWindow()->setMousePosition(lastMousePos.x, lastMousePos.y);
 	}
-	else if (eng.getWindow()->getMousePointer()->rightButtonPressed())
+	else if (eng.getMouse()->rightButtonPressed())
 	{
 		lastRightButtonState = true;
 		eng.getWindow()->getMousePointer()->resetRaw();

@@ -4,7 +4,6 @@
 
 class Mouse
 {
-	friend class window;
 public:
 	Mouse() = default;
 	Mouse(Mouse&) = delete;
@@ -23,7 +22,7 @@ public:
 	bool leftButtonPressed();
 	bool rightButtonPressed();
 
-private:
+public:
 	void updatePosition(POINTS p);
 	void updateRawPosition(int x, int y);
 	void buttonDown(const char buttonArgs);
@@ -33,6 +32,8 @@ private:
 
 	void emptyButtonList();
 
+	static const constexpr char leftButton = 0x2;
+	static const constexpr char rightButton = 0x1;
 private:
 	int xPos = 0;
 	int yPos = 0;
@@ -42,8 +43,6 @@ private:
 
 	char mouseButtons = 0;
 
-	static const constexpr char leftButton = 0x2;
-	static const constexpr char rightButton = 0x1;
 
 	float scroll=0;
 	

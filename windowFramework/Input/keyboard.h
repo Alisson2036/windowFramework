@@ -4,7 +4,6 @@
 
 class Keyboard
 {
-	friend class window;
 public:
 	Keyboard() = default;
 	Keyboard(Keyboard&) = delete;
@@ -13,7 +12,7 @@ public:
 	bool isKeyPressed(char key);
 	char getLastKey();
 
-private:
+public:
 	void keyDown(char key);
 	void keyUp(char key);
 	void emptyKeys();

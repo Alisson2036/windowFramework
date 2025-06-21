@@ -1,14 +1,23 @@
 #include "Engine.h"
 
-Engine::Engine(UINT windowSizeX, UINT windowSizeY)
+Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 	:
-	win(L"Game", windowSizeX, windowSizeY),
-	gfx(win.getWindowHandle(), windowSizeX, windowSizeY),
-	pipeline(gfx.getDevice(), gfx.getDeviceContext(), vec2(windowSizeX, windowSizeY))
+	win(L"Game", screenSizeX, screenSizeY),
+	gfx(win.getWindowHandle(), screenSizeX, screenSizeY),
+	pipeline(gfx.getDevice(), gfx.getDeviceContext(), vec2(screenSizeX, screenSizeY)),
+	inputProxy(&mouse, &keyboard)
 {
+
+	screenSize = vec2((float)screenSizeX, (float)screenSizeY);
 
 	//inicia GDI
 	Image::initialize();
+
+	//sets mouse and keyboard
+	win.setMouse(&mouse);
+	win.setKeyboard(&keyboard);
+
+
 }
 Engine::~Engine()
 {
@@ -21,6 +30,21 @@ bool Engine::update()
 	gfx.flip();
 
 	return a;
+}
+
+vec2 Engine::getScreenSize()
+{
+	return screenSize;
+}
+
+Mouse* Engine::getMouse()
+{
+	return &mouse;
+}
+
+Keyboard* Engine::getKeyboard()
+{
+	return &keyboard;
 }
 
 Graphics* Engine::getGfx()

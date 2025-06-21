@@ -20,9 +20,11 @@ public:
 	Mouse* getMousePointer();
 	Keyboard* getKeyboarPointer();
 	HWND getWindowHandle() const;
-	Graphics& Gfx();
 
-	void setTitle(std::string newTitle);
+	void setTitle(const std::string& newTitle);
+
+	void setMouse(Mouse* pMouse);
+	void setKeyboard(Keyboard* pKeyboard);
 
 	enum class cursorType { normal, hand, dragAll, dragVertical, dragHorizontal, wait};
 	void setMousePosition(int x, int y);
@@ -52,8 +54,8 @@ private:
 
 	MSG lastMessage;//variavel para guardar a ultima mensagem
 
-	Mouse mouse;
+	Mouse* mouse;
 	HCURSOR currentCursor;
-	Keyboard keyboard;
+	Keyboard* keyboard;
 	
 };
