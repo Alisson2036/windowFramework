@@ -19,6 +19,7 @@ public:
 	HINSTANCE get_hInstance() const;
 	Mouse* getMousePointer();
 	Keyboard* getKeyboarPointer();
+	HWND getWindowHandle() const;
 	Graphics& Gfx();
 
 	void setTitle(std::string newTitle);
@@ -54,6 +55,5 @@ private:
 	Mouse mouse;
 	HCURSOR currentCursor;
 	Keyboard keyboard;
-	std::unique_ptr<Graphics> pGfx;
 	
 };

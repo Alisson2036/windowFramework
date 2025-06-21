@@ -3,6 +3,7 @@
 #include <exception>
 #include "app.h"
 #include "Core/exception.h"
+#include "Utils\timer.h"
 
 int CALLBACK WinMain(
 	_In_      HINSTANCE hInstance,
@@ -13,6 +14,7 @@ int CALLBACK WinMain(
 {
 	try
 	{
+		
 		app main;
 		main.start();
 

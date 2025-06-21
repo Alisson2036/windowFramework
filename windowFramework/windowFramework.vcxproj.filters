@@ -132,6 +132,9 @@
     <ClCompile Include="UI\guiPanel.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\window.h">
@@ -241,6 +244,9 @@
     </ClInclude>
     <ClInclude Include="UI\guiPanel.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -59,13 +59,9 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	//inicia bindables
 	Bindable::setDevice(d3dDevice.Get());
 	Bindable::setContext(deviceContext.Get());
-	//inicia pipeline
-	pipeline = new Pipeline(d3dDevice.Get(), deviceContext.Get(), { (float)windowSizeX, (float)windowSizeY });
-	//inicia GDI
-	Image::initialize();
 
 	depthStencilBuffer.create(vec2(windowSizeX, windowSizeY));
-
+	
 	drawToScreen();
 }
 
@@ -73,15 +69,20 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 
 Pipeline* Graphics::getPipeline()
 {
-	return pipeline;
+	return nullptr;
 }
 
-
-Graphics::~Graphics()
+Microsoft::WRL::ComPtr<ID3D11Device> Graphics::getDevice()
 {
-	Image::uninitialize();
-	delete pipeline;
+	return d3dDevice;
 }
+
+Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getDeviceContext()
+{
+	return deviceContext;
+}
+
+
 
 void Graphics::drawToScreen()
 {

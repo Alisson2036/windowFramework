@@ -1,5 +1,5 @@
 #pragma once
-#include "Core\window.h"
+#include "Engine.h"
 #include "Core\exception.h"
 #include "Utils\timer.h"
 #include "Graphics\Bindables\renderTarget.h"
@@ -46,7 +46,7 @@ private:
 	float frameTime;
 	float FPS;
 
-	window win;
+	Engine eng;
 	Timer timeSinceCreation;
 
 

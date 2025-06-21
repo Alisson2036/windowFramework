@@ -51,7 +51,6 @@ window::window(const LPCWSTR name, int _width, int _height):
 	//mostra a janela
 	ShowWindow(hwnd, 1);
 
-	pGfx = std::make_unique<Graphics>(hwnd, windowWidth, windowHeight);
 
 	// ativa raw mouse input
 	RAWINPUTDEVICE rid;
@@ -93,8 +92,6 @@ int window::update()
 		}		
 	}
 
-	pGfx->flip();
-
 	return 1;
 }
 
@@ -114,9 +111,14 @@ Keyboard* window::getKeyboarPointer()
 	return &keyboard;
 }
 
+HWND window::getWindowHandle() const
+{
+	return hwnd;
+}
+
 Graphics& window::Gfx()
 {
-	return *pGfx;
+	return Gfx();
 }
 
 void window::setTitle(std::string newTitle)

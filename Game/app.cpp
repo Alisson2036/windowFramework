@@ -2,17 +2,17 @@
 
 app::app()
 	:
-	win(L"Jojo fofo", 1400, 900),
+	eng(1400, 900),
 	timeSinceCreation()
 {
-	pipeline = win.Gfx().getPipeline();
+	pipeline = eng.getPipeline();
 
 	//criando novo target view
 	{
 		//resolucao com -200 no x por causa do painel
 		resolution3d = vec2(
-			win.getWindowSizeX() - 200.0f, //
-			win.getWindowSizeY()
+			eng.getWindow()->getWindowSizeX() - 200.0f, //
+			eng.getWindow()->getWindowSizeY()
 		);
 		target.create(resolution3d);
 		targetDS.create(resolution3d);
@@ -195,11 +195,11 @@ app::app()
 	{
 		vec2 pos(-1.f, -1.0f);
 
-		const float xFactor = ((win.getWindowSizeX() - 200.0f) / win.getWindowSizeX());
+		const float xFactor = ((eng.getWindow()->getWindowSizeX() - 200.0f) / eng.getWindow()->getWindowSizeX());
 		vec2 size(xFactor*2.f, 2.0f);
 		targetSprite.create(target.getTexture(), pos, size);
 
-		HUD.fromBlank(win.getWindowSizeX() - 200, win.getWindowSizeY());
+		HUD.fromBlank(eng.getWindow()->getWindowSizeX() - 200, eng.getWindow()->getWindowSizeY());
 		HUDsprite.create(HUD, pos, size);
 	}
 
@@ -215,7 +215,7 @@ app::app()
 
 
 	//inicializa guipanel
-	gui.create(vec2(win.getWindowSizeX(), win.getWindowSizeY()));
+	gui.create(vec2(eng.getWindow()->getWindowSizeX(), eng.getWindow()->getWindowSizeY()));
 	gui.addValue(L"Frametime", &frameTime);
 	gui.addValue(L"FPS", &FPS);
 	gui.addValue(L"Quantidade de bolas", &nBolas);
@@ -230,42 +230,42 @@ app::app()
 void app::input()
 {
 	//posicao do mouse na tela 
-	float x = (float)win.getMousePointer()->getX();
-	float y = (float)win.getMousePointer()->getY();
+	float x = (float)eng.getWindow()->getMousePointer()->getX();
+	float y = (float)eng.getWindow()->getMousePointer()->getY();
 
 	//codigo para mecher a tela 
 	static bool lastRightButtonState = false;
 	static vec2 lastMousePos;
-	if (win.getMousePointer()->rightButtonPressed() && lastRightButtonState)
+	if (eng.getWindow()->getMousePointer()->rightButtonPressed() && lastRightButtonState)
 	{
-		win.showMouse(false);
+		eng.getWindow()->showMouse(false);
 
 		static const float sens = 0.003f;
-		float xRaw = (float)win.getMousePointer()->getRawX();
-		float yRaw = (float)win.getMousePointer()->getRawY();
+		float xRaw = (float)eng.getWindow()->getMousePointer()->getRawX();
+		float yRaw = (float)eng.getWindow()->getMousePointer()->getRawY();
 		cam.moveAngle({ -yRaw * sens, -xRaw * sens });
-		win.getMousePointer()->resetRaw();
+		eng.getWindow()->getMousePointer()->resetRaw();
 
 
 		//win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
-		win.setMousePosition(lastMousePos.x, lastMousePos.y);
+		eng.getWindow()->setMousePosition(lastMousePos.x, lastMousePos.y);
 	}
-	else if (win.getMousePointer()->rightButtonPressed())
+	else if (eng.getWindow()->getMousePointer()->rightButtonPressed())
 	{
 		lastRightButtonState = true;
-		win.getMousePointer()->resetRaw();
+		eng.getWindow()->getMousePointer()->resetRaw();
 		lastMousePos.x = x;
 		lastMousePos.y = y;
 	}
 	else
 	{
-		win.showMouse(true);
+		eng.getWindow()->showMouse(true);
 		lastRightButtonState = false;
 	}
 
 
 	//movimento da camera
-	auto kb = win.getKeyboarPointer();
+	auto kb = eng.getWindow()->getKeyboarPointer();
 	if (kb->isKeyPressed('W')) cam.movePosition({ 0.0f, 0.0f, 0.1f });
 	if (kb->isKeyPressed('S')) cam.movePosition({ 0.0f, 0.0f,-0.1f });
 	if (kb->isKeyPressed('A')) cam.movePosition({ -0.1f, 0.0f, 0.0f });
@@ -277,9 +277,9 @@ void app::input()
 	if (kb->isKeyPressed('X')) a -= 0.1f;
 
 	//gui input handling
-	bool guiStatus = gui.handleInput(x, y, win.getMousePointer()->leftButtonPressed());
-	if (guiStatus) win.setCursor(window::cursorType::dragHorizontal);
-	else win.setCursor(window::cursorType::normal);
+	bool guiStatus = gui.handleInput(x, y, eng.getWindow()->getMousePointer()->leftButtonPressed());
+	if (guiStatus) eng.getWindow()->setCursor(window::cursorType::dragHorizontal);
+	else eng.getWindow()->setCursor(window::cursorType::normal);
 }
 
 void app::logic()
@@ -288,7 +288,7 @@ void app::logic()
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
 	nBolas = phyObjs.size();
-	if (nBolas < 10 || win.getKeyboarPointer()->isKeyPressed('C'))
+	if (nBolas < 10 || eng.getWindow()->getKeyboarPointer()->isKeyPressed('C'))
 	{
 		phyObjs.push_back(new physicsObject(vec3(4 * cos(lastBallTime * 1234.f), 15.0f, 4 * sin(lastBallTime * 78347.f))));
 		phyDomain.addObject(phyObjs.back());
@@ -357,7 +357,7 @@ void app::logic()
 void app::draw()
 {
 	//preenche a tela
-	win.Gfx().fillScreen(0.2f, 0.6f, 0.9f);
+	eng.getGfx()->fillScreen(0.2f, 0.6f, 0.9f);
 	target.fill(0.2f, 0.6f, 0.9f);
 	targetDS.clear();
 
@@ -365,9 +365,9 @@ void app::draw()
 	shadowMap.clear();
 	pipeline->setRenderTarget(nullptr, &shadowMap);
 	pipeline->setCamera(&lightCam);
-	win.Gfx().getPipeline()->drawObject(sphere);
-	win.Gfx().getPipeline()->drawObject(normalCube);
-	win.Gfx().getPipeline()->drawObject(texturedCube);
+	pipeline->drawObject(sphere);
+	pipeline->drawObject(normalCube);
+	pipeline->drawObject(texturedCube);
 
 
 	//forward render pass
@@ -376,11 +376,11 @@ void app::draw()
 	pipeline->setCamera(&cam);
 
 	//render normal das esferas
-	win.Gfx().getPipeline()->drawObject(sphere);
+	pipeline->drawObject(sphere);
 
 
 	//renderiza o chao
-	win.Gfx().getPipeline()->drawObject(normalCube);
+	pipeline->drawObject(normalCube);
 
 	//desenha todos os cubos coloridos
 	vec3 pos;
@@ -393,12 +393,12 @@ void app::draw()
 			pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
 
 			colorBlendCube.set(pos, { 0.f,0.f,0.f });
-			win.Gfx().getPipeline()->drawObject(colorBlendCube);
+			pipeline->drawObject(colorBlendCube);
 		}
 	}
 
 	//desenha a luz
-	win.Gfx().getPipeline()->drawObject(cubeLight);
+	pipeline->drawObject(cubeLight);
 
 
 	//coloca o cubo texturizado
@@ -420,7 +420,7 @@ void app::draw()
 	timerVertexBuffer.setSlot(3);
 	timerVertexBuffer.bind();
 	//desenha agua
-	win.Gfx().getPipeline()->drawObject(water);
+	pipeline->drawObject(water);
 
 
 
@@ -430,19 +430,19 @@ void app::draw()
 	FPS = 1.0f / frameTime;
 	dTime = timeSinceCreation.getPassedSeconds();
 
-	win.Gfx().drawToScreen();
+	eng.getGfx()->drawToScreen();
 
 	//desenha e atualiza o hud
 	//targetSprite.update(hud);
-	targetSprite.draw(*win.Gfx().getPipeline());
+	targetSprite.draw(*pipeline);
 
 	HUDsprite.update(HUD);
-	HUDsprite.draw(*win.Gfx().getPipeline());
+	HUDsprite.draw(*pipeline);
 	HUD.clear();
 	//hud.clear();
 
 	//desenha o gui
-	gui.draw(*win.Gfx().getPipeline());
+	gui.draw(*pipeline);
 }
 
 
@@ -452,7 +452,7 @@ void app::start()
 {
 
 
-	while (win.update())
+	while (eng.update())
 	{
 		input();
 		logic();

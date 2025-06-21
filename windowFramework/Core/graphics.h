@@ -22,12 +22,14 @@ public:
 	Graphics(HWND _hwnd, int _windowSizeX, int _windowSizeY);
 	Graphics(Graphics&) = delete;
 	Graphics operator=(Graphics&) = delete;
-	~Graphics();
 
 
 
 	//classe que armazena pointers para os objetos
 	Pipeline* getPipeline();
+	Microsoft::WRL::ComPtr<ID3D11Device> getDevice();
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> getDeviceContext();
+
 
 	void drawToScreen();
 	void fillScreen(float r, float g, float b);
@@ -44,7 +46,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  renderTargetView;
 	depthStencil depthStencilBuffer;
 
-	Pipeline* pipeline;
 
 };
 
