@@ -168,6 +168,8 @@ void Image::drawRectangle(vec2 pos, vec2 size, color c)
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	gfx->FillRectangle(&brush, pos.x, pos.y, size.x, size.y);
 	needsBufferUpdate = true;
+
+	delete gfx;
 }
 
 void Image::drawText(std::wstring text, font& textFont, vec2 position, color textColor)
