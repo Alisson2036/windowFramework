@@ -9,13 +9,13 @@ int CALLBACK WinMain(
 	_In_opt_  HINSTANCE hPrevInstance,
 	_In_      LPSTR lpCmdLine,
 	_In_      int nCmdShow
-	)
+)
 {
 	try
 	{
 		app main;
 		main.start();
-		
+
 	}
 	catch (const frameworkException& e)
 	{
@@ -33,7 +33,7 @@ int CALLBACK WinMain(
 	{
 		std::string error = e.what();
 		MessageBoxA(nullptr, error.c_str(), "STD EXCEPTION", 0);
-		
+
 	}
 	catch (...)
 	{

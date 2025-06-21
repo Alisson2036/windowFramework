@@ -24,9 +24,9 @@ app::app()
 	shadowMap.create(vec2(1200, 1200));
 
 	//carregando imagem
-	Image img(L"a.png");
-	Image bricks(L"bricks.jpg");
-	Image bricksNormal(L"bricksNormal.jpg");
+	Image img(L"Textures\\a.png");
+	Image bricks(L"Textures\\bricks.jpg");
+	Image bricksNormal(L"Textures\\bricksNormal.jpg");
 	Image solidWhite;
 	solidWhite.fromBlank(100, 100);
 	solidWhite.drawRectangle(
@@ -50,19 +50,17 @@ app::app()
 	//-----------------------------
 
 	objLoader obj;
-	objLoader planeObj;
 	objLoader sphereObj;
 	objLoader waterObj;
-	obj.fromFile("cube.obj");
-	planeObj.fromFile("plane.obj");
-	sphereObj.fromFile("sphere.obj");
-	waterObj.fromFile("waterPlane.obj");
+	obj.fromFile("Objs\\cube.obj");
+	sphereObj.fromFile("Objs\\sphere.obj");
+	waterObj.fromFile("Objs\\waterPlane.obj");
 
 	//carrega o shader
-	texturedShader.create(L"texturedVS.cso", L"texturedPS.cso");
-	texturedInstancedShader.create(L"texturedInstancedVS.cso", L"texturedPS.cso");
-	normalShader.create(L"texturedInstancedVS.cso", L"normalPS.cso");
-	waterShader.create(L"waterVS.cso", L"waterPS.cso");
+	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
+	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
+	normalShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\normalPS.cso");
+	waterShader.create(L"CompiledShaders\\waterVS.cso", L"CompiledShaders\\waterPS.cso");
 
 	//cria o cubo teste
 	std::vector<vec3> verArr =
@@ -109,7 +107,7 @@ app::app()
 	};
 
 
-	colorBlendShader.create(L"colorBlendVS.cso", L"colorBlendPS.cso");
+	colorBlendShader.create(L"CompiledShaders\\colorBlendVS.cso", L"CompiledShaders\\colorBlendPS.cso");
 
 	colorBlendCube.create(colorBlendShader);
 	colorBlendCube.loadFromVertexArray(verArr);

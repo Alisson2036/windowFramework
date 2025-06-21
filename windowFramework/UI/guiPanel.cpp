@@ -43,7 +43,7 @@ void guiPanel::create(vec2 windowSize)
 	gfx.drawRectangle(vec2(0, 0), vec2(panelRes.x, panelRes.y), color(30, 30, 30, 255));
 
 	tex.create(gfx, false);
-	shader2d.create(L"tex2dVS.cso", L"tex2dPS.cso");
+	shader2d.create(L"CompiledShaders\\tex2dVS.cso", L"CompiledShaders\\tex2dPS.cso");
 	obj.create(shader2d);
 	obj.setTexture(&tex, 0);
 	obj.loadFromVertexArray(vertices);

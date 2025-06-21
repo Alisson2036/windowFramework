@@ -6,5 +6,6 @@ struct VS_Output
 
 float4 main(VS_Output input) : SV_TARGET
 {
-    return input.color;
+    float4 color = input.color;
+    return color;
 }
