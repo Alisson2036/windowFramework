@@ -230,30 +230,30 @@ app::app()
 void app::input()
 {
 	//posicao do mouse na tela 
-	float x = (float)eng.getMouse()->getX();
-	float y = (float)eng.getMouse()->getY();
+	float x = (float)eng.input().mouseX();
+	float y = (float)eng.input().mouseY();
 
 	//codigo para mecher a tela 
 	static bool lastRightButtonState = false;
 	static vec2 lastMousePos;
-	if (eng.getMouse()->rightButtonPressed() && lastRightButtonState)
+	if (eng.input().rightButtonPressed() && lastRightButtonState)
 	{
 		eng.getWindow()->showMouse(false);
 
 		static const float sens = 0.003f;
-		float xRaw = (float)eng.getMouse()->getRawX();
-		float yRaw = (float)eng.getMouse()->getRawY();
+		float xRaw = (float)eng.input().rawMouseX();
+		float yRaw = (float)eng.input().rawMouseY();
 		cam.moveAngle({ -yRaw * sens, -xRaw * sens });
-		eng.getMouse()->resetRaw();
+		eng.input().resetRaw();
 
 
 		//win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
 		eng.getWindow()->setMousePosition(lastMousePos.x, lastMousePos.y);
 	}
-	else if (eng.getMouse()->rightButtonPressed())
+	else if (eng.input().rightButtonPressed())
 	{
 		lastRightButtonState = true;
-		eng.getWindow()->getMousePointer()->resetRaw();
+		eng.input().resetRaw();
 		lastMousePos.x = x;
 		lastMousePos.y = y;
 	}
@@ -265,16 +265,16 @@ void app::input()
 
 
 	//movimento da camera
-	auto kb = eng.getWindow()->getKeyboarPointer();
-	if (kb->isKeyPressed('W')) cam.movePosition({ 0.0f, 0.0f, 0.1f });
-	if (kb->isKeyPressed('S')) cam.movePosition({ 0.0f, 0.0f,-0.1f });
-	if (kb->isKeyPressed('A')) cam.movePosition({ -0.1f, 0.0f, 0.0f });
-	if (kb->isKeyPressed('D')) cam.movePosition({ 0.1f, 0.0f, 0.0f });
-	if (kb->isKeyPressed('R')) cam.movePosition({ 0.0f, 0.1f, 0.0f });
-	if (kb->isKeyPressed('F')) cam.movePosition({ 0.0f,-0.1f, 0.0f });
+	auto& kb = eng.input();
+	if (kb.isKeyPressed('W')) cam.movePosition({ 0.0f, 0.0f, 0.1f });
+	if (kb.isKeyPressed('S')) cam.movePosition({ 0.0f, 0.0f,-0.1f });
+	if (kb.isKeyPressed('A')) cam.movePosition({ -0.1f, 0.0f, 0.0f });
+	if (kb.isKeyPressed('D')) cam.movePosition({ 0.1f, 0.0f, 0.0f });
+	if (kb.isKeyPressed('R')) cam.movePosition({ 0.0f, 0.1f, 0.0f });
+	if (kb.isKeyPressed('F')) cam.movePosition({ 0.0f,-0.1f, 0.0f });
 
-	if (kb->isKeyPressed('Z')) a += 0.1f;
-	if (kb->isKeyPressed('X')) a -= 0.1f;
+	if (kb.isKeyPressed('Z')) a += 0.1f;
+	if (kb.isKeyPressed('X')) a -= 0.1f;
 
 	//gui input handling
 	bool guiStatus = gui.handleInput(x, y, eng.getWindow()->getMousePointer()->leftButtonPressed());
@@ -357,7 +357,7 @@ void app::logic()
 void app::draw()
 {
 	//preenche a tela
-	eng.getGfx()->fillScreen(0.2f, 0.6f, 0.9f);
+	eng.getPipeline()->fillScreen(0.2f, 0.6f, 0.9f);
 	target.fill(0.2f, 0.6f, 0.9f);
 	targetDS.clear();
 
@@ -430,7 +430,7 @@ void app::draw()
 	FPS = 1.0f / frameTime;
 	dTime = timeSinceCreation.getPassedSeconds();
 
-	eng.getGfx()->drawToScreen();
+	eng.getPipeline()->drawToScreen();
 
 	//desenha e atualiza o hud
 	//targetSprite.update(hud);

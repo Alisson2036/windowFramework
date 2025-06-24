@@ -4,7 +4,12 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 	:
 	win(L"Game", screenSizeX, screenSizeY),
 	gfx(win.getWindowHandle(), screenSizeX, screenSizeY),
-	pipeline(gfx.getDevice(), gfx.getDeviceContext(), vec2(screenSizeX, screenSizeY)),
+	pipeline(gfx.getDevice(), 
+		gfx.getDeviceContext(), 
+		gfx.getBackViewBuffer(), 
+		gfx.getBackDSBuffer(), 
+		vec2(screenSizeX, screenSizeY)
+	),
 	inputProxy(&mouse, &keyboard)
 {
 
@@ -37,20 +42,12 @@ vec2 Engine::getScreenSize()
 	return screenSize;
 }
 
-Mouse* Engine::getMouse()
+
+InputProxy& Engine::input()
 {
-	return &mouse;
+	return inputProxy;
 }
 
-Keyboard* Engine::getKeyboard()
-{
-	return &keyboard;
-}
-
-Graphics* Engine::getGfx()
-{
-	return &gfx;
-}
 
 Pipeline* Engine::getPipeline()
 {

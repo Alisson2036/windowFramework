@@ -29,7 +29,13 @@
 class Pipeline
 {
 public:
-	Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context, vec2 _windowResolution);
+	Pipeline(
+		Microsoft::WRL::ComPtr<ID3D11Device> _device,
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
+		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _backBufferView,
+		depthStencil* _backDSBuffer,
+		vec2 _windowResolution
+	);
 
 
 	void initializeBindable(Bindable* bindable);
@@ -39,6 +45,9 @@ public:
 	void setCamera(Camera* _camera);
 
 	void setRenderTarget(renderTarget* target, depthStencil* dtTarget);
+	void drawToScreen();
+	void fillScreen(float r, float g, float b);
+	void fillScreen(color c);
 
 	vec2 getWindowResolution() const;
 
@@ -50,6 +59,8 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> backBufferView;
+	depthStencil* backDSBuffer;
 
 	Sampler aliasedSampler;
 	Sampler sampler;

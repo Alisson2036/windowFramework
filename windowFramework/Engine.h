@@ -16,9 +16,7 @@ public:
 
 	vec2 getScreenSize();
 
-	Mouse* getMouse();
-	Keyboard* getKeyboard();
-	Graphics* getGfx();
+	InputProxy& input();
 	Pipeline* getPipeline();
 	window* getWindow();
 

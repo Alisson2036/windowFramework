@@ -4,7 +4,13 @@
 
 
 
-Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context, vec2 _windowResolution)
+Pipeline::Pipeline(
+	Microsoft::WRL::ComPtr<ID3D11Device> _device, 
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _backBufferView,
+	depthStencil* _backDSBuffer,
+	vec2 _windowResolution
+	)
 {
 	device = _device;
 	context = _context;
@@ -24,6 +30,9 @@ Pipeline::Pipeline(Microsoft::WRL::ComPtr<ID3D11Device> _device, Microsoft::WRL:
 	blendState.create();
 
 	windowResolution = _windowResolution;
+
+	backDSBuffer = _backDSBuffer;
+	backBufferView = _backBufferView;
 }
 
 
@@ -119,6 +128,33 @@ void Pipeline::setRenderTarget(renderTarget* target, depthStencil* dtTarget)
 		context->OMSetRenderTargets(1, target->getViewPointer(), NULL);
 	else
 		context->OMSetRenderTargets(0, NULL, dtTarget->getViewPointer());
+}
+
+void Pipeline::drawToScreen()
+{
+	//configura viewport
+	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, windowResolution.x, windowResolution.y, 0.0f, 1.0f };
+	context->RSSetViewports(1, &viewport);
+	//bind depth stencil state na pipeline
+	backDSBuffer->bind();
+	//configura render target
+	context->OMSetRenderTargets(1, backBufferView.GetAddressOf(), backDSBuffer->getViewPointer());
+}
+
+void Pipeline::fillScreen(float r, float g, float b)
+{
+	const float f[4] = { r, g, b, 1.0f };
+	context->ClearRenderTargetView(backBufferView.Get(), f);
+	backDSBuffer->clear();
+}
+
+void Pipeline::fillScreen(color c)
+{
+	fillScreen(
+		float(1.0f) * c.r / 255.f,
+		float(1.0f) * c.g / 255.f,
+		float(1.0f) * c.b / 255.f
+		);
 }
 
 vec2 Pipeline::getWindowResolution() const

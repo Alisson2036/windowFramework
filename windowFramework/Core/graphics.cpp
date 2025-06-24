@@ -82,6 +82,16 @@ Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getDeviceContext()
 	return deviceContext;
 }
 
+Microsoft::WRL::ComPtr<ID3D11RenderTargetView> Graphics::getBackViewBuffer()
+{
+	return renderTargetView;
+}
+
+depthStencil* Graphics::getBackDSBuffer()
+{
+	return &depthStencilBuffer;
+}
+
 
 
 void Graphics::drawToScreen()

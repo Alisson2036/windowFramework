@@ -29,6 +29,8 @@ public:
 	Pipeline* getPipeline();
 	Microsoft::WRL::ComPtr<ID3D11Device> getDevice();
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> getDeviceContext();
+	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> getBackViewBuffer();
+	depthStencil* getBackDSBuffer();
 
 
 	void drawToScreen();
