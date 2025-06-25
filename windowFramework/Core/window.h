@@ -34,6 +34,9 @@ public:
 	int getWindowSizeX();
 	int getWindowSizeY();
 
+	//variable that has to be set externally
+	HCURSOR currentCursor;
+
 private:
 	static LRESULT CALLBACK messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 	static LRESULT CALLBACK messageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
@@ -55,7 +58,6 @@ private:
 	MSG lastMessage;//variavel para guardar a ultima mensagem
 
 	Mouse* mouse;
-	HCURSOR currentCursor;
 	Keyboard* keyboard;
 	
 };

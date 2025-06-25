@@ -10,7 +10,8 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 		gfx.getBackDSBuffer(), 
 		vec2(screenSizeX, screenSizeY)
 	),
-	inputProxy(&mouse, &keyboard)
+	inputProxy(&mouse, &keyboard),
+	mouseControl(win.getWindowHandle(), &win.currentCursor)
 {
 
 	screenSize = vec2((float)screenSizeX, (float)screenSizeY);
@@ -43,6 +44,11 @@ vec2 Engine::getScreenSize()
 }
 
 
+CursorController& Engine::mouseController()
+{
+	return mouseControl;
+}
+
 InputProxy& Engine::input()
 {
 	return inputProxy;
@@ -54,7 +60,3 @@ Pipeline* Engine::getPipeline()
 	return &pipeline;
 }
 
-window* Engine::getWindow()
-{
-	return &win;
-}

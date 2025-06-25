@@ -141,6 +141,7 @@
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Bindables\depthStencil.cpp" />
     <ClCompile Include="Input\inputProxy.cpp" />
+    <ClCompile Include="Input\CursorController.cpp" />
     <ClCompile Include="UI\guiPanel.cpp" />
     <ClCompile Include="Graphics\Bindables\renderTarget.cpp" />
     <ClCompile Include="Core\exception.cpp" />
@@ -175,6 +176,7 @@
     <ClInclude Include="Graphics\Bindables\blendState.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Input\inputProxy.h" />
+    <ClInclude Include="Input\CursorController.h" />
     <ClInclude Include="Math\color.h" />
     <ClInclude Include="Graphics\Bindables\depthStencil.h" />
     <ClInclude Include="UI\guiPanel.h" />

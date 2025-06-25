@@ -11,8 +11,8 @@ app::app()
 	{
 		//resolucao com -200 no x por causa do painel
 		resolution3d = vec2(
-			eng.getWindow()->getWindowSizeX() - 200.0f, //
-			eng.getWindow()->getWindowSizeY()
+			eng.getScreenSize().x - 200.0f, //
+			eng.getScreenSize().y
 		);
 		target.create(resolution3d);
 		targetDS.create(resolution3d);
@@ -195,11 +195,11 @@ app::app()
 	{
 		vec2 pos(-1.f, -1.0f);
 
-		const float xFactor = ((eng.getWindow()->getWindowSizeX() - 200.0f) / eng.getWindow()->getWindowSizeX());
+		const float xFactor = ((eng.getScreenSize().x - 200.0f) / eng.getScreenSize().x);
 		vec2 size(xFactor*2.f, 2.0f);
 		targetSprite.create(target.getTexture(), pos, size);
 
-		HUD.fromBlank(eng.getWindow()->getWindowSizeX() - 200, eng.getWindow()->getWindowSizeY());
+		HUD.fromBlank(eng.getScreenSize().x - 200, eng.getScreenSize().y);
 		HUDsprite.create(HUD, pos, size);
 	}
 
@@ -215,7 +215,7 @@ app::app()
 
 
 	//inicializa guipanel
-	gui.create(vec2(eng.getWindow()->getWindowSizeX(), eng.getWindow()->getWindowSizeY()));
+	gui.create(vec2(eng.getScreenSize().x, eng.getScreenSize().y));
 	gui.addValue(L"Frametime", &frameTime);
 	gui.addValue(L"FPS", &FPS);
 	gui.addValue(L"Quantidade de bolas", &nBolas);
@@ -238,7 +238,7 @@ void app::input()
 	static vec2 lastMousePos;
 	if (eng.input().rightButtonPressed() && lastRightButtonState)
 	{
-		eng.getWindow()->showMouse(false);
+		eng.mouseController().showMouse(false);
 
 		static const float sens = 0.003f;
 		float xRaw = (float)eng.input().rawMouseX();
@@ -248,7 +248,7 @@ void app::input()
 
 
 		//win.setMousePosition(win.getWindowSizeX() / 2, win.getWindowSizeY() / 2);
-		eng.getWindow()->setMousePosition(lastMousePos.x, lastMousePos.y);
+		eng.mouseController().setMousePosition(lastMousePos.x, lastMousePos.y);
 	}
 	else if (eng.input().rightButtonPressed())
 	{
@@ -259,7 +259,7 @@ void app::input()
 	}
 	else
 	{
-		eng.getWindow()->showMouse(true);
+		eng.mouseController().showMouse(true);
 		lastRightButtonState = false;
 	}
 
@@ -277,9 +277,9 @@ void app::input()
 	if (kb.isKeyPressed('X')) a -= 0.1f;
 
 	//gui input handling
-	bool guiStatus = gui.handleInput(x, y, eng.getWindow()->getMousePointer()->leftButtonPressed());
-	if (guiStatus) eng.getWindow()->setCursor(window::cursorType::dragHorizontal);
-	else eng.getWindow()->setCursor(window::cursorType::normal);
+	bool guiStatus = gui.handleInput(x, y, eng.input().leftButtonPressed());
+	if (guiStatus) eng.mouseController().setCursor(CursorController::cursorType::dragHorizontal);
+	else eng.mouseController().setCursor(CursorController::cursorType::normal);
 }
 
 void app::logic()
@@ -288,7 +288,7 @@ void app::logic()
 	//cria mais bolas
 	static float lastBallTime = timeSinceCreation.getPassedSeconds();
 	nBolas = phyObjs.size();
-	if (nBolas < 10 || eng.getWindow()->getKeyboarPointer()->isKeyPressed('C'))
+	if (nBolas < 10 || eng.input().isKeyPressed('C'))
 	{
 		phyObjs.push_back(new physicsObject(vec3(4 * cos(lastBallTime * 1234.f), 15.0f, 4 * sin(lastBallTime * 78347.f))));
 		phyDomain.addObject(phyObjs.back());

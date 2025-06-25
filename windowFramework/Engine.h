@@ -4,6 +4,7 @@
 #include "Graphics\pipeline.h"
 #include "Input\keyboard.h"
 #include "Input\mouse.h"
+#include "Input\CursorController.h"
 #include "Input\inputProxy.h"
 
 class Engine
@@ -16,9 +17,9 @@ public:
 
 	vec2 getScreenSize();
 
+	CursorController& mouseController();
 	InputProxy& input();
 	Pipeline* getPipeline();
-	window* getWindow();
 
 private:
 	vec2 screenSize;
@@ -27,6 +28,7 @@ private:
 	Pipeline pipeline;
 
 	InputProxy inputProxy;
+	CursorController mouseControl;
 	Keyboard keyboard;
 	Mouse mouse;
 };
