@@ -2,6 +2,7 @@
 #include "Engine.h"
 #include "Core\exception.h"
 #include "Utils\timer.h"
+#include "Assets\AssetManager.h"
 #include "Graphics\Bindables\renderTarget.h"
 #include "Graphics\Bindables\depthStencil.h"
 

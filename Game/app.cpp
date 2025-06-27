@@ -20,6 +20,9 @@ app::app()
 		targetDS.clear();
 	}
 
+	AssetManager assetManager;
+	//assetManager.CreateAsset<IAsset>("TextureAsset", "Textures\\a.png");
+
 	//criacao do shadowmap
 	shadowMap.create(vec2(1200, 1200));
 
