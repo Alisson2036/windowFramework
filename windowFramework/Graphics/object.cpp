@@ -24,6 +24,11 @@ void object::create(shader& shader)
 	initialized = true;
 }
 
+void object::load(MeshAsset* mesh)
+{
+	mesh->getData(&dataBuffer);
+}
+
 void object::loadFromObj(objLoader& obj)
 {
 	if (!initialized) _throwMsg("Class not initialized");

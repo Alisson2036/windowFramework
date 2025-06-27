@@ -40,6 +40,7 @@ public:
 
 	//setters
 	void set(const void* data, int index, const std::string type);
+	void setArray(const void* data, int elementCount, std::string type);
 	void setLast(const void* data, const std::string type);
 
 	void createVertexBuffer(VertexBuffer& vb);

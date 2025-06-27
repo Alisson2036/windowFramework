@@ -5,6 +5,7 @@
 #include "..\Math\vec3.h"
 #include "..\Math\vec2.h"
 #include "..\Math\color.h"
+#include "..\Assets\MeshAsset.h"
 #include "Shader\shader.h"
 #include "Bindables\vertexConstantBuffer.h"
 #include "Bindables\texture.h"
@@ -27,6 +28,7 @@ public:
 
 	// --Loaders--
 
+	void load(MeshAsset* mesh);
 	void loadFromObj(objLoader& obj);
 	void loadFromVertexArray(const std::vector<vec3>& vertexArray);
 	void loadFromVertexArray(const std::vector<vec2>& vertexArray);

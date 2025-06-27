@@ -13,7 +13,14 @@ public:
 
     // Cria e armazena um asset do tipo T, retornando ponteiro para o asset criado
     template<typename T, typename... Args>
-    T* CreateAsset(const std::string& name, Args&&... args);
+    T* CreateAsset(const std::string& name, Args&&... args)
+    {
+        static_assert(std::is_base_of_v<IAsset, T>, "T deve herdar de IAsset");
+        auto asset = std::make_unique<T>(std::forward<Args>(args)...);
+        T* assetPtr = asset.get();
+        assets[name] = std::move(asset);
+        return assetPtr;
+    }
 
     // Recupera um asset pelo nome
     IAsset* GetAsset(const std::string& name) const;

@@ -86,6 +86,30 @@ void inputBuffer::set(const void* data, int index, const std::string type)
 
 }
 
+void inputBuffer::setArray(const void* data, int elementCount, std::string type)
+{
+    if (!initialized) _throwMsg("Class not initialized");
+    if (!containsType(type)) return;
+
+    typeInfo inf = typeToOffset.at(type);
+
+    // Garante que há espaço suficiente no buffer
+    int requiredElements = elementCount;
+    if (getElementCount() < requiredElements)
+        reserve(requiredElements);
+
+    const char* src = reinterpret_cast<const char*>(data);
+
+    for (int i = 0; i < elementCount; ++i)
+    {
+        int bufferIndex = (i * elementSize) + inf.offset;
+        for (int j = 0; j < inf.size; ++j)
+        {
+            buffer[bufferIndex + j] = src[i * inf.size + j];
+        }
+    }
+}
+
 void inputBuffer::setLast(const void* const data, const std::string type)
 {
 	this->set(data, this->getElementCount() - 1, type);

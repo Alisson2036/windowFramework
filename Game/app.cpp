@@ -59,6 +59,11 @@ app::app()
 	sphereObj.fromFile("Objs\\sphere.obj");
 	waterObj.fromFile("Objs\\waterPlane.obj");
 
+
+	//-----TESTE ASSET SYSTEM------
+	auto asset = assetManager.CreateAsset<MeshAsset>("Teste", "Objs\\cube.obj");
+	asset->Load();
+
 	//carrega o shader
 	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
@@ -127,7 +132,8 @@ app::app()
 
 	//cria o cubo texturizado
 	texturedCube.create(texturedShader);
-	texturedCube.loadFromObj(obj);
+	//texturedCube.loadFromObj(obj);
+	texturedCube.load(asset);
 	//texturedCube.setTexture(&tex, 0);
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
@@ -226,6 +232,8 @@ app::app()
 	gui.addValue(L"Rotação cubo", &cubeRot, false);
 	gui.addValue(L"Altura da luz", &a, false);
 	gui.addValue(L"Cubos colidindo", &cubesColliding);
+
+	
 
 }
 

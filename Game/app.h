@@ -3,6 +3,7 @@
 #include "Core\exception.h"
 #include "Utils\timer.h"
 #include "Assets\AssetManager.h"
+#include "Assets\MeshAsset.h"
 #include "Graphics\Bindables\renderTarget.h"
 #include "Graphics\Bindables\depthStencil.h"
 
@@ -91,6 +92,8 @@ private:
 	std::vector<physicsObject*> phyObjs;
 	int nBolas = 0;
 	float cubesColliding = 0;
+
+	AssetManager assetManager;
 
 	//teste fisica
 	vec3 cubePos = { 3.f,2.f,3.f };
