@@ -14,15 +14,19 @@ class object
 {
 	friend class Pipeline;
 public:
-	//impedir construtores
+	// Impedir construtores
 	object(object&) = delete;
+	object& operator=(const object&) = delete;
+	object(const object&) = delete;
 
-	//construtores padroes
+	// --Construtores padroes--
+
 	object() = default;
 	object(shader& shader);
 	void create(shader& shader);
 
-	//loaders
+	// --Loaders--
+
 	void loadFromObj(objLoader& obj);
 	void loadFromVertexArray(const std::vector<vec3>& vertexArray);
 	void loadFromVertexArray(const std::vector<vec2>& vertexArray);
@@ -31,16 +35,19 @@ public:
 	void setVertexIndices(const std::vector<int>& vertexIndices);
 	void setInstancesPos(const std::vector<vec3>& positions);
 
-	//getters
+	// --Getters--
+
 	int getVertexCount();
 
-	//setters
+	// --Setters--
+
 	void set(vec3 position, vec3 angle);
 	void move(vec3 vector);
 	void rotate(vec3 angle);
 	void setScale(vec3 Scale);
 	void setTexture(Texture* text, int slot);
 
+	// Envia os dados para GPU e cria os buffers necessários
 	void lock();
 
 private:

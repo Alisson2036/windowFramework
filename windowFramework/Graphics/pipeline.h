@@ -38,14 +38,17 @@ public:
 	);
 
 
-	void initializeBindable(Bindable* bindable);
 	void drawObject(object& obj);
+
+	// --Setters--
 
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);
-
 	void setRenderTarget(renderTarget* target, depthStencil* dtTarget);
+
+	// Define renderTarget como o BackBuffer da janela
 	void drawToScreen();
+
 	void fillScreen(float r, float g, float b);
 	void fillScreen(color c);
 
@@ -54,22 +57,30 @@ public:
 
 private:
 
-	Light* light;
 
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
+	// Back buffer e depth stencil da janela
+
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> backBufferView;
 	depthStencil* backDSBuffer;
+
+	// Samplers
 
 	Sampler aliasedSampler;
 	Sampler sampler;
 
+	// Camera buffers
+
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
 
+
+
 	BlendState blendState;
 	Camera* camera;
+	Light* light;
 
 	renderTarget* currentRenderTarget;
 

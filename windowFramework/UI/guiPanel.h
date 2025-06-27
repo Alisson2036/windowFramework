@@ -17,6 +17,8 @@ public:
 	void addValue(std::wstring name, int* value, bool readOnly = true);
 	void addValue(std::wstring name, vec3* value, bool readOnly = true);
 
+	// Gerencia a entrada do mouse e atualiza o estado do painel.
+	// Retorna true se o mouse está sob um valor editável.
 	bool handleInput(int mouseX, int mouseY, bool clicking);
 
 	void draw(Pipeline& pipeline);

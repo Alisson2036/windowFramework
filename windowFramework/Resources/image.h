@@ -22,6 +22,7 @@ public:
 		int height;
 	};
 
+	// Classe para armazenar uma fonte
 	class font
 	{
 	public:
@@ -39,12 +40,19 @@ public:
 
 	Image() = default;
 	Image(std::wstring fileName);
-	Image(Image&) = default;
+	Image(Image&) = delete;
 
+	// Inicializa a imagem a partir de um arquivo
 	void loadFile(std::wstring fileName);
+
+	//inicializa a imagem a partir de um texto renderizado
 	void fromRenderText(std::wstring text, font& textFont, int texSizeX, int texSizeY, color textColor);
+
+	//inicializa a imagem com uma imagem em branco
 	void fromBlank(int sizeX, int sizeY);
 
+
+	// Define todos os pixels como transparentes
 	void clear();
 	void fill(color c);
 
@@ -61,7 +69,7 @@ public:
 
 private:
 	Gdiplus::Bitmap* img = nullptr;
-	data imageData;
+	data imageData = {};
 	bool needsBufferUpdate = false;
 
 

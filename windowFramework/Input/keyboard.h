@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <vector>
 
+// Gerenciamento de entrada do teclado.
 class Keyboard
 {
 public:

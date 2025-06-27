@@ -36,11 +36,6 @@ Pipeline::Pipeline(
 }
 
 
-void Pipeline::initializeBindable(Bindable* bindable)
-{
-	bindable->setContext(context.Get());
-	bindable->setDevice(device.Get());
-}
 
 void Pipeline::drawObject(object& obj)
 {

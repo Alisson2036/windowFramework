@@ -6,6 +6,9 @@
 #include "..\Input\keyboard.h"
 #include "graphics.h"
 
+
+// Classe responsável por gerenciar a janela da aplicação, incluindo
+// criação, atualização e manipulação de eventos de entrada do usuário.
 class window
 {
 public:
@@ -26,15 +29,14 @@ public:
 	void setMouse(Mouse* pMouse);
 	void setKeyboard(Keyboard* pKeyboard);
 
-	enum class cursorType { normal, hand, dragAll, dragVertical, dragHorizontal, wait};
 	void setMousePosition(int x, int y);
 	void showMouse(bool show);
-	void setCursor(cursorType cursor);
 
 	int getWindowSizeX();
 	int getWindowSizeY();
 
-	//variable that has to be set externally
+	// Variável para armazenar o cursor atual,
+	// que pode ser alterada externamente
 	HCURSOR currentCursor;
 
 private:

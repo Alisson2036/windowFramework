@@ -7,28 +7,39 @@
 #include "Input\CursorController.h"
 #include "Input\inputProxy.h"
 
+// Classe principal do motor do framework, responsável por gerenciar
+// a janela, gráficos, pipeline de renderização e entrada do usuário.
 class Engine
 {
 public:
-	Engine(UINT screenSizeX, UINT screenSizeY);
-	~Engine();
+    Engine(UINT screenSizeX, UINT screenSizeY);
 
-	bool update();
+    ~Engine();
 
-	vec2 getScreenSize();
+    // Atualiza o estado do motor (entrada, lógica, etc.).
+    // Retorna false se o motor deve ser encerrado.
+    bool update();
 
-	CursorController& mouseController();
-	InputProxy& input();
-	Pipeline* getPipeline();
+    // Retorna o tamanho da tela atual.
+    vec2 getScreenSize();
+
+    // Acesso ao controlador do cursor do mouse.
+    CursorController& mouseController();
+
+    // Acesso ao proxy de entrada (teclado, mouse, etc.).
+    InputProxy& input();
+
+    // Retorna ponteiro para o pipeline de renderização.
+    Pipeline* getPipeline();
 
 private:
-	vec2 screenSize;
-	window win;
-	Graphics gfx;
-	Pipeline pipeline;
+    vec2 screenSize;         // Tamanho da tela (largura, altura)
+    window win;              // Gerencia a janela da aplicação
+    Graphics gfx;            // Gerencia recursos gráficos (DirectX, etc.)
+    Pipeline pipeline;       // Pipeline de renderização
 
-	InputProxy inputProxy;
-	CursorController mouseControl;
-	Keyboard keyboard;
-	Mouse mouse;
+    InputProxy inputProxy;         // Proxy para entrada do usuário
+    CursorController mouseControl; // Controlador do cursor do mouse
+    Keyboard keyboard;             // Gerencia entrada do teclado
+    Mouse mouse;                   // Gerencia entrada do mouse
 };

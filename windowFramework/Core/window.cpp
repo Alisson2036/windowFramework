@@ -150,33 +150,6 @@ void window::showMouse(bool show)
 		ShowCursor(show);
 }
 
-void window::setCursor(cursorType cursor)
-{
-	//HCURSOR hCur = LoadCursor(NULL, IDC_CROSS);
-	switch (cursor)
-	{
-	case window::cursorType::normal:
-		currentCursor = LoadCursor(NULL, IDC_ARROW);
-		break;
-	case window::cursorType::hand:
-		currentCursor = LoadCursor(NULL, IDC_HAND);
-		break;
-	case window::cursorType::dragAll:
-		currentCursor = LoadCursor(NULL, IDC_SIZEALL);
-		break;
-	case window::cursorType::dragHorizontal:
-		currentCursor = LoadCursor(NULL, IDC_SIZEWE);
-		break;
-	case window::cursorType::dragVertical:
-		currentCursor = LoadCursor(NULL, IDC_SIZENS);
-		break;
-	case window::cursorType::wait:
-		currentCursor = LoadCursor(NULL, IDC_WAIT);
-		break;
-	default:
-		break;
-	}
-}
 
 int window::getWindowSizeX()
 {

@@ -1,7 +1,8 @@
 #pragma once
 #include <Windows.h>
 
-
+// Gerencia um controlador de mouse que lida com a entrada do mouse,
+// incluindo posição, botões pressionados e rolagem.
 class Mouse
 {
 public:

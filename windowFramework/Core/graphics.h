@@ -13,7 +13,7 @@
 #include "..\Graphics\Bindables\depthStencil.h"
 
 
-
+// Classe responsável por gerenciar a renderização gráfica usando DirectX 11.
 class Graphics
 {
 public:

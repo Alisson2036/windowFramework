@@ -2,7 +2,7 @@
 #include "mouse.h"
 #include "keyboard.h"
 
-
+// Proxy para entrada do usuário, encapsula mouse e teclado.
 class InputProxy
 {
 public:

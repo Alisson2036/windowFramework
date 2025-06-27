@@ -19,8 +19,9 @@ public:
 private:
 
 private:
-	Camera* cam;
+	Camera* cam;                     // câmera de projeção da luz, usada para
+									 // calcular a matriz de projeção da sombra
 	vec3 pos = { 0.0f, 1.0f, 0.0f };
-	ConstantPixelBuffer buf;
-	ConstantVertexBuffer matBuf;
+	ConstantPixelBuffer buf;         // Pixel constant buffer para posição da luz
+	ConstantVertexBuffer matBuf;     // Vertex constant buffer para a matriz de projeção da luz
 };

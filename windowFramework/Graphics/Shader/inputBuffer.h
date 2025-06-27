@@ -5,12 +5,9 @@
 #include <map>
 #include "..\Bindables\vertexBuffer.h"
 
-//classe para armazenar um array composto por elementos 
-// de tamanhos variados, sendo que cada elemento pode ser 
-// constituído por multiplas variaveis (ou setores), mapeadas
-// com um nome e um offset em relação ao pointer para o começo do elemento
-//
-
+// Classe para armazenar e gerenciar um buffer de dados que
+// contém dados de tipos dinâmicos definidos em runtime,
+// que serão enviados para a GPU.
 class inputBuffer
 {
 public:

@@ -1,13 +1,14 @@
 #pragma once
 #include <Windows.h>
 
-
+// Controlador de cursor do mouse, responsável por gerenciar o cursor
+// e a posição do mouse na janela da aplicação.
 class CursorController
 {
 public:
 	explicit CursorController(HWND windowHandle, HCURSOR* cursorOut);
 
-	//supported cursor types
+	// Tipos de cursor disponíveis
 	enum class cursorType { 
 		normal, 
 		hand, 
