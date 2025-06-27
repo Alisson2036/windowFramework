@@ -135,6 +135,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\AssetManager.cpp" />
+    <ClCompile Include="Assets\IAsset.h" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Graphics\Bindables\bindable.cpp" />
     <ClCompile Include="Graphics\Bindables\blendState.cpp" />
@@ -171,6 +173,7 @@
     <ClCompile Include="Core\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\AssetManager.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Graphics\Bindables\bindable.h" />
     <ClInclude Include="Graphics\Bindables\blendState.h" />

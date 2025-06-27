@@ -54,6 +54,7 @@ int inputBuffer::getElementCount() const
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	return (int)buffer.size() / elementSize;
+	
 }
 
 int inputBuffer::getSizeBytes() const
