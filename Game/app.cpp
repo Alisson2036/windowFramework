@@ -20,7 +20,6 @@ app::app()
 		targetDS.clear();
 	}
 
-	AssetManager assetManager;
 	//assetManager.CreateAsset<IAsset>("TextureAsset", "Textures\\a.png");
 
 	//criacao do shadowmap
@@ -50,25 +49,24 @@ app::app()
 	//coloca camera na pipeline
 	pipeline->setCamera(&cam);
 
-	//-----------------------------
 
-	objLoader obj;
-	objLoader sphereObj;
-	objLoader waterObj;
-	obj.fromFile("Objs\\cube.obj");
-	sphereObj.fromFile("Objs\\sphere.obj");
-	waterObj.fromFile("Objs\\waterPlane.obj");
+	//-----Asset Loading------
+	auto* cubeObj = assetManager.CreateAsset<MeshAsset>("Cube", "Objs\\cube.obj");
+	auto* sphereObj = assetManager.CreateAsset<MeshAsset>("Sphere", "Objs\\sphere.obj");
+	auto* waterObj = assetManager.CreateAsset<MeshAsset>("Water", "Objs\\waterPlane.obj");
+	auto* coloredCube = assetManager.CreateAsset<MeshAsset>("ColoredCube");
+	auto* whiteCube = assetManager.CreateAsset<MeshAsset>("whiteCube");
+	assetManager.LoadAll();
 
 
-	//-----TESTE ASSET SYSTEM------
-	auto asset = assetManager.CreateAsset<MeshAsset>("Teste", "Objs\\cube.obj");
-	asset->Load();
 
-	//carrega o shader
+
+	//carrega os shaders
 	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	normalShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\normalPS.cso");
 	waterShader.create(L"CompiledShaders\\waterVS.cso", L"CompiledShaders\\waterPS.cso");
+	colorBlendShader.create(L"CompiledShaders\\colorBlendVS.cso", L"CompiledShaders\\colorBlendPS.cso");
 
 	//cria o cubo teste
 	std::vector<vec3> verArr =
@@ -114,39 +112,41 @@ app::app()
 		0,1,4, 1,5,4
 	};
 
+	//carrega vetores
+	coloredCube->manualLoad("Position", verArr);
+	coloredCube->manualLoad("Color", colors);
+	whiteCube->manualLoad("Position", verArr);
+	whiteCube->manualLoad("Color", colorsWhite);
 
-	colorBlendShader.create(L"CompiledShaders\\colorBlendVS.cso", L"CompiledShaders\\colorBlendPS.cso");
 
+	// Cria os cubos procedurais
 	colorBlendCube.create(colorBlendShader);
-	colorBlendCube.loadFromVertexArray(verArr);
-	colorBlendCube.loadFromColorArray(colors);
+	colorBlendCube.load(coloredCube);
 	colorBlendCube.setVertexIndices(ind);
 	colorBlendCube.lock();
 
 	cubeLight.create(colorBlendShader);
-	cubeLight.loadFromVertexArray(verArr);
-	cubeLight.loadFromColorArray(colorsWhite);
+	cubeLight.load(whiteCube);
 	cubeLight.setVertexIndices(ind);
 	cubeLight.lock();
 	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
 	texturedCube.create(texturedShader);
-	//texturedCube.loadFromObj(obj);
-	texturedCube.load(asset);
-	//texturedCube.setTexture(&tex, 0);
+	texturedCube.load(cubeObj);
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
 
-	//cria o cubo bricks
+	// Cria o cubo bricks
 	{
-		std::vector<vec3> positions = {};
 		normalCube.create(normalShader);
-		normalCube.loadFromObj(obj);
+		normalCube.load(cubeObj);
 		normalCube.setTexture(&brickTex, 0);
 		normalCube.setTexture(&brickTexNormal, 1);
 		normalCube.setTexture(shadowMap.getTexture(), 2);
 		normalCube.lock();
+
+		std::vector<vec3> positions = {};
 		vec3 pos;
 		for (int y = -10; y < 10; y++)
 		{
@@ -156,12 +156,7 @@ app::app()
 				pos.y = -1.0f; //+ (float)cos(x) + (float)cos(y);
 				pos.z = y * 2.0f;
 
-
-				//normalCube.set(pos, vec3(0.f,0.f,0.f));
 				positions.push_back(pos);
-				//texturedCube.update(inst);
-				//texturedCube.draw();
-				//win.Gfx().getPipeline()->bind(normalCube);
 			}
 		}
 		normalCube.setInstancesPos(positions);
@@ -169,7 +164,7 @@ app::app()
 
 	//cria a water
 	water.create(waterShader);
-	water.loadFromObj(waterObj);
+	water.load(waterObj);
 	water.lock();
 	water.set(vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 	water.setScale(vec3(100, 1, 100));
@@ -181,7 +176,7 @@ app::app()
 
 	//cria a esfera
 	sphere.create(texturedInstancedShader);
-	sphere.loadFromObj(sphereObj);
+	sphere.load(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
 	sphere.setTexture(shadowMap.getTexture(), 2);
 	sphere.lock();
@@ -213,13 +208,7 @@ app::app()
 	}
 
 
-	//adiciona objetos de fisica
-	phyObjs.push_back(new physicsObject(vec3(1.0f, 4.0f, 0.0f)));
-	phyObjs.push_back(new physicsObject(vec3(0.0f, 6.0f, 1.0f)));
-	phyObjs.push_back(new physicsObject(vec3(0.0f, 8.0f, 0.0f)));
-
-	for (auto& i : phyObjs)
-		phyDomain.addObject(i);
+	//Define gravidade
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
 
 

@@ -90,66 +90,48 @@ void MeshAsset::Load()
             index++;
         }
     }
+
+    loaded = true;
 }
 
 void MeshAsset::Unload()
 {
+    // Se for possível recarregar,
+    // apaga os dados do vetor
+    if (!fileName.empty())
+    {
+        meshData.clear();
+    }
 }
 
 bool MeshAsset::IsLoaded() const
 {
-    return false;
+    return loaded;
 }
 
 const std::filesystem::path& MeshAsset::GetFilePath() const
 {
-	return "";
+	return filePath;
 }
 
 const std::string& MeshAsset::GetFileName() const
 {
-	return "";
+	return fileName;
 }
 
 void MeshAsset::getData(inputBuffer* out)
 {
     out->reserve(vCount);
 
-    if (out->containsType("Position"))
+    for(const auto& [key, value] : meshData)
     {
-        auto& v = meshData["Position"];
+        if(!out->containsType(key))
+			continue;
         out->setArray(
-            v.buffer.data(),
-            v.buffer.size() / v.stride,
-            "Position"
+            value.buffer.data(),
+            value.buffer.size() / value.stride,
+            key
         );
-    }
-    if (out->containsType("TexCoord"))
-    {
-        auto& v = meshData["TexCoord"];
-        out->setArray(
-            v.buffer.data(),
-            v.buffer.size() / v.stride,
-            "TexCoord"
-        );
-    }
-    if (out->containsType("Normals"))
-    {
-        auto& v = meshData["Normals"];
-        out->setArray(
-            v.buffer.data(),
-            v.buffer.size() / v.stride,
-            "Normals"
-        );
-    }
-    if (out->containsType("Tangents"))
-    {
-        auto& v = meshData["Tangents"];
-        out->setArray(
-            v.buffer.data(),
-            v.buffer.size() / v.stride,
-            "Tangents"
-        );
-    }
+	}
     
 }

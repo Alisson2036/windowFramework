@@ -11,7 +11,13 @@ public:
     AssetManager() = default;
     ~AssetManager() = default;
 
-    // Cria e armazena um asset do tipo T, retornando ponteiro para o asset criado
+    /**
+     * Cria e armazena um asset do tipo T, e retorna um pointer para
+     * o asset criado.
+     * @tparam T Tipo do asset, que deve ser baseado no IAsset
+     * @param name Nome do asset (não pode se repetir)
+     * @param args Argumentos para a criação do asset
+     */
     template<typename T, typename... Args>
     T* CreateAsset(const std::string& name, Args&&... args)
     {
@@ -27,6 +33,9 @@ public:
 
     // Remove um asset pelo nome
     void RemoveAsset(const std::string& name);
+
+    // Carrega todos os assets
+    void LoadAll();
 
     // Limpa todos os assets
     void Clear();

@@ -13,6 +13,14 @@ void AssetManager::RemoveAsset(const std::string& name)
     assets.erase(name);
 }
 
+void AssetManager::LoadAll()
+{
+    for (auto& i : assets)
+    {
+        i.second->Load();
+    }
+}
+
 void AssetManager::Clear()
 {
     assets.clear();
