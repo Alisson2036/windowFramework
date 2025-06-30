@@ -4,6 +4,7 @@
 #include <string>
 #include <filesystem>
 #include "IAsset.h"
+#include "..\Core\exception.h"
 
 class AssetManager
 {
@@ -28,8 +29,23 @@ public:
         return assetPtr;
     }
 
-    // Recupera um asset pelo nome
+    // Retorna um pointer para o IAsset com o nome dado
     IAsset* GetAsset(const std::string& name) const;
+
+	// Retorna um pointer para o asset do tipo T com o nome dado
+    template<typename AssetType>
+    AssetType* getAsset(const std::string& name) const
+    {
+        static_assert(std::is_base_of_v<IAsset, AssetType>, "T deve herdar de IAsset");
+        
+        if (auto it = assets.find(name); it != assets.end())
+        {
+            if (auto p = dynamic_cast<AssetType*>(it->second.get()))
+                return p;
+            _throwMsg("Asset required is not the correct type.");
+        }
+		return nullptr;
+    }
 
     // Remove um asset pelo nome
     void RemoveAsset(const std::string& name);
