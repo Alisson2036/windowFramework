@@ -138,6 +138,7 @@
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Assets\IAsset.h" />
     <ClCompile Include="Assets\MeshAsset.cpp" />
+    <ClCompile Include="Assets\TextureAsset.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Graphics\Bindables\bindable.cpp" />
     <ClCompile Include="Graphics\Bindables\blendState.cpp" />
@@ -176,6 +177,7 @@
   <ItemGroup>
     <ClInclude Include="Assets\AssetManager.h" />
     <ClInclude Include="Assets\MeshAsset.h" />
+    <ClInclude Include="Assets\TextureAsset.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Graphics\Bindables\bindable.h" />
     <ClInclude Include="Graphics\Bindables\blendState.h" />
