@@ -10,13 +10,15 @@
 class TextureAsset : public IAsset
 {
 public:
-    TextureAsset(const std::filesystem::path& path);
+    TextureAsset(const std::filesystem::path& path, bool generateMipMap);
 
     void Load() override;
     void Unload() override;
     bool IsLoaded() const override;
     const std::filesystem::path& GetFilePath() const override;
     const std::string& GetFileName() const override;
+
+    const Texture* getTexture() const;
 
 private:
 
@@ -26,4 +28,5 @@ private:
 
     Texture tex; // Gpu-side texture
     Image img;   // Cpu-side texture
+    bool mipMap; // Needs MipMap generation
 };
