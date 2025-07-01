@@ -64,13 +64,14 @@ public:
 
 
 	vec2 getResolution();
-	data& getData();
+	data getData();
 
 
 
 private:
-	Gdiplus::Bitmap* img = nullptr;
-	data imageData = {};
+	std::unique_ptr<Gdiplus::Bitmap> img = nullptr;
+	std::unique_ptr<color[]> buffer = nullptr;
+	data imageData;
 	bool needsBufferUpdate = false;
 
 

@@ -27,10 +27,6 @@ void Image::uninitialize()
 
 Image::~Image()
 {
-	if (img)
-		delete[] img;
-	if (imageData.data)
-		delete[] imageData.data;
 }
 
 Image::Image(std::wstring fileName)
@@ -40,20 +36,8 @@ Image::Image(std::wstring fileName)
 
 void Image::loadFile(std::wstring fileName)
 {
-	//apagando imgem, se exisitr
-	if (img)
-	{
-		delete[] img;
-		img = 0;
-	}
-	if (imageData.data)
-	{
-		delete[] imageData.data;
-		imageData.data = 0;
-	}
-
 	//criando bitmap no heap
-	img = new Gdiplus::Bitmap(fileName.c_str());
+	img = std::make_unique<Gdiplus::Bitmap>(fileName.c_str());
 	if (img->GetLastStatus())
 		_throwMsg("Image does not exist");
 
@@ -63,22 +47,10 @@ void Image::loadFile(std::wstring fileName)
 
 void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int texSizeY, color textColor)
 {
-	//apagando imagem anterior, se existir
-	if (img)
-	{
-		delete[] img;
-		img = 0;
-	}
-	if (imageData.data)
-	{
-		delete[] imageData.data;
-		imageData.data = 0;
-	}
 
+	img = std::make_unique<Gdiplus::Bitmap>(texSizeX, texSizeY);
 	
-	img = new Gdiplus::Bitmap(texSizeX, texSizeY);
-	
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	
 	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
@@ -108,19 +80,7 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 
 void Image::fromBlank(int sizeX, int sizeY)
 {
-	//apagando imagem anterior, se existir
-	if (img)
-	{
-		delete[] img;
-		img = 0;
-	}
-	if (imageData.data)
-	{
-		delete[] imageData.data;
-		imageData.data = 0;
-	}
-
-	img = new Gdiplus::Bitmap(sizeX, sizeY);
+	img = std::make_unique<Gdiplus::Bitmap>(sizeX, sizeY);
 
 	needsBufferUpdate = true;
 }
@@ -128,7 +88,7 @@ void Image::fromBlank(int sizeX, int sizeY)
 void Image::clear()
 {
 
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	gfx->Clear(Gdiplus::Color(0u, 0u, 0u, 0u));
 	needsBufferUpdate = true;
 
@@ -138,7 +98,7 @@ void Image::clear()
 void Image::fill(color c)
 {
 
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	gfx->Clear(Gdiplus::Color(c.a, c.r, c.g, c.b));
 	needsBufferUpdate = true;
 
@@ -153,7 +113,7 @@ void Image::drawPixel(unsigned int x, unsigned int y, color color)
 
 void Image::drawLine(vec2 startPos, vec2 endPos, color c)
 {
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	Gdiplus::Pen pen(&brush);
 	gfx->DrawLine(&pen, startPos.x, startPos.y, endPos.x, endPos.y);
@@ -164,7 +124,7 @@ void Image::drawLine(vec2 startPos, vec2 endPos, color c)
 
 void Image::drawRectangle(vec2 pos, vec2 size, color c)
 {
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	gfx->FillRectangle(&brush, pos.x, pos.y, size.x, size.y);
 	needsBufferUpdate = true;
@@ -175,7 +135,7 @@ void Image::drawRectangle(vec2 pos, vec2 size, color c)
 void Image::drawText(std::wstring text, font& textFont, vec2 position, color textColor)
 {
 
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 
 	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
@@ -206,7 +166,7 @@ void Image::drawText(std::wstring text, font& textFont, vec2 position, color tex
 int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor)
 {
 
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 
 	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
@@ -253,26 +213,24 @@ vec2 Image::getResolution()
 	return vec2(img->GetWidth(), img->GetHeight());
 }
 
-Image::data& Image::getData()
+Image::data Image::getData()
 {
-	if(!needsBufferUpdate)
-		return imageData;//mudar para enviar por referencia depois
-
-	//colocando a imagem no buffer
-	if (imageData.data)
-	{
-		delete[] imageData.data;
-		imageData.data = 0;
-	}
-	//configurando imageData
 	imageData.pixelCount = img->GetWidth() * img->GetHeight();
 	imageData.width = img->GetWidth();
 	imageData.height = img->GetHeight();
 
-	//alocando espaço na memoria para armazenar a imagem
-	imageData.data = new color[imageData.pixelCount];
+	// Retorna se o buffer nao precisar
+	// de update
+	if (!needsBufferUpdate)
+	{
+		imageData.data = buffer.get();
+		return imageData;
+	}
 
-	//guardando os pixeis
+	// Alocando espaço na memoria para armazenar a imagem
+	buffer = std::make_unique<color[]>(imageData.pixelCount);//new color[imageData.pixelCount];
+
+	// Copiando os pixeis para o buffer
 	Gdiplus::Rect imgRect(
 		0,
 		0,
@@ -280,24 +238,26 @@ Image::data& Image::getData()
 		imageData.height
 	);
 	Gdiplus::PixelFormat pixelFormat = PixelFormat32bppARGB;
-	Gdiplus::BitmapData* bitmapData = new Gdiplus::BitmapData;
+	std::unique_ptr<Gdiplus::BitmapData> bitmapData = std::make_unique<Gdiplus::BitmapData>();
 
 	img->LockBits(
 		&imgRect,
 		Gdiplus::ImageLockModeRead,
 		pixelFormat,
-		bitmapData
+		bitmapData.get()
 	);
 
 	color* start = reinterpret_cast<color*>(bitmapData->Scan0);
 	color* end = start + imageData.pixelCount;
-	std::copy<color*, color*>(start, end, imageData.data);
+	std::copy<color*, color*>(start, end, buffer.get());
 
-	//liberando memoria
-	img->UnlockBits(bitmapData);
-	delete bitmapData;
+	// Liberando memoria
+	img->UnlockBits(bitmapData.get());
 
-	//salva que ja buffer foi atualizado
+	// Adquirindo pointer
+	imageData.data = buffer.get();
+
+	// Salva que ja buffer foi atualizado
 	needsBufferUpdate = false;
 
 	return imageData;

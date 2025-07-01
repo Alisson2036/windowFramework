@@ -361,3 +361,13 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Game/CompiledShaders/colorBlendPS.cso
+/Game/CompiledShaders/colorBlendVS.cso
+/Game/CompiledShaders/normalPS.cso
+/Game/CompiledShaders/tex2dPS.cso
+/Game/CompiledShaders/tex2dVS.cso
+/Game/CompiledShaders/texturedInstancedVS.cso
+/Game/CompiledShaders/texturedPS.cso
+/Game/CompiledShaders/texturedVS.cso
+/Game/CompiledShaders/waterPS.cso
+/Game/CompiledShaders/waterVS.cso
