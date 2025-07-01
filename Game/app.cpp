@@ -220,7 +220,7 @@ app::app()
 	gui.addValue(L"Posição cubo", &cubePos, false);
 	gui.addValue(L"Rotação cubo", &cubeRot, false);
 	gui.addValue(L"Altura da luz", &a, false);
-	gui.addValue(L"Cubos colidindo", &cubesColliding);
+	gui.addValue(L"Cubos colidindo ou nao talvez seja mas nao tenho certeza", &cubesColliding);
 
 	
 

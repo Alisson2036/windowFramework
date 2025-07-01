@@ -60,6 +60,7 @@ public:
 	void drawLine(vec2 startPos, vec2 endPos, color c);
 	void drawRectangle(vec2 pos, vec2 size, color c);
 	void drawText(std::wstring text, font& textFont, vec2 position, color textColor);
+	int drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor);
 
 
 	vec2 getResolution();

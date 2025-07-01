@@ -203,6 +203,51 @@ void Image::drawText(std::wstring text, font& textFont, vec2 position, color tex
 	delete gfx;
 }
 
+int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor)
+{
+
+	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img);
+
+	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
+
+	Gdiplus::RectF rect(position.x, position.y, (float)maxWidth, 1000.0f);
+	Gdiplus::PointF pos(position.x, position.y);
+
+	gfx->SetTextRenderingHint(Gdiplus::TextRenderingHintAntiAliasGridFit);
+
+	Gdiplus::SolidBrush* brush = new Gdiplus::SolidBrush(*reinterpret_cast<Gdiplus::Color*>(&textColor));
+
+	// Desenha string
+	Gdiplus::Status s = gfx->DrawString(
+		text.c_str(),
+		-1,
+		textFont.fontLoaded.get(),
+		rect,
+		nullptr,
+		brush
+	);
+
+	// Calcula o tamanho da string 
+	Gdiplus::RectF boundingBox;
+	gfx->MeasureString(
+		text.c_str(),
+		-1,
+		textFont.fontLoaded.get(),
+		rect,
+		nullptr,
+		&boundingBox
+	);
+
+
+
+	needsBufferUpdate = true;
+
+	delete brush;
+	delete gfx;
+
+	return boundingBox.Height;
+}
+
 vec2 Image::getResolution()
 {
 	return vec2(img->GetWidth(), img->GetHeight());

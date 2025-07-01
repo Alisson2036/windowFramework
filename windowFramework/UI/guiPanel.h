@@ -47,6 +47,7 @@ private:
 	const float fontSize = 15.0f;
 
 	int lastXMouse = 0;
+	float lastCursor = 0.f;
 
 	Texture tex;
 	object obj;

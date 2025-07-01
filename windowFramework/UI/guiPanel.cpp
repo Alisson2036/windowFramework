@@ -121,13 +121,14 @@ void guiPanel::draw(Pipeline& pipeline)
 	float cursor = 0.0f;
 	for (panelValue& i : data)
 	{
-		gfx.drawText(i.name, font, vec2(0, cursor), color(255, 255, 255, 255));
-		cursor += fontSize;
+		//gfx.drawText(i.name, font, vec2(0, cursor), color(255, 255, 255, 255));
+		cursor += gfx.drawBoundedText(i.name, font, vec2(0, cursor), 200, color(255, 255, 255, 255));
 		//gfx.drawText(std::to_wstring(*i.value), font, vec2(20, cursor), color(255, 255, 255, 255));
 		for(int offset = 0; offset < i.arraySize; offset++)
 			cursor = drawElement(i, cursor, offset);
 	}
 
+	lastCursor = cursor;
 	//draws image
 	tex.update(gfx);
 	pipeline.drawObject(obj);
