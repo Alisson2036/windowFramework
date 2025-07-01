@@ -38,6 +38,7 @@ void Image::loadFile(std::wstring fileName)
 {
 	//criando bitmap no heap
 	img = std::make_unique<Gdiplus::Bitmap>(fileName.c_str());
+	gfx = std::make_unique<Gdiplus::Graphics>(img.get());
 	if (img->GetLastStatus())
 		_throwMsg("Image does not exist");
 
@@ -49,8 +50,7 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 {
 
 	img = std::make_unique<Gdiplus::Bitmap>(texSizeX, texSizeY);
-	
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
+	gfx = std::make_unique<Gdiplus::Graphics>(img.get());
 	
 	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
@@ -75,34 +75,27 @@ void Image::fromRenderText(std::wstring text, font& textFont, int texSizeX, int 
 	needsBufferUpdate = true;
 	
 	delete brush;
-	delete gfx;
 }
 
 void Image::fromBlank(int sizeX, int sizeY)
 {
 	img = std::make_unique<Gdiplus::Bitmap>(sizeX, sizeY);
+	gfx = std::make_unique<Gdiplus::Graphics>(img.get());
 
 	needsBufferUpdate = true;
 }
 
 void Image::clear()
 {
-
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	gfx->Clear(Gdiplus::Color(0u, 0u, 0u, 0u));
 	needsBufferUpdate = true;
-
-	delete gfx;
 }
 
 void Image::fill(color c)
 {
-
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	gfx->Clear(Gdiplus::Color(c.a, c.r, c.g, c.b));
 	needsBufferUpdate = true;
 
-	delete gfx;
 }
 
 void Image::drawPixel(unsigned int x, unsigned int y, color color)
@@ -113,32 +106,22 @@ void Image::drawPixel(unsigned int x, unsigned int y, color color)
 
 void Image::drawLine(vec2 startPos, vec2 endPos, color c)
 {
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	Gdiplus::Pen pen(&brush);
 	gfx->DrawLine(&pen, startPos.x, startPos.y, endPos.x, endPos.y);
 	needsBufferUpdate = true;
-
-	delete gfx;
 }
 
 void Image::drawRectangle(vec2 pos, vec2 size, color c)
 {
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
 	Gdiplus::SolidBrush brush(*reinterpret_cast<Gdiplus::Color*>(&c));
 	gfx->FillRectangle(&brush, pos.x, pos.y, size.x, size.y);
 	needsBufferUpdate = true;
-
-	delete gfx;
 }
 
 void Image::drawText(std::wstring text, font& textFont, vec2 position, color textColor)
 {
-
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
-
 	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
-
 	//Gdiplus::RectF rect(0.0f, 0.0f, (float)texSizeX, (float)texSizeY);
 	Gdiplus::PointF pos(position.x, position.y);
 
@@ -160,14 +143,10 @@ void Image::drawText(std::wstring text, font& textFont, vec2 position, color tex
 	needsBufferUpdate = true;
 
 	delete brush;
-	delete gfx;
 }
 
 int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor)
 {
-
-	Gdiplus::Graphics* gfx = Gdiplus::Graphics::FromImage(img.get());
-
 	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
 	Gdiplus::RectF rect(position.x, position.y, (float)maxWidth, 1000.0f);
@@ -203,7 +182,6 @@ int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int
 	needsBufferUpdate = true;
 
 	delete brush;
-	delete gfx;
 
 	return boundingBox.Height;
 }

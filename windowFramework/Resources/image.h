@@ -70,6 +70,7 @@ public:
 
 private:
 	std::unique_ptr<Gdiplus::Bitmap> img = nullptr;
+	std::unique_ptr<Gdiplus::Graphics> gfx = nullptr;
 	std::unique_ptr<color[]> buffer = nullptr;
 	data imageData;
 	bool needsBufferUpdate = false;
