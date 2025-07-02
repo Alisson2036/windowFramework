@@ -23,6 +23,7 @@ public:
     T* CreateAsset(const std::string& name, Args&&... args)
     {
         static_assert(std::is_base_of_v<IAsset, T>, "T deve herdar de IAsset");
+        static_assert(std::is_constructible_v<T, Args...>, "Os argumentos fornecidos não correspondem a um construtor válido para o tipo T");
         auto asset = std::make_unique<T>(std::forward<Args>(args)...);
         T* assetPtr = asset.get();
         assets[name] = std::move(asset);
