@@ -18,7 +18,7 @@ public:
     const std::filesystem::path& GetFilePath() const override;
     const std::string& GetFileName() const override;
 
-    const Texture* getTexture() const;
+    Texture* getTexture();
 
 private:
 

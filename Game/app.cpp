@@ -25,24 +25,6 @@ app::app()
 	//criacao do shadowmap
 	shadowMap.create(vec2(1200, 1200));
 
-	//carregando imagem
-	Image img(L"Textures\\a.png");
-	Image bricks(L"Textures\\bricks.jpg");
-	Image bricksNormal(L"Textures\\bricksNormal.jpg");
-	Image solidWhite;
-	solidWhite.fromBlank(100, 100);
-	solidWhite.drawRectangle(
-		vec2(0, 0),
-		vec2(100, 100),
-		color(255u, 255u, 255u, 255u)
-	);
-
-
-	//cria texturas
-	tex.createWithMipMap(img);
-	brickTex.createWithMipMap(bricks);
-	brickTexNormal.createWithMipMap(bricksNormal);
-	solidWhiteTex.create(solidWhite);
 
 	//coloca luz na pipeline
 	pipeline->setLight(&light);
@@ -51,15 +33,32 @@ app::app()
 
 
 	//-----Asset Loading------
+
+	// Meshes
 	auto* cubeObj = assetManager.CreateAsset<MeshAsset>("Cube", "Objs\\cube.obj");
 	auto* sphereObj = assetManager.CreateAsset<MeshAsset>("Sphere", "Objs\\sphere.obj");
 	auto* waterObj = assetManager.CreateAsset<MeshAsset>("Water", "Objs\\waterPlane.obj");
 	auto* coloredCube = assetManager.CreateAsset<MeshAsset>("ColoredCube");
 	auto* whiteCube = assetManager.CreateAsset<MeshAsset>("whiteCube");
+
+	// Textures
+	auto* tex = assetManager.CreateAsset<TextureAsset>("a", L"Textures\\a.png", false);
+	auto* brickTex = assetManager.CreateAsset<TextureAsset>("Bricks", L"Textures\\bricks.jpg", true);
+	auto* brickTexNormal = assetManager.CreateAsset<TextureAsset>("BricksNormal", L"Textures\\bricksNormal.jpg", true);
+
+	// Load
 	assetManager.LoadAll();
 
 
-
+	// Cria textura de branco solido
+	Image solidWhite;
+	solidWhite.fromBlank(100, 100);
+	solidWhite.drawRectangle(
+		vec2(0, 0),
+		vec2(100, 100),
+		color(255u, 255u, 255u, 255u)
+	);
+	solidWhiteTex.create(solidWhite);
 
 	//carrega os shaders
 	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
@@ -141,8 +140,8 @@ app::app()
 	{
 		normalCube.create(normalShader);
 		normalCube.load(cubeObj);
-		normalCube.setTexture(&brickTex, 0);
-		normalCube.setTexture(&brickTexNormal, 1);
+		normalCube.setTexture(brickTex->getTexture(), 0);
+		normalCube.setTexture(brickTexNormal->getTexture(), 1);
 		normalCube.setTexture(shadowMap.getTexture(), 2);
 		normalCube.lock();
 

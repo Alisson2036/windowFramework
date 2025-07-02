@@ -4,6 +4,7 @@
 #include "Utils\timer.h"
 #include "Assets\AssetManager.h"
 #include "Assets\MeshAsset.h"
+#include "Assets\TextureAsset.h"
 #include "Graphics\Bindables\renderTarget.h"
 #include "Graphics\Bindables\depthStencil.h"
 
@@ -39,9 +40,6 @@ private:
 	Camera cam;
 	Camera lightCam;
 
-	Texture tex;
-	Texture brickTex;
-	Texture brickTexNormal;
 	Texture solidWhiteTex;
 
 	float a = 8.0f;

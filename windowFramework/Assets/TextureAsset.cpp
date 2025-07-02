@@ -38,7 +38,7 @@ const std::string& TextureAsset::GetFileName() const
 	return fileName;
 }
 
-const Texture* TextureAsset::getTexture() const
+Texture* TextureAsset::getTexture()
 {
 	return &tex;
 }
