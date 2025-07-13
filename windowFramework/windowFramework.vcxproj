@@ -144,6 +144,7 @@
     <ClCompile Include="Graphics\Bindables\blendState.cpp" />
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Bindables\depthStencil.cpp" />
+    <ClCompile Include="Graphics\Shader\ShaderCompiler.cpp" />
     <ClCompile Include="Input\inputProxy.cpp" />
     <ClCompile Include="Input\CursorController.cpp" />
     <ClCompile Include="UI\guiPanel.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="Graphics\Bindables\bindable.h" />
     <ClInclude Include="Graphics\Bindables\blendState.h" />
     <ClInclude Include="Graphics\Camera.h" />
+    <ClInclude Include="Graphics\Shader\ShaderCompiler.h" />
     <ClInclude Include="Input\inputProxy.h" />
     <ClInclude Include="Input\CursorController.h" />
     <ClInclude Include="Math\color.h" />

@@ -20,6 +20,12 @@ app::app()
 		targetDS.clear();
 	}
 
+	// Shader compile teste 
+	{
+		ShaderCompiler sc("Shaders\\normalPS.hlsl", ShaderCompiler::ShaderType::PixelShader);
+		sc.compile();
+	}
+
 	//assetManager.CreateAsset<IAsset>("TextureAsset", "Textures\\a.png");
 
 	//criacao do shadowmap

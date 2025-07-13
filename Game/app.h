@@ -19,6 +19,8 @@
 #include "Physics\physicsDomain.h"
 #include "Physics\physicsObject.h"
 
+#include "Graphics\Shader\ShaderCompiler.h"
+
 class app
 {
 public:
