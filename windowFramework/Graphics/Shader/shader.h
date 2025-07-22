@@ -23,6 +23,8 @@ public:
 	//coloca na pipeline
 	void bind();
 
+	bool isInitialized();
+
 	bool hasPerInstanceData();
 	std::vector<inputBuffer::type> inputParams;
 

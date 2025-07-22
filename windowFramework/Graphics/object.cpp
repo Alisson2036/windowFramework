@@ -7,6 +7,8 @@ object::object(shader& shader)
 
 void object::create(shader& shader)
 {
+	if (!shader.isInitialized()) _throwMsg("Shader has not been initialized.");
+
 	pShader = &shader;
 	dataBuffer.create(shader.inputParams);
 

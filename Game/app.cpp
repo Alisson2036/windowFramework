@@ -64,11 +64,15 @@ app::app()
 
 	// Shader compile test
 	{
-		ShaderCompiler sc("Shaders\\normalPS.hlsl", ShaderCompiler::ShaderType::PixelShader);
-		sc.compile();
+		ShaderCompiler vs("Shaders\\texturedVS.hlsl", ShaderCompiler::ShaderType::VertexShader);
+		vs.compile();
+		ShaderCompiler ps("Shaders\\texturedPS.hlsl", ShaderCompiler::ShaderType::PixelShader);
+		ps.compile();
+
+		texturedShader.create(vs.getCompiledBlob(), ps.getCompiledBlob());
 	}
 	//carrega os shaders
-	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
+	//texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	normalShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\normalPS.cso");
 	waterShader.create(L"CompiledShaders\\waterVS.cso", L"CompiledShaders\\waterPS.cso");

@@ -37,6 +37,12 @@ int CALLBACK WinMain(
 		MessageBoxA(nullptr, error.c_str(), "STD EXCEPTION", 0);
 
 	}
+	catch (const std::runtime_error& e)
+	{
+		std::string error = e.what();
+		MessageBoxA(nullptr, error.c_str(), "RUNTIME ERROR", 0);
+
+	}
 	catch (...)
 	{
 		MessageBoxA(nullptr, "UNHANDLED EXCEPTION", "???", 0);

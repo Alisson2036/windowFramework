@@ -29,6 +29,10 @@ void shader::bind()
 	if (ps.isInitialized()) ps.bind();
 	if (il.isInitialized()) il.bind();
 }
+bool shader::isInitialized()
+{
+	return initialized;
+}
 
 bool shader::hasPerInstanceData()
 {
