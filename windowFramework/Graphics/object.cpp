@@ -1,11 +1,11 @@
 #include "object.h"
 
-object::object(shader& shader)
+object::object(Shader& shader)
 {
 	create(shader);
 }
 
-void object::create(shader& shader)
+void object::create(Shader& shader)
 {
 	if (!shader.isInitialized()) _throwMsg("Shader has not been initialized.");
 

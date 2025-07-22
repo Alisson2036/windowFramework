@@ -51,7 +51,7 @@ private:
 
 	Texture tex;
 	object obj;
-	shader shader2d;
+	Shader shader2d;
 	vec2 resolution;
 	vec2 panelRes;
 	Image gfx;

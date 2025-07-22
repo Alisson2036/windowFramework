@@ -8,15 +8,15 @@
 #include "shaderDesc.h"
 
 
-class shader
+class Shader
 {
 public:
 	//apaga outros construtores 
-	shader(shader&) = delete;
+	Shader(Shader&) = delete;
  	
 	//construtor para inicializar com VS, PS e IL
-	shader() = default;
-	shader(const wchar_t* vertexShader, const wchar_t* pixelShader);
+	Shader() = default;
+	Shader(const wchar_t* vertexShader, const wchar_t* pixelShader);
 	void create(const wchar_t* vertexShader, const wchar_t* pixelShader);
 	void create(Microsoft::WRL::ComPtr<ID3DBlob> vertexShader, Microsoft::WRL::ComPtr<ID3DBlob> pixelShader);
 

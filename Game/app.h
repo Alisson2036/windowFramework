@@ -58,11 +58,11 @@ private:
 	Image HUD;
 	sprite HUDsprite;
 
-	shader colorBlendShader;
-	shader texturedShader;
-	shader normalShader;
-	shader waterShader;
-	shader texturedInstancedShader;
+	Shader colorBlendShader;
+	Shader texturedShader;
+	Shader normalShader;
+	Shader waterShader;
+	Shader texturedInstancedShader;
 
 	object colorBlendCube;
 	object texturedCube;

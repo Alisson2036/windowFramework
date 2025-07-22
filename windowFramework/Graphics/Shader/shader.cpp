@@ -1,11 +1,11 @@
 #include "shader.h"
 
-shader::shader(const wchar_t* vertexShader, const wchar_t* pixelShader)
+Shader::Shader(const wchar_t* vertexShader, const wchar_t* pixelShader)
 {
 	create(vertexShader, pixelShader);
 }
 
-void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
+void Shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 {
 	vs.create(vertexShader);
 
@@ -14,7 +14,7 @@ void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 	initializeInputInfo();
 
 }
-void shader::create(Microsoft::WRL::ComPtr<ID3DBlob> vertexShader, Microsoft::WRL::ComPtr<ID3DBlob> pixelShader)
+void Shader::create(Microsoft::WRL::ComPtr<ID3DBlob> vertexShader, Microsoft::WRL::ComPtr<ID3DBlob> pixelShader)
 {
 	vs.create(vertexShader);
 
@@ -22,24 +22,24 @@ void shader::create(Microsoft::WRL::ComPtr<ID3DBlob> vertexShader, Microsoft::WR
 
 	initializeInputInfo();
 }
-void shader::bind()
+void Shader::bind()
 {
 
 	if (vs.isInitialized()) vs.bind();
 	if (ps.isInitialized()) ps.bind();
 	if (il.isInitialized()) il.bind();
 }
-bool shader::isInitialized()
+bool Shader::isInitialized()
 {
 	return initialized;
 }
 
-bool shader::hasPerInstanceData()
+bool Shader::hasPerInstanceData()
 {
 	return hasInstancedData;
 }
 
-void shader::initializeInputInfo()
+void Shader::initializeInputInfo()
 {
 	std::vector<D3D11_INPUT_ELEMENT_DESC> desc;
 	ShaderDesc sd(vs.getBlob());

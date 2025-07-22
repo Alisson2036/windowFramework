@@ -23,8 +23,8 @@ public:
 	// --Construtores padroes--
 
 	object() = default;
-	object(shader& shader);
-	void create(shader& shader);
+	object(Shader& shader);
+	void create(Shader& shader);
 
 	// --Loaders--
 
@@ -60,7 +60,7 @@ private:
 
 	bool initialized = false;
 
-	shader* pShader;
+	Shader* pShader;
 	inputBuffer dataBuffer;
 	IndexBuffer ib;
 	VertexBuffer vb;
