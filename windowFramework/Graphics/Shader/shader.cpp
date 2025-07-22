@@ -7,12 +7,36 @@ shader::shader(const wchar_t* vertexShader, const wchar_t* pixelShader)
 
 void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 {
-	//CRIA PIXEL SHADER
 	vs.create(vertexShader);
 
-	//CRIA PIXEL SHADER
 	ps.create(pixelShader);
 
+	initializeInputInfo();
+
+}
+void shader::create(Microsoft::WRL::ComPtr<ID3DBlob> vertexShader, Microsoft::WRL::ComPtr<ID3DBlob> pixelShader)
+{
+	vs.create(vertexShader);
+
+	ps.create(pixelShader);
+
+	initializeInputInfo();
+}
+void shader::bind()
+{
+
+	if (vs.isInitialized()) vs.bind();
+	if (ps.isInitialized()) ps.bind();
+	if (il.isInitialized()) il.bind();
+}
+
+bool shader::hasPerInstanceData()
+{
+	return hasInstancedData;
+}
+
+void shader::initializeInputInfo()
+{
 	std::vector<D3D11_INPUT_ELEMENT_DESC> desc;
 	ShaderDesc sd(vs.getBlob());
 
@@ -21,7 +45,7 @@ void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 	for (std::string& semantic : sd.inputParams)
 	{
 		format current = layouts.at(semantic);
-		
+
 		if (current.perVertex)
 			inputParams.push_back({ semantic, current.size });
 		else
@@ -29,15 +53,15 @@ void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 
 		try
 		{
-			desc.push_back({ 
-				semantic.c_str(), 
-				0, 
-				current.format, 
+			desc.push_back({
+				semantic.c_str(),
+				0,
+				current.format,
 				current.perVertex ? 0u : 1u,
 				current.perVertex ? D3D11_APPEND_ALIGNED_ELEMENT : 0u,
-				current.perVertex ? D3D11_INPUT_PER_VERTEX_DATA : D3D11_INPUT_PER_INSTANCE_DATA, 
+				current.perVertex ? D3D11_INPUT_PER_VERTEX_DATA : D3D11_INPUT_PER_INSTANCE_DATA,
 				current.perVertex ? 0u : 1u
-			});
+				});
 		}
 		catch (...)
 		{
@@ -51,18 +75,4 @@ void shader::create(const wchar_t* vertexShader, const wchar_t* pixelShader)
 	il.create(&vs, desc, D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	initialized = true;
-}
-
-void shader::bind()
-{
-	if (!initialized) _throwMsg("Class not initialized");
-
-	if (vs.isInitialized()) vs.bind();
-	if (ps.isInitialized()) ps.bind();
-	if (il.isInitialized()) il.bind();
-}
-
-bool shader::hasPerInstanceData()
-{
-	return hasInstancedData;
 }

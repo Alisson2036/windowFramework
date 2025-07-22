@@ -6,11 +6,19 @@ void VertexShader::create(const wchar_t* _shaderFile)
 {
 	shaderFile = _shaderFile;
 
-	//criando o pixel shader
 	_throwHr(D3DReadFileToBlob(shaderFile, vertexShaderBlob.GetAddressOf()));
 
 
-	_throwHr(getDevice()->CreateVertexShader(vertexShaderBlob->GetBufferPointer(), vertexShaderBlob->GetBufferSize(), nullptr, &vertexShader));
+	createShader();
+
+	initialized = true;
+}
+
+void VertexShader::create(const Microsoft::WRL::ComPtr<ID3DBlob>& blob)
+{
+	vertexShaderBlob = blob;
+
+	createShader();
 
 	initialized = true;
 }
@@ -27,4 +35,16 @@ void VertexShader::bind()
 Microsoft::WRL::ComPtr<ID3DBlob> VertexShader::getBlob()
 {
 	return vertexShaderBlob;
+}
+
+void VertexShader::createShader()
+{
+	_throwHr(
+		getDevice()->CreateVertexShader(
+			vertexShaderBlob->GetBufferPointer(),
+			vertexShaderBlob->GetBufferSize(),
+			nullptr,
+			&vertexShader
+		)
+	);
 }

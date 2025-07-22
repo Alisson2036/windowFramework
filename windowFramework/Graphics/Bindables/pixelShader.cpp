@@ -9,11 +9,20 @@ void PixelShader::create(const wchar_t* _shaderFile)
 	//criando o pixel shader
 	_throwHr(D3DReadFileToBlob(shaderFile, pixelShaderBlob.GetAddressOf()));
 
-
-	_throwHr(getDevice()->CreatePixelShader(pixelShaderBlob->GetBufferPointer(), pixelShaderBlob->GetBufferSize(), nullptr, &pixelShader));
+	createShader();
 
 	initialized = true;
 }
+
+void PixelShader::create(const Microsoft::WRL::ComPtr<ID3DBlob>& blob)
+{
+	pixelShaderBlob = blob;
+
+	createShader();
+
+	initialized = true;
+}
+
 
 void PixelShader::bind()
 {
@@ -28,4 +37,16 @@ void PixelShader::bind()
 Microsoft::WRL::ComPtr<ID3DBlob> PixelShader::getBlob()
 {
 	return pixelShaderBlob;
+}
+
+void PixelShader::createShader()
+{
+	_throwHr(
+		getDevice()->CreatePixelShader(
+			pixelShaderBlob->GetBufferPointer(),
+			pixelShaderBlob->GetBufferSize(),
+			nullptr,
+			&pixelShader
+		)
+	);
 }

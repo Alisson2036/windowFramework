@@ -11,16 +11,17 @@ class PixelShader : public Bindable
 public:
 
 	void create(const wchar_t* _shaderFile);
+	void create(const Microsoft::WRL::ComPtr<ID3DBlob>& blob);
 
 	void bind() override;
 
 	Microsoft::WRL::ComPtr<ID3DBlob> getBlob();
 
 private:
-
+	void createShader();
 
 	const wchar_t* shaderFile;
-	Microsoft::WRL::ComPtr<ID3D11PixelShader>  pixelShader = nullptr;
-	Microsoft::WRL::ComPtr<ID3DBlob>           pixelShaderBlob = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11PixelShader>  pixelShader;
+	Microsoft::WRL::ComPtr<ID3DBlob>           pixelShaderBlob;
 
 };

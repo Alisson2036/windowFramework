@@ -1,5 +1,6 @@
 #pragma once
-#include <map>
+#include <unordered_map>
+#include <wrl.h>
 #include "..\Bindables\vertexShader.h"
 #include "..\Bindables\pixelShader.h"
 #include "..\Bindables\inputLayout.h"
@@ -17,15 +18,21 @@ public:
 	shader() = default;
 	shader(const wchar_t* vertexShader, const wchar_t* pixelShader);
 	void create(const wchar_t* vertexShader, const wchar_t* pixelShader);
+	void create(Microsoft::WRL::ComPtr<ID3DBlob> vertexShader, Microsoft::WRL::ComPtr<ID3DBlob> pixelShader);
 
 	//coloca na pipeline
 	void bind();
 
 	bool hasPerInstanceData();
 	std::vector<inputBuffer::type> inputParams;
+
+private:
+	void initializeInputInfo();
+
 private:
 	bool initialized = false;
 	bool hasInstancedData = false;
+
 
 	VertexShader vs;
 	PixelShader ps;
@@ -38,7 +45,7 @@ private:
 		bool perVertex;
 	};
 
-	const std::map<std::string, format> layouts =
+	const std::unordered_map<std::string, format> layouts =
 	{
 		{ "Position",  {DXGI_FORMAT_R32G32B32_FLOAT, 12, true  }},
 		{ "TexCoord",  {DXGI_FORMAT_R32G32_FLOAT   ,  8, true  }},

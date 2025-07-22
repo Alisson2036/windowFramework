@@ -20,11 +20,6 @@ app::app()
 		targetDS.clear();
 	}
 
-	// Shader compile teste 
-	{
-		ShaderCompiler sc("Shaders\\normalPS.hlsl", ShaderCompiler::ShaderType::PixelShader);
-		sc.compile();
-	}
 
 	//assetManager.CreateAsset<IAsset>("TextureAsset", "Textures\\a.png");
 
@@ -66,6 +61,12 @@ app::app()
 	);
 	solidWhiteTex.create(solidWhite);
 
+
+	// Shader compile test
+	{
+		ShaderCompiler sc("Shaders\\normalPS.hlsl", ShaderCompiler::ShaderType::PixelShader);
+		sc.compile();
+	}
 	//carrega os shaders
 	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
