@@ -131,26 +131,26 @@ app::app()
 
 
 	// Cria os cubos procedurais
-	colorBlendCube.create(colorBlendShader);
+	colorBlendCube.create(&colorBlendShader);
 	colorBlendCube.load(coloredCube);
 	colorBlendCube.setVertexIndices(ind);
 	colorBlendCube.lock();
 
-	cubeLight.create(colorBlendShader);
+	cubeLight.create(&colorBlendShader);
 	cubeLight.load(whiteCube);
 	cubeLight.setVertexIndices(ind);
 	cubeLight.lock();
 	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
-	texturedCube.create(texturedShader);
+	texturedCube.create(&texturedShader);
 	texturedCube.load(cubeObj);
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
 
 	// Cria o cubo bricks
 	{
-		normalCube.create(*normalShader->getShader());
+		normalCube.create(normalShader->getShader());
 		normalCube.load(cubeObj);
 		normalCube.setTexture(brickTex->getTexture(), 0);
 		normalCube.setTexture(brickTexNormal->getTexture(), 1);
@@ -174,7 +174,7 @@ app::app()
 	}
 
 	//cria a water
-	water.create(waterShader);
+	water.create(&waterShader);
 	water.load(waterObj);
 	water.lock();
 	water.set(vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
@@ -186,7 +186,7 @@ app::app()
 	}
 
 	//cria a esfera
-	sphere.create(texturedInstancedShader);
+	sphere.create(&texturedInstancedShader);
 	sphere.load(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
 	sphere.setTexture(shadowMap.getTexture(), 2);

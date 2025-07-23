@@ -44,7 +44,7 @@ void guiPanel::create(vec2 windowSize)
 
 	tex.create(gfx, false);
 	shader2d.create(L"CompiledShaders\\tex2dVS.cso", L"CompiledShaders\\tex2dPS.cso");
-	obj.create(shader2d);
+	obj.create(&shader2d);
 	obj.setTexture(&tex, 0);
 	obj.loadFromVertexArray(vertices);
 	obj.loadFromTexCoordArray(coords);

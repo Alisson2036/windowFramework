@@ -23,8 +23,8 @@ public:
 	// --Construtores padroes--
 
 	object() = default;
-	object(Shader& shader);
-	void create(Shader& shader);
+	object(Shader* shader);
+	void create(Shader* shader);
 
 	// --Loaders--
 

@@ -1,16 +1,16 @@
 #include "object.h"
 
-object::object(Shader& shader)
+object::object(Shader* shader)
 {
 	create(shader);
 }
 
-void object::create(Shader& shader)
+void object::create(Shader* shader)
 {
-	if (!shader.isInitialized()) _throwMsg("Shader has not been initialized.");
+	if (!shader->isInitialized()) _throwMsg("Shader has not been initialized.");
 
-	pShader = &shader;
-	dataBuffer.create(shader.inputParams);
+	pShader = shader;
+	dataBuffer.create(shader->inputParams);
 
 	//CRIA CONSTANT BUFFER
 	DirectX::XMMATRIX b[] = {

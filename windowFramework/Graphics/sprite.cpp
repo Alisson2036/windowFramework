@@ -41,7 +41,7 @@ void sprite::create(Texture* img, vec2 position, vec2 size)
 
 	tex = img;
 	shader2d.create(L"CompiledShaders\\tex2dVS.cso", L"CompiledShaders\\tex2dPS.cso");
-	obj.create(shader2d);
+	obj.create(&shader2d);
 	obj.setTexture(tex, 0);
 	obj.loadFromVertexArray(vertices);
 	obj.loadFromTexCoordArray(coords);
