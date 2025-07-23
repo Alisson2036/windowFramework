@@ -2,11 +2,13 @@
 #include "Engine.h"
 #include "Core\exception.h"
 #include "Utils\timer.h"
-#include "Assets\AssetManager.h"
-#include "Assets\MeshAsset.h"
-#include "Assets\TextureAsset.h"
 #include "Graphics\Bindables\renderTarget.h"
 #include "Graphics\Bindables\depthStencil.h"
+
+#include "Assets\AssetManager.h"
+#include "Assets\MeshAsset.h"
+#include "Assets\ShaderAsset.h"
+#include "Assets\TextureAsset.h"
 
 #include "Graphics\Camera.h"
 #include "Graphics\light.h"

@@ -138,6 +138,7 @@
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Assets\IAsset.h" />
     <ClCompile Include="Assets\MeshAsset.cpp" />
+    <ClCompile Include="Assets\ShaderAsset.cpp" />
     <ClCompile Include="Assets\TextureAsset.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Graphics\Bindables\bindable.cpp" />

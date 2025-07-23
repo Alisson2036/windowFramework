@@ -47,6 +47,15 @@ app::app()
 	auto* brickTex = assetManager.CreateAsset<TextureAsset>("Bricks", L"Textures\\bricks.jpg", true);
 	auto* brickTexNormal = assetManager.CreateAsset<TextureAsset>("BricksNormal", L"Textures\\bricksNormal.jpg", true);
 
+	// Shaders
+	auto* normalShader = assetManager.CreateAsset<ShaderAsset>(
+		"normalShader",
+		"Shaders\\texturedInstancedVS.hlsl",
+		"CompiledShaders\\texturedInstancedVS.cso",
+		"Shaders\\normalPS.hlsl",
+		"CompiledShaders\\normalPS.cso"
+		);
+
 	// Load
 	assetManager.LoadAll();
 
@@ -62,19 +71,11 @@ app::app()
 	solidWhiteTex.create(solidWhite);
 
 
-	// Shader compile test
-	{
-		ShaderCompiler vs("Shaders\\texturedVS.hlsl", ShaderCompiler::ShaderType::VertexShader);
-		vs.compile();
-		ShaderCompiler ps("Shaders\\texturedPS.hlsl", ShaderCompiler::ShaderType::PixelShader);
-		ps.compile();
 
-		texturedShader.create(vs.getCompiledBlob(), ps.getCompiledBlob());
-	}
 	//carrega os shaders
-	//texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
+	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
 	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
-	normalShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\normalPS.cso");
+	//normalShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\normalPS.cso");
 	waterShader.create(L"CompiledShaders\\waterVS.cso", L"CompiledShaders\\waterPS.cso");
 	colorBlendShader.create(L"CompiledShaders\\colorBlendVS.cso", L"CompiledShaders\\colorBlendPS.cso");
 
@@ -149,7 +150,7 @@ app::app()
 
 	// Cria o cubo bricks
 	{
-		normalCube.create(normalShader);
+		normalCube.create(*normalShader->getShader());
 		normalCube.load(cubeObj);
 		normalCube.setTexture(brickTex->getTexture(), 0);
 		normalCube.setTexture(brickTexNormal->getTexture(), 1);

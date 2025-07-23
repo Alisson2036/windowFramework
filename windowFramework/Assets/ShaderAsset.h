@@ -4,11 +4,17 @@
 #include "IAsset.h"
 #include "..\Resources\image.h"
 #include "..\Graphics\Shader\shader.h"
+#include "..\Graphics\Shader\ShaderCompiler.h"
 
 class ShaderAsset : public IAsset
 {
 public:
-    ShaderAsset(const std::filesystem::path& path);
+    ShaderAsset(
+        const std::filesystem::path& vsShader,
+        const std::filesystem::path& vsCompiled,
+        const std::filesystem::path& psShader,
+        const std::filesystem::path& psCompiled
+    );
 
     void Load() override;
     void Unload() override;
@@ -16,11 +22,15 @@ public:
     const std::filesystem::path& GetFilePath() const override;
     const std::string& GetFileName() const override;
 
-    Shader* getTexture();
+    Shader* getShader();
 
 private:
 
-    std::filesystem::path filePath; // Caminho do arquivo
-    std::string fileName;           // Nome do arquivo
-    bool loaded = false;            // Indica se o asset está carregado
+    std::filesystem::path vsShaderFile;   // Caminho do arquivo
+    std::filesystem::path psShaderFile;   // Caminho do arquivo
+    std::filesystem::path vsCompiledFile; // Caminho do arquivo
+    std::filesystem::path psCompiledFile; // Caminho do arquivo
+
+    Shader shader;       // Shader interno
+    bool loaded = false; // Indica se o asset está carregado
 };

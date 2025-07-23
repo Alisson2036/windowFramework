@@ -156,6 +156,9 @@
     <ClCompile Include="Graphics\Shader\ShaderCompiler.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Assets\ShaderAsset.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\window.h">
