@@ -147,7 +147,6 @@ void Image::drawText(std::wstring text, font& textFont, vec2 position, color tex
 
 int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor)
 {
-	//Gdiplus::FontFamily fontFamily(L"Times New Roman");
 
 	Gdiplus::RectF rect(position.x, position.y, (float)maxWidth, 1000.0f);
 	Gdiplus::PointF pos(position.x, position.y);
@@ -182,6 +181,24 @@ int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int
 	needsBufferUpdate = true;
 
 	delete brush;
+
+	return boundingBox.Height;
+}
+
+int Image::calcHeightBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth)
+{
+	Gdiplus::RectF rect(position.x, position.y, (float)maxWidth, 1000.0f);
+
+	// Calcula o tamanho da string 
+	Gdiplus::RectF boundingBox;
+	gfx->MeasureString(
+		text.c_str(),
+		-1,
+		textFont.fontLoaded.get(),
+		rect,
+		nullptr,
+		&boundingBox
+	);
 
 	return boundingBox.Height;
 }
