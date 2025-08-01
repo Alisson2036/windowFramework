@@ -185,9 +185,9 @@ int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int
 	return boundingBox.Height;
 }
 
-int Image::calcHeightBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth)
+int Image::calcHeightBoundedText(std::wstring text, font& textFont, int maxWidth)
 {
-	Gdiplus::RectF rect(position.x, position.y, (float)maxWidth, 1000.0f);
+	Gdiplus::RectF rect(0.f, 0.f, (float)maxWidth, 1000.0f);
 
 	// Calcula o tamanho da string 
 	Gdiplus::RectF boundingBox;

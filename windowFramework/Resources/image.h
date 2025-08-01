@@ -61,7 +61,7 @@ public:
 	void drawRectangle(vec2 pos, vec2 size, color c);
 	void drawText(std::wstring text, font& textFont, vec2 position, color textColor);
 	int drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor);
-	int calcHeightBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth);
+	int calcHeightBoundedText(std::wstring text, font& textFont, int maxWidth);
 
 
 	vec2 getResolution();

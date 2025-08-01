@@ -84,7 +84,9 @@ bool guiPanel::handleInput(int mouseX, int mouseY, bool clicking)
 
 	for (panelValue& i : data)
 	{
-		float cursorNext = cursor + fontSize + (fontSize + 6.f) * i.arraySize;
+		float cursorNext = cursor + 
+			gfx.calcHeightBoundedText(i.name, font, 200.f) +
+			(fontSize + 6.f) * i.arraySize;
 		if (i.readOnly == false && mouseY < cursorNext && cursor < mouseY)
 		{
 			mouseOverValue = i.pValue;
