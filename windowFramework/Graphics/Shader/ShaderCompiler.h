@@ -17,6 +17,7 @@ public:
 	ShaderCompiler(const std::filesystem::path& file, const ShaderType& type);
 
 	void compile();
+	void saveToFile(const std::filesystem::path& file);
 
 	Microsoft::WRL::ComPtr<ID3DBlob> getCompiledBlob();
 

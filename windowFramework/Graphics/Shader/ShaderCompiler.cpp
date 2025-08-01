@@ -46,6 +46,18 @@ void ShaderCompiler::compile()
 		_throwMsg("Shader compilation error");
 }
 
+void ShaderCompiler::saveToFile(const std::filesystem::path& file)
+{
+	if (!shaderBlob) _throwMsg("Null shader trying to be saved to file");
+	_throwHr(
+		D3DWriteBlobToFile(
+			shaderBlob.Get(),
+			file.c_str(),
+			TRUE
+		)
+	);
+}
+
 Microsoft::WRL::ComPtr<ID3DBlob> ShaderCompiler::getCompiledBlob()
 {
 	return shaderBlob;
