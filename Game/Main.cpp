@@ -2,7 +2,7 @@
 #include <string>
 #include <exception>
 #include "app.h"
-#include "Core/exception.h"
+#include "Core\exception.h"
 #include "Utils\timer.h"
 
 int CALLBACK WinMain(

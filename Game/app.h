@@ -23,6 +23,8 @@
 
 #include "Graphics\Shader\ShaderCompiler.h"
 
+#include "ECS\Registry.h"
+
 class app
 {
 public:
