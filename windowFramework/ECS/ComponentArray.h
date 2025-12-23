@@ -32,13 +32,13 @@ public:
         entityToIndex.erase(entity);
         m_indexToEntity.erase(lastIndex);
     }
-    Component& get(Entity entity) {
+    Component* get(Entity entity) {
         // MELHORAR ISSO AQUI
-        return components[entityToIndex[entity]];
+        return &components[entityToIndex[entity]];
     }
-    Component& getByIndex(size_t index)
+    Component* getByIndex(size_t index)
     {
-        return components[index];
+        return &components[index];
     }
     bool containsEntity(Entity entity) override
     {

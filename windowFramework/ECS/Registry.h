@@ -42,7 +42,7 @@ public:
 				return *this;
 			}
 			template<typename Component>
-			Component get()
+			Component* get()
 			{
 				return m_view->get<Component>(m_index);
 			}
@@ -96,7 +96,7 @@ public:
 			return pArrays.at(mainComponent)->indexToEntity(index);
 		}
 		template<typename Comp>
-		Comp get(size_t index)
+		Comp* get(size_t index)
 		{
 			std::type_index type = typeid(Comp);
 			if (type == mainComponent)

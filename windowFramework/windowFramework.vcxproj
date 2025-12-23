@@ -140,6 +140,7 @@
     <ClCompile Include="Assets\MeshAsset.cpp" />
     <ClCompile Include="Assets\ShaderAsset.cpp" />
     <ClCompile Include="Assets\TextureAsset.cpp" />
+    <ClCompile Include="ECS\ComponentFactory.cpp" />
     <ClCompile Include="ECS\EntityManager.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Graphics\Bindables\bindable.cpp" />
@@ -183,8 +184,10 @@
     <ClInclude Include="Assets\ShaderAsset.h" />
     <ClInclude Include="Assets\TextureAsset.h" />
     <ClInclude Include="ECS\ComponentArray.h" />
+    <ClInclude Include="ECS\Components\Object.h" />
     <ClInclude Include="ECS\Entity.h" />
     <ClInclude Include="ECS\EntityManager.h" />
+    <ClInclude Include="ECS\ComponentFactory.h" />
     <ClInclude Include="ECS\Registry.h" />
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Graphics\Bindables\bindable.h" />

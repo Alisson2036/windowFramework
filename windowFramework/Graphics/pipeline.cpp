@@ -33,6 +33,20 @@ Pipeline::Pipeline(
 
 	backDSBuffer = _backDSBuffer;
 	backBufferView = _backBufferView;
+
+	// Cria o registry
+	registry = std::make_unique<Registry>();
+
+	// Cria o transform buffer
+	DirectX::XMMATRIX b[] = {
+		DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
+	};
+
+	transformBuffer.create(
+		b,
+		1,
+		sizeof(DirectX::XMMATRIX)
+	);
 }
 
 
@@ -98,6 +112,35 @@ void Pipeline::drawObject(object& obj)
 			context->Draw(obj.getVertexCount(), 0);
 }
 
+void Pipeline::drawScene()
+{
+
+	Registry::View view = registry->getView<CMeshNonIndexed, CMaterial, SpatialData>();
+
+	for (auto i : view)
+	{
+		CMaterial* mat = i.get<CMaterial>();
+		CMeshNonIndexed* mesh = i.get<CMeshNonIndexed>();
+		SpatialData* spatial = i.get<SpatialData>();
+
+		// Configura o transform buffer
+		DirectX::XMMATRIX b[] = {
+			spatial->getMatrix()
+		};
+		transformBuffer.update(b);
+
+		// Bind de tudo
+		mesh->vb.bind();
+		mat->shader->bind();
+		transformBuffer.bind();
+
+		// Draw
+		context->Draw(mesh->vertexCount, 0);
+
+	}
+
+}
+
 void Pipeline::setLight(Light* _light)
 {
 	light = _light;
@@ -155,4 +198,9 @@ void Pipeline::fillScreen(color c)
 vec2 Pipeline::getWindowResolution() const
 {
 	return windowResolution;
+}
+
+Registry* Pipeline::getRegistry() const
+{
+	return registry.get();
 }

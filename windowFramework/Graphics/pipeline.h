@@ -11,6 +11,8 @@
 #include "Bindables\vertexConstantBuffer.h"
 #include "Bindables\texture.h"
 #include "Bindables\sampler.h"
+#include "..\ECS\Registry.h"
+#include "..\ECS\Components\Object.h"
 #include "Shader\shaderDesc.h"
 #include "object.h"
 #include "Bindables\renderTarget.h"
@@ -20,9 +22,6 @@
 #include "..\Math\SpatialData.h"
 #include "Camera.h"
 #include "..\Math\vec2.h"
-
-
-
 
 
 
@@ -39,6 +38,7 @@ public:
 
 
 	void drawObject(object& obj);
+	void drawScene();
 
 	// --Setters--
 
@@ -53,6 +53,7 @@ public:
 	void fillScreen(color c);
 
 	vec2 getWindowResolution() const;
+	Registry* getRegistry() const;
 
 
 private:
@@ -76,6 +77,9 @@ private:
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
 
+	// RCS vars
+	std::unique_ptr<Registry> registry;
+	ConstantVertexBuffer transformBuffer;
 
 
 	BlendState blendState;

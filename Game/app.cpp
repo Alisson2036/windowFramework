@@ -6,12 +6,13 @@ app::app()
 	timeSinceCreation()
 {
 	pipeline = eng.getPipeline();
+	factory = std::make_unique<ComponentFactory>(pipeline->getRegistry());
 
 	//criando novo target view
 	{
 		//resolucao com -200 no x por causa do painel
 		resolution3d = vec2(
-			eng.getScreenSize().x - 200.0f, //
+			eng.getScreenSize().x - 200.0f, 
 			eng.getScreenSize().y
 		);
 		target.create(resolution3d);
@@ -55,6 +56,13 @@ app::app()
 		"Shaders\\normalPS.hlsl",
 		"CompiledShaders\\normalPS.cso"
 		);
+	auto* texturedShaderAsset = assetManager.CreateAsset<ShaderAsset>(
+		"texturedShader",
+		"Shaders\\texturedVS.hlsl",
+		"CompiledShaders\\texturedVS.cso",
+		"Shaders\\texturedPS.hlsl",
+		"CompiledShaders\\texturedPS.cso"
+	);
 
 	// Load
 	assetManager.LoadAll();
@@ -147,6 +155,9 @@ app::app()
 	texturedCube.load(cubeObj);
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
+
+	//cria o cubo ECS
+	factory->createObject(texturedShaderAsset, cubeObj);
 
 	// Cria o cubo bricks
 	{
@@ -415,6 +426,9 @@ void app::draw()
 	//coloca o cubo texturizado
 	pipeline->drawObject(texturedCube);
 
+	// ECS draw
+	pipeline->drawScene();
+
 	//posiciona e renderiza segundo cubo texturizado
 	texturedCube.set({ 0.0f,1.0f,0.0f }, { 0.0f,0.0f,0.0f });
 	texturedCube.setScale(vec3(2.f, 1.f, 1.f));
@@ -432,8 +446,6 @@ void app::draw()
 	timerVertexBuffer.bind();
 	//desenha agua
 	pipeline->drawObject(water);
-
-
 
 	//escreve texto do frametime
 	static float dTime;
