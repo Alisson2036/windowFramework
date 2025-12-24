@@ -17,7 +17,7 @@ ShaderDesc::ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob)
 	//pegando a descricao do shader
 	D3D11_SHADER_DESC desc = {};
 	reflect->GetDesc(&desc);
-
+	
 	//lendo todos os constantBuffers do shader
 	for (unsigned int i = 0; i < desc.ConstantBuffers; i++)
 	{
@@ -26,7 +26,9 @@ ShaderDesc::ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob)
 		buf->GetDesc(&bufDesc);
 		ID3D11ShaderReflectionVariable* var = buf->GetVariableByIndex(0);
 		
-
+		D3D11_SHADER_VARIABLE_DESC svDesc;
+		var->GetDesc(&svDesc);
+		constantBuffers.push_back(svDesc.Name);
 	}
 
 	//lendo inputLayout

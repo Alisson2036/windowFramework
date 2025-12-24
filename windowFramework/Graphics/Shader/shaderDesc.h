@@ -15,6 +15,8 @@ public:
 
 
 	std::vector<std::string> inputParams;
+
+	std::vector<std::string> constantBuffers;
 private:
 
 

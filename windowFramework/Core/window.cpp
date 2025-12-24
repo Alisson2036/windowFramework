@@ -224,8 +224,8 @@ LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM l
 	//RAW MOUSE MESSAGES-------------
 	case WM_INPUT:
 	{
-		UINT size;
-		UINT out;
+		UINT size{};
+		UINT out{};
 		//descobre o tamanho do buffer
 		out = GetRawInputData(
 			reinterpret_cast<HRAWINPUT>(lParam),
