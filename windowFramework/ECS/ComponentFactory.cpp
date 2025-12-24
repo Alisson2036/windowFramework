@@ -34,16 +34,6 @@ Entity ComponentFactory::createObject(ShaderAsset* shaderAsset, MeshAsset* meshA
 	mesh.mesh = meshAsset;
 	mesh.shader = shaderAsset;
 	mesh.Textures = {};
-	
-	{
-		// Creates vertex buffer
-		inputBuffer ib;
-		ib.create(material.shader->inputParams);
-		meshAsset->getData(&ib);
-		ib.createVertexBuffer(mesh.vb);
-		mesh.vertexCount = ib.getElementCount();
-	}
-	
 
 	reg->addComponent(ent, mesh);
 

@@ -35,7 +35,7 @@ private:
         std::pair<MeshAsset*, ShaderAsset*>,
         Buffer,
         VertexBufferCacheHash
-    > cacheMap;
+    > cacheMap = {};
 
 };
 

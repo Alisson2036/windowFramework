@@ -6,6 +6,8 @@
 #include "Input\mouse.h"
 #include "Input\CursorController.h"
 #include "Input\inputProxy.h"
+#include "Graphics\Caching\VertexBufferCache.h"
+#include "ECS\Registry.h"
 
 // Classe principal do motor do framework, responsável por gerenciar
 // a janela, gráficos, pipeline de renderização e entrada do usuário.
@@ -32,11 +34,19 @@ public:
     // Retorna ponteiro para o pipeline de renderização.
     Pipeline* getPipeline();
 
+    // Acesso ao registry
+    Registry* getRegistry();
+
+    // Acesso ao cache
+    VertexBufferCache* getVBCache();
+
 private:
-    vec2 screenSize;         // Tamanho da tela (largura, altura)
-    window win;              // Gerencia a janela da aplicação
-    Graphics gfx;            // Gerencia recursos gráficos (DirectX, etc.)
-    Pipeline pipeline;       // Pipeline de renderização
+    vec2 screenSize;           // Tamanho da tela (largura, altura)
+    window win;                // Gerencia a janela da aplicação
+    Graphics gfx;              // Gerencia recursos gráficos (DirectX, etc.)
+    Registry registry;         // Registro do sistema ECS
+    Pipeline pipeline;         // Pipeline de renderização
+    VertexBufferCache vbCache; // Vertex buffering cache
 
     InputProxy inputProxy;         // Proxy para entrada do usuário
     CursorController mouseControl; // Controlador do cursor do mouse

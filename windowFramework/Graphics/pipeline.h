@@ -13,6 +13,7 @@
 #include "Bindables\sampler.h"
 #include "..\ECS\Registry.h"
 #include "..\ECS\Components\Object.h"
+#include "Caching\VertexBufferCache.h"
 #include "Shader\shaderDesc.h"
 #include "object.h"
 #include "Bindables\renderTarget.h"
@@ -32,6 +33,8 @@ public:
 		Microsoft::WRL::ComPtr<ID3D11Device> _device,
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
 		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _backBufferView,
+		Registry* _registry,
+		VertexBufferCache* _vbCache,
 		depthStencil* _backDSBuffer,
 		vec2 _windowResolution
 	);
@@ -68,18 +71,19 @@ private:
 	depthStencil* backDSBuffer;
 
 	// Samplers
-
 	Sampler aliasedSampler;
 	Sampler sampler;
 
 	// Camera buffers
-
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
 
 	// RCS vars
-	std::unique_ptr<Registry> registry;
+	Registry* registry;
 	ConstantVertexBuffer transformBuffer;
+	
+	// Caching
+	VertexBufferCache* vbCache;
 
 
 	BlendState blendState;

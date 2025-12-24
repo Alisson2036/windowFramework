@@ -14,8 +14,6 @@
 
 struct CMeshNonIndexed
 {
-	VertexBuffer vb;
-	size_t vertexCount;
 	ShaderAsset* shader;
 	MeshAsset* mesh;
 	std::vector<TextureAsset*> Textures;

@@ -6,8 +6,10 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 	gfx(win.getWindowHandle(), screenSizeX, screenSizeY),
 	pipeline(gfx.getDevice(), 
 		gfx.getDeviceContext(), 
-		gfx.getBackViewBuffer(), 
-		gfx.getBackDSBuffer(), 
+		gfx.getBackViewBuffer(),
+		&registry,
+		&vbCache,
+		gfx.getBackDSBuffer(),		
 		vec2(screenSizeX, screenSizeY)
 	),
 	inputProxy(&mouse, &keyboard),
@@ -58,5 +60,15 @@ InputProxy& Engine::input()
 Pipeline* Engine::getPipeline()
 {
 	return &pipeline;
+}
+
+Registry* Engine::getRegistry()
+{
+	return &registry;
+}
+
+VertexBufferCache* Engine::getVBCache()
+{
+	return &vbCache;
 }
 

@@ -5,9 +5,11 @@
 
 
 Pipeline::Pipeline(
-	Microsoft::WRL::ComPtr<ID3D11Device> _device, 
+	Microsoft::WRL::ComPtr<ID3D11Device> _device,
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _backBufferView,
+	Registry* _registry,
+	VertexBufferCache* _vbCache,
 	depthStencil* _backDSBuffer,
 	vec2 _windowResolution
 	)
@@ -34,8 +36,11 @@ Pipeline::Pipeline(
 	backDSBuffer = _backDSBuffer;
 	backBufferView = _backBufferView;
 
-	// Cria o registry
-	registry = std::make_unique<Registry>();
+	// Seta o registry
+	registry = _registry;
+
+	// Seta o vbCache
+	vbCache = _vbCache;
 
 	// Cria o transform buffer
 	DirectX::XMMATRIX b[] = {
@@ -129,13 +134,19 @@ void Pipeline::drawScene()
 		};
 		transformBuffer.update(b);
 
+		// Adquirindo buffer do cache
+		auto buf = vbCache->getBuffer(
+			mesh->mesh,
+			mesh->shader
+		);
+
 		// Bind de tudo
-		mesh->vb.bind();
+		buf->vBuffer.bind();
 		mat->shader->bind();
 		transformBuffer.bind();
 
 		// Draw
-		context->Draw(mesh->vertexCount, 0);
+		context->Draw(buf->vCount, 0);
 
 	}
 
@@ -202,5 +213,5 @@ vec2 Pipeline::getWindowResolution() const
 
 Registry* Pipeline::getRegistry() const
 {
-	return registry.get();
+	return registry;
 }
