@@ -156,11 +156,13 @@ app::app()
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
 
-	//cria o cubo ECS
-	Entity cube = factory->createObject(texturedShaderAsset, cubeObj);
-	pipeline->getRegistry()->getComponent<SpatialData>(cube)->move(vec3(5, 4, 5));
-	pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = &solidWhiteTex;
-	
+	//cria os cubos ECS
+	for(int i = 0; i < 10; i++)
+	{
+		Entity cube = factory->createObject(texturedShaderAsset, cubeObj);
+		pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10 + (i*3), 5, 4), vec3(1, 2.4, 2));
+		pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = brickTex->getTexture();
+	}
 
 	// Cria o cubo bricks
 	{
