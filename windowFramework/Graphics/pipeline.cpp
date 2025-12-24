@@ -119,6 +119,24 @@ void Pipeline::drawObject(object& obj)
 
 void Pipeline::drawScene()
 {
+	// Preparacao camera buffers
+	if (camera)
+	{
+		DirectX::XMMATRIX a = camera->getMatrix();
+		cameraConstantBuffer.update(&a);
+		DirectX::XMVECTOR b[] = { camera->getPositionVector() };
+		cameraPositionBuffer.update(b);
+	}
+	else
+		_throwMsg("Camera does not exist in the pipeline.");
+	//bind projection matrix
+	cameraConstantBuffer.bind();
+	//bind camera position
+	cameraPositionBuffer.bind();
+
+	//luzes..caso existirem
+	if (light)
+		light->bind(0, 2);
 
 	Registry::View view = registry->getView<CMeshNonIndexed, CMaterial, SpatialData>();
 
@@ -133,6 +151,18 @@ void Pipeline::drawScene()
 			spatial->getMatrix()
 		};
 		transformBuffer.update(b);
+
+		// Bind das texturas
+		for (auto i : mat->textures)
+		{
+			if (i.second->isAntialiased())
+				aliasedSampler.bind();
+			else
+				sampler.bind();
+			aliasedSampler.bind();
+			i.second->setSlot(i.first);
+			i.second->bind();
+		}
 
 		// Adquirindo buffer do cache
 		auto buf = vbCache->getBuffer(

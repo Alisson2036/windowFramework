@@ -178,7 +178,7 @@ public:
 		{
 			ComponentArray<Component>* pComp = static_cast<ComponentArray<Component>*>(components.at(type).get());
 			if (pComp->containsEntity(entity))
-				return &pComp->get(entity);
+				return pComp->get(entity);
 		}
 	}
 

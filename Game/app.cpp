@@ -157,7 +157,10 @@ app::app()
 	texturedCube.lock();
 
 	//cria o cubo ECS
-	factory->createObject(texturedShaderAsset, cubeObj);
+	Entity cube = factory->createObject(texturedShaderAsset, cubeObj);
+	pipeline->getRegistry()->getComponent<SpatialData>(cube)->move(vec3(5, 4, 5));
+	pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = &solidWhiteTex;
+	
 
 	// Cria o cubo bricks
 	{
