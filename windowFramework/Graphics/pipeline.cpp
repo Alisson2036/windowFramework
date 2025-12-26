@@ -68,8 +68,7 @@ Pipeline::Pipeline(
 	};
 	instancesBuffer.create(
 		insts,
-		10,
-		sizeof(vec3)
+		10
 	);
 	instancesBuffer.setSlot(0);
 }
