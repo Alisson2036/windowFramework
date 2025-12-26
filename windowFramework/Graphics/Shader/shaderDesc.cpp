@@ -36,7 +36,9 @@ ShaderDesc::ShaderDesc(Microsoft::WRL::ComPtr<ID3DBlob> blob)
 	{
 		D3D11_SIGNATURE_PARAMETER_DESC parDesc;
 		reflect->GetInputParameterDesc(i, &parDesc);
-		inputParams.push_back((std::string)parDesc.SemanticName);
+		std::string str = (std::string)parDesc.SemanticName;
+		if(str[0] != 'S' && str[1] != 'V')
+			inputParams.push_back(str);
 
 	}
 

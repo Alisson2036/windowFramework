@@ -33,6 +33,7 @@
     <FxCompile Include="Shaders\texturedVS.hlsl" />
     <FxCompile Include="Shaders\waterPS.hlsl" />
     <FxCompile Include="Shaders\waterVS.hlsl" />
+    <FxCompile Include="Shaders\ecsVS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Objs\waterPlane.obj" />

@@ -56,10 +56,10 @@ app::app()
 		"Shaders\\normalPS.hlsl",
 		"CompiledShaders\\normalPS.cso"
 		);
-	auto* texturedShaderAsset = assetManager.CreateAsset<ShaderAsset>(
-		"texturedShader",
-		"Shaders\\texturedVS.hlsl",
-		"CompiledShaders\\texturedVS.cso",
+	auto* ecsShader = assetManager.CreateAsset<ShaderAsset>(
+		"ecsShader",
+		"Shaders\\ecsVS.hlsl",
+		"CompiledShaders\\ecsVS.cso",
 		"Shaders\\texturedPS.hlsl",
 		"CompiledShaders\\texturedPS.cso"
 	);
@@ -159,7 +159,7 @@ app::app()
 	//cria os cubos ECS
 	for(int i = 0; i < 10; i++)
 	{
-		Entity cube = factory->createObject(texturedShaderAsset, cubeObj);
+		Entity cube = factory->createObject(ecsShader, cubeObj);
 		pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10 + (i*3), 5, 4), vec3(1, 2.4, 2));
 		pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = brickTex->getTexture();
 	}

@@ -52,6 +52,26 @@ Pipeline::Pipeline(
 		1,
 		sizeof(DirectX::XMMATRIX)
 	);
+
+	// Cria o structured buffer para instancias, apenas para teste
+	vec3 insts[] = {
+		vec3(0,0,1)*3,
+		vec3(0,0,2)*3,
+		vec3(0,0,3)*3,
+		vec3(0,0,4)*3,
+		vec3(0,0,5)*3,
+		vec3(0,0,6)*3,
+		vec3(0,0,7)*3,
+		vec3(0,0,8)*3,
+		vec3(0,0,9)*3,
+		vec3(0,0,10)*3
+	};
+	instancesBuffer.create(
+		insts,
+		10,
+		sizeof(vec3)
+	);
+	instancesBuffer.setSlot(0);
 }
 
 
@@ -175,8 +195,10 @@ void Pipeline::drawScene()
 		mat->shader->bind();
 		transformBuffer.bind();
 
+		instancesBuffer.bind();
+
 		// Draw
-		context->Draw(buf->vCount, 0);
+		context->DrawInstanced(buf->vCount,10, 0,0);
 
 	}
 

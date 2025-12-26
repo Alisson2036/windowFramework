@@ -24,6 +24,8 @@
 #include "Camera.h"
 #include "..\Math\vec2.h"
 
+// Temporario
+#include "Bindables\structuredBuffer.h"
 
 
 class Pipeline
@@ -81,6 +83,7 @@ private:
 	// RCS vars
 	Registry* registry;
 	ConstantVertexBuffer transformBuffer;
+	StructuredBuffer instancesBuffer;
 	
 	// Caching
 	VertexBufferCache* vbCache;
