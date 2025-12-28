@@ -13,7 +13,7 @@ class window
 {
 public:
 
-	window(const LPCWSTR name, int width, int height);
+	window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int width, int height);
 	window(window& w) = delete;
 	~window();
 

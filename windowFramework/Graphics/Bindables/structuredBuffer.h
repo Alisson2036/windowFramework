@@ -26,9 +26,15 @@ public:
 		bufferDesc.MiscFlags = D3D11_RESOURCE_MISC_BUFFER_STRUCTURED;
 		bufferDesc.StructureByteStride = sizeof(T);
 
+		if (data == nullptr)
+		{
+			_throwHr(getDevice()->CreateBuffer(&bufferDesc, NULL, &buffer));
+		}
+		else
+		{
 
-		_throwHr(getDevice()->CreateBuffer(&bufferDesc, &subresource, &buffer));
-
+			_throwHr(getDevice()->CreateBuffer(&bufferDesc, &subresource, &buffer));
+		}
 		// Creates buffer view
 		//criando a view da textura
 		D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
@@ -60,6 +66,10 @@ public:
 		getContext()->Unmap(buffer.Get(), 0u);
 	}
 
+	UINT getArraySize()
+	{
+		return currentArraySize;
+	}
 
 	void setSlot(int n)
 	{

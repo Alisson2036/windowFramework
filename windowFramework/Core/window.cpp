@@ -1,10 +1,12 @@
 #include "window.h"
 
-window::window(const LPCWSTR name, int _width, int _height):
+window::window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int _width, int _height):
 	hInstance(GetModuleHandle(NULL)),
 	lastMessage(MSG()),
 	windowWidth(_width),
-	windowHeight(_height)
+	windowHeight(_height),
+	mouse(_mouse),
+	keyboard(_keyboard)
 {
 	//criando window class
 	WNDCLASSEX wc = { };
@@ -69,6 +71,7 @@ window::window(const LPCWSTR name, int _width, int _height):
 window::~window()
 {
 	UnregisterClass(className, hInstance);
+	//DestroyWindow(hwnd);
 }
 
 int window::update()

@@ -2,7 +2,7 @@
 
 Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 	:
-	win(L"Game", screenSizeX, screenSizeY),
+	win(L"Game", &mouse, &keyboard, screenSizeX, screenSizeY),
 	gfx(win.getWindowHandle(), screenSizeX, screenSizeY),
 	pipeline(gfx.getDevice(), 
 		gfx.getDeviceContext(), 
@@ -20,10 +20,6 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 
 	//inicia GDI
 	Image::initialize();
-
-	//sets mouse and keyboard
-	win.setMouse(&mouse);
-	win.setKeyboard(&keyboard);
 
 
 }
