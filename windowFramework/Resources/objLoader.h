@@ -5,6 +5,7 @@
 #include <iostream>
 #include "..\Math\vec3.h"
 #include "..\Math\vec2.h"
+#include "..\Core\exception.h"
 
 
 class objLoader

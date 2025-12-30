@@ -4,7 +4,8 @@
 void objLoader::fromFile(std::string fileName)
 {
 	std::ifstream file(fileName);
-
+	if (file.fail()) _throwMsg("Obj file does not exist");
+	
 	enum state {
 		lineStart,
 		comment,

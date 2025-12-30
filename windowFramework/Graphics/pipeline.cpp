@@ -184,18 +184,19 @@ void Pipeline::drawScene()
 		for(int startingIndex = 0; startingIndex < value.size(); startingIndex += maxSize)
 		{
 			// Preparing instances buffer
-			for (int i = startingIndex; i < value.size() && i < startingIndex + maxSize; i++)
+			int i = startingIndex;
+			for (; i < value.size() && i < startingIndex + maxSize; i++)
 			{
 				auto m = registry->getComponent<SpatialData>(value[i]);
 				tempInstBuffer[i - startingIndex] = m->getMatrix();
 			}
-			instancesBuffer.update(tempInstBuffer.data(), (UINT)min(value.size(), maxSize) );
+			instancesBuffer.update(tempInstBuffer.data(), (UINT)(i - startingIndex) );
 
 			// Binding buffer
 			instancesBuffer.bind();
 
 			// Drawing
-			context->DrawInstanced(buffer->vCount, (UINT)value.size(), 0, 0);
+			context->DrawInstanced(buffer->vCount, (UINT)(i - startingIndex), 0, 0);
 		}
 	}
 }
