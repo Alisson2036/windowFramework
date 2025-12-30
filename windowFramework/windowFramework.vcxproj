@@ -137,6 +137,7 @@
   <ItemGroup>
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Assets\IAsset.h" />
+    <ClCompile Include="Assets\MaterialAsset.cpp" />
     <ClCompile Include="Assets\MeshAsset.cpp" />
     <ClCompile Include="Assets\ShaderAsset.cpp" />
     <ClCompile Include="Assets\TextureAsset.cpp" />
@@ -182,6 +183,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\AssetManager.h" />
+    <ClInclude Include="Assets\MaterialAsset.h" />
     <ClInclude Include="Assets\MeshAsset.h" />
     <ClInclude Include="Assets\ShaderAsset.h" />
     <ClInclude Include="Assets\TextureAsset.h" />

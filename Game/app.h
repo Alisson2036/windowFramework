@@ -9,6 +9,7 @@
 #include "Assets\MeshAsset.h"
 #include "Assets\ShaderAsset.h"
 #include "Assets\TextureAsset.h"
+#include "Assets\MaterialAsset.h"
 
 #include "Graphics\Camera.h"
 #include "Graphics\light.h"

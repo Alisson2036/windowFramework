@@ -16,8 +16,8 @@ public:
     void Load() override;
     void Unload() override;
     bool IsLoaded() const override;
-    const std::filesystem::path& GetFilePath() const override;
-    const std::string& GetFileName() const override;
+    const std::filesystem::path& GetFilePath() const;
+    const std::string& GetFileName() const;
 
     /**
      * Preenche o inputBuffer fornecido com os dados do asset.

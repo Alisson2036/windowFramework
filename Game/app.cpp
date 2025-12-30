@@ -64,6 +64,9 @@ app::app()
 		"CompiledShaders\\texturedPS.cso"
 	);
 
+
+	MaterialAsset aaa(ecsShader, tex, brickTex);
+	aaa.addTexture(brickTexNormal, 1);
 	// Load
 	assetManager.LoadAll();
 
