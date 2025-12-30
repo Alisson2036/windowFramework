@@ -158,49 +158,61 @@ void Pipeline::drawScene()
 		light->bind(0, 2);
 
 	Registry::View view = registry->getView<CMeshNonIndexed, CMaterial, SpatialData>();
+	std::unordered_map<
+		std::pair<MeshAsset*, ShaderAsset*>,
+		std::vector<Entity>,
+		VertexBufferCacheHash
+	> batches;
 
+
+	// Creating bathes
 	for (auto i : view)
 	{
-		CMaterial* mat = i.get<CMaterial>();
 		CMeshNonIndexed* mesh = i.get<CMeshNonIndexed>();
-		SpatialData* spatial = i.get<SpatialData>();
 
-		// Configura o transform buffer
+		batches[std::pair(mesh->mesh, mesh->shader)].push_back(i.getEntity());
+	}
+
+	// Drawing
+	std::vector<vec3> tempInstBuffer(instancesBuffer.getArraySize());
+	for (auto const [key, value] : batches)
+	{
+		// VertexBuffer from cache
+		auto buffer = vbCache->getBuffer(
+			key.first,
+			key.second
+		);
+
+		// Transform matrix
 		DirectX::XMMATRIX b[] = {
-			spatial->getMatrix()
+			DirectX::XMMatrixIdentity()
 		};
 		transformBuffer.update(b);
 
-		// Bind das texturas
-		for (auto i : mat->textures)
+		// Preparing instances buffer
+		for (int i = 0; i < value.size(); i++)
 		{
-			if (i.second->isAntialiased())
-				aliasedSampler.bind();
-			else
-				sampler.bind();
-			aliasedSampler.bind();
+			auto m = registry->getComponent<SpatialData>(value[i]);
+			tempInstBuffer[i] = m->getPosition();
+		}
+		instancesBuffer.update(tempInstBuffer.data(), value.size());
+
+		// Bind das texturas
+		for (auto i : registry->getComponent<CMaterial>(value[0])->textures)
+		{
 			i.second->setSlot(i.first);
 			i.second->bind();
 		}
 
-		// Adquirindo buffer do cache
-		auto buf = vbCache->getBuffer(
-			mesh->mesh,
-			mesh->shader
-		);
+		// Binds
+		buffer->vBuffer.bind();          // VertexBuffer
+		transformBuffer.bind();			 // Transform
+		instancesBuffer.bind();			 // Instances
+		key.second->getShader()->bind(); // Shader
 
-		// Bind de tudo
-		buf->vBuffer.bind();
-		mat->shader->bind();
-		transformBuffer.bind();
 
-		instancesBuffer.bind();
-
-		// Draw
-		context->DrawInstanced(buf->vCount,10, 0,0);
-
+		context->DrawInstanced(buffer->vCount, value.size(), 0, 0);
 	}
-
 }
 
 void Pipeline::setLight(Light* _light)

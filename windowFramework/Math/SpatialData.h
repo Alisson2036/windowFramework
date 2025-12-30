@@ -17,6 +17,7 @@ public:
 	void setScale(vec3 Scale);
 
 	DirectX::XMMATRIX getMatrix();
+	vec3 getPosition();
 
 private:
 	vec3 scale;

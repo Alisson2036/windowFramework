@@ -79,3 +79,7 @@ DirectX::XMMATRIX SpatialData::getMatrix()
 
 }
 
+vec3 SpatialData::getPosition()
+{
+	return position;
+}

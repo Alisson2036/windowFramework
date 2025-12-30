@@ -157,7 +157,7 @@ app::app()
 	texturedCube.lock();
 
 	//cria os cubos ECS
-	for(int i = 0; i < 10; i++)
+	for(int i = 0; i < 8; i++)
 	{
 		Entity cube = factory->createObject(ecsShader, cubeObj);
 		pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10 + (i*3), 5, 4), vec3(1, 2.4, 2));
