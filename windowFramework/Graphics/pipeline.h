@@ -83,7 +83,7 @@ private:
 	// RCS vars
 	Registry* registry;
 	ConstantVertexBuffer transformBuffer;
-	StructuredBuffer<vec3> instancesBuffer;
+	StructuredBuffer<DirectX::XMMATRIX> instancesBuffer;
 	
 	// Caching
 	VertexBufferCache* vbCache;

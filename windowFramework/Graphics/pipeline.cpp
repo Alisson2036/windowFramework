@@ -54,20 +54,8 @@ Pipeline::Pipeline(
 	);
 
 	// Cria o structured buffer para instancias, apenas para teste
-	vec3 insts[] = {
-		vec3(0,0,1)*3,
-		vec3(0,0,2)*3,
-		vec3(0,0,3)*3,
-		vec3(0,0,4)*3,
-		vec3(0,0,5)*3,
-		vec3(0,0,6)*3,
-		vec3(0,0,7)*3,
-		vec3(0,0,8)*3,
-		vec3(0,0,9)*3,
-		vec3(0,0,10)*3
-	};
 	instancesBuffer.create(
-		insts,
+		nullptr,
 		10
 	);
 	instancesBuffer.setSlot(0);
@@ -174,7 +162,7 @@ void Pipeline::drawScene()
 	}
 
 	// Drawing
-	std::vector<vec3> tempInstBuffer(instancesBuffer.getArraySize());
+	std::vector<DirectX::XMMATRIX> tempInstBuffer(instancesBuffer.getArraySize());
 	for (auto const [key, value] : batches)
 	{
 		// VertexBuffer from cache
@@ -193,7 +181,7 @@ void Pipeline::drawScene()
 		for (int i = 0; i < value.size(); i++)
 		{
 			auto m = registry->getComponent<SpatialData>(value[i]);
-			tempInstBuffer[i] = m->getPosition();
+			tempInstBuffer[i] = m->getMatrix();
 		}
 		instancesBuffer.update(tempInstBuffer.data(), value.size());
 
