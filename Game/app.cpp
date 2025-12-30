@@ -160,7 +160,7 @@ app::app()
 	for(int i = 0; i < 8; i++)
 	{
 		Entity cube = factory->createObject(ecsShader, cubeObj);
-		pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10 + (i*3), 5, 4), vec3(1, 2.4, 2));
+		pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10.f + (i*3), 5.f, 4.f), vec3(1.f, 2.4, 2.f));
 		pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = brickTex->getTexture();
 	}
 
@@ -304,7 +304,7 @@ void app::input()
 	if (kb.isKeyPressed('X')) a -= 0.1f;
 
 	//gui input handling
-	bool guiStatus = gui.handleInput(x, y, eng.input().leftButtonPressed());
+	bool guiStatus = gui.handleInput((int)x, (int)y, eng.input().leftButtonPressed());
 	if (guiStatus) eng.mouseController().setCursor(CursorController::cursorType::dragHorizontal);
 	else eng.mouseController().setCursor(CursorController::cursorType::normal);
 }

@@ -39,9 +39,9 @@ vec3 physicsDomain::cubeColliding(vec3 pos, vec3 rot, vec3 scale1, vec3 scale2)
     std::vector<vec3> axes;
 
     // World axes (x, y, z)
-    axes.emplace_back(1, 0, 0);
-    axes.emplace_back(0, 1, 0);
-    axes.emplace_back(0, 0, 1);
+    axes.emplace_back(1.f, 0.f, 0.f);
+    axes.emplace_back(0.f, 1.f, 0.f);
+    axes.emplace_back(0.f, 0.f, 1.f);
 
     // OBB axes (u1, u2, u3)
     axes.push_back(u1);

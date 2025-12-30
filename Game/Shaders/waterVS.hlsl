@@ -56,7 +56,7 @@ VS_Output main(VS_Input input)
     float2 normal2d = float2(0.0f, 0.0f);
     float dx = 0.0f;
     float dy = 0.0f;
-    for (int i = 0; i < nWaves; i++)
+    for (unsigned int i = 0; i < nWaves; i++)
     {
         float hash1 = (float(triple32(uint(i))) / 1000000.0f); //(3.0f*cos(float(i)));
         float hash2 = (float(triple32(uint(i * 2 + 1))) / 1000000.0f); //(3.0f*sin(float(i)));

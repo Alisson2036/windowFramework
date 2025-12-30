@@ -10,7 +10,7 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 		&registry,
 		&vbCache,
 		gfx.getBackDSBuffer(),		
-		vec2(screenSizeX, screenSizeY)
+		vec2((float)screenSizeX, (float)screenSizeY)
 	),
 	inputProxy(&mouse, &keyboard),
 	mouseControl(win.getWindowHandle(), &win.currentCursor)

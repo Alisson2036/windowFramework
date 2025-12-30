@@ -14,8 +14,8 @@ void depthStencil::create(vec2 bufferResolution)
 
 	//criando a textura do depth buffer
 	D3D11_TEXTURE2D_DESC depthTextureDesc = {};
-	depthTextureDesc.Width = resolution.x;
-	depthTextureDesc.Height = resolution.y;
+	depthTextureDesc.Width = (UINT)resolution.x;
+	depthTextureDesc.Height = (UINT)resolution.y;
 	depthTextureDesc.Usage = D3D11_USAGE_DEFAULT;
 	depthTextureDesc.MipLevels = 1u;
 	depthTextureDesc.ArraySize = 1u;

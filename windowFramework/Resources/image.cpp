@@ -182,7 +182,7 @@ int Image::drawBoundedText(std::wstring text, font& textFont, vec2 position, int
 
 	delete brush;
 
-	return boundingBox.Height;
+	return (int)boundingBox.Height;
 }
 
 int Image::calcHeightBoundedText(std::wstring text, font& textFont, int maxWidth)

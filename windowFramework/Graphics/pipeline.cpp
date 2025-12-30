@@ -13,6 +13,10 @@ Pipeline::Pipeline(
 	depthStencil* _backDSBuffer,
 	vec2 _windowResolution
 	)
+	:
+	camera(nullptr),
+	currentRenderTarget(nullptr),
+	light(nullptr)
 {
 	device = _device;
 	context = _context;
@@ -42,16 +46,6 @@ Pipeline::Pipeline(
 	// Seta o vbCache
 	vbCache = _vbCache;
 
-	// Cria o transform buffer
-	DirectX::XMMATRIX b[] = {
-		DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
-	};
-
-	transformBuffer.create(
-		b,
-		1,
-		sizeof(DirectX::XMMATRIX)
-	);
 
 	// Cria o structured buffer para instancias, apenas para teste
 	instancesBuffer.create(
@@ -59,6 +53,7 @@ Pipeline::Pipeline(
 		10
 	);
 	instancesBuffer.setSlot(0);
+
 }
 
 
@@ -113,15 +108,15 @@ void Pipeline::drawObject(object& obj)
 	{
 		obj.ib.bind();
 		if (obj.instanceCount)
-			context->DrawIndexedInstanced(obj.indexes.size(), obj.instanceCount, 0u, 0u, 0u);
+			context->DrawIndexedInstanced((UINT)obj.indexes.size(), obj.instanceCount, 0u, 0u, 0u);
 		else
-			context->DrawIndexed(obj.indexes.size(), 0u, 0u);
+			context->DrawIndexed((UINT)obj.indexes.size(), 0u, 0u);
 	}
 	else
 		if (obj.instanceCount)
-			context->DrawInstanced(obj.getVertexCount(), obj.instanceCount, 0u, 0u);
+			context->DrawInstanced((UINT)obj.getVertexCount(), obj.instanceCount, 0u, 0u);
 		else
-			context->Draw(obj.getVertexCount(), 0);
+			context->Draw((UINT)obj.getVertexCount(), 0);
 }
 
 void Pipeline::drawScene()
@@ -171,19 +166,13 @@ void Pipeline::drawScene()
 			key.second
 		);
 
-		// Transform matrix
-		DirectX::XMMATRIX b[] = {
-			DirectX::XMMatrixIdentity()
-		};
-		transformBuffer.update(b);
-
 		// Preparing instances buffer
 		for (int i = 0; i < value.size(); i++)
 		{
 			auto m = registry->getComponent<SpatialData>(value[i]);
 			tempInstBuffer[i] = m->getMatrix();
 		}
-		instancesBuffer.update(tempInstBuffer.data(), value.size());
+		instancesBuffer.update(tempInstBuffer.data(), (UINT)value.size());
 
 		// Bind das texturas
 		for (auto i : registry->getComponent<CMaterial>(value[0])->textures)
@@ -194,12 +183,11 @@ void Pipeline::drawScene()
 
 		// Binds
 		buffer->vBuffer.bind();          // VertexBuffer
-		transformBuffer.bind();			 // Transform
 		instancesBuffer.bind();			 // Instances
 		key.second->getShader()->bind(); // Shader
 
 
-		context->DrawInstanced(buffer->vCount, value.size(), 0, 0);
+		context->DrawInstanced(buffer->vCount, (UINT)value.size(), 0, 0);
 	}
 }
 

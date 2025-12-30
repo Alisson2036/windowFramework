@@ -43,7 +43,7 @@ private:
 	struct format
 	{
 		DXGI_FORMAT format;
-		char size;
+		unsigned char size;
 		bool perVertex;
 	};
 

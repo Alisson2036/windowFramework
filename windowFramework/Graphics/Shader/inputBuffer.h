@@ -20,7 +20,7 @@ public:
 	struct type
 	{
 		std::string type;
-		char size;
+		unsigned char size;
 	};
 
 	//construtores padroes
@@ -32,15 +32,15 @@ public:
 	std::unique_ptr<unsigned char*> data();
 	std::vector<char> getElement(const int index, const std::string type) const;
 	bool containsType(const std::string type) const;
-	int getElementCount() const;
-	int getSizeBytes() const;
+	UINT getElementCount() const;
+	size_t getSizeBytes() const;
 
 	//reserva mais espaço, sem nenhuma informação
-	void reserve(int dataSize);
+	void reserve(size_t dataSize);
 
 	//setters
 	void set(const void* data, int index, const std::string type);
-	void setArray(const void* data, int elementCount, std::string type);
+	void setArray(const void* data, UINT elementCount, std::string type);
 	void setLast(const void* data, const std::string type);
 
 	void createVertexBuffer(VertexBuffer& vb);
@@ -54,9 +54,9 @@ private:
 	std::vector<unsigned char> buffer;
 
 	//mapeia o nome do setor e seu tamanho e offset
-	struct typeInfo { char size; int offset; };
+	struct typeInfo { unsigned char size; UINT offset; };
 	std::map<std::string, typeInfo> typeToOffset;
 
-	int elementSize;
+	UINT elementSize;
 
 };

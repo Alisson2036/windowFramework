@@ -129,7 +129,7 @@ void MeshAsset::getData(inputBuffer* out)
 			continue;
         out->setArray(
             value.buffer.data(),
-            value.buffer.size() / value.stride,
+            (int)value.buffer.size() / value.stride,
             key
         );
 	}

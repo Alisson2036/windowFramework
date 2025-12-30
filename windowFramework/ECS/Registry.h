@@ -180,6 +180,7 @@ public:
 			if (pComp->containsEntity(entity))
 				return pComp->get(entity);
 		}
+		return nullptr;
 	}
 
     template<typename Component, typename... Others>

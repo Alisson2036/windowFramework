@@ -60,7 +60,7 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	Bindable::setDevice(d3dDevice.Get());
 	Bindable::setContext(deviceContext.Get());
 
-	depthStencilBuffer.create(vec2(windowSizeX, windowSizeY));
+	depthStencilBuffer.create(vec2((float)windowSizeX, (float)windowSizeY));
 	
 	drawToScreen();
 }

@@ -22,7 +22,7 @@ public:
     struct Buffer
     {
         VertexBuffer vBuffer;
-        int vCount;
+        UINT vCount;
     };
 
 

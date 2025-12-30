@@ -6,8 +6,8 @@ void renderTarget::create(vec2 targetSize)
 
 	//criando a textura do buffer
 	D3D11_TEXTURE2D_DESC texDesc = {};
-	texDesc.Width = targetResolution.x;
-	texDesc.Height = targetResolution.y;
+	texDesc.Width = (UINT)targetResolution.x;
+	texDesc.Height = (UINT)targetResolution.y;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;

@@ -25,7 +25,6 @@ public:
 
 private:
 	HCURSOR* currentCursor;
-	RECT windowRect;
 	HWND hwnd;
 
 

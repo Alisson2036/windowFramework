@@ -82,7 +82,6 @@ private:
 
 	// RCS vars
 	Registry* registry;
-	ConstantVertexBuffer transformBuffer;
 	StructuredBuffer<DirectX::XMMATRIX> instancesBuffer;
 	
 	// Caching

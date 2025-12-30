@@ -50,22 +50,22 @@ bool inputBuffer::containsType(const std::string type) const
 	return typeToOffset.contains(type);
 }
 
-int inputBuffer::getElementCount() const
+UINT inputBuffer::getElementCount() const
 {
 	if (!initialized) _throwMsg("Class not initialized");
-	return (int)buffer.size() / elementSize;
+	return (UINT)buffer.size() / elementSize;
 	
 }
 
-int inputBuffer::getSizeBytes() const
+size_t inputBuffer::getSizeBytes() const
 {
 	return buffer.size();
 }
 
-void inputBuffer::reserve(int dataSize)
+void inputBuffer::reserve(size_t dataSize)
 {
 	if (!initialized) _throwMsg("Class not initialized");
-	int diff = dataSize - getElementCount();
+	int diff = (int)dataSize - getElementCount();
 	if (diff < 0) _throwMsg("Trying to erase data");
 	
 	buffer.resize(buffer.size() + (elementSize * diff), 0);
@@ -86,7 +86,7 @@ void inputBuffer::set(const void* data, int index, const std::string type)
 
 }
 
-void inputBuffer::setArray(const void* data, int elementCount, std::string type)
+void inputBuffer::setArray(const void* data, UINT elementCount, std::string type)
 {
     if (!initialized) _throwMsg("Class not initialized");
     if (!containsType(type)) return;
@@ -94,16 +94,16 @@ void inputBuffer::setArray(const void* data, int elementCount, std::string type)
     typeInfo inf = typeToOffset.at(type);
 
     // Garante que há espaço suficiente no buffer
-    int requiredElements = elementCount;
+    UINT requiredElements = elementCount;
     if (getElementCount() < requiredElements)
         reserve(requiredElements);
 
     const char* src = reinterpret_cast<const char*>(data);
 
-    for (int i = 0; i < elementCount; ++i)
+    for (UINT i = 0; i < elementCount; ++i)
     {
-        int bufferIndex = (i * elementSize) + inf.offset;
-        for (int j = 0; j < inf.size; ++j)
+        UINT bufferIndex = (i * elementSize) + inf.offset;
+        for (unsigned char j = 0; j < inf.size; ++j)
         {
             buffer[bufferIndex + j] = src[i * inf.size + j];
         }

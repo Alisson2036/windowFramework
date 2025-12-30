@@ -52,7 +52,7 @@ public:
 		initialized = true;
 	}
 
-	void update(const T* data, int arraySize)
+	void update(const T* data, UINT arraySize)
 	{
 		if (arraySize > currentArraySize) _throwMsg("Allocated buffer is not big enough.");
 

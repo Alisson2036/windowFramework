@@ -39,7 +39,7 @@ void guiPanel::create(vec2 windowSize)
 	};
 
 	//cria a imagem de fundo
-	gfx.fromBlank(panelRes.x, panelRes.y);
+	gfx.fromBlank((int)panelRes.x, (int)panelRes.y);
 	gfx.drawRectangle(vec2(0, 0), vec2(panelRes.x, panelRes.y), color(30, 30, 30, 255));
 
 	tex.create(gfx, false);
@@ -85,13 +85,13 @@ bool guiPanel::handleInput(int mouseX, int mouseY, bool clicking)
 	for (panelValue& i : data)
 	{
 		float cursorNext = cursor + 
-			gfx.calcHeightBoundedText(i.name, font, 200.f) +
+			gfx.calcHeightBoundedText(i.name, font, 200) +
 			(fontSize + 6.f) * i.arraySize;
 		if (i.readOnly == false && mouseY < cursorNext && cursor < mouseY)
 		{
 			mouseOverValue = i.pValue;
 			mouseOverValueType = i.valueType;
-			offset = (mouseY - cursor - fontSize) / int(fontSize + 6.0f);
+			offset = int((mouseY - cursor - fontSize) / int(fontSize + 6.0f));
 			break;
 		}
 		cursor = cursorNext;
