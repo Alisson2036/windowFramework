@@ -50,7 +50,7 @@ Pipeline::Pipeline(
 	// Cria o structured buffer para instancias, apenas para teste
 	instancesBuffer.create(
 		nullptr,
-		10
+		5
 	);
 	instancesBuffer.setSlot(0);
 
@@ -166,14 +166,7 @@ void Pipeline::drawScene()
 			key.second
 		);
 
-		// Preparing instances buffer
-		for (int i = 0; i < value.size(); i++)
-		{
-			auto m = registry->getComponent<SpatialData>(value[i]);
-			tempInstBuffer[i] = m->getMatrix();
-		}
-		instancesBuffer.update(tempInstBuffer.data(), (UINT)value.size());
-
+		
 		// Bind das texturas
 		for (auto i : registry->getComponent<CMaterial>(value[0])->textures)
 		{
@@ -183,11 +176,27 @@ void Pipeline::drawScene()
 
 		// Binds
 		buffer->vBuffer.bind();          // VertexBuffer
-		instancesBuffer.bind();			 // Instances
 		key.second->getShader()->bind(); // Shader
 
 
-		context->DrawInstanced(buffer->vCount, (UINT)value.size(), 0, 0);
+		// Drawing batches
+		UINT maxSize = instancesBuffer.getArraySize();
+		for(int startingIndex = 0; startingIndex < value.size(); startingIndex += maxSize)
+		{
+			// Preparing instances buffer
+			for (int i = startingIndex; i < value.size() && i < startingIndex + maxSize; i++)
+			{
+				auto m = registry->getComponent<SpatialData>(value[i]);
+				tempInstBuffer[i - startingIndex] = m->getMatrix();
+			}
+			instancesBuffer.update(tempInstBuffer.data(), (UINT)min(value.size(), maxSize) );
+
+			// Binding buffer
+			instancesBuffer.bind();
+
+			// Drawing
+			context->DrawInstanced(buffer->vCount, (UINT)value.size(), 0, 0);
+		}
 	}
 }
 
