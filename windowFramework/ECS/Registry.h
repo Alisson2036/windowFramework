@@ -117,6 +117,9 @@ public:
 		template<typename Comp> 
 		void addComp(ComponentArray<Comp>* component)
 		{
+			// Nao adiciona componente nulo
+			if (component == nullptr) return;
+
 			// Adiciona pointer
 			std::type_index type = typeid(Comp);
 			pArrays[type] = component;
