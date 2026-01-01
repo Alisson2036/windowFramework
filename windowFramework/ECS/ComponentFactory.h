@@ -5,7 +5,7 @@
 
 
 #include "..\Assets\MeshAsset.h"
-#include "..\Assets\ShaderAsset.h"
+#include "..\Assets\MaterialAsset.h"
 #include "..\Assets\TextureAsset.h"
 
 
@@ -17,8 +17,9 @@ public:
 
 
 	Entity createObject(
-		ShaderAsset* shaderAsset,
-		MeshAsset* meshAsset
+		MaterialAsset* materialAsset,
+		MeshAsset* meshAsset,
+		SpatialData initialPos
 	);
 
 

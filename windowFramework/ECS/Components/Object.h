@@ -2,7 +2,7 @@
 #include <memory>
 
 #include "..\..\Assets\MeshAsset.h"
-#include "..\..\Assets\ShaderAsset.h"
+#include "..\..\Assets\MaterialAsset.h"
 #include "..\..\Assets\TextureAsset.h"
 #include "..\..\Math\SpatialData.h"
 
@@ -14,18 +14,10 @@
 
 struct CMeshNonIndexed
 {
-	ShaderAsset* shader;
+	MaterialAsset* material;
 	MeshAsset* mesh;
-	std::vector<TextureAsset*> Textures;
 };
 
 
 
-
-
-struct CMaterial
-{
-	Shader* shader;
-	std::map<int, Texture*> textures;
-};
 

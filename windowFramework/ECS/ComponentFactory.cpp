@@ -5,7 +5,7 @@ ComponentFactory::ComponentFactory(Registry* registry)
 	reg = registry;
 }
 
-Entity ComponentFactory::createObject(ShaderAsset* shaderAsset, MeshAsset* meshAsset)
+Entity ComponentFactory::createObject(MaterialAsset* materialAsset, MeshAsset* meshAsset, SpatialData initialPos)
 {
 
 	// Creates entity
@@ -13,27 +13,13 @@ Entity ComponentFactory::createObject(ShaderAsset* shaderAsset, MeshAsset* meshA
 
 
 	// Transform component
-	SpatialData pos;
-	pos.set(
-		{ 0.f,0.f,0.f },
-		{ 0.f,0.f,0.f }
-	);
+	reg->addComponent(ent, initialPos);
 
-	reg->addComponent(ent, pos);
-
-
-	// Material Component
-	CMaterial material;
-	material.shader = shaderAsset->getShader();
-	material.textures = {};
-
-	reg->addComponent(ent, material);
 
 	// Mesh component
 	CMeshNonIndexed mesh;
 	mesh.mesh = meshAsset;
-	mesh.shader = shaderAsset;
-	mesh.Textures = {};
+	mesh.material = materialAsset;
 
 	reg->addComponent(ent, mesh);
 

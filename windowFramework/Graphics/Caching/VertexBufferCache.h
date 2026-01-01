@@ -6,9 +6,9 @@
 
 
 struct VertexBufferCacheHash {
-    std::size_t operator()(const std::pair<MeshAsset*, ShaderAsset*>& p) const {
-        auto h1 = std::hash<MeshAsset*>{}(p.first);
-        auto h2 = std::hash<ShaderAsset*>{}(p.second);
+    std::size_t operator()(const std::pair<void*, void*>& p) const {
+        auto h1 = std::hash<void*>{}(p.first);
+        auto h2 = std::hash<void*>{}(p.second);
 
         // Hash combination formula
         return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));

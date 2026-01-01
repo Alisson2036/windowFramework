@@ -65,8 +65,6 @@ app::app()
 	);
 
 
-	MaterialAsset aaa(ecsShader, tex, brickTex);
-	aaa.addTexture(brickTexNormal, 1);
 	// Load
 	assetManager.LoadAll();
 
@@ -160,11 +158,16 @@ app::app()
 	texturedCube.lock();
 
 	//cria os cubos ECS
+	auto* material = assetManager.CreateAsset<MaterialAsset>("Material", ecsShader, brickTex);
 	for(int i = 0; i < 8; i++)
 	{
-		Entity cube = factory->createObject(ecsShader, cubeObj);
-		pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10.f + (i*3), 5.f, 4.f), vec3(1.f, 2.4, 2.f));
-		pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = brickTex->getTexture();
+		Entity cube = factory->createObject(
+			material,
+			cubeObj,
+			SpatialData(vec3(-10.f + (i * 3), 5.f, 4.f), vec3(1.f, 2.4, 2.f))
+		);
+		//pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10.f + (i*3), 5.f, 4.f), vec3(1.f, 2.4, 2.f));
+		//pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = brickTex->getTexture();
 	}
 
 	// Cria o cubo bricks

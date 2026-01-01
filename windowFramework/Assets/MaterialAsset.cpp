@@ -67,6 +67,11 @@ TextureAsset* MaterialAsset::getTextureAsset(UINT slot)
 	return i == textureAssets.end() ? nullptr : i._Ptr->second;
 }
 
+ShaderAsset* MaterialAsset::getShader()
+{
+	return shader;
+}
+
 Texture* MaterialAsset::getTexture(UINT slot)
 {
 	auto i = std::find_if(

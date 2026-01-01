@@ -140,9 +140,9 @@ void Pipeline::drawScene()
 	if (light)
 		light->bind(0, 2);
 
-	Registry::View view = registry->getView<CMeshNonIndexed, CMaterial, SpatialData>();
+	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
 	std::unordered_map<
-		std::pair<MeshAsset*, ShaderAsset*>,
+		std::pair<MeshAsset*, MaterialAsset*>,
 		std::vector<Entity>,
 		VertexBufferCacheHash
 	> batches;
@@ -153,7 +153,7 @@ void Pipeline::drawScene()
 	{
 		CMeshNonIndexed* mesh = i.get<CMeshNonIndexed>();
 
-		batches[std::pair(mesh->mesh, mesh->shader)].push_back(i.getEntity());
+		batches[std::pair(mesh->mesh, mesh->material)].push_back(i.getEntity());
 	}
 
 	// Drawing
@@ -163,20 +163,21 @@ void Pipeline::drawScene()
 		// VertexBuffer from cache
 		auto buffer = vbCache->getBuffer(
 			key.first,
-			key.second
+			key.second->getShader()
 		);
 
 		
 		// Bind das texturas
-		for (auto i : registry->getComponent<CMaterial>(value[0])->textures)
-		{
-			i.second->setSlot(i.first);
-			i.second->bind();
-		}
+		//for (auto i : registry->getComponent<CMaterial>(value[0])->textures)
+		//{
+		//	i.second->setSlot(i.first);
+		//	i.second->bind();
+		//}
 
 		// Binds
-		buffer->vBuffer.bind();          // VertexBuffer
-		key.second->getShader()->bind(); // Shader
+		buffer->vBuffer.bind();     // VertexBuffer
+		key.second->bindMaterial(); // Shader and textures
+		//key.second->getShader()->bind(); // Shader
 
 
 		// Drawing batches

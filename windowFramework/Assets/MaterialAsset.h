@@ -39,6 +39,7 @@ public:
     void clearSlot(UINT slot);
 
     TextureAsset* getTextureAsset(UINT slot);
+    ShaderAsset* getShader();
     Texture* getTexture(UINT slot);
 
     void bindMaterial();
