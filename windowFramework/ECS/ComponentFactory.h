@@ -7,6 +7,7 @@
 #include "..\Assets\MeshAsset.h"
 #include "..\Assets\MaterialAsset.h"
 #include "..\Assets\TextureAsset.h"
+#include "..\Math\SpatialData.h"
 
 
 

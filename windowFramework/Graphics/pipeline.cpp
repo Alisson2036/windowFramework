@@ -167,37 +167,31 @@ void Pipeline::drawScene()
 		);
 
 		
-		// Bind das texturas
-		//for (auto i : registry->getComponent<CMaterial>(value[0])->textures)
-		//{
-		//	i.second->setSlot(i.first);
-		//	i.second->bind();
-		//}
-
 		// Binds
 		buffer->vBuffer.bind();     // VertexBuffer
 		key.second->bindMaterial(); // Shader and textures
-		//key.second->getShader()->bind(); // Shader
-
+		
 
 		// Drawing batches
 		UINT maxSize = instancesBuffer.getArraySize();
 		for(int startingIndex = 0; startingIndex < value.size(); startingIndex += maxSize)
 		{
-			// Preparing instances buffer
-			int i = startingIndex;
-			for (; i < value.size() && i < startingIndex + maxSize; i++)
-			{
-				auto m = registry->getComponent<SpatialData>(value[i]);
-				tempInstBuffer[i - startingIndex] = m->getMatrix();
-			}
-			instancesBuffer.update(tempInstBuffer.data(), (UINT)(i - startingIndex) );
+			// Calcs the amount of instances to draw in this batch
+			const UINT amount = min(value.size() - startingIndex, maxSize);
+
+			// Assemble structuredBuffer
+			instanceBufferSetup(
+				&tempInstBuffer,
+				value,
+				startingIndex
+			);
+			instancesBuffer.update(tempInstBuffer.data(), amount );
 
 			// Binding buffer
 			instancesBuffer.bind();
 
 			// Drawing
-			context->DrawInstanced(buffer->vCount, (UINT)(i - startingIndex), 0, 0);
+			context->DrawInstanced(buffer->vCount, amount, 0, 3);
 		}
 	}
 }
@@ -264,4 +258,20 @@ vec2 Pipeline::getWindowResolution() const
 Registry* Pipeline::getRegistry() const
 {
 	return registry;
+}
+
+void Pipeline::instanceBufferSetup(
+	std::vector<DirectX::XMMATRIX>* outBuffer,
+	const std::vector<Entity>& entities,
+	UINT startingIndex
+)
+{
+	// Gets spatial data from each entity and bundles them
+	// inside a vector of matrices
+	const int maxSize = outBuffer->size();
+	for (int i = startingIndex; i < entities.size() && i < startingIndex + maxSize; i++)
+	{
+		auto m = registry->getComponent<SpatialData>(entities[i]);
+		(*outBuffer)[i - startingIndex] = m->getMatrix();
+	}
 }

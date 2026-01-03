@@ -60,6 +60,16 @@ public:
 	vec2 getWindowResolution() const;
 	Registry* getRegistry() const;
 
+private:
+	void instanceBufferSetup(
+		std::vector<DirectX::XMMATRIX>* outBuffer,
+		const std::vector<Entity>& entities,
+		UINT startingIndex
+	);
+	void internalDrawBatch(
+
+	);
+
 
 private:
 
