@@ -135,3 +135,22 @@ void MeshAsset::getData(inputBuffer* out)
 	}
     
 }
+
+const std::vector<UINT>& MeshAsset::getIndices()
+{
+    return indices;
+}
+
+void MeshAsset::manualLoadIndices(const std::vector<UINT>& indexArray)
+{
+
+    indices.operator=(indexArray);
+
+}
+
+void MeshAsset::manualLoadIndices(const std::vector<UINT>&& indexArray)
+{
+
+    indices.operator=(std::move(indexArray));
+
+}

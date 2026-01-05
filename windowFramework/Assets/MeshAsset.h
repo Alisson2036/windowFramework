@@ -25,6 +25,8 @@ public:
      */
     void getData(inputBuffer* out);
 
+    const std::vector<UINT>& getIndices();
+
     /**
      * Carrega dados manualmente para uma semântica específica do shader.
      * @tparam T Tipo do dado (ex: vec3, vec2, color)
@@ -46,6 +48,9 @@ public:
         fileName.clear();
         filePath.clear();
     }
+    
+    void manualLoadIndices(const std::vector<UINT>& indexArray);
+    void manualLoadIndices(const std::vector<UINT>&& indexArray);
 
 private:
     struct data
@@ -60,4 +65,6 @@ private:
 
     std::unordered_map<std::string, data> meshData; // Dados do mesh
     size_t vCount = 0u;                             // Quantidade total de vertices
+
+    std::vector<UINT> indices;                      // Armazenas indices
 };

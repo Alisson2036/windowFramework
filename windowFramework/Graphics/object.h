@@ -34,7 +34,7 @@ public:
 	void loadFromVertexArray(const std::vector<vec2>& vertexArray);
 	void loadFromColorArray(const std::vector<color>& ColorArray);
 	void loadFromTexCoordArray(const std::vector<vec2>& texCoordArray);
-	void setVertexIndices(const std::vector<int>& vertexIndices);
+	void setVertexIndices(const std::vector<UINT>& vertexIndices);
 	void setInstancesPos(const std::vector<vec3>& positions);
 
 	// --Getters--
@@ -75,7 +75,7 @@ private:
 	std::map<int, Texture*> textures;
 
 	//vertexIndex
-	std::vector<int> indexes;
+	std::vector<UINT> indexes;
 	//instance count 
 	unsigned int instanceCount = 0u;
 

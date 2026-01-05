@@ -2,6 +2,7 @@
 #include "..\..\Assets\MeshAsset.h"
 #include "..\..\Assets\ShaderAsset.h"
 #include "..\Bindables\vertexBuffer.h"
+#include "..\Bindables\indexBuffer.h"
 
 
 
@@ -21,6 +22,7 @@ class VertexBufferCache
 public:
     struct Buffer
     {
+        IndexBuffer iBuffer;
         VertexBuffer vBuffer;
         UINT vCount;
     };

@@ -29,6 +29,7 @@ void object::create(Shader* shader)
 void object::load(MeshAsset* mesh)
 {
 	mesh->getData(&dataBuffer);
+	indexes = mesh->getIndices();
 }
 
 void object::loadFromObj(objLoader& obj)
@@ -149,7 +150,7 @@ void object::loadFromTexCoordArray(const std::vector<vec2>& texCoordArray)
 		dataBuffer.set(&(texCoordArray[i]), i, "TexCoord");
 }
 
-void object::setVertexIndices(const std::vector<int>& vertexIndices)
+void object::setVertexIndices(const std::vector<UINT>& vertexIndices)
 {
 	indexes = vertexIndices;
 }
@@ -182,7 +183,7 @@ void object::lock()
 	if (!initialized) _throwMsg("Class not initialized");
 
 	dataBuffer.createVertexBuffer(vb);
-
+	
 	if (indexes.size() > 0)
 		ib.create(indexes.data(), indexes.size());
 }

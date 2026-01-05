@@ -33,7 +33,7 @@ void sprite::create(Texture* img, vec2 position, vec2 size)
 		vec2(0.0f, 0.0f),
 		vec2(1.0f, 0.0f),
 	};
-	std::vector<int> indices =
+	std::vector<UINT> indices =
 	{
 		0, 2, 1,
 		1, 2, 3

@@ -1,6 +1,6 @@
 #include "indexBuffer.h"
 
-void IndexBuffer::create(const void* data, int arraySize)
+void IndexBuffer::create(const UINT data[], int arraySize)
 {
 	D3D11_SUBRESOURCE_DATA subresource = { data };
 

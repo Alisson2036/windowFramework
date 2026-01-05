@@ -122,7 +122,7 @@ app::app()
 		color(255u, 255u, 255u, 255u),
 		color(255u, 255u, 255u, 255u),
 	};
-	std::vector<int> ind =
+	std::vector<UINT> ind =
 	{
 		0,2,1, 2,3,1,
 		1,3,5, 3,7,5,
@@ -135,19 +135,19 @@ app::app()
 	//carrega vetores
 	coloredCube->manualLoad("Position", verArr);
 	coloredCube->manualLoad("Color", colors);
+	coloredCube->manualLoadIndices(ind);
 	whiteCube->manualLoad("Position", verArr);
 	whiteCube->manualLoad("Color", colorsWhite);
+	whiteCube->manualLoadIndices(ind);
 
 
 	// Cria os cubos procedurais
 	colorBlendCube.create(&colorBlendShader);
 	colorBlendCube.load(coloredCube);
-	colorBlendCube.setVertexIndices(ind);
 	colorBlendCube.lock();
 
 	cubeLight.create(&colorBlendShader);
 	cubeLight.load(whiteCube);
-	cubeLight.setVertexIndices(ind);
 	cubeLight.lock();
 	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 

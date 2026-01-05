@@ -8,12 +8,19 @@ VertexBufferCache::Buffer* VertexBufferCache::addBuffer(MeshAsset* mesh, ShaderA
     auto iter = cacheMap.find(pair);
     if (iter != cacheMap.end()) return &iter->second;
 
-    // Creates buffer
-    inputBuffer ib;
-    ib.create(shader->getShader()->inputParams);
-    mesh->getData(&ib);
-    ib.createVertexBuffer(cacheMap[pair].vBuffer);
-    cacheMap[pair].vCount = ib.getElementCount();
+    // Creates vertex Buffer
+    inputBuffer db;
+    db.create(shader->getShader()->inputParams);
+    mesh->getData(&db);
+    db.createVertexBuffer(cacheMap[pair].vBuffer);
+    cacheMap[pair].vCount = db.getElementCount();
+
+    // Creates index buffer
+    auto& ind = mesh->getIndices();
+    if (ind.size() > 0u)
+        cacheMap[pair].iBuffer.create(ind.data(), ind.size());
+
+    // Returns buffer
     return &cacheMap[pair];
 }
 
