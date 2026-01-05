@@ -148,7 +148,7 @@ void Pipeline::drawScene()
 	> batches;
 
 
-	// Creating bathes
+	// Creating batches
 	for (auto i : view)
 	{
 		CMeshNonIndexed* mesh = i.get<CMeshNonIndexed>();
@@ -191,7 +191,13 @@ void Pipeline::drawScene()
 			instancesBuffer.bind();
 
 			// Drawing
-			context->DrawInstanced(buffer->vCount, amount, 0, 3);
+			if (buffer->iBuffer.isInitialized())
+			{
+				buffer->iBuffer.bind();
+				context->DrawIndexedInstanced(buffer->vCount, amount, 0, 0, 0);
+			}
+			else
+				context->DrawInstanced(buffer->vCount, amount, 0, 0);
 		}
 	}
 }

@@ -51,11 +51,11 @@ app::app()
 	// Shaders
 	auto* normalShader = assetManager.CreateAsset<ShaderAsset>(
 		"normalShader",
-		"Shaders\\texturedInstancedVS.hlsl",
-		"CompiledShaders\\texturedInstancedVS.cso",
+		"Shaders\\ecsVS.hlsl",
+		"CompiledShaders\\ecsVS.cso",
 		"Shaders\\normalPS.hlsl",
 		"CompiledShaders\\normalPS.cso"
-		);
+	);
 	auto* ecsShader = assetManager.CreateAsset<ShaderAsset>(
 		"ecsShader",
 		"Shaders\\ecsVS.hlsl",
@@ -63,7 +63,43 @@ app::app()
 		"Shaders\\texturedPS.hlsl",
 		"CompiledShaders\\texturedPS.cso"
 	);
+	auto* colorBlendShader = assetManager.CreateAsset<ShaderAsset>(
+		"colorBlendShader",
+		"Shaders\\colorBlendVS.hlsl",
+		"CompiledShaders\\colorBlendVS.cso",
+		"Shaders\\colorBlendPS.hlsl",
+		"CompiledShaders\\colorBlendPS.cso"
+	);
+	auto* texturedShader = assetManager.CreateAsset<ShaderAsset>(
+		"texturedShader",
+		"Shaders\\texturedVS.hlsl",
+		"CompiledShaders\\texturedVS.cso",
+		"Shaders\\texturedPS.hlsl",
+		"CompiledShaders\\texturedPS.cso"
+	);
+	auto* texturedInstancedShader = assetManager.CreateAsset<ShaderAsset>(
+		"texturedInstancedShader",
+		"Shaders\\texturedInstancedVS.hlsl",
+		"CompiledShaders\\texturedInstancedVS.cso",
+		"Shaders\\texturedPS.hlsl",
+		"CompiledShaders\\texturedPS.cso"
+	);
+	auto* waterShader = assetManager.CreateAsset<ShaderAsset>(
+		"waterShader",
+		"Shaders\\waterVS.hlsl",
+		"CompiledShaders\\waterVS.cso",
+		"Shaders\\waterPS.hlsl",
+		"CompiledShaders\\waterPS.cso"
+	);
 
+	// Cria os materiais
+	auto* ecsMat = assetManager.CreateAsset<MaterialAsset>("ecsMat", ecsShader, brickTex);
+	ecsMat->addTexture(shadowMap.getTexture(), 2);
+
+	auto* brickMat = assetManager.CreateAsset<MaterialAsset>("brickMat", normalShader, brickTex, brickTexNormal);
+	brickMat->addTexture(shadowMap.getTexture(), 2);
+
+	auto* coloredMat = assetManager.CreateAsset<MaterialAsset>("coloredMat", colorBlendShader);
 
 	// Load
 	assetManager.LoadAll();
@@ -81,12 +117,7 @@ app::app()
 
 
 
-	//carrega os shaders
-	texturedShader.create(L"CompiledShaders\\texturedVS.cso", L"CompiledShaders\\texturedPS.cso");
-	texturedInstancedShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\texturedPS.cso");
-	//normalShader.create(L"CompiledShaders\\texturedInstancedVS.cso", L"CompiledShaders\\normalPS.cso");
-	waterShader.create(L"CompiledShaders\\waterVS.cso", L"CompiledShaders\\waterPS.cso");
-	colorBlendShader.create(L"CompiledShaders\\colorBlendVS.cso", L"CompiledShaders\\colorBlendPS.cso");
+	
 
 	//cria o cubo teste
 	std::vector<vec3> verArr =
@@ -142,61 +173,61 @@ app::app()
 
 
 	// Cria os cubos procedurais
-	colorBlendCube.create(&colorBlendShader);
+	colorBlendCube.create(colorBlendShader->getShader());
 	colorBlendCube.load(coloredCube);
 	colorBlendCube.lock();
 
-	cubeLight.create(&colorBlendShader);
+	cubeLight.create(colorBlendShader->getShader());
 	cubeLight.load(whiteCube);
 	cubeLight.lock();
 	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
-	texturedCube.create(&texturedShader);
+	texturedCube.create(texturedShader->getShader());
 	texturedCube.load(cubeObj);
 	texturedCube.setTexture(shadowMap.getTexture(), 0);
 	texturedCube.lock();
 
 	//cria os cubos ECS
-	auto* material = assetManager.CreateAsset<MaterialAsset>("Material", ecsShader, brickTex);
 	for(int i = 0; i < 8; i++)
 	{
 		Entity cube = factory->createObject(
-			material,
+			ecsMat,
 			cubeObj,
 			SpatialData(vec3(-10.f + (i * 3), 5.f, 4.f), vec3(1.f, 2.4, 2.f))
 		);
-		//pipeline->getRegistry()->getComponent<SpatialData>(cube)->set(vec3(-10.f + (i*3), 5.f, 4.f), vec3(1.f, 2.4, 2.f));
-		//pipeline->getRegistry()->getComponent<CMaterial>(cube)->textures[0] = brickTex->getTexture();
 	}
 
-	// Cria o cubo bricks
+	// Cria os cubos bricks
+	for (int y = -10; y < 10; y++)
 	{
-		normalCube.create(normalShader->getShader());
-		normalCube.load(cubeObj);
-		normalCube.setTexture(brickTex->getTexture(), 0);
-		normalCube.setTexture(brickTexNormal->getTexture(), 1);
-		normalCube.setTexture(shadowMap.getTexture(), 2);
-		normalCube.lock();
-
-		std::vector<vec3> positions = {};
-		vec3 pos;
-		for (int y = -10; y < 10; y++)
+		for (int x = -10; x < 10; x++)
 		{
-			for (int x = -10; x < 10; x++)
-			{
-				pos.x = x * 2.0f;
-				pos.y = -1.0f; //+ (float)cos(x) + (float)cos(y);
-				pos.z = y * 2.0f;
 
-				positions.push_back(pos);
-			}
+			Entity cube = factory->createObject(
+				brickMat,
+				cubeObj,
+				SpatialData(vec3(x*2.f, -1.f, y*2.f), vec3())
+			);
 		}
-		normalCube.setInstancesPos(positions);
 	}
+
+	// Cria os coloredCubes
+	for (int y = -10; y < 10; y++)
+	{
+		for (int x = -10; x < 10; x++)
+		{
+			Entity cube = factory->createObject(
+				coloredMat,
+				coloredCube,
+				SpatialData(vec3(x * 4.f, 30.f, y * 6.f), vec3())
+			);
+		}
+	}
+
 
 	//cria a water
-	water.create(&waterShader);
+	water.create(waterShader->getShader());
 	water.load(waterObj);
 	water.lock();
 	water.set(vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
@@ -208,7 +239,7 @@ app::app()
 	}
 
 	//cria a esfera
-	sphere.create(&texturedInstancedShader);
+	sphere.create(texturedInstancedShader->getShader());
 	sphere.load(sphereObj);
 	sphere.setTexture(&solidWhiteTex, 0);
 	sphere.setTexture(shadowMap.getTexture(), 2);
@@ -235,9 +266,6 @@ app::app()
 		const float xFactor = ((eng.getScreenSize().x - 200.0f) / eng.getScreenSize().x);
 		vec2 size(xFactor*2.f, 2.0f);
 		targetSprite.create(target.getTexture(), pos, size);
-
-		HUD.fromBlank(eng.getScreenSize().x - 200, eng.getScreenSize().y);
-		HUDsprite.create(HUD, pos, size);
 	}
 
 
@@ -338,35 +366,6 @@ void app::logic()
 		phyDomain.solve(pdt);
 	}
 
-	//testa colisao dos dois cubos
-	vec3 move = phyDomain.cubeColliding(
-		cubePos - vec3(0.f, 1.f, 0.f), 
-		cubeRot,
-		vec3(2.f, 1.f, 1.f),
-		vec3(1.f, 1.f, 1.f)
-	);
-	cubePos += move;
-	cubesColliding = std::sqrt(move.lengthSquared());
-	//draw cube position on hud
-	{
-		DirectX::XMMATRIX projMat = cam.getMatrix();
-		DirectX::XMVECTOR pos = {cubePos.x, cubePos.y, cubePos.z, 1.0f};
-		DirectX::XMVECTOR scrPos = DirectX::XMVector4Transform(pos, projMat);
-		float w = scrPos.m128_f32[3];
-		scrPos = DirectX::XMVectorScale(scrPos, 1.0f / w);
-		vec2 vecScrPos(
-			scrPos.m128_f32[0],
-			scrPos.m128_f32[1]
-		);
-		vec2 hudRes = HUD.getResolution();
-		vecScrPos.y = -vecScrPos.y;
-		vecScrPos = (vecScrPos + vec2(1.0f, 1.0f)) / vec2(2.0f,2.0f) * hudRes;
-		HUD.drawRectangle(
-			vecScrPos,
-			vec2(10, 10),
-			color(255, 0, 0, 255)
-		);
-	}
 
 	//atualiza as posições da bola
 	std::vector<vec3> ballPositions = {};
@@ -399,7 +398,7 @@ void app::draw()
 	pipeline->setRenderTarget(nullptr, &shadowMap);
 	pipeline->setCamera(&lightCam);
 	pipeline->drawObject(sphere);
-	pipeline->drawObject(normalCube);
+	//pipeline->drawObject(normalCube);
 	pipeline->drawObject(texturedCube);
 
 
@@ -413,22 +412,7 @@ void app::draw()
 
 
 	//renderiza o chao
-	pipeline->drawObject(normalCube);
-
-	//desenha todos os cubos coloridos
-	vec3 pos;
-	for (int j = -5; j < 5; j++)
-	{
-		for (int i = -20; i < 20; i++)
-		{
-			pos.x = i * 4.0f;
-			pos.y = cos(timeSinceCreation.getPassedSeconds() * 2 + i) + 3 * 10;
-			pos.z = sin(timeSinceCreation.getPassedSeconds() * 2 + i) + j * 10;
-
-			colorBlendCube.set(pos, { 0.f,0.f,0.f });
-			pipeline->drawObject(colorBlendCube);
-		}
-	}
+	//pipeline->drawObject(normalCube);
 
 	//desenha a luz
 	pipeline->drawObject(cubeLight);
@@ -469,11 +453,6 @@ void app::draw()
 	//desenha e atualiza o hud
 	//targetSprite.update(hud);
 	targetSprite.draw(*pipeline);
-
-	HUDsprite.update(HUD);
-	HUDsprite.draw(*pipeline);
-	HUD.clear();
-	//hud.clear();
 
 	//desenha o gui
 	gui.draw(*pipeline);

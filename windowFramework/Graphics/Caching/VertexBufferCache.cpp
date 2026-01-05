@@ -18,8 +18,10 @@ VertexBufferCache::Buffer* VertexBufferCache::addBuffer(MeshAsset* mesh, ShaderA
     // Creates index buffer
     auto& ind = mesh->getIndices();
     if (ind.size() > 0u)
+    {
         cacheMap[pair].iBuffer.create(ind.data(), ind.size());
-
+        cacheMap[pair].vCount = ind.size();
+    }
     // Returns buffer
     return &cacheMap[pair];
 }

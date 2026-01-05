@@ -61,8 +61,6 @@ private:
 	sprite targetSprite;
 	guiPanel gui;
 
-	Image HUD;
-	sprite HUDsprite;
 
 	Shader colorBlendShader;
 	Shader texturedShader;
@@ -72,7 +70,6 @@ private:
 
 	object colorBlendCube;
 	object texturedCube;
-	object normalCube;
 	object cubeLight;
 	object sphere;
 
