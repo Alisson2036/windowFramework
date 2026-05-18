@@ -58,7 +58,7 @@ Pipeline::Pipeline(
 
 
 
-void Pipeline::drawObject(object& obj)
+void Pipeline::drawObject(Object& obj)
 {
 	if (camera)
 	{

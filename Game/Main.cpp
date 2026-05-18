@@ -15,7 +15,7 @@ int CALLBACK WinMain(
 	try
 	{
 		
-		app main;
+		App main;
 		main.start();
 
 	}

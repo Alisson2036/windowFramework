@@ -42,7 +42,7 @@ public:
 	);
 
 
-	void drawObject(object& obj);
+	void drawObject(Object& obj);
 	void drawScene();
 
 	// --Setters--

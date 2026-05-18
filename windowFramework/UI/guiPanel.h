@@ -50,7 +50,7 @@ private:
 	float lastCursor = 0.f;
 
 	Texture tex;
-	object obj;
+	Object obj;
 	Shader shader2d;
 	vec2 resolution;
 	vec2 panelRes;

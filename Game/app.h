@@ -27,12 +27,12 @@
 #include "ECS\Registry.h"
 #include "ECS\ComponentFactory.h"
 
-class app
+class App
 {
 public:
-	app();
-	app(app&) = delete;
-	app operator=(app&) = delete;
+	App();
+	App(App&) = delete;
+	App operator=(App&) = delete;
 
 	void start();
 
@@ -68,12 +68,12 @@ private:
 	Shader waterShader;
 	Shader texturedInstancedShader;
 
-	object colorBlendCube;
-	object texturedCube;
-	object cubeLight;
-	object sphere;
+	
+	Object texturedCube;
+	Object cubeLight;
+	Object sphere;
 
-	object water;
+	Object water;
 	ConstantPixelBuffer timerBuffer;
 	ConstantVertexBuffer timerVertexBuffer;
 

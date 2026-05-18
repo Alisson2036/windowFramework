@@ -11,19 +11,18 @@
 #include "Bindables\texture.h"
 #include "Bindables\indexBuffer.h"
 
-class object
+class Object
 {
 	friend class Pipeline;
 public:
 	// Impedir construtores
-	object(object&) = delete;
-	object& operator=(const object&) = delete;
-	object(const object&) = delete;
+	Object(Object&) = delete;
+	Object& operator=(const Object&) = delete;
+	Object(const Object&) = delete;
 
 	// --Construtores padroes--
-
-	object() = default;
-	object(Shader* shader);
+	Object() = default;
+	Object(Shader* shader);
 	void create(Shader* shader);
 
 	// --Loaders--

@@ -20,7 +20,7 @@ public:
 
 private:
 	Texture* tex;
-	object obj;
+	Object obj;
 	Shader shader2d;
 	vec2 resolution;
 

@@ -1,6 +1,6 @@
 #include "window.h"
 
-window::window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int _width, int _height):
+Window::Window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int _width, int _height):
 	hInstance(GetModuleHandle(NULL)),
 	lastMessage(MSG()),
 	windowWidth(_width),
@@ -68,13 +68,13 @@ window::window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int _widt
 
 }
 
-window::~window()
+Window::~Window()
 {
 	UnregisterClass(className, hInstance);
 	//DestroyWindow(hwnd);
 }
 
-int window::update()
+int Window::update()
 {
 
 	//acessa a ultima mensagem da janela e coloca o codigo de retorno em r
@@ -97,43 +97,43 @@ int window::update()
 }
 
 
-HINSTANCE window::get_hInstance() const
+HINSTANCE Window::get_hInstance() const
 {
 	return HINSTANCE();
 }
 
-Mouse* window::getMousePointer()
+Mouse* Window::getMousePointer()
 {
 	return mouse;
 }
 
-Keyboard* window::getKeyboarPointer()
+Keyboard* Window::getKeyboarPointer()
 {
 	return keyboard;
 }
 
-HWND window::getWindowHandle() const
+HWND Window::getWindowHandle() const
 {
 	return hwnd;
 }
 
 
-void window::setTitle(const std::string& newTitle)
+void Window::setTitle(const std::string& newTitle)
 {
 	SetWindowTextA(hwnd, newTitle.c_str());
 }
 
-void window::setMouse(Mouse* pMouse)
+void Window::setMouse(Mouse* pMouse)
 {
 	mouse = pMouse;
 }
 
-void window::setKeyboard(Keyboard* pKeyboard)
+void Window::setKeyboard(Keyboard* pKeyboard)
 {
 	keyboard = pKeyboard;
 }
 
-void window::setMousePosition(int x, int y)
+void Window::setMousePosition(int x, int y)
 {
 	LPRECT rect = new RECT();
 	GetWindowRect(hwnd, rect);
@@ -145,7 +145,7 @@ void window::setMousePosition(int x, int y)
 
 }
 
-void window::showMouse(bool show)
+void Window::showMouse(bool show)
 {
 	CURSORINFO ci = { sizeof(CURSORINFO) };
 	GetCursorInfo(&ci);
@@ -154,23 +154,23 @@ void window::showMouse(bool show)
 }
 
 
-int window::getWindowSizeX()
+int Window::getWindowSizeX()
 {
 	return windowWidth;
 }
 
-int window::getWindowSizeY()
+int Window::getWindowSizeY()
 {
 	return windowHeight;
 }
 
-LRESULT CALLBACK window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK Window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{
 	case WM_NCCREATE:
 		CREATESTRUCT* structP = reinterpret_cast<CREATESTRUCT*>(lParam);
-		window* wind = reinterpret_cast<window*>(structP->lpCreateParams);
+		Window* wind = reinterpret_cast<Window*>(structP->lpCreateParams);
 
 		wind;
 		
@@ -182,14 +182,14 @@ LRESULT CALLBACK window::messageHandlerSetup(HWND hwnd, UINT msg, WPARAM wParam,
 	return DefWindowProc(hwnd, msg, wParam, lParam);
 }
 
-LRESULT window::messageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT Window::messageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	//pegando o pointer em GWLP_USERDATA, apontando para a classe criadora da janela, e chamando o messageHandlerLocal
-	return reinterpret_cast<window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA))->messageHandlerLocal(hwnd, msg, wParam, lParam);
+	return reinterpret_cast<Window*>(GetWindowLongPtr(hwnd, GWLP_USERDATA))->messageHandlerLocal(hwnd, msg, wParam, lParam);
 	
 }
 
-LRESULT window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
+LRESULT Window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
 	switch (msg)
 	{

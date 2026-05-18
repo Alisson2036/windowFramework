@@ -42,7 +42,7 @@ public:
 
 private:
     vec2 screenSize;           // Tamanho da tela (largura, altura)
-    window win;                // Gerencia a janela da aplicação
+    Window win;                // Gerencia a janela da aplicação
     Graphics gfx;              // Gerencia recursos gráficos (DirectX, etc.)
     Registry registry;         // Registro do sistema ECS
     Pipeline pipeline;         // Pipeline de renderização

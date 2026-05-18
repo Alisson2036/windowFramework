@@ -1,6 +1,6 @@
 #include "app.h"
 
-app::app()
+App::App()
 	:
 	eng(1400, 900),
 	timeSinceCreation()
@@ -171,12 +171,6 @@ app::app()
 	whiteCube->manualLoad("Color", colorsWhite);
 	whiteCube->manualLoadIndices(ind);
 
-
-	// Cria os cubos procedurais
-	colorBlendCube.create(colorBlendShader->getShader());
-	colorBlendCube.load(coloredCube);
-	colorBlendCube.lock();
-
 	cubeLight.create(colorBlendShader->getShader());
 	cubeLight.load(whiteCube);
 	cubeLight.lock();
@@ -288,7 +282,7 @@ app::app()
 }
 
 
-void app::input()
+void App::input()
 {
 	//posicao do mouse na tela 
 	float x = (float)eng.input().mouseX();
@@ -343,7 +337,7 @@ void app::input()
 	else eng.mouseController().setCursor(CursorController::cursorType::normal);
 }
 
-void app::logic()
+void App::logic()
 {
 
 	//cria mais bolas
@@ -386,7 +380,7 @@ void app::logic()
 
 }
 
-void app::draw()
+void App::draw()
 {
 	//preenche a tela
 	eng.getPipeline()->fillScreen(0.2f, 0.6f, 0.9f);
@@ -461,7 +455,7 @@ void app::draw()
 
 
 
-void app::start()
+void App::start()
 {
 
 

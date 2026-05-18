@@ -9,13 +9,13 @@
 
 // Classe responsável por gerenciar a janela da aplicação, incluindo
 // criação, atualização e manipulação de eventos de entrada do usuário.
-class window
+class Window
 {
 public:
 
-	window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int width, int height);
-	window(window& w) = delete;
-	~window();
+	Window(const LPCWSTR name, Mouse* _mouse, Keyboard* _keyboard, int width, int height);
+	Window(Window& w) = delete;
+	~Window();
 
 	int update();
 

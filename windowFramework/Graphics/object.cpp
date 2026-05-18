@@ -1,11 +1,11 @@
 #include "object.h"
 
-object::object(Shader* shader)
+Object::Object(Shader* shader)
 {
 	create(shader);
 }
 
-void object::create(Shader* shader)
+void Object::create(Shader* shader)
 {
 	if (!shader->isInitialized()) _throwMsg("Shader has not been initialized.");
 
@@ -26,13 +26,13 @@ void object::create(Shader* shader)
 	initialized = true;
 }
 
-void object::load(MeshAsset* mesh)
+void Object::load(MeshAsset* mesh)
 {
 	mesh->getData(&dataBuffer);
 	indexes = mesh->getIndices();
 }
 
-void object::loadFromObj(objLoader& obj)
+void Object::loadFromObj(objLoader& obj)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 
@@ -110,7 +110,7 @@ void object::loadFromObj(objLoader& obj)
 	}
 }
 
-void object::loadFromVertexArray(const std::vector<vec3>& vertexArray)
+void Object::loadFromVertexArray(const std::vector<vec3>& vertexArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if(!dataBuffer.containsType("Position")) return;
@@ -120,7 +120,7 @@ void object::loadFromVertexArray(const std::vector<vec3>& vertexArray)
 		dataBuffer.set(&(vertexArray[i]), i, "Position");
 }
 
-void object::loadFromVertexArray(const std::vector<vec2>& vertexArray)
+void Object::loadFromVertexArray(const std::vector<vec2>& vertexArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (!dataBuffer.containsType("Position2d")) return;
@@ -130,7 +130,7 @@ void object::loadFromVertexArray(const std::vector<vec2>& vertexArray)
 		dataBuffer.set(&(vertexArray[i]), i, "Position2d");
 }
 
-void object::loadFromColorArray(const std::vector<color>& ColorArray)
+void Object::loadFromColorArray(const std::vector<color>& ColorArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (!dataBuffer.containsType("Color")) return;
@@ -140,7 +140,7 @@ void object::loadFromColorArray(const std::vector<color>& ColorArray)
 		dataBuffer.set(&(ColorArray[i]), i, "Color");
 }
 
-void object::loadFromTexCoordArray(const std::vector<vec2>& texCoordArray)
+void Object::loadFromTexCoordArray(const std::vector<vec2>& texCoordArray)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (!dataBuffer.containsType("TexCoord")) return;
@@ -150,12 +150,12 @@ void object::loadFromTexCoordArray(const std::vector<vec2>& texCoordArray)
 		dataBuffer.set(&(texCoordArray[i]), i, "TexCoord");
 }
 
-void object::setVertexIndices(const std::vector<UINT>& vertexIndices)
+void Object::setVertexIndices(const std::vector<UINT>& vertexIndices)
 {
 	indexes = vertexIndices;
 }
 
-void object::setInstancesPos(const std::vector<vec3>& positions)
+void Object::setInstancesPos(const std::vector<vec3>& positions)
 {
 	if (!pShader->hasPerInstanceData())
 		_throwMsg("Object does not support instance data");
@@ -173,12 +173,12 @@ void object::setInstancesPos(const std::vector<vec3>& positions)
 	}
 }
 
-int object::getVertexCount()
+int Object::getVertexCount()
 {
 	return dataBuffer.getElementCount();
 }
 
-void object::lock()
+void Object::lock()
 {
 	if (!initialized) _throwMsg("Class not initialized");
 
@@ -188,36 +188,36 @@ void object::lock()
 		ib.create(indexes.data(), indexes.size());
 }
 
-void object::set(vec3 position, vec3 angle)
+void Object::set(vec3 position, vec3 angle)
 {
 	pos.set(position, angle);
 	needUpdate = true;
 }
 
-void object::move(vec3 vector)
+void Object::move(vec3 vector)
 {
 	pos.move(vector);
 	needUpdate = true;
 }
 
-void object::rotate(vec3 angle)
+void Object::rotate(vec3 angle)
 {
 	pos.rotate(angle);
 	needUpdate = true;
 }
 
-void object::setScale(vec3 Scale)
+void Object::setScale(vec3 Scale)
 {
 	pos.setScale(Scale);
 	needUpdate = true;
 }
 
-void object::setTexture(Texture* text, int slot)
+void Object::setTexture(Texture* text, int slot)
 {
 	textures[slot] = text;
 }
 
-void object::reserveVertexBuffer(int vertexCount)
+void Object::reserveVertexBuffer(int vertexCount)
 {
 	if (!initialized) _throwMsg("Class not initialized");
 	if (vertexCount < getVertexCount()) _throwMsg("Not enough vertex data");
@@ -226,7 +226,7 @@ void object::reserveVertexBuffer(int vertexCount)
 
 }
 
-ConstantVertexBuffer* object::getConstantVertexBuffer()
+ConstantVertexBuffer* Object::getConstantVertexBuffer()
 {
 	if (!initialized) _throwMsg("Class not initialized");
 
