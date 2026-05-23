@@ -335,5 +335,8 @@
     <ClInclude Include="Assets\MaterialAsset.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Utils\PagedSparseSet.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

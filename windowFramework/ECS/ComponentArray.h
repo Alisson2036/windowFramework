@@ -1,4 +1,9 @@
 #pragma once
+#include <limits>
+#include "..\Utils\PagedSparseSet.h"
+
+
+
 class IComponentArray {
 public:
     virtual ~IComponentArray() = default;
@@ -11,55 +16,59 @@ public:
 template<typename Component>
 class ComponentArray : public IComponentArray {
 public:
+    ComponentArray()
+        :
+        m_entityToIndex((size_t)(std::numeric_limits<size_t>::max)())
+    {}
     void insert(Entity entity, Component component) 
     {
-        if (entityToIndex.find(entity) == entityToIndex.end()) {
-            entityToIndex[entity] = components.size();
-            m_indexToEntity[components.size()] = entity;
-            components.push_back(component);
+        if (!containsEntity(entity)) {
+            m_entityToIndex[entity] = m_components.size();
+            m_indexToEntity.push_back(entity);
+            m_components.push_back(component);
         }
     }
     void remove(Entity entity) override 
     {
-        // Remoção eficiente mantendo o vetor denso
-        size_t index = entityToIndex[entity];
-        size_t lastIndex = components.size() - 1;
-        components[index] = components[lastIndex];
+        // Swap and pop
+        size_t index = m_entityToIndex[entity];
+        size_t lastIndex = m_components.size() - 1;
         Entity lastEntity = m_indexToEntity[lastIndex];
-        entityToIndex[lastEntity] = index;
-        m_indexToEntity[index] = lastEntity;
-        components.pop_back();
-        entityToIndex.erase(entity);
-        m_indexToEntity.erase(lastIndex);
+        m_components[index] = m_components[lastIndex];
+		m_indexToEntity[index] = lastEntity;
+        m_entityToIndex[lastEntity] = index;
+        m_components.pop_back();
+        m_indexToEntity.pop_back();
+        m_entityToIndex[entity] = (std::numeric_limits<size_t>::max)();
     }
     Component* get(Entity entity) {
         // MELHORAR ISSO AQUI
-        return &components[entityToIndex[entity]];
+        return &m_components[m_entityToIndex[entity]];
     }
     Component* getByIndex(size_t index)
     {
-        return &components[index];
+        return &m_components[index];
     }
     bool containsEntity(Entity entity) override
     {
-        return entityToIndex.find(entity) != entityToIndex.end();
+        auto* index = m_entityToIndex.get(entity);
+        return index != nullptr && (*index) != (std::numeric_limits<size_t>::max)();
     }
     std::vector<Component>& getArray()
     {
-        return components;
+        return m_components;
     }
     size_t getArraySize() override
     {
-        return components.size();
+        return m_components.size();
     }
     Entity indexToEntity(size_t index) override
     {
-        auto it = m_indexToEntity.find(index);
-        if (it == m_indexToEntity.end()) return 0;
+        if (index >= m_indexToEntity.size()) return 0;
         return m_indexToEntity[index];
     }
 private:
-    std::vector<Component> components;
-    std::unordered_map<Entity, size_t> entityToIndex;
-    std::unordered_map<size_t, Entity> m_indexToEntity;
+    std::vector<Component> m_components;
+    PagedSparseSet<size_t> m_entityToIndex;
+    std::vector<Entity> m_indexToEntity;
 };

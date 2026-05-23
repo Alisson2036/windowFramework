@@ -228,6 +228,7 @@
     <ClInclude Include="Graphics\Shader\shader.h" />
     <ClInclude Include="Graphics\Shader\shaderDesc.h" />
     <ClInclude Include="Graphics\Bindables\texture.h" />
+    <ClInclude Include="Utils\PagedSparseSet.h" />
     <ClInclude Include="Utils\timer.h" />
     <ClInclude Include="Math\vec2.h" />
     <ClInclude Include="Math\vec3.h" />
