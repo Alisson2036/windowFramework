@@ -158,7 +158,7 @@ void Pipeline::drawScene()
 
 	// Drawing
 	std::vector<DirectX::XMMATRIX> tempInstBuffer(instancesBuffer.getArraySize());
-	for (auto const [key, value] : batches)
+	for (const auto& [key, value] : batches)
 	{
 		// VertexBuffer from cache
 		auto buffer = vbCache->getBuffer(

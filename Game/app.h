@@ -70,7 +70,7 @@ private:
 
 	
 	Object texturedCube;
-	Object cubeLight;
+	Entity cubeLight;
 	Object sphere;
 
 	Object water;

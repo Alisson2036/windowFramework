@@ -171,10 +171,6 @@ App::App()
 	whiteCube->manualLoad("Color", colorsWhite);
 	whiteCube->manualLoadIndices(ind);
 
-	cubeLight.create(colorBlendShader->getShader());
-	cubeLight.load(whiteCube);
-	cubeLight.lock();
-	cubeLight.setScale({ 0.2f, 0.2f, 0.2f });
 
 	//cria o cubo texturizado
 	texturedCube.create(texturedShader->getShader());
@@ -218,6 +214,14 @@ App::App()
 			);
 		}
 	}
+	// Cria o light cube
+	cubeLight = factory->createObject(
+		coloredMat,
+		whiteCube,
+		SpatialData(vec3(10, 10, 10), vec3())
+	);
+	pipeline->getRegistry()->getComponent<SpatialData>(cubeLight)->setScale(vec3(.2f,.2f,.2f));
+
 
 
 	//cria a water
@@ -373,7 +377,8 @@ void App::logic()
 
 	//muda posicao da luz 
 	light.updatePos({ 2.0f + 3, a, 0.0f });
-	cubeLight.set({ 2.0f + 3,a,0.0f }, {0.f,0.f,0.f});
+	//cubeLight.set({ 2.0f + 3,a,0.0f }, {0.f,0.f,0.f});
+	pipeline->getRegistry()->getComponent<SpatialData>(cubeLight)->set(vec3(2.0f + 3, a, 0.0f), vec3());
 
 	//muda posicao do cubo texturizado
 	texturedCube.set(cubePos, cubeRot);
@@ -407,9 +412,6 @@ void App::draw()
 
 	//renderiza o chao
 	//pipeline->drawObject(normalCube);
-
-	//desenha a luz
-	pipeline->drawObject(cubeLight);
 
 
 	//coloca o cubo texturizado
