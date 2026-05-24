@@ -3,6 +3,9 @@
 #include <memory>
 #include <string>
 #include <filesystem>
+#include <queue>
+#include <utility>
+#include <concepts>
 #include "IAsset.h"
 #include "..\Core\exception.h"
 
@@ -20,11 +23,11 @@ public:
      * @param args Argumentos para a criação do asset
      */
     template<typename T, typename... Args>
+    requires std::derived_from<T, IAsset> && std::constructible_from<T, Args...>
     T* CreateAsset(const std::string& name, Args&&... args)
     {
-        static_assert(std::is_base_of_v<IAsset, T>, "T deve herdar de IAsset");
-        static_assert(std::is_constructible_v<T, Args...>, "Os argumentos fornecidos não correspondem a um construtor válido para o tipo T");
         auto asset = std::make_unique<T>(std::forward<Args>(args)...);
+        asset->setId(getNextId(), {});
         T* assetPtr = asset.get();
         assets[name] = std::move(asset);
         return assetPtr;
@@ -58,7 +61,16 @@ public:
     void Clear();
 
 private:
+    AssetId getNextId();
+    void removeId(const AssetId& id);
+
+private:
     std::unordered_map<std::string, std::unique_ptr<IAsset>> assets;
+
+    // Id creation system
+    AssetId biggestId = 0;
+    std::queue<AssetId> freeIds;
+    
 };
 
 

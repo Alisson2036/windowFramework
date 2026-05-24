@@ -25,3 +25,16 @@ void AssetManager::Clear()
 {
     assets.clear();
 }
+
+AssetId AssetManager::getNextId()
+{
+    if (freeIds.empty()) return biggestId++;
+    AssetId id = freeIds.front();
+    freeIds.pop();
+    return id;
+}
+
+void AssetManager::removeId(const AssetId& id)
+{
+    freeIds.push(id);
+}
