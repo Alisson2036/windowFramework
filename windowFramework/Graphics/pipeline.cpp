@@ -141,64 +141,70 @@ void Pipeline::drawScene()
 		light->bind(0, 2);
 
 	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
-	std::unordered_map<
-		std::pair<MeshAsset*, MaterialAsset*>,
-		std::vector<Entity>,
-		VertexBufferCacheHash
-	> batches;
+	std::vector<Renderer::RenderObject> objectBuffer;
 
 
 	// Creating batches
 	for (auto i : view)
 	{
 		CMeshNonIndexed* mesh = i.get<CMeshNonIndexed>();
-
-		batches[std::pair(mesh->mesh, mesh->material)].push_back(i.getEntity());
+		objectBuffer.push_back(Renderer::RenderObject{ mesh->material, mesh->mesh, *i.get<SpatialData>() });
 	}
 
 	// Drawing
-	std::vector<DirectX::XMMATRIX> tempInstBuffer(instancesBuffer.getArraySize());
-	for (const auto& [key, value] : batches)
+	std::vector<DirectX::XMMATRIX> tempInstBuffer;
+	tempInstBuffer.reserve(instancesBuffer.getArraySize());
+	auto buffer = vbCache->getBuffer(
+		objectBuffer[0].mesh,
+		objectBuffer[0].material->getShader()
+	);
+
+	for (int i = 0; i < objectBuffer.size(); i++)
 	{
+		auto& renderObject = objectBuffer[i];
+		
+		tempInstBuffer.push_back(renderObject.transformation.getMatrix());
+
+		// Checks if render can wait (batch is being made)
+		auto type = VertexBufferCacheHash()({ objectBuffer[i].mesh, objectBuffer[i].material });
+		if (tempInstBuffer.size() != tempInstBuffer.capacity() && i < objectBuffer.size() - 1) {
+			auto nextType = VertexBufferCacheHash()({ objectBuffer[i+1].mesh, objectBuffer[i+1].material });
+			if(type == nextType)
+				continue;
+		}
+		
+
 		// VertexBuffer from cache
 		auto buffer = vbCache->getBuffer(
-			key.first,
-			key.second->getShader()
+			renderObject.mesh,
+			renderObject.material->getShader()
 		);
-
 		
 		// Binds
 		buffer->vBuffer.bind();     // VertexBuffer
-		key.second->bindMaterial(); // Shader and textures
+		renderObject.material->bindMaterial(); // Shader and textures
 		
 
-		// Drawing batches
-		UINT maxSize = instancesBuffer.getArraySize();
-		for(int startingIndex = 0; startingIndex < value.size(); startingIndex += maxSize)
+		// Calcs the amount of instances to draw in this batch
+		const UINT amount = tempInstBuffer.size();
+
+		// Updates instances buffer
+		instancesBuffer.update(tempInstBuffer.data(), amount );
+
+		// Binding buffer
+		instancesBuffer.bind();
+
+		// Drawing
+		if (buffer->iBuffer.isInitialized())
 		{
-			// Calcs the amount of instances to draw in this batch
-			const UINT amount = min(value.size() - startingIndex, maxSize);
-
-			// Assemble structuredBuffer
-			instanceBufferSetup(
-				&tempInstBuffer,
-				value,
-				startingIndex
-			);
-			instancesBuffer.update(tempInstBuffer.data(), amount );
-
-			// Binding buffer
-			instancesBuffer.bind();
-
-			// Drawing
-			if (buffer->iBuffer.isInitialized())
-			{
-				buffer->iBuffer.bind();
-				context->DrawIndexedInstanced(buffer->vCount, amount, 0, 0, 0);
-			}
-			else
-				context->DrawInstanced(buffer->vCount, amount, 0, 0);
+			buffer->iBuffer.bind();
+			context->DrawIndexedInstanced(buffer->vCount, amount, 0, 0, 0);
 		}
+		else
+			context->DrawInstanced(buffer->vCount, amount, 0, 0);
+		
+		// Resets tempInstBuffer
+		tempInstBuffer.clear();
 	}
 }
 
@@ -264,20 +270,4 @@ vec2 Pipeline::getWindowResolution() const
 Registry* Pipeline::getRegistry() const
 {
 	return registry;
-}
-
-void Pipeline::instanceBufferSetup(
-	std::vector<DirectX::XMMATRIX>* outBuffer,
-	const std::vector<Entity>& entities,
-	UINT startingIndex
-)
-{
-	// Gets spatial data from each entity and bundles them
-	// inside a vector of matrices
-	const int maxSize = outBuffer->size();
-	for (int i = startingIndex; i < entities.size() && i < startingIndex + maxSize; i++)
-	{
-		auto m = registry->getComponent<SpatialData>(entities[i]);
-		(*outBuffer)[i - startingIndex] = m->getMatrix();
-	}
 }

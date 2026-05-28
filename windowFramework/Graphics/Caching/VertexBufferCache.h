@@ -7,12 +7,9 @@
 
 
 struct VertexBufferCacheHash {
-    std::size_t operator()(const std::pair<void*, void*>& p) const {
-        auto h1 = std::hash<void*>{}(p.first);
-        auto h2 = std::hash<void*>{}(p.second);
-
-        // Hash combination formula
-        return h1 ^ (h2 + 0x9e3779b9 + (h1 << 6) + (h1 >> 2));
+    std::uint64_t operator()(const std::pair<IAsset*, IAsset*>& p) const {
+        return (static_cast<uint64_t>(p.second->getId())) << 32 | 
+            static_cast<uint64_t>(p.second->getId());
     }
 };
 
@@ -24,7 +21,7 @@ public:
     {
         IndexBuffer iBuffer;
         VertexBuffer vBuffer;
-        UINT vCount;
+        UINT vCount=0;
     };
 
 

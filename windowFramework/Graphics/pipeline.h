@@ -16,6 +16,7 @@
 #include "Caching\VertexBufferCache.h"
 #include "Shader\shaderDesc.h"
 #include "object.h"
+#include "Renderer.h"
 #include "Bindables\renderTarget.h"
 #include "Bindables\depthStencil.h"
 
@@ -61,14 +62,6 @@ public:
 	Registry* getRegistry() const;
 
 private:
-	void instanceBufferSetup(
-		std::vector<DirectX::XMMATRIX>* outBuffer,
-		const std::vector<Entity>& entities,
-		UINT startingIndex
-	);
-	void internalDrawBatch(
-
-	);
 
 
 private:
