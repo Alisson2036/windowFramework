@@ -151,6 +151,18 @@ void Pipeline::drawScene()
 		objectBuffer.push_back(Renderer::RenderObject{ mesh->material, mesh->mesh, *i.get<SpatialData>() });
 	}
 
+	// Vertex buffer hash functor
+	VertexBufferCacheHash vbHash;
+
+	// Array sorting
+	std::sort(
+		objectBuffer.begin(),
+		objectBuffer.end(),
+		[vbHash](const Renderer::RenderObject& a, const Renderer::RenderObject& b) {
+			return vbHash({ a.mesh, a.material }) < vbHash({ b.mesh, b.material });
+		}
+	);
+
 	// Drawing
 	std::vector<DirectX::XMMATRIX> tempInstBuffer;
 	tempInstBuffer.reserve(instancesBuffer.getArraySize());
