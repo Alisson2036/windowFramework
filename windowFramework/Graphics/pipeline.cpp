@@ -50,7 +50,7 @@ Pipeline::Pipeline(
 	// Cria o structured buffer para instancias, apenas para teste
 	instancesBuffer.create(
 		nullptr,
-		5
+		128
 	);
 	instancesBuffer.setSlot(0);
 
