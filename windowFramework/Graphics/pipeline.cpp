@@ -171,16 +171,17 @@ void Pipeline::drawScene()
 		objectBuffer[0].material->getShader()
 	);
 
-	for (int i = 0; i < objectBuffer.size(); i++)
+	for (size_t i = 0; i < objectBuffer.size(); i++)
 	{
 		auto& renderObject = objectBuffer[i];
 		
 		tempInstBuffer.push_back(renderObject.transformation.getMatrix());
 
 		// Checks if render can wait (batch is being made)
-		auto type = VertexBufferCacheHash()({ objectBuffer[i].mesh, objectBuffer[i].material });
+		auto type = vbHash({ objectBuffer[i].mesh, objectBuffer[i].material });
 		if (tempInstBuffer.size() != tempInstBuffer.capacity() && i < objectBuffer.size() - 1) {
-			auto nextType = VertexBufferCacheHash()({ objectBuffer[i+1].mesh, objectBuffer[i+1].material });
+			auto& next = objectBuffer[i+1];
+			auto nextType = vbHash({ next.mesh, next.material });
 			if(type == nextType)
 				continue;
 		}

@@ -8,7 +8,7 @@
 
 struct VertexBufferCacheHash {
     std::uint64_t operator()(const std::pair<IAsset*, IAsset*>& p) const {
-        return (static_cast<uint64_t>(p.second->getId())) << 32 | 
+        return (static_cast<uint64_t>(p.first->getId())) << 32 | 
             static_cast<uint64_t>(p.second->getId());
     }
 };
