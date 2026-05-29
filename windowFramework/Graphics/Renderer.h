@@ -10,19 +10,16 @@
 class Renderer
 {
 public:
-	Renderer() = default;
+	Renderer(
+		Microsoft::WRL::ComPtr<ID3D11DeviceContext> context,
+		VertexBufferCache* vbCache
+	);
 
 	struct RenderObject {
 		MaterialAsset* material;
 		MeshAsset* mesh;
 		SpatialData transformation;
 	};
-
-	// Clears buffer but memory stays allocated
-	void clearBuffer();
-
-	// Frees memory used for buffer
-	void eraseBuffer();
 
 	void setObjects(std::span<RenderObject> bufferSpan);
 
@@ -40,9 +37,16 @@ private:
 	void bufferSetup();
 	void executeOperations();
 
+	void createNewInstancesBuffer();
 
 private:
-	std::span<RenderObject> objectBuffer;
 
-	std::vector<StructuredBuffer<DirectX::XMMATRIX>> instancesBuffer;
+	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_context;
+
+	std::span<RenderObject> m_objectBuffer;
+
+	VertexBufferCache* m_vbCache;
+	VertexBufferCacheHash m_vbHash;
+
+	std::vector<StructuredBuffer<DirectX::XMMATRIX>> m_instancesBuffer;
 };

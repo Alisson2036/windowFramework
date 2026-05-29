@@ -70,6 +70,7 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
+
 	// Back buffer e depth stencil da janela
 
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> backBufferView;
@@ -90,6 +91,8 @@ private:
 	// Caching
 	VertexBufferCache* vbCache;
 
+	// Renderer
+	Renderer renderer;
 
 	BlendState blendState;
 	Camera* camera;

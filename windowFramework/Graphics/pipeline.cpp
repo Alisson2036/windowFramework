@@ -14,13 +14,18 @@ Pipeline::Pipeline(
 	vec2 _windowResolution
 	)
 	:
+	device(_device),
+	context(_context),
 	camera(nullptr),
 	currentRenderTarget(nullptr),
-	light(nullptr)
+	light(nullptr),
+	vbCache(_vbCache),
+	registry(_registry),
+	backDSBuffer(_backDSBuffer),
+	backBufferView(_backBufferView),
+	windowResolution(_windowResolution),
+	renderer(context, vbCache)
 {
-	device = _device;
-	context = _context;
-
 	aliasedSampler.create(true, false);
 	sampler.create(false, false);
 	
@@ -34,17 +39,6 @@ Pipeline::Pipeline(
 	cameraPositionBuffer.setSlot(1);
 	//cria o blendState
 	blendState.create();
-
-	windowResolution = _windowResolution;
-
-	backDSBuffer = _backDSBuffer;
-	backBufferView = _backBufferView;
-
-	// Seta o registry
-	registry = _registry;
-
-	// Seta o vbCache
-	vbCache = _vbCache;
 
 
 	// Cria o structured buffer para instancias, apenas para teste
@@ -163,62 +157,9 @@ void Pipeline::drawScene()
 		}
 	);
 
-	// Drawing
-	std::vector<DirectX::XMMATRIX> tempInstBuffer;
-	tempInstBuffer.reserve(instancesBuffer.getArraySize());
-	auto buffer = vbCache->getBuffer(
-		objectBuffer[0].mesh,
-		objectBuffer[0].material->getShader()
-	);
+	renderer.setObjects(objectBuffer);
+	renderer.execute();
 
-	for (size_t i = 0; i < objectBuffer.size(); i++)
-	{
-		auto& renderObject = objectBuffer[i];
-		
-		tempInstBuffer.push_back(renderObject.transformation.getMatrix());
-
-		// Checks if render can wait (batch is being made)
-		auto type = vbHash({ objectBuffer[i].mesh, objectBuffer[i].material });
-		if (tempInstBuffer.size() != tempInstBuffer.capacity() && i < objectBuffer.size() - 1) {
-			auto& next = objectBuffer[i+1];
-			auto nextType = vbHash({ next.mesh, next.material });
-			if(type == nextType)
-				continue;
-		}
-		
-
-		// VertexBuffer from cache
-		auto buffer = vbCache->getBuffer(
-			renderObject.mesh,
-			renderObject.material->getShader()
-		);
-		
-		// Binds
-		buffer->vBuffer.bind();     // VertexBuffer
-		renderObject.material->bindMaterial(); // Shader and textures
-		
-
-		// Calcs the amount of instances to draw in this batch
-		const UINT amount = tempInstBuffer.size();
-
-		// Updates instances buffer
-		instancesBuffer.update(tempInstBuffer.data(), amount );
-
-		// Binding buffer
-		instancesBuffer.bind();
-
-		// Drawing
-		if (buffer->iBuffer.isInitialized())
-		{
-			buffer->iBuffer.bind();
-			context->DrawIndexedInstanced(buffer->vCount, amount, 0, 0, 0);
-		}
-		else
-			context->DrawInstanced(buffer->vCount, amount, 0, 0);
-		
-		// Resets tempInstBuffer
-		tempInstBuffer.clear();
-	}
 }
 
 void Pipeline::setLight(Light* _light)
