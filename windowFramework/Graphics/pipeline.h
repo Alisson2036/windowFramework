@@ -19,11 +19,13 @@
 #include "Renderer.h"
 #include "Bindables\renderTarget.h"
 #include "Bindables\depthStencil.h"
+#include "RenderPass\RenderPassMask.h"
 
 #include "light.h"
 #include "..\Math\SpatialData.h"
 #include "Camera.h"
 #include "..\Math\vec2.h"
+#include "RenderPass\IRenderPass.h"
 
 // Temporario
 #include "Bindables\structuredBuffer.h"
@@ -46,8 +48,10 @@ public:
 	void drawObject(Object& obj);
 	void drawScene();
 
-	// --Setters--
+	// Render passes
 
+
+	// --Setters--
 	void setLight(Light* _light);
 	void setCamera(Camera* _camera);
 	void setRenderTarget(renderTarget* target, depthStencil* dtTarget);
@@ -64,9 +68,6 @@ public:
 private:
 
 
-private:
-
-
 	Microsoft::WRL::ComPtr<ID3D11Device>        device;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
 
@@ -76,6 +77,11 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> backBufferView;
 	depthStencil* backDSBuffer;
 
+	// Render passes
+	std::vector<RenderPassMask> renderMasks;
+	std::vector<std::vector<Renderer::RenderObject>> renderBuckets;
+	
+
 	// Samplers
 	Sampler aliasedSampler;
 	Sampler sampler;
@@ -83,6 +89,9 @@ private:
 	// Camera buffers
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
+
+	// Render passes
+	std::vector<RenderPassMask> masks;
 
 	// RCS vars
 	Registry* registry;

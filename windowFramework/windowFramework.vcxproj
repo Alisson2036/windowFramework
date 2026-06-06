@@ -151,6 +151,7 @@
     <ClCompile Include="Graphics\Camera.cpp" />
     <ClCompile Include="Graphics\Bindables\depthStencil.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
+    <ClCompile Include="Graphics\RenderPass\ForwardRender.cpp" />
     <ClCompile Include="Graphics\Shader\ShaderCompiler.cpp" />
     <ClCompile Include="Input\inputProxy.cpp" />
     <ClCompile Include="Input\CursorController.cpp" />
@@ -201,6 +202,9 @@
     <ClInclude Include="Graphics\Caching\VertexBufferCache.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\Renderer.h" />
+    <ClInclude Include="Graphics\RenderPass\ForwardRender.h" />
+    <ClInclude Include="Graphics\RenderPass\IRenderPass.h" />
+    <ClInclude Include="Graphics\RenderPass\RenderPassMask.h" />
     <ClInclude Include="Graphics\Shader\ShaderCompiler.h" />
     <ClInclude Include="Input\inputProxy.h" />
     <ClInclude Include="Input\CursorController.h" />

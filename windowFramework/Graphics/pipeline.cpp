@@ -24,10 +24,13 @@ Pipeline::Pipeline(
 	backDSBuffer(_backDSBuffer),
 	backBufferView(_backBufferView),
 	windowResolution(_windowResolution),
-	renderer(context, vbCache)
+	renderer(context, vbCache),
+	renderBuckets(sizeof(RenderPassMask)*8u)
 {
 	aliasedSampler.create(true, false);
 	sampler.create(false, false);
+
+	// Allocates render buckets
 	
 	//cria projection matrix
 	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };//camera->getProjectionMatrix() };
@@ -135,14 +138,29 @@ void Pipeline::drawScene()
 		light->bind(0, 2);
 
 	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
-	std::vector<Renderer::RenderObject> objectBuffer;
 
+	// Clears buffers
+	for (auto& i : renderBuckets) i.clear();
 
 	// Creating batches
-	for (auto i : view)
-	{
-		CMeshNonIndexed* mesh = i.get<CMeshNonIndexed>();
-		objectBuffer.push_back(Renderer::RenderObject{ mesh->material, mesh->mesh, *i.get<SpatialData>() });
+	for (auto& obj : view) {
+		CMeshNonIndexed* mesh = obj.get<CMeshNonIndexed>();
+		SpatialData pos = *obj.get<SpatialData>();
+		uint32_t mask = mesh->renderMask.flags;
+
+		while (mask > 0) {
+			// 1. Encontra o índice do bit ativo mais à direita em O(1) via hardware
+			int bucket_idx = std::countr_zero(mask);
+
+			// 2. Adiciona o objeto no bucket correspondente
+			renderBuckets[bucket_idx].push_back(
+				Renderer::RenderObject{ mesh->material, mesh->mesh, pos }
+			);
+
+			// 3. O "pulo do gato": limpa o bit mais à direita que acabamos de processar
+			// Ex: 0b110 & 0b101 = 0b100 (o bit 1 sumiu, sobrou o bit 2)
+			mask &= (mask - 1);
+		}
 	}
 
 	// Vertex buffer hash functor
@@ -150,14 +168,14 @@ void Pipeline::drawScene()
 
 	// Array sorting
 	std::sort(
-		objectBuffer.begin(),
-		objectBuffer.end(),
+		renderBuckets[RenderMask::Opaque].begin(),
+		renderBuckets[RenderMask::Opaque].end(),
 		[vbHash](const Renderer::RenderObject& a, const Renderer::RenderObject& b) {
 			return vbHash({ a.mesh, a.material }) < vbHash({ b.mesh, b.material });
 		}
 	);
 
-	renderer.setObjects(objectBuffer);
+	renderer.setObjects(renderBuckets[RenderMask::Opaque]);
 	renderer.execute();
 
 }
