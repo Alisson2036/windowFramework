@@ -32,9 +32,9 @@ void VertexShader::bind()
 	}
 }
 
-Microsoft::WRL::ComPtr<ID3DBlob> VertexShader::getBlob()
+ID3DBlob* VertexShader::getBlob()
 {
-	return vertexShaderBlob;
+	return vertexShaderBlob.Get();
 }
 
 void VertexShader::createShader()

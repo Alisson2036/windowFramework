@@ -11,14 +11,14 @@ public:
 	//virtual void setDevice(Microsoft::WRL::ComPtr<ID3D11Device> _device) = 0;
 	//virtual void setContext(Microsoft::WRL::ComPtr<ID3D11DeviceContext> _deviceContext) = 0;
 
-	static void setDevice(Microsoft::WRL::ComPtr<ID3D11Device> _device);
-	static void setContext(Microsoft::WRL::ComPtr<ID3D11DeviceContext> _deviceContext);
+	static void setDevice(ID3D11Device* _device);
+	static void setContext(ID3D11DeviceContext* _deviceContext);
 
 	bool isInitialized();
 protected:
 
-	Microsoft::WRL::ComPtr<ID3D11Device> getDevice();
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> getContext();
+	ID3D11Device* getDevice();
+	ID3D11DeviceContext* getContext();
 
 	bool initialized = false;
 

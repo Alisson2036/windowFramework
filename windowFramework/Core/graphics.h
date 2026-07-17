@@ -27,8 +27,8 @@ public:
 
 
 	//classe que armazena pointers para os objetos
-	Microsoft::WRL::ComPtr<ID3D11Device> getDevice();
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> getDeviceContext();
+	ID3D11Device* getDevice();
+	ID3D11DeviceContext* getDeviceContext();
 	renderTarget* getBackBuffer();
 	depthStencil* getBackDSBuffer();
 

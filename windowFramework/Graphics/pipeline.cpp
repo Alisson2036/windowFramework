@@ -5,8 +5,8 @@
 
 
 Pipeline::Pipeline(
-	Microsoft::WRL::ComPtr<ID3D11Device> _device,
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
+	ID3D11Device* _device,
+	ID3D11DeviceContext* _context,
 	renderTarget* _backBuffer,
 	Registry* _registry,
 	VertexBufferCache* _vbCache,
@@ -158,6 +158,7 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 		);
 	}
 
+	// Rendering passes
 	for (auto pass : renderPasses)
 	{
 		uint32_t mask = pass->getRenderMaskFilter();
@@ -183,17 +184,17 @@ void Pipeline::setRenderTarget(renderTarget* target, depthStencil* dtTarget)
 {
 	currentRenderTarget = target;
 
-	if(target)
-		target->bind();
-	if (dtTarget)
-		dtTarget->bind();
+	if (target)   target->bind();
+	if (dtTarget) dtTarget->bind();
 
-	if(target && dtTarget)
-		context->OMSetRenderTargets(1, target->getViewPointer(), dtTarget->getViewPointer());
-	else if(target)
-		context->OMSetRenderTargets(1, target->getViewPointer(), NULL);
-	else
-		context->OMSetRenderTargets(0, NULL, dtTarget->getViewPointer());
+	ID3D11RenderTargetView* rtv = target ? target->getView() : nullptr;
+	ID3D11DepthStencilView* dsv = dtTarget ? dtTarget->getView() : nullptr;
+
+	context->OMSetRenderTargets(
+		rtv ? 1 : 0,
+		rtv ? &rtv : nullptr,
+		dsv
+	);
 }
 
 void Pipeline::drawToScreen()
@@ -204,7 +205,9 @@ void Pipeline::drawToScreen()
 	//bind depth stencil state na pipeline
 	backDSBuffer->bind();
 	//configura render target
-	context->OMSetRenderTargets(1, backBuffer->getViewPointer(), backDSBuffer->getViewPointer());
+
+	ID3D11RenderTargetView* rtv = backBuffer->getView();
+	context->OMSetRenderTargets(1, &rtv, backDSBuffer->getView());
 }
 
 void Pipeline::fillScreen(float r, float g, float b)

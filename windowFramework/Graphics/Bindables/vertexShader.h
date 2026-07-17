@@ -15,7 +15,7 @@ public:
 
 	void bind() override;
 
-	Microsoft::WRL::ComPtr<ID3DBlob> getBlob();
+	ID3DBlob* getBlob();
 
 private:
 	void createShader();

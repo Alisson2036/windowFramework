@@ -60,7 +60,7 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	{
 		//d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, renderTargetView.GetAddressOf());
 		backBuffer.create(pBackBuffer);
-		renderTargetView = *backBuffer.getViewPointer();
+		renderTargetView = backBuffer.getView();
 	}
 	else _throw;
 	
@@ -70,14 +70,14 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	drawToScreen();
 }
 
-Microsoft::WRL::ComPtr<ID3D11Device> Graphics::getDevice()
+ID3D11Device* Graphics::getDevice()
 {
-	return d3dDevice;
+	return d3dDevice.Get();
 }
 
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getDeviceContext()
+ID3D11DeviceContext* Graphics::getDeviceContext()
 {
-	return deviceContext;
+	return deviceContext.Get();
 }
 
 renderTarget* Graphics::getBackBuffer()
@@ -100,7 +100,7 @@ void Graphics::drawToScreen()
 	//bind depth stencil state na pipeline
 	depthStencilBuffer.bind();
 	//configura render target
-	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilBuffer.getViewPointer());
+	deviceContext->OMSetRenderTargets(1, renderTargetView.GetAddressOf(), depthStencilBuffer.getView());
 }
 
 

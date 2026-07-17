@@ -63,7 +63,7 @@ void depthStencil::clear()
 	getContext()->ClearDepthStencilView(depthStencilView.Get(), D3D11_CLEAR_DEPTH, 1.0f, 0u);
 }
 
-ID3D11DepthStencilView* depthStencil::getViewPointer()
+ID3D11DepthStencilView* depthStencil::getView()
 {
 	if (initialized)
 		return depthStencilView.Get();

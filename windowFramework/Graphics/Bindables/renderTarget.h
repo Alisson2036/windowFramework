@@ -23,7 +23,7 @@ public:
 	void clear();
 	void fill(float r, float g, float b);
 
-	ID3D11RenderTargetView** getViewPointer();
+	ID3D11RenderTargetView* getView();
 	void bind() override;
 
 private:

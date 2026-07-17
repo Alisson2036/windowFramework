@@ -35,8 +35,8 @@ class Pipeline
 {
 public:
 	Pipeline(
-		Microsoft::WRL::ComPtr<ID3D11Device> _device,
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
+		ID3D11Device* _device,
+		ID3D11DeviceContext* _context,
 		renderTarget* _backBuffer,
 		Registry* _registry,
 		VertexBufferCache* _vbCache,
@@ -68,8 +68,8 @@ public:
 private:
 
 
-	Microsoft::WRL::ComPtr<ID3D11Device>        device;
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+	ID3D11Device*        device;
+	ID3D11DeviceContext* context;
 
 
 	// Back buffer e depth stencil da janela

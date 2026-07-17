@@ -2,25 +2,25 @@
 
 
 
-Microsoft::WRL::ComPtr<ID3D11Device> device;
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> context;
+ID3D11Device* device;
+ID3D11DeviceContext* context;
 
-void Bindable::setDevice(Microsoft::WRL::ComPtr<ID3D11Device> _device)
+void Bindable::setDevice(ID3D11Device* _device)
 {
 	device = _device;
 }
 
-void Bindable::setContext(Microsoft::WRL::ComPtr<ID3D11DeviceContext> _deviceContext)
+void Bindable::setContext(ID3D11DeviceContext* _deviceContext)
 {
 	context = _deviceContext;
 }
 
-Microsoft::WRL::ComPtr<ID3D11Device> Bindable::getDevice()
+ID3D11Device* Bindable::getDevice()
 {
 	return device;
 }
 
-Microsoft::WRL::ComPtr<ID3D11DeviceContext> Bindable::getContext()
+ID3D11DeviceContext* Bindable::getContext()
 {
 	return context;
 }

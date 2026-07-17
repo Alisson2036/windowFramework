@@ -36,9 +36,9 @@ void renderTarget::create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture)
 	create_internal(texDesc);
 }
 
-ID3D11RenderTargetView** renderTarget::getViewPointer()
+ID3D11RenderTargetView* renderTarget::getView()
 {
-	return renderTargetView.GetAddressOf();
+	return renderTargetView.Get();
 }
 
 void renderTarget::bind()

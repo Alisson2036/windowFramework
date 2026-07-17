@@ -16,7 +16,7 @@ public:
 
 	void clear();
 
-	ID3D11DepthStencilView* getViewPointer();
+	ID3D11DepthStencilView* getView();
 	Texture* getTexture();
 	vec2 getResolution();
 

@@ -34,9 +34,9 @@ void PixelShader::bind()
 	}
 }
 
-Microsoft::WRL::ComPtr<ID3DBlob> PixelShader::getBlob()
+ID3DBlob* PixelShader::getBlob()
 {
-	return pixelShaderBlob;
+	return pixelShaderBlob.Get();
 }
 
 void PixelShader::createShader()
