@@ -27,12 +27,10 @@ public:
 	void bind() override;
 
 private:
-	void create_internal(D3D11_TEXTURE2D_DESC texDesc);
+	void create_internal(D3D11_TEXTURE2D_DESC texDesc, Microsoft::WRL::ComPtr<ID3D11Texture2D>& pTexture);
 
 private:
 	Texture texInterface;
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> m_texture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 	
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> renderTargetView;
 

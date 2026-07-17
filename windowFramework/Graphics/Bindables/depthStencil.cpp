@@ -2,7 +2,10 @@
 
 void depthStencil::create(vec2 bufferResolution)
 {
-	resolution = bufferResolution;
+	resolution = bufferResolution; 
+	
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 
 	//configura depth buffer
 	D3D11_DEPTH_STENCIL_DESC depthStencilDesc = {};

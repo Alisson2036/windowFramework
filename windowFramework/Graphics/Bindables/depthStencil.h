@@ -23,8 +23,6 @@ public:
 private:
 	Texture texInterface;
 
-	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilState> depthStencilState;
 	Microsoft::WRL::ComPtr<ID3D11DepthStencilView> depthStencilView;

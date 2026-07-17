@@ -3,6 +3,8 @@
 void renderTarget::create(vec2 targetSize)
 {
 
+	Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture;
+
 	//criando a textura do buffer
 	D3D11_TEXTURE2D_DESC texDesc = {};
 	texDesc.Width = (UINT)targetSize.x;
@@ -20,10 +22,10 @@ void renderTarget::create(vec2 targetSize)
 	//criando a textura vazia
 	_throwHr
 	(
-		getDevice()->CreateTexture2D(&texDesc, nullptr, m_texture.GetAddressOf())
+		getDevice()->CreateTexture2D(&texDesc, nullptr, pTexture.GetAddressOf())
 	);
 
-	create_internal(texDesc);
+	create_internal(texDesc, pTexture);
 }
 
 void renderTarget::create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture)
@@ -31,9 +33,8 @@ void renderTarget::create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture)
 	D3D11_TEXTURE2D_DESC texDesc = {};
 	texture->GetDesc(&texDesc);
 
-	m_texture = texture;
 
-	create_internal(texDesc);
+	create_internal(texDesc, texture);
 }
 
 ID3D11RenderTargetView* renderTarget::getView()
@@ -49,8 +50,10 @@ void renderTarget::bind()
 
 }
 
-void renderTarget::create_internal(D3D11_TEXTURE2D_DESC texDesc)
+void renderTarget::create_internal(D3D11_TEXTURE2D_DESC texDesc, Microsoft::WRL::ComPtr<ID3D11Texture2D>& pTexture)
 {
+
+	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView;
 
 	targetResolution = vec2(texDesc.Width, texDesc.Height);
 
@@ -58,7 +61,7 @@ void renderTarget::create_internal(D3D11_TEXTURE2D_DESC texDesc)
 	_throwHr
 	(
 		getDevice()->CreateRenderTargetView(
-			m_texture.Get(),
+			pTexture.Get(),
 			nullptr,
 			renderTargetView.GetAddressOf()
 		)
@@ -75,11 +78,11 @@ void renderTarget::create_internal(D3D11_TEXTURE2D_DESC texDesc)
 
 		_throwHr
 		(
-			getDevice()->CreateShaderResourceView(m_texture.Get(), &viewDesc, textureView.GetAddressOf())
+			getDevice()->CreateShaderResourceView(pTexture.Get(), &viewDesc, textureView.GetAddressOf())
 		);
 
 		// Creates texture
-		texInterface.create(m_texture.Get(), textureView.Get());
+		texInterface.create(pTexture.Get(), textureView.Get());
 	}
 
 

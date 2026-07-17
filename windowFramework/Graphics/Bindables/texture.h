@@ -13,7 +13,10 @@ class Texture : public Bindable
 public:
 
 	void create(Image& img, bool hasAntiAliasing=true);
-	void create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView);
+	void create(
+		Microsoft::WRL::ComPtr<ID3D11Texture2D> pTexture,
+		Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> textureView
+	);
 	void createWithMipMap(Image& img, bool hasAntiAliasing = true);
 
 	void update(Image& img);

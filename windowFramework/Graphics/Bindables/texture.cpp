@@ -51,8 +51,9 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 
 }
 
-void Texture::create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView)
+void Texture::create(Microsoft::WRL::ComPtr<ID3D11Texture2D> pTex, Microsoft::WRL::ComPtr<ID3D11ShaderResourceView> pView)
 {
+
 	texture = pTex;
 	textureView = pView;
 
@@ -64,6 +65,7 @@ void Texture::create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView)
 
 	initialized = true;
 }
+
 
 void Texture::createWithMipMap(Image& img, bool hasAntiAliasing)
 {
