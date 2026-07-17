@@ -41,7 +41,10 @@ const char* frameworkException::what() const
 			(LPSTR)&message,
 			0,
 			nullptr
-		) != 0) return message;
+		) != 0) return (
+				std::string(message) + 
+				std::format("0x{:08X}", static_cast<uint32_t>(hr))
+			).c_str();
 
 		return "couldn't find message";
 

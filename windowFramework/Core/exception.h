@@ -2,6 +2,7 @@
 #include <Windows.h>
 #include <exception>
 #include <string>
+#include <format>
 
 
 class frameworkException : public std::exception
