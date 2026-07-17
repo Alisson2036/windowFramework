@@ -64,17 +64,10 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	}
 	else _throw;
 	
-
+	
 	depthStencilBuffer.create(vec2((float)windowSizeX, (float)windowSizeY));
 	
 	drawToScreen();
-}
-
-
-
-Pipeline* Graphics::getPipeline()
-{
-	return nullptr;
 }
 
 Microsoft::WRL::ComPtr<ID3D11Device> Graphics::getDevice()
@@ -87,10 +80,11 @@ Microsoft::WRL::ComPtr<ID3D11DeviceContext> Graphics::getDeviceContext()
 	return deviceContext;
 }
 
-Microsoft::WRL::ComPtr<ID3D11RenderTargetView> Graphics::getBackViewBuffer()
+renderTarget* Graphics::getBackBuffer()
 {
-	return renderTargetView;
+	return &backBuffer;
 }
+
 
 depthStencil* Graphics::getBackDSBuffer()
 {
@@ -102,8 +96,7 @@ depthStencil* Graphics::getBackDSBuffer()
 void Graphics::drawToScreen()
 {
 	//configura viewport
-	D3D11_VIEWPORT viewport = { 0.0f, 0.0f, (float)windowSizeX, (float)windowSizeY, 0.0f, 1.0f };
-	deviceContext->RSSetViewports(1, &viewport);
+	backBuffer.bind();
 	//bind depth stencil state na pipeline
 	depthStencilBuffer.bind();
 	//configura render target

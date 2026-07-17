@@ -37,7 +37,7 @@ public:
 	Pipeline(
 		Microsoft::WRL::ComPtr<ID3D11Device> _device,
 		Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
-		Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _backBufferView,
+		renderTarget* _backBuffer,
 		Registry* _registry,
 		VertexBufferCache* _vbCache,
 		depthStencil* _backDSBuffer,
@@ -74,7 +74,7 @@ private:
 
 	// Back buffer e depth stencil da janela
 
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> backBufferView;
+	renderTarget* backBuffer;
 	depthStencil* backDSBuffer;
 
 	// Render passes

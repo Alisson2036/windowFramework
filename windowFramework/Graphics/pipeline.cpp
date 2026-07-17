@@ -7,7 +7,7 @@
 Pipeline::Pipeline(
 	Microsoft::WRL::ComPtr<ID3D11Device> _device,
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext> _context,
-	Microsoft::WRL::ComPtr<ID3D11RenderTargetView> _backBufferView,
+	renderTarget* _backBuffer,
 	Registry* _registry,
 	VertexBufferCache* _vbCache,
 	depthStencil* _backDSBuffer,
@@ -22,7 +22,7 @@ Pipeline::Pipeline(
 	vbCache(_vbCache),
 	registry(_registry),
 	backDSBuffer(_backDSBuffer),
-	backBufferView(_backBufferView),
+	backBuffer(_backBuffer),
 	windowResolution(_windowResolution),
 	renderer(context, vbCache),
 	renderBuckets(sizeof(RenderPassMask)*8u)
@@ -204,14 +204,12 @@ void Pipeline::drawToScreen()
 	//bind depth stencil state na pipeline
 	backDSBuffer->bind();
 	//configura render target
-	context->OMSetRenderTargets(1, backBufferView.GetAddressOf(), backDSBuffer->getViewPointer());
+	context->OMSetRenderTargets(1, backBuffer->getViewPointer(), backDSBuffer->getViewPointer());
 }
 
 void Pipeline::fillScreen(float r, float g, float b)
 {
-	const float f[4] = { r, g, b, 1.0f };
-	context->ClearRenderTargetView(backBufferView.Get(), f);
-	backDSBuffer->clear();
+	backBuffer->fill(r, g, b);
 }
 
 void Pipeline::fillScreen(color c)
