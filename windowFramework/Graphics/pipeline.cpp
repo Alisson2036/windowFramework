@@ -149,16 +149,15 @@ void Pipeline::drawScene()
 		uint32_t mask = mesh->renderMask.flags;
 
 		while (mask > 0) {
-			// 1. Encontra o índice do bit ativo mais à direita em O(1) via hardware
-			int bucket_idx = std::countr_zero(mask);
+			// find bucket index
+			size_t bucketIndex = std::countr_zero(mask);
 
-			// 2. Adiciona o objeto no bucket correspondente
-			renderBuckets[bucket_idx].push_back(
+			// Adding object
+			renderBuckets[bucketIndex].push_back(
 				Renderer::RenderObject{ mesh->material, mesh->mesh, pos }
 			);
 
-			// 3. O "pulo do gato": limpa o bit mais à direita que acabamos de processar
-			// Ex: 0b110 & 0b101 = 0b100 (o bit 1 sumiu, sobrou o bit 2)
+			// Next mask
 			mask &= (mask - 1);
 		}
 	}
@@ -167,13 +166,16 @@ void Pipeline::drawScene()
 	VertexBufferCacheHash vbHash;
 
 	// Array sorting
-	std::sort(
-		renderBuckets[RenderMask::Opaque].begin(),
-		renderBuckets[RenderMask::Opaque].end(),
-		[vbHash](const Renderer::RenderObject& a, const Renderer::RenderObject& b) {
-			return vbHash({ a.mesh, a.material }) < vbHash({ b.mesh, b.material });
-		}
-	);
+	for(size_t i = 0; i < renderBuckets.size(); i++)
+	{
+		std::sort(
+			renderBuckets[i].begin(),
+			renderBuckets[i].end(),
+			[vbHash](const Renderer::RenderObject& a, const Renderer::RenderObject& b) {
+				return vbHash({ a.mesh, a.material }) < vbHash({ b.mesh, b.material });
+			}
+		);
+	}
 
 	renderer.setObjects(renderBuckets[RenderMask::Opaque]);
 	renderer.execute();
