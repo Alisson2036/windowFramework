@@ -1,6 +1,6 @@
 #pragma once
 #include <stdint.h>
-
+#include <d3d11.h>
 #include "RenderPassMask.h"
 
 
@@ -11,5 +11,5 @@ public:
 	virtual ~IRenderPass() = default;
 	
 	
-	virtual void bind() = 0;
+	virtual void bind(ID3D11DeviceContext* context) = 0;
 };

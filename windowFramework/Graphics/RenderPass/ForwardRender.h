@@ -3,6 +3,9 @@
 #include "RenderPassMask.h"
 #include "..\Camera.h"
 #include "..\light.h"
+#include "..\Bindables\renderTarget.h"
+#include "..\Bindables\depthStencil.h"
+
 
 class ForwardRenderPass : public IRenderPass
 {
@@ -11,10 +14,11 @@ public:
 
 	RenderPassMask getRenderMaskFilter() override;
 
+	void setTargets(renderTarget* rt, depthStencil* ds);
 	void setLight(Light* light);
 	void setCamera(Camera* camera);
 
-	void bind() override;
+	void bind(ID3D11DeviceContext* context) override;
 
 private:
 	Camera* m_camera;
@@ -23,5 +27,9 @@ private:
 	// Camera buffers
 	ConstantVertexBuffer cameraConstantBuffer;
 	ConstantPixelBuffer cameraPositionBuffer;
+
+	// Targets
+	renderTarget* target;
+	depthStencil* targetDS;
 
 };

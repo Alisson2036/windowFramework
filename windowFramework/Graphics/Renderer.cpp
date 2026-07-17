@@ -1,6 +1,6 @@
 #include "Renderer.h"
 
-Renderer::Renderer(Microsoft::WRL::ComPtr<ID3D11DeviceContext> context, VertexBufferCache* vbCache)
+Renderer::Renderer(ID3D11DeviceContext* context, VertexBufferCache* vbCache)
 {
 	m_context = context;
 	m_vbCache = vbCache;
@@ -18,7 +18,7 @@ void Renderer::setObjects(std::span<RenderObject> bufferSpan)
 void Renderer::execute(IRenderPass& pass)
 {
 	// Render pass bind
-	pass.bind();
+	pass.bind(m_context);
 
 
 	std::vector<DirectX::XMMATRIX> tempInstBuffer;

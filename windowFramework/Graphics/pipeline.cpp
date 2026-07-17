@@ -123,7 +123,7 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 	// Clears buffers
 	for (auto& i : renderBuckets) i.clear();
 
-	// Creating batches
+	// Bucketing
 	for (auto& obj : view) {
 		CMeshNonIndexed* mesh = obj.get<CMeshNonIndexed>();
 		SpatialData pos = *obj.get<SpatialData>();

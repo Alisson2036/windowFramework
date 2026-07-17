@@ -284,6 +284,7 @@ App::App()
 	// Creating render passes
 	forwardPass.setCamera(&cam);
 	forwardPass.setLight(&light);
+	forwardPass.setTargets(&target, &targetDS);
 
 	
 
@@ -409,16 +410,7 @@ void App::draw()
 	//win.Gfx().drawToScreen();
 	pipeline->setRenderTarget(&target, &targetDS);
 	pipeline->setCamera(&cam);
-
-	//render normal das esferas
 	pipeline->drawObject(sphere);
-
-
-	//renderiza o chao
-	//pipeline->drawObject(normalCube);
-
-
-	//coloca o cubo texturizado
 	pipeline->drawObject(texturedCube);
 
 	// ECS draw

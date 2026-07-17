@@ -12,7 +12,7 @@ class Renderer
 {
 public:
 	Renderer(
-		Microsoft::WRL::ComPtr<ID3D11DeviceContext> context,
+		ID3D11DeviceContext* context,
 		VertexBufferCache* vbCache
 	);
 
@@ -43,7 +43,7 @@ private:
 
 private:
 
-	Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_context;
+	ID3D11DeviceContext* m_context;
 
 	std::span<RenderObject> m_objectBuffer;
 
