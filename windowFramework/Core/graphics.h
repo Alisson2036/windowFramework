@@ -11,6 +11,7 @@
 #include "..\Graphics\pipeline.h"
 #include "..\Resources\image.h"
 #include "..\Graphics\Bindables\depthStencil.h"
+#include "..\Graphics\Bindables\renderTarget.h"
 
 
 // Classe responsável por gerenciar a renderização gráfica usando DirectX 11.
@@ -46,6 +47,7 @@ private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>          swapChain;
 	Microsoft::WRL::ComPtr<ID3D11DeviceContext>     deviceContext;
 	Microsoft::WRL::ComPtr<ID3D11RenderTargetView>  renderTargetView;
+	renderTarget backBuffer;
 	depthStencil depthStencilBuffer;
 
 

@@ -2,12 +2,11 @@
 
 void renderTarget::create(vec2 targetSize)
 {
-	targetResolution = targetSize;
 
 	//criando a textura do buffer
 	D3D11_TEXTURE2D_DESC texDesc = {};
-	texDesc.Width = (UINT)targetResolution.x;
-	texDesc.Height = (UINT)targetResolution.y;
+	texDesc.Width = (UINT)targetSize.x;
+	texDesc.Height = (UINT)targetSize.y;
 	texDesc.MipLevels = 1;
 	texDesc.ArraySize = 1;
 	texDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;
@@ -21,38 +20,20 @@ void renderTarget::create(vec2 targetSize)
 	//criando a textura vazia
 	_throwHr
 	(
-		getDevice()->CreateTexture2D(&texDesc, nullptr, texture.GetAddressOf())
+		getDevice()->CreateTexture2D(&texDesc, nullptr, m_texture.GetAddressOf())
 	);
 
-	//criando a render target da textura
-	_throwHr
-	(
-		getDevice()->CreateRenderTargetView(
-			texture.Get(),
-			nullptr,
-			renderTargetView.GetAddressOf()
-		)
-	);
+	create_internal(texDesc);
+}
 
-	//criando a view da textura
-	D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
-	viewDesc.Format = texDesc.Format;
-	viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-	viewDesc.Texture2D.MipLevels = 1;
-	viewDesc.Texture2D.MostDetailedMip = 0;
-	
-	_throwHr
-	(
-		getDevice()->CreateShaderResourceView(texture.Get(), &viewDesc, textureView.GetAddressOf())
-	);
+void renderTarget::create(Microsoft::WRL::ComPtr<ID3D11Texture2D> texture)
+{
+	D3D11_TEXTURE2D_DESC texDesc = {};
+	texture->GetDesc(&texDesc);
 
+	m_texture = texture;
 
-	const float f[4] = { 0.f,0.f,0.f, 1.0f };
-	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
-
-	//cria a textura
-	texInterface.create(texture.Get(), textureView.Get());
-
+	create_internal(texDesc);
 }
 
 ID3D11RenderTargetView** renderTarget::getViewPointer()
@@ -68,9 +49,51 @@ void renderTarget::bind()
 
 }
 
+void renderTarget::create_internal(D3D11_TEXTURE2D_DESC texDesc)
+{
+
+	targetResolution = vec2(texDesc.Width, texDesc.Height);
+
+	//criando a render target da textura
+	_throwHr
+	(
+		getDevice()->CreateRenderTargetView(
+			m_texture.Get(),
+			nullptr,
+			renderTargetView.GetAddressOf()
+		)
+	);
+
+	// Creates texture view if it can be bound to a shader
+	if(texDesc.BindFlags & D3D11_BIND_SHADER_RESOURCE)
+	{
+		D3D11_SHADER_RESOURCE_VIEW_DESC viewDesc = {};
+		viewDesc.Format = texDesc.Format;
+		viewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
+		viewDesc.Texture2D.MipLevels = 1;
+		viewDesc.Texture2D.MostDetailedMip = 0;
+
+		_throwHr
+		(
+			getDevice()->CreateShaderResourceView(m_texture.Get(), &viewDesc, textureView.GetAddressOf())
+		);
+
+		// Creates texture
+		texInterface.create(m_texture.Get(), textureView.Get());
+	}
+
+
+	const float f[4] = { 0.f,0.f,0.f, 1.0f };
+	getContext()->ClearRenderTargetView(renderTargetView.Get(), f);
+
+
+}
+
 Texture* renderTarget::getTexture()
 {
-	return &texInterface;
+	if(texInterface.isInitialized())
+		return &texInterface;
+	return nullptr;
 }
 
 vec2 renderTarget::getResolution()

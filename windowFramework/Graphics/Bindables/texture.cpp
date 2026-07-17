@@ -46,6 +46,9 @@ void Texture::create(Image& img, bool hasAntiAliasing)
 
 	resolution = vec2(d.width, d.height);
 
+
+	initialized = true;
+
 }
 
 void Texture::create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView)
@@ -59,6 +62,7 @@ void Texture::create(ID3D11Texture2D* pTex, ID3D11ShaderResourceView* pView)
 	resolution.y = desc.Height;
 	antialiased = false;
 
+	initialized = true;
 }
 
 void Texture::createWithMipMap(Image& img, bool hasAntiAliasing)

@@ -49,16 +49,21 @@ Graphics::Graphics(HWND hWnd, int _windowSizeX, int _windowSizeY)
 	_throwHr(hr);
 	
 
+	//inicia bindables
+	Bindable::setDevice(d3dDevice.Get());
+	Bindable::setContext(deviceContext.Get());
 	
 	Microsoft::WRL::ComPtr<ID3D11Texture2D> pBackBuffer;
 	hr = swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), &pBackBuffer);
 	_throwHr(hr);
-	if (pBackBuffer != nullptr) d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, renderTargetView.GetAddressOf());
+	if (pBackBuffer != nullptr) 
+	{
+		//d3dDevice->CreateRenderTargetView(pBackBuffer.Get(), nullptr, renderTargetView.GetAddressOf());
+		backBuffer.create(pBackBuffer);
+		renderTargetView = *backBuffer.getViewPointer();
+	}
 	else _throw;
-
-	//inicia bindables
-	Bindable::setDevice(d3dDevice.Get());
-	Bindable::setContext(deviceContext.Get());
+	
 
 	depthStencilBuffer.create(vec2((float)windowSizeX, (float)windowSizeY));
 	
