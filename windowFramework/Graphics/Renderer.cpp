@@ -15,10 +15,16 @@ void Renderer::setObjects(std::span<RenderObject> bufferSpan)
 	m_objectBuffer = bufferSpan;
 }
 
-void Renderer::execute()
+void Renderer::execute(IRenderPass& pass)
 {
+	// Render pass bind
+	pass.bind();
+
+
 	std::vector<DirectX::XMMATRIX> tempInstBuffer;
 	tempInstBuffer.reserve(m_instancesBuffer[0].getArraySize());
+
+	// First object
 	auto buffer = m_vbCache->getBuffer(
 		m_objectBuffer[0].mesh,
 		m_objectBuffer[0].material->getShader()
@@ -41,7 +47,7 @@ void Renderer::execute()
 
 
 		// VertexBuffer from cache
-		auto buffer = m_vbCache->getBuffer(
+		buffer = m_vbCache->getBuffer(
 			renderObject.mesh,
 			renderObject.material->getShader()
 		);

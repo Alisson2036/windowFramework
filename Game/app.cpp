@@ -281,6 +281,10 @@ App::App()
 	gui.addValue(L"Altura da luz", &a, false);
 	gui.addValue(L"Cubos colidindo ou nao talvez seja mas nao tenho certeza", &cubesColliding);
 
+	// Creating render passes
+	forwardPass.setCamera(&cam);
+	forwardPass.setLight(&light);
+
 	
 
 }
@@ -418,7 +422,7 @@ void App::draw()
 	pipeline->drawObject(texturedCube);
 
 	// ECS draw
-	pipeline->drawScene();
+	pipeline->drawScene(std::vector<IRenderPass*>{&forwardPass});
 
 	//posiciona e renderiza segundo cubo texturizado
 	texturedCube.set({ 0.0f,1.0f,0.0f }, { 0.0f,0.0f,0.0f });

@@ -2,6 +2,7 @@
 #include <vector>
 #include <span>
 
+#include "RenderPass\IRenderPass.h"
 #include "Caching\VertexBufferCache.h"
 #include "..\Assets\MaterialAsset.h"
 #include "..\Math\SpatialData.h"
@@ -23,7 +24,8 @@ public:
 
 	void setObjects(std::span<RenderObject> bufferSpan);
 
-	void execute();
+	void execute(IRenderPass& pass);
+
 private:
 	struct PipelineState {
 		MaterialAsset* material;

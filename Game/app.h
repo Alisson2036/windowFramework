@@ -23,6 +23,7 @@
 #include "Physics\physicsObject.h"
 
 #include "Graphics\Shader\ShaderCompiler.h"
+#include "Graphics\RenderPass\ForwardRender.h"
 
 #include "ECS\Registry.h"
 #include "ECS\ComponentFactory.h"
@@ -83,6 +84,9 @@ private:
 	renderTarget target;
 	depthStencil targetDS;
 	vec2 resolution3d;
+
+	// Render passes
+	ForwardRenderPass forwardPass;
 
 
 	depthStencil shadowMap;

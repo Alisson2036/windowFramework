@@ -116,27 +116,8 @@ void Pipeline::drawObject(Object& obj)
 			context->Draw((UINT)obj.getVertexCount(), 0);
 }
 
-void Pipeline::drawScene()
+void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 {
-	// Preparacao camera buffers
-	if (camera)
-	{
-		DirectX::XMMATRIX a = camera->getMatrix();
-		cameraConstantBuffer.update(&a);
-		DirectX::XMVECTOR b[] = { camera->getPositionVector() };
-		cameraPositionBuffer.update(b);
-	}
-	else
-		_throwMsg("Camera does not exist in the pipeline.");
-	//bind projection matrix
-	cameraConstantBuffer.bind();
-	//bind camera position
-	cameraPositionBuffer.bind();
-
-	//luzes..caso existirem
-	if (light)
-		light->bind(0, 2);
-
 	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
 
 	// Clears buffers
@@ -177,8 +158,14 @@ void Pipeline::drawScene()
 		);
 	}
 
-	renderer.setObjects(renderBuckets[RenderMask::Opaque]);
-	renderer.execute();
+	for (auto pass : renderPasses)
+	{
+		uint32_t mask = pass->getRenderMaskFilter();
+		size_t bucketIndex = std::countr_zero(mask);
+		renderer.setObjects(renderBuckets[bucketIndex]);
+		renderer.execute(*pass);
+
+	}
 
 }
 

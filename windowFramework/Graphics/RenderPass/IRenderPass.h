@@ -8,7 +8,7 @@ class IRenderPass
 {
 public:
 	virtual RenderPassMask getRenderMaskFilter() = 0;
-	virtual ~IRenderPass() = 0;
+	virtual ~IRenderPass() = default;
 	
 	
 	virtual void bind() = 0;

@@ -46,7 +46,7 @@ public:
 
 
 	void drawObject(Object& obj);
-	void drawScene();
+	void drawScene(std::vector<IRenderPass*>&& renderPasses);
 
 	// Render passes
 
