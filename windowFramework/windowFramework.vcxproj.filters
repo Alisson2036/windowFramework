@@ -356,5 +356,8 @@
     <ClInclude Include="Graphics\RenderPass\ForwardRender.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="Graphics\RenderPass\ShadowPass.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

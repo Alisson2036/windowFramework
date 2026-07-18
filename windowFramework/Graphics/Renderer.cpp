@@ -95,6 +95,6 @@ void Renderer::executeBatch(std::vector<DirectX::XMMATRIX>& instances, RenderObj
 void Renderer::createNewInstancesBuffer()
 {
 	StructuredBuffer<DirectX::XMMATRIX> newBuffer;
-	newBuffer.create(nullptr, 512u);
+	newBuffer.create(nullptr, 128u);
 	m_instancesBuffer.push_back(std::move(newBuffer));
 }
