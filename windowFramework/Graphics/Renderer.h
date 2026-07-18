@@ -20,6 +20,7 @@ public:
 		MaterialAsset* material;
 		MeshAsset* mesh;
 		SpatialData transformation;
+		uint64_t sortKey;
 	};
 
 	void setObjects(std::span<RenderObject> bufferSpan);
@@ -36,8 +37,7 @@ private:
 
 		UINT instanceCount;
 	};
-	void bufferSetup();
-	void executeOperations();
+	void executeBatch(std::vector<DirectX::XMMATRIX>& instances, RenderObject renderObject);
 
 	void createNewInstancesBuffer();
 

@@ -120,6 +120,10 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 {
 	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
 
+
+	// Vertex buffer hash functor
+	VertexBufferCacheHash vbHash;
+
 	// Clears buffers
 	for (auto& i : renderBuckets) i.clear();
 
@@ -133,9 +137,12 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 			// find bucket index
 			size_t bucketIndex = std::countr_zero(mask);
 
+			// hash
+			uint64_t hash = vbHash({ mesh->material, mesh->mesh });
+
 			// Adding object
 			renderBuckets[bucketIndex].push_back(
-				Renderer::RenderObject{ mesh->material, mesh->mesh, pos }
+				Renderer::RenderObject{ mesh->material, mesh->mesh, pos, hash }
 			);
 
 			// Next mask
@@ -143,8 +150,6 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 		}
 	}
 
-	// Vertex buffer hash functor
-	VertexBufferCacheHash vbHash;
 
 	// Array sorting
 	for(size_t i = 0; i < renderBuckets.size(); i++)
@@ -153,7 +158,7 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 			renderBuckets[i].begin(),
 			renderBuckets[i].end(),
 			[vbHash](const Renderer::RenderObject& a, const Renderer::RenderObject& b) {
-				return vbHash({ a.mesh, a.material }) < vbHash({ b.mesh, b.material });
+				return a.sortKey < b.sortKey;
 			}
 		);
 	}

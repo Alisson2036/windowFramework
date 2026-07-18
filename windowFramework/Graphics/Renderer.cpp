@@ -14,76 +14,87 @@ void Renderer::setObjects(std::span<RenderObject> bufferSpan)
 {
 	m_objectBuffer = bufferSpan;
 }
-
 void Renderer::execute(IRenderPass& pass)
 {
 	// Render pass bind
 	pass.bind(m_context);
 
+	const size_t capacity = m_instancesBuffer[0].getArraySize();
+	if (capacity == 0 || m_objectBuffer.empty()) return; // Early exit
 
 	std::vector<DirectX::XMMATRIX> tempInstBuffer;
-	tempInstBuffer.reserve(m_instancesBuffer[0].getArraySize());
+	tempInstBuffer.reserve(capacity);
 
-	// First object
+	// Batching
+	const RenderObject* batchRepresentative = nullptr;
+
+	for (auto& renderObject : m_objectBuffer)
+	{
+		// Culling: if obj needs to be culled, just continue
+
+		// Check if it is the same batch
+		bool isSameBatch = batchRepresentative &&
+			batchRepresentative->sortKey == renderObject.sortKey;
+
+		// Execute batch if type changed
+		if (!isSameBatch || tempInstBuffer.size() == capacity)
+		{
+			if (!tempInstBuffer.empty())
+			{
+				executeBatch(tempInstBuffer, *batchRepresentative);
+				tempInstBuffer.clear();
+			}
+			batchRepresentative = &renderObject;
+		}
+
+		// Push current object
+		tempInstBuffer.push_back(renderObject.transformation.getMatrix());
+	}
+
+	// Flush remaining instances
+	if (!tempInstBuffer.empty() && batchRepresentative)
+	{
+		executeBatch(tempInstBuffer, *batchRepresentative);
+	}
+}
+
+void Renderer::executeBatch(std::vector<DirectX::XMMATRIX>& instances, RenderObject renderObject)
+{
+
+	// VertexBuffer from cache
 	auto buffer = m_vbCache->getBuffer(
-		m_objectBuffer[0].mesh,
-		m_objectBuffer[0].material->getShader()
+		renderObject.mesh,
+		renderObject.material->getShader()
 	);
 
-	for (size_t i = 0; i < m_objectBuffer.size(); i++)
+	// Binds
+	buffer->vBuffer.bind();     // VertexBuffer
+	renderObject.material->bindMaterial(); // Shader and textures
+
+
+	// Calcs the amount of instances to draw in this batch
+	const UINT amount = instances.size();
+
+	// Updates instances buffer
+	m_instancesBuffer[0].update(instances.data(), amount);
+
+	// Binding buffer
+	m_instancesBuffer[0].bind();
+
+	// Drawing
+	if (buffer->iBuffer.isInitialized())
 	{
-		auto& renderObject = m_objectBuffer[i];
-
-		tempInstBuffer.push_back(renderObject.transformation.getMatrix());
-
-		// Checks if render can wait (batch is being made)
-		auto type = m_vbHash({ m_objectBuffer[i].mesh, m_objectBuffer[i].material });
-		if (tempInstBuffer.size() != tempInstBuffer.capacity() && i < m_objectBuffer.size() - 1) {
-			auto& next = m_objectBuffer[i + 1];
-			auto nextType = m_vbHash({ next.mesh, next.material });
-			if (type == nextType)
-				continue;
-		}
-
-
-		// VertexBuffer from cache
-		buffer = m_vbCache->getBuffer(
-			renderObject.mesh,
-			renderObject.material->getShader()
-		);
-
-		// Binds
-		buffer->vBuffer.bind();     // VertexBuffer
-		renderObject.material->bindMaterial(); // Shader and textures
-
-
-		// Calcs the amount of instances to draw in this batch
-		const UINT amount = tempInstBuffer.size();
-
-		// Updates instances buffer
-		m_instancesBuffer[0].update(tempInstBuffer.data(), amount);
-
-		// Binding buffer
-		m_instancesBuffer[0].bind();
-
-		// Drawing
-		if (buffer->iBuffer.isInitialized())
-		{
-			buffer->iBuffer.bind();
-			m_context->DrawIndexedInstanced(buffer->vCount, amount, 0, 0, 0);
-		}
-		else
-			m_context->DrawInstanced(buffer->vCount, amount, 0, 0);
-
-		// Resets tempInstBuffer
-		tempInstBuffer.clear();
+		buffer->iBuffer.bind();
+		m_context->DrawIndexedInstanced(buffer->vCount, amount, 0, 0, 0);
 	}
+	else
+		m_context->DrawInstanced(buffer->vCount, amount, 0, 0);
 
 }
 
 void Renderer::createNewInstancesBuffer()
 {
 	StructuredBuffer<DirectX::XMMATRIX> newBuffer;
-	newBuffer.create(nullptr, 128u);
+	newBuffer.create(nullptr, 512u);
 	m_instancesBuffer.push_back(std::move(newBuffer));
 }
