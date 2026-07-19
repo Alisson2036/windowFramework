@@ -37,7 +37,7 @@ App::App()
 	//-----Asset Loading------
 
 	{
-		AssetLoader	loader(&assetManager, pipeline->getRegistry());
+		AssetLoader	loader(&assetManager, factory.get());
 		loader.loadFromXML("Scene\\scene.xml");
 		assetManager.LoadAll();
 	}

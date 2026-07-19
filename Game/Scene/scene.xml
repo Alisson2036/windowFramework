@@ -1,48 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Assets>
-	<Meshes>
-		<Mesh name="Cube" path="Objs\cube.obj" />
-		<Mesh name="Sphere" path="Objs\sphere.obj" />
-		<Mesh name="Water" path="Objs\waterPlane.obj" />
-		<Mesh name="ColoredCube" />
-		<Mesh name="whiteCube" />
-	</Meshes>
 
-	<Textures>
-		<Texture name="a" path="Textures\a.png" mipmap="false" />
-		<Texture name="Bricks" path="Textures\bricks.jpg" mipmap="true" />
-		<Texture name="BricksNormal" path="Textures\bricksNormal.jpg" mipmap="true" />
-	</Textures>
+<Scene>
+	<Assets>
+		<Meshes>
+			<Mesh name="Cube" path="Objs\cube.obj" />
+			<Mesh name="Sphere" path="Objs\sphere.obj" />
+			<Mesh name="Water" path="Objs\waterPlane.obj" />
+			<Mesh name="ColoredCube" />
+			<Mesh name="whiteCube" />
+		</Meshes>
 
-	<Shaders>
-		<Shader name="normalShader"
-                vs="Shaders\ecsVS.hlsl" vscso="CompiledShaders\ecsVS.cso"
-                ps="Shaders\normalPS.hlsl" pscso="CompiledShaders\normalPS.cso" />
+		<Textures>
+			<Texture name="a" path="Textures\a.png" mipmap="false" />
+			<Texture name="Bricks" path="Textures\bricks.jpg" mipmap="true" />
+			<Texture name="BricksNormal" path="Textures\bricksNormal.jpg" mipmap="true" />
+		</Textures>
 
-		<Shader name="ecsShader"
-                vs="Shaders\ecsVS.hlsl" vscso="CompiledShaders\ecsVS.cso"
-                ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
+		<Shaders>
+			<Shader name="normalShader"
+					vs="Shaders\ecsVS.hlsl" vscso="CompiledShaders\ecsVS.cso"
+					ps="Shaders\normalPS.hlsl" pscso="CompiledShaders\normalPS.cso" />
 
-		<Shader name="colorBlendShader"
-                vs="Shaders\colorBlendVS.hlsl" vscso="CompiledShaders\colorBlendVS.cso"
-                ps="Shaders\colorBlendPS.hlsl" pscso="CompiledShaders\colorBlendPS.cso" />
+			<Shader name="ecsShader"
+					vs="Shaders\ecsVS.hlsl" vscso="CompiledShaders\ecsVS.cso"
+					ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
 
-		<Shader name="texturedShader"
-                vs="Shaders\texturedVS.hlsl" vscso="CompiledShaders\texturedVS.cso"
-                ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
+			<Shader name="colorBlendShader"
+					vs="Shaders\colorBlendVS.hlsl" vscso="CompiledShaders\colorBlendVS.cso"
+					ps="Shaders\colorBlendPS.hlsl" pscso="CompiledShaders\colorBlendPS.cso" />
 
-		<Shader name="texturedInstancedShader"
-                vs="Shaders\texturedInstancedVS.hlsl" vscso="CompiledShaders\texturedInstancedVS.cso"
-                ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
+			<Shader name="texturedShader"
+					vs="Shaders\texturedVS.hlsl" vscso="CompiledShaders\texturedVS.cso"
+					ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
 
-		<Shader name="waterShader"
-                vs="Shaders\waterVS.hlsl" vscso="CompiledShaders\waterVS.cso"
-                ps="Shaders\waterPS.hlsl" pscso="CompiledShaders\waterPS.cso" />
-	</Shaders>
+			<Shader name="texturedInstancedShader"
+					vs="Shaders\texturedInstancedVS.hlsl" vscso="CompiledShaders\texturedInstancedVS.cso"
+					ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
 
-	<Materials>
-		<Material name="ecsMat" shader="ecsShader" texture="Bricks" />
-		<Material name="brickMat" shader="normalShader" texture="Bricks" normalMap="BricksNormal" />
-		<Material name="coloredMat" shader="colorBlendShader" />
-	</Materials>
-</Assets>
+			<Shader name="waterShader"
+					vs="Shaders\waterVS.hlsl" vscso="CompiledShaders\waterVS.cso"
+					ps="Shaders\waterPS.hlsl" pscso="CompiledShaders\waterPS.cso" />
+		</Shaders>
+
+		<Materials>
+			<Material name="ecsMat" shader="ecsShader" texture="Bricks" />
+			<Material name="brickMat" shader="normalShader" texture="Bricks" normalMap="BricksNormal" />
+			<Material name="coloredMat" shader="colorBlendShader" />
+		</Materials>
+	</Assets>
+
+	<Objects>
+		<Object material="ecsMat" mesh="Cube">
+			<Position x="5.0" y="8.0" z="5.0" />
+			<Rotation x="0.0" y="45.0" z="0.0" />
+			<Scale x="1.0" y="1.0" z="1.0" />
+
+			<Repeat>
+				<X amount="5" distance="3.0"></X>
+				<Y amount="5" distance="3.0"></Y>
+				<Z amount="5" distance="3.0"></Z>
+			</Repeat>
+		</Object>
+	</Objects>
+</Scene>

@@ -48,6 +48,7 @@ public:
                 return p;
             _throwMsg("Asset required is not the correct type.");
         }
+        _throwMsg(std::string("Asset does not exist:") + name);
 		return nullptr;
     }
 
