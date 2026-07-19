@@ -14,14 +14,12 @@ public:
 
 	RenderPassMask getRenderMaskFilter() override;
 
-	void setTargets(renderTarget* rt, depthStencil* ds);
+	void setTarget(depthStencil* ds);
 	void setLight(Light* light);
-	void setCamera(Camera* camera);
 
 	void bind(ID3D11DeviceContext* context) override;
 
 private:
-	Camera* m_camera;
 	Light* m_light;
 
 	// Camera buffers
@@ -29,7 +27,6 @@ private:
 	ConstantPixelBuffer cameraPositionBuffer;
 
 	// Targets
-	renderTarget* target;
 	depthStencil* targetDS;
 
 };

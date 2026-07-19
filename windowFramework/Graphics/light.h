@@ -14,6 +14,8 @@ public:
 	void updatePos(vec3 Position);
 	void setShadowMapProjectionCam(Camera* _cam);
 
+	Camera* getCamera();
+
 	void bind(int pixelBufferSlote, int vertexBufferSlot);
 
 private:

@@ -54,6 +54,11 @@ void Light::setShadowMapProjectionCam(Camera* _cam)
 	cam = _cam;
 }
 
+Camera* Light::getCamera()
+{
+	return cam;
+}
+
 void Light::bind(int pixelBufferSlote, int vertexBufferSlot)
 {
 	buf.setSlot(pixelBufferSlote);

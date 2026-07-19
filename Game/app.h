@@ -24,6 +24,7 @@
 
 #include "Graphics\Shader\ShaderCompiler.h"
 #include "Graphics\RenderPass\ForwardRender.h"
+#include "Graphics\RenderPass\ShadowPass.h"
 
 #include "ECS\Registry.h"
 #include "ECS\ComponentFactory.h"
@@ -87,6 +88,7 @@ private:
 
 	// Render passes
 	ForwardRenderPass forwardPass;
+	ShadowMapPass shadowPass;
 
 
 	depthStencil shadowMap;

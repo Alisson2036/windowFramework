@@ -180,6 +180,9 @@
     <ClCompile Include="Graphics\RenderPass\ForwardRender.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="Graphics\RenderPass\ShadowPass.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\window.h">

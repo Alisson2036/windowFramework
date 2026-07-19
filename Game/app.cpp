@@ -249,7 +249,7 @@ App::App()
 	cam.setPositionAndAngle({ 0.0f,4.0f,-12.0f }, { 0.0f,0 });
 
 	//CAMERA LUZ
-	lightCam.setViewSize(vec2(30, 30));
+	lightCam.setViewSize(vec2(60, 60));
 	lightCam.setPerspective(false);
 	lightCam.setPositionAndAngle(vec3(0.f, 18.f, 0.f), vec2(-DirectX::XM_PIDIV2, 0.0f));
 	light.setShadowMapProjectionCam(&lightCam);
@@ -282,9 +282,16 @@ App::App()
 	gui.addValue(L"Cubos colidindo ou nao talvez seja mas nao tenho certeza", &cubesColliding);
 
 	// Creating render passes
-	forwardPass.setCamera(&cam);
-	forwardPass.setLight(&light);
-	forwardPass.setTargets(&target, &targetDS);
+	{
+		// Forward pass
+		forwardPass.setCamera(&cam);
+		forwardPass.setLight(&light);
+		forwardPass.setTargets(&target, &targetDS);
+
+		// ShadowPass
+		shadowPass.setLight(&light);
+		shadowPass.setTarget(&shadowMap);
+	}
 
 	
 
@@ -330,12 +337,13 @@ void App::input()
 
 	//movimento da camera
 	auto& kb = eng.input();
-	if (kb.isKeyPressed('W')) cam.movePosition({ 0.0f, 0.0f, 0.1f });
-	if (kb.isKeyPressed('S')) cam.movePosition({ 0.0f, 0.0f,-0.1f });
-	if (kb.isKeyPressed('A')) cam.movePosition({ -0.1f, 0.0f, 0.0f });
-	if (kb.isKeyPressed('D')) cam.movePosition({ 0.1f, 0.0f, 0.0f });
-	if (kb.isKeyPressed('R')) cam.movePosition({ 0.0f, 0.1f, 0.0f });
-	if (kb.isKeyPressed('F')) cam.movePosition({ 0.0f,-0.1f, 0.0f });
+	float speed = 30.f * frameTime;
+	if (kb.isKeyPressed('W')) cam.movePosition({ 0.0f, 0.0f, speed });
+	if (kb.isKeyPressed('S')) cam.movePosition({ 0.0f, 0.0f,-speed });
+	if (kb.isKeyPressed('A')) cam.movePosition({-speed, 0.0f, 0.0f });
+	if (kb.isKeyPressed('D')) cam.movePosition({ speed, 0.0f, 0.0f });
+	if (kb.isKeyPressed('R')) cam.movePosition({ 0.0f, speed, 0.0f });
+	if (kb.isKeyPressed('F')) cam.movePosition({ 0.0f,-speed, 0.0f });
 
 	if (kb.isKeyPressed('Z')) a += 0.1f;
 	if (kb.isKeyPressed('X')) a -= 0.1f;
@@ -405,6 +413,8 @@ void App::draw()
 	//pipeline->drawObject(normalCube);
 	pipeline->drawObject(texturedCube);
 
+	// ECS draw
+	pipeline->drawScene(std::vector<IRenderPass*>{&shadowPass, & forwardPass});
 
 	//forward render pass
 	//win.Gfx().drawToScreen();
@@ -413,8 +423,6 @@ void App::draw()
 	pipeline->drawObject(sphere);
 	pipeline->drawObject(texturedCube);
 
-	// ECS draw
-	pipeline->drawScene(std::vector<IRenderPass*>{&forwardPass});
 
 	//posiciona e renderiza segundo cubo texturizado
 	texturedCube.set({ 0.0f,1.0f,0.0f }, { 0.0f,0.0f,0.0f });

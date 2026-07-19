@@ -152,6 +152,7 @@
     <ClCompile Include="Graphics\Bindables\depthStencil.cpp" />
     <ClCompile Include="Graphics\Renderer.cpp" />
     <ClCompile Include="Graphics\RenderPass\ForwardRender.cpp" />
+    <ClCompile Include="Graphics\RenderPass\ShadowPass.cpp" />
     <ClCompile Include="Graphics\Shader\ShaderCompiler.cpp" />
     <ClCompile Include="Input\inputProxy.cpp" />
     <ClCompile Include="Input\CursorController.cpp" />
