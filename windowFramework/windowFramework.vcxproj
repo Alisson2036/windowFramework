@@ -199,7 +199,9 @@
     <ClInclude Include="Engine.h" />
     <ClInclude Include="Graphics\Bindables\bindable.h" />
     <ClInclude Include="Graphics\Bindables\blendState.h" />
+    <ClInclude Include="Graphics\Bindables\pixelConstantBuffer.h" />
     <ClInclude Include="Graphics\Bindables\structuredBuffer.h" />
+    <ClInclude Include="Graphics\Bindables\vertexConstantBuffer.h" />
     <ClInclude Include="Graphics\Caching\VertexBufferCache.h" />
     <ClInclude Include="Graphics\Camera.h" />
     <ClInclude Include="Graphics\Renderer.h" />
@@ -229,7 +231,6 @@
     <ClInclude Include="Graphics\object.h" />
     <ClInclude Include="Resources\objLoader.h" />
     <ClInclude Include="Graphics\pipeline.h" />
-    <ClInclude Include="Graphics\Bindables\pixelConstantBuffer.h" />
     <ClInclude Include="Graphics\Bindables\pixelShader.h" />
     <ClInclude Include="Resources\image.h" />
     <ClInclude Include="Graphics\Bindables\sampler.h" />
@@ -241,7 +242,6 @@
     <ClInclude Include="Math\vec2.h" />
     <ClInclude Include="Math\vec3.h" />
     <ClInclude Include="Graphics\Bindables\vertexBuffer.h" />
-    <ClInclude Include="Graphics\Bindables\vertexConstantBuffer.h" />
     <ClInclude Include="Graphics\Bindables\vertexShader.h" />
     <ClInclude Include="Core\window.h" />
   </ItemGroup>

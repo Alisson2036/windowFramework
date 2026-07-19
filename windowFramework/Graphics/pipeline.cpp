@@ -34,11 +34,11 @@ Pipeline::Pipeline(
 	
 	//cria projection matrix
 	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };//camera->getProjectionMatrix() };
-	cameraConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
+	cameraConstantBuffer.create(mat);
 	cameraConstantBuffer.setSlot(1);
 	//cria buffer para posicao da camera
 	DirectX::XMVECTOR vec[] = { DirectX::XMVECTOR({0.0f,0.0f,0.0f,0.0f})};
-	cameraPositionBuffer.create(vec, 1, sizeof(DirectX::XMVECTOR));
+	cameraPositionBuffer.create(vec);
 	cameraPositionBuffer.setSlot(1);
 	//cria o blendState
 	blendState.create();
@@ -60,7 +60,7 @@ void Pipeline::drawObject(Object& obj)
 	if (camera)
 	{
 		DirectX::XMMATRIX a = camera->getMatrix();
-		cameraConstantBuffer.update(&a);
+		cameraConstantBuffer.update({ a });
 		DirectX::XMVECTOR b[] = { camera->getPositionVector() };
 		cameraPositionBuffer.update(b);
 	}

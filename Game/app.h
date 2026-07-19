@@ -29,6 +29,12 @@
 #include "ECS\Registry.h"
 #include "ECS\ComponentFactory.h"
 
+
+struct timerStruct {
+	double time;
+	double padding;
+};
+
 class App
 {
 public:
@@ -76,8 +82,8 @@ private:
 	Object sphere;
 
 	Object water;
-	ConstantPixelBuffer timerBuffer;
-	ConstantVertexBuffer timerVertexBuffer;
+	ConstantPixelBuffer<timerStruct> timerBuffer;
+	ConstantVertexBuffer<timerStruct> timerVertexBuffer;
 
 	Image::font* fonte;
 

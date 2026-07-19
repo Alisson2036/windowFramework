@@ -23,7 +23,7 @@ cbuffer projectionMatrix : register(b1)
 };
 cbuffer timer : register(b3)
 {
-    float iTime;
+    double iTime;
 };
 
 

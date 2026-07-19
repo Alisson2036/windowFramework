@@ -8,8 +8,6 @@ class Bindable
 {
 public:
 	virtual void bind() {};
-	//virtual void setDevice(Microsoft::WRL::ComPtr<ID3D11Device> _device) = 0;
-	//virtual void setContext(Microsoft::WRL::ComPtr<ID3D11DeviceContext> _deviceContext) = 0;
 
 	static void setDevice(ID3D11Device* _device);
 	static void setContext(ID3D11DeviceContext* _deviceContext);

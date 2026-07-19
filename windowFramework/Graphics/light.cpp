@@ -15,16 +15,12 @@ Light::Light()
 	{
 		DirectX::XMVECTOR{0.0f,0.0f,0.0f,0.0f}
 	};
-	buf.create(
-		b,
-		1,
-		sizeof(DirectX::XMVECTOR)
-	);
+	buf.create(b);
 	buf.setSlot(0);
 
 	//cria light projection matrix
 	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };
-	matBuf.create(mat, 1, sizeof(DirectX::XMMATRIX));
+	matBuf.create(mat);
 	matBuf.setSlot(0);
 	
 }

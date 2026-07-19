@@ -231,9 +231,9 @@ App::App()
 	water.set(vec3(0.0f, -1.0f, 0.0f), vec3(0.0f, 0.0f, 0.0f));
 	water.setScale(vec3(100, 1, 100));
 	{
-		float a = 0.0f;
-		timerBuffer.create(&a, 1, sizeof(float) * 8);
-		timerVertexBuffer.create(&a, 1, sizeof(float) * 8);
+		timerStruct a = {};
+		timerBuffer.create(a);
+		timerVertexBuffer.create(a);
 	}
 
 	//cria a esfera
@@ -433,10 +433,10 @@ void App::draw()
 
 	//atualiza timer buffers para a agua
 	float time = timeSinceCreation.getPassedSeconds();
-	timerBuffer.update(&time);
+	timerBuffer.update(timerStruct{time, 0.f});
 	timerBuffer.setSlot(2);
 	timerBuffer.bind();
-	timerVertexBuffer.update(&time);
+	timerVertexBuffer.update(timerStruct{ time, 0.f });
 	timerVertexBuffer.setSlot(3);
 	timerVertexBuffer.bind();
 	//desenha agua

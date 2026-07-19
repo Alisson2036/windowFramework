@@ -1,16 +1,13 @@
 #pragma once
 #include "vertexConstantBuffer.h"
 
-class ConstantPixelBuffer : public ConstantVertexBuffer
+template <typename T>
+class ConstantPixelBuffer : public ConstantVertexBuffer<T>
 {
 public:
 	void bind() override
 	{
-		static ConstantPixelBuffer* last = nullptr;
-		if (last != this)
-		{
-			last = this;
-			getContext()->PSSetConstantBuffers(bufferSlot, 1, constantBuffer.GetAddressOf());
-		}
+		
+		this->getContext()->PSSetConstantBuffers(this->bufferSlot, 1, this->constantBuffer.GetAddressOf());
 	}
 };

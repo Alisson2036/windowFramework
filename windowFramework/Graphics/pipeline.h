@@ -87,8 +87,8 @@ private:
 	Sampler sampler;
 
 	// Camera buffers
-	ConstantVertexBuffer cameraConstantBuffer;
-	ConstantPixelBuffer cameraPositionBuffer;
+	ConstantVertexBuffer<DirectX::XMMATRIX> cameraConstantBuffer;
+	ConstantPixelBuffer<DirectX::XMVECTOR> cameraPositionBuffer;
 
 	// Render passes
 	std::vector<RenderPassMask> masks;

@@ -52,7 +52,7 @@ public:
 	void lock();
 
 private:
-	ConstantVertexBuffer* getConstantVertexBuffer();
+	ConstantVertexBuffer<DirectX::XMMATRIX>* getConstantVertexBuffer();
 	void reserveVertexBuffer(int vertexCount);
 
 private:
@@ -67,7 +67,7 @@ private:
 
 	//posicao do objeto
 	SpatialData pos;
-	ConstantVertexBuffer cvb;
+	ConstantVertexBuffer<DirectX::XMMATRIX> cvb;
 	bool needUpdate = false;
 
 	//texturas

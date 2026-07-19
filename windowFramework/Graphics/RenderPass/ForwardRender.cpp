@@ -9,12 +9,12 @@ ForwardRenderPass::ForwardRenderPass()
 
 	//cria projection matrix
 	DirectX::XMMATRIX mat[] = { DirectX::XMMatrixIdentity() };//camera->getProjectionMatrix() };
-	cameraConstantBuffer.create(mat, 1, sizeof(DirectX::XMMATRIX));
+	cameraConstantBuffer.create(mat);
 	cameraConstantBuffer.setSlot(1);
 
 	//cria buffer para posicao da camera
 	DirectX::XMVECTOR vec[] = { DirectX::XMVECTOR({0.0f,0.0f,0.0f,0.0f}) };
-	cameraPositionBuffer.create(vec, 1, sizeof(DirectX::XMVECTOR));
+	cameraPositionBuffer.create(vec);
 	cameraPositionBuffer.setSlot(1);
 
 }
@@ -46,8 +46,8 @@ void ForwardRenderPass::bind(ID3D11DeviceContext* context)
 	if (m_camera)
 	{
 		DirectX::XMMATRIX a = m_camera->getMatrix();
-		cameraConstantBuffer.update(&a);
-		DirectX::XMVECTOR b[] = { m_camera->getPositionVector() };
+		cameraConstantBuffer.update(a);
+		DirectX::XMVECTOR b = m_camera->getPositionVector();
 		cameraPositionBuffer.update(b);
 	}
 	else

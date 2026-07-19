@@ -17,11 +17,7 @@ void Object::create(Shader* shader)
 		DirectX::XMMatrixScaling(1.0f,1.0f,1.0f)
 	};
 
-	cvb.create(
-		b,
-		1,
-		sizeof(DirectX::XMMATRIX)
-	);
+	cvb.create(b);
 
 	initialized = true;
 }
@@ -226,7 +222,7 @@ void Object::reserveVertexBuffer(int vertexCount)
 
 }
 
-ConstantVertexBuffer* Object::getConstantVertexBuffer()
+ConstantVertexBuffer<DirectX::XMMATRIX>* Object::getConstantVertexBuffer()
 {
 	if (!initialized) _throwMsg("Class not initialized");
 

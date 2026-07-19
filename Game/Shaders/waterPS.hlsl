@@ -17,7 +17,7 @@ cbuffer cameraPosition : register(b1)
 };
 cbuffer timer : register(b2)
 {
-    float iTime;
+    double iTime;
 };
 
 Texture2D tex : register(t0);

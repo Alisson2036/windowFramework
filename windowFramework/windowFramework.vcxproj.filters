@@ -218,9 +218,6 @@
     <ClInclude Include="Graphics\Bindables\vertexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
-    <ClInclude Include="Graphics\Bindables\vertexConstantBuffer.h">
-      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
-    </ClInclude>
     <ClInclude Include="Graphics\Bindables\indexBuffer.h">
       <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
@@ -244,9 +241,6 @@
     </ClInclude>
     <ClInclude Include="Graphics\light.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="Graphics\Bindables\pixelConstantBuffer.h">
-      <Filter>Arquivos de Cabeçalho\Bindable</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\Shader\shaderDesc.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
@@ -360,6 +354,12 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\RenderPass\ShadowPass.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Bindables\vertexConstantBuffer.h">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics\Bindables\pixelConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>

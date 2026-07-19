@@ -25,8 +25,8 @@ private:
 	Light* m_light;
 
 	// Camera buffers
-	ConstantVertexBuffer cameraConstantBuffer;
-	ConstantPixelBuffer cameraPositionBuffer;
+	ConstantVertexBuffer<DirectX::XMMATRIX> cameraConstantBuffer;
+	ConstantPixelBuffer<DirectX::XMVECTOR> cameraPositionBuffer;
 
 	// Targets
 	renderTarget* target;
