@@ -156,6 +156,7 @@
     <ClCompile Include="Graphics\Shader\ShaderCompiler.cpp" />
     <ClCompile Include="Input\inputProxy.cpp" />
     <ClCompile Include="Input\CursorController.cpp" />
+    <ClCompile Include="thirdparty\pugixml\pugixml.cpp" />
     <ClCompile Include="UI\guiPanel.cpp" />
     <ClCompile Include="Graphics\Bindables\renderTarget.cpp" />
     <ClCompile Include="Core\exception.cpp" />
@@ -214,6 +215,8 @@
     <ClInclude Include="Input\CursorController.h" />
     <ClInclude Include="Math\color.h" />
     <ClInclude Include="Graphics\Bindables\depthStencil.h" />
+    <ClInclude Include="thirdparty\pugixml\pugiconfig.hpp" />
+    <ClInclude Include="thirdparty\pugixml\pugixml.hpp" />
     <ClInclude Include="UI\guiPanel.h" />
     <ClInclude Include="Graphics\Bindables\renderTarget.h" />
     <ClInclude Include="Core\exception.h" />
@@ -244,6 +247,9 @@
     <ClInclude Include="Graphics\Bindables\vertexBuffer.h" />
     <ClInclude Include="Graphics\Bindables\vertexShader.h" />
     <ClInclude Include="Core\window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="thirdparty\pugixml\LICENSE.md" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

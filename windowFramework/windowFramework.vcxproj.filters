@@ -183,6 +183,9 @@
     <ClCompile Include="Graphics\RenderPass\ShadowPass.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
+    <ClCompile Include="thirdparty\pugixml\pugixml.cpp">
+      <Filter>Arquivos de Origem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\window.h">
@@ -362,5 +365,14 @@
     <ClInclude Include="Graphics\Bindables\pixelConstantBuffer.h">
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
+    <ClInclude Include="thirdparty\pugixml\pugiconfig.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+    <ClInclude Include="thirdparty\pugixml\pugixml.hpp">
+      <Filter>Arquivos de Cabeçalho</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="thirdparty\pugixml\LICENSE.md" />
   </ItemGroup>
 </Project>
