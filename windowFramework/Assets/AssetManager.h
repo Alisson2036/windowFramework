@@ -34,7 +34,7 @@ public:
     }
 
     // Retorna um pointer para o IAsset com o nome dado
-    IAsset* GetAsset(const std::string& name) const;
+    IAsset* GetAssetInterface(const std::string& name) const;
 
 	// Retorna um pointer para o asset do tipo T com o nome dado
     template<typename AssetType>

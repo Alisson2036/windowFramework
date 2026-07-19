@@ -36,70 +36,39 @@ App::App()
 
 	//-----Asset Loading------
 
+	{
+		AssetLoader	loader(&assetManager, pipeline->getRegistry());
+		loader.loadFromXML("Scene\\scene.xml");
+		assetManager.LoadAll();
+	}
 	// Meshes
-	auto* cubeObj = assetManager.CreateAsset<MeshAsset>("Cube", "Objs\\cube.obj");
-	auto* sphereObj = assetManager.CreateAsset<MeshAsset>("Sphere", "Objs\\sphere.obj");
-	auto* waterObj = assetManager.CreateAsset<MeshAsset>("Water", "Objs\\waterPlane.obj");
+	auto* cubeObj = assetManager.getAsset<MeshAsset>("Cube");
+	auto* sphereObj = assetManager.getAsset<MeshAsset>("Sphere");
+	auto* waterObj = assetManager.getAsset<MeshAsset>("Water");
 	auto* coloredCube = assetManager.CreateAsset<MeshAsset>("ColoredCube");
 	auto* whiteCube = assetManager.CreateAsset<MeshAsset>("whiteCube");
 
 	// Textures
-	auto* tex = assetManager.CreateAsset<TextureAsset>("a", L"Textures\\a.png", false);
-	auto* brickTex = assetManager.CreateAsset<TextureAsset>("Bricks", L"Textures\\bricks.jpg", true);
-	auto* brickTexNormal = assetManager.CreateAsset<TextureAsset>("BricksNormal", L"Textures\\bricksNormal.jpg", true);
+	auto* tex = assetManager.getAsset<TextureAsset>("a");
+	auto* brickTex = assetManager.getAsset<TextureAsset>("Bricks");
+	auto* brickTexNormal = assetManager.getAsset<TextureAsset>("BricksNormal");
 
 	// Shaders
-	auto* normalShader = assetManager.CreateAsset<ShaderAsset>(
-		"normalShader",
-		"Shaders\\ecsVS.hlsl",
-		"CompiledShaders\\ecsVS.cso",
-		"Shaders\\normalPS.hlsl",
-		"CompiledShaders\\normalPS.cso"
-	);
-	auto* ecsShader = assetManager.CreateAsset<ShaderAsset>(
-		"ecsShader",
-		"Shaders\\ecsVS.hlsl",
-		"CompiledShaders\\ecsVS.cso",
-		"Shaders\\texturedPS.hlsl",
-		"CompiledShaders\\texturedPS.cso"
-	);
-	auto* colorBlendShader = assetManager.CreateAsset<ShaderAsset>(
-		"colorBlendShader",
-		"Shaders\\colorBlendVS.hlsl",
-		"CompiledShaders\\colorBlendVS.cso",
-		"Shaders\\colorBlendPS.hlsl",
-		"CompiledShaders\\colorBlendPS.cso"
-	);
-	auto* texturedShader = assetManager.CreateAsset<ShaderAsset>(
-		"texturedShader",
-		"Shaders\\texturedVS.hlsl",
-		"CompiledShaders\\texturedVS.cso",
-		"Shaders\\texturedPS.hlsl",
-		"CompiledShaders\\texturedPS.cso"
-	);
-	auto* texturedInstancedShader = assetManager.CreateAsset<ShaderAsset>(
-		"texturedInstancedShader",
-		"Shaders\\texturedInstancedVS.hlsl",
-		"CompiledShaders\\texturedInstancedVS.cso",
-		"Shaders\\texturedPS.hlsl",
-		"CompiledShaders\\texturedPS.cso"
-	);
-	auto* waterShader = assetManager.CreateAsset<ShaderAsset>(
-		"waterShader",
-		"Shaders\\waterVS.hlsl",
-		"CompiledShaders\\waterVS.cso",
-		"Shaders\\waterPS.hlsl",
-		"CompiledShaders\\waterPS.cso"
-	);
+	auto* normalShader = assetManager.getAsset<ShaderAsset>("normalShader");
+	auto* ecsShader = assetManager.getAsset<ShaderAsset>("ecsShader");
+	auto* colorBlendShader = assetManager.getAsset<ShaderAsset>("colorBlendShader");
+	auto* texturedShader = assetManager.getAsset<ShaderAsset>("texturedShader");
+	auto* texturedInstancedShader = assetManager.getAsset<ShaderAsset>("texturedInstancedShader");
+	auto* waterShader = assetManager.getAsset<ShaderAsset>("waterShader");
 
 	// Cria os materiais
-	auto* ecsMat = assetManager.CreateAsset<MaterialAsset>("ecsMat", ecsShader, brickTex);
+	auto* ecsMat = assetManager.getAsset<MaterialAsset>("ecsMat");
 	ecsMat->addTexture(shadowMap.getTexture(), 2);
 
-	auto* brickMat = assetManager.CreateAsset<MaterialAsset>("brickMat", normalShader, brickTex, brickTexNormal);
+	auto* brickMat = assetManager.getAsset<MaterialAsset>("brickMat");
 	brickMat->addTexture(shadowMap.getTexture(), 2);
 
-	auto* coloredMat = assetManager.CreateAsset<MaterialAsset>("coloredMat", colorBlendShader);
+	auto* coloredMat = assetManager.getAsset<MaterialAsset>("coloredMat");
 
 	// Load
 	assetManager.LoadAll();

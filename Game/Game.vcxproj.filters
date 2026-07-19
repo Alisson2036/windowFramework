@@ -45,4 +45,7 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Scene\scene.xml" />
+  </ItemGroup>
 </Project>

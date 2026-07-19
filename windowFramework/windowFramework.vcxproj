@@ -135,6 +135,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Assets\AssetLoader.cpp" />
     <ClCompile Include="Assets\AssetManager.cpp" />
     <ClCompile Include="Assets\IAsset.h" />
     <ClCompile Include="Assets\MaterialAsset.cpp" />
@@ -186,6 +187,7 @@
     <ClCompile Include="Core\window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets\AssetLoader.h" />
     <ClInclude Include="Assets\AssetManager.h" />
     <ClInclude Include="Assets\MaterialAsset.h" />
     <ClInclude Include="Assets\MeshAsset.h" />

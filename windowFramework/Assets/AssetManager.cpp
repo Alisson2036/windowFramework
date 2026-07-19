@@ -1,6 +1,6 @@
 #include "AssetManager.h"
 
-IAsset* AssetManager::GetAsset(const std::string& name) const
+IAsset* AssetManager::GetAssetInterface(const std::string& name) const
 {
     auto it = assets.find(name);
     if (it != assets.end())

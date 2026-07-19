@@ -6,6 +6,7 @@
 #include "Graphics\Bindables\depthStencil.h"
 
 #include "Assets\AssetManager.h"
+#include <Assets\AssetLoader.h>
 #include "Assets\MeshAsset.h"
 #include "Assets\ShaderAsset.h"
 #include "Assets\TextureAsset.h"

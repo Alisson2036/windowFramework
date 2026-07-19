@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Assets>
+	<Meshes>
+		<Mesh name="Cube" path="Objs\cube.obj" />
+		<Mesh name="Sphere" path="Objs\sphere.obj" />
+		<Mesh name="Water" path="Objs\waterPlane.obj" />
+		<Mesh name="ColoredCube" />
+		<Mesh name="whiteCube" />
+	</Meshes>
+
+	<Textures>
+		<Texture name="a" path="Textures\a.png" mipmap="false" />
+		<Texture name="Bricks" path="Textures\bricks.jpg" mipmap="true" />
+		<Texture name="BricksNormal" path="Textures\bricksNormal.jpg" mipmap="true" />
+	</Textures>
+
+	<Shaders>
+		<Shader name="normalShader"
+                vs="Shaders\ecsVS.hlsl" vscso="CompiledShaders\ecsVS.cso"
+                ps="Shaders\normalPS.hlsl" pscso="CompiledShaders\normalPS.cso" />
+
+		<Shader name="ecsShader"
+                vs="Shaders\ecsVS.hlsl" vscso="CompiledShaders\ecsVS.cso"
+                ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
+
+		<Shader name="colorBlendShader"
+                vs="Shaders\colorBlendVS.hlsl" vscso="CompiledShaders\colorBlendVS.cso"
+                ps="Shaders\colorBlendPS.hlsl" pscso="CompiledShaders\colorBlendPS.cso" />
+
+		<Shader name="texturedShader"
+                vs="Shaders\texturedVS.hlsl" vscso="CompiledShaders\texturedVS.cso"
+                ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
+
+		<Shader name="texturedInstancedShader"
+                vs="Shaders\texturedInstancedVS.hlsl" vscso="CompiledShaders\texturedInstancedVS.cso"
+                ps="Shaders\texturedPS.hlsl" pscso="CompiledShaders\texturedPS.cso" />
+
+		<Shader name="waterShader"
+                vs="Shaders\waterVS.hlsl" vscso="CompiledShaders\waterVS.cso"
+                ps="Shaders\waterPS.hlsl" pscso="CompiledShaders\waterPS.cso" />
+	</Shaders>
+
+	<Materials>
+		<Material name="ecsMat" shader="ecsShader" texture="Bricks" />
+		<Material name="brickMat" shader="normalShader" texture="Bricks" normalMap="BricksNormal" />
+		<Material name="coloredMat" shader="colorBlendShader" />
+	</Materials>
+</Assets>
