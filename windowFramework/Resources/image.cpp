@@ -34,6 +34,27 @@ Image::Image(std::wstring fileName)
 	loadFile(fileName);
 }
 
+Image::Image(Image&& rhs) noexcept
+{
+	// Move ownership
+	img = std::move(rhs.img);
+	gfx = std::move(rhs.gfx);
+	buffer = std::move(rhs.buffer);
+
+	imageData = rhs.imageData;
+	needsBufferUpdate = rhs.needsBufferUpdate;
+
+	imageData.data = buffer ? buffer.get() : nullptr;
+
+
+	// Uninitialize rhs
+	rhs.imageData.data = nullptr;
+	rhs.imageData.pixelCount = 0;
+	rhs.imageData.width = 0;
+	rhs.imageData.height = 0;
+	rhs.needsBufferUpdate = false;
+}
+
 void Image::loadFile(std::wstring fileName)
 {
 	//criando bitmap no heap
@@ -252,7 +273,7 @@ Image::data Image::getData()
 	// Adquirindo pointer
 	imageData.data = buffer.get();
 
-	// Salva que ja buffer foi atualizado
+	// Salva que buffer foi atualizado
 	needsBufferUpdate = false;
 
 	return imageData;

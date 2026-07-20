@@ -41,6 +41,7 @@ public:
 	Image() = default;
 	Image(std::wstring fileName);
 	Image(Image&) = delete;
+	Image(Image&& rhs) noexcept;
 
 	// Inicializa a imagem a partir de um arquivo
 	void loadFile(std::wstring fileName);
@@ -63,7 +64,7 @@ public:
 	int drawBoundedText(std::wstring text, font& textFont, vec2 position, int maxWidth, color textColor);
 	int calcHeightBoundedText(std::wstring text, font& textFont, int maxWidth);
 
-
+	bool isLoaded() const { return img != nullptr; }
 	vec2 getResolution();
 	data getData();
 
