@@ -19,6 +19,7 @@ struct CMeshNonIndexed
 	MaterialAsset* material;
 	MeshAsset* mesh;
     RenderMask renderMask{};
+    uint64_t sortKey;
 };
 
 

@@ -20,6 +20,7 @@ Entity ComponentFactory::createObject(MaterialAsset* materialAsset, MeshAsset* m
 	CMeshNonIndexed mesh;
 	mesh.mesh = meshAsset;
 	mesh.material = materialAsset;
+	mesh.sortKey = vbHash({ materialAsset, meshAsset });
 
 	reg->addComponent(ent, mesh);
 

@@ -405,8 +405,7 @@ void App::draw()
 		ImGui::TextUnformatted("Altura da luz");
 		ImGui::SliderFloat("##alturaLuz", &a, 0.0f, 20.0f);
 
-
-		ImGui::End();
+		//ImGui::ShowStyleEditor();
 	}
 
 
@@ -447,7 +446,7 @@ void App::draw()
 	timerVertexBuffer.setSlot(3);
 	timerVertexBuffer.bind();
 	//desenha agua
-	pipeline->drawObject(water);
+	//pipeline->drawObject(water);
 
 	//escreve texto do frametime
 	static float dTime;
@@ -460,6 +459,7 @@ void App::draw()
 	//desenha e atualiza o hud
 	targetSprite.draw(*pipeline);
 
+	ImGui::End();
 }
 
 

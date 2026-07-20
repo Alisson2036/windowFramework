@@ -120,6 +120,8 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 {
 	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
 
+	Timer timer;
+	timer.reset();
 
 	// Vertex buffer hash functor
 	VertexBufferCacheHash vbHash;
@@ -128,6 +130,7 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 	for (auto& i : renderBuckets) i.clear();
 
 	// Bucketing
+	int nObjs = 0;
 	for (auto& obj : view) {
 		CMeshNonIndexed* mesh = obj.get<CMeshNonIndexed>();
 		SpatialData pos = *obj.get<SpatialData>();
@@ -137,19 +140,25 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 			// find bucket index
 			size_t bucketIndex = std::countr_zero(mask);
 
-			// hash
-			uint64_t hash = vbHash({ mesh->material, mesh->mesh });
 
 			// Adding object
-			renderBuckets[bucketIndex].push_back(
-				Renderer::RenderObject{ mesh->material, mesh->mesh, pos, hash }
+			renderBuckets[bucketIndex].emplace_back(
+				mesh->material, mesh->mesh, pos, mesh->sortKey
 			);
 
 			// Next mask
 			mask &= (mask - 1);
 		}
+		nObjs++;
 	}
 
+
+	ImGui::TextUnformatted("Objects count:");
+	ImGui::Text("  %d", nObjs);
+
+	ImGui::TextUnformatted("Bucketing (ms):");
+	ImGui::Text("  %.6f", timer.getPassedSeconds() * 1000.0f);
+	timer.reset();
 
 	// Array sorting
 	for(size_t i = 0; i < renderBuckets.size(); i++)
@@ -163,13 +172,26 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 		);
 	}
 
+	ImGui::TextUnformatted("Sorting (ms):");
+	ImGui::Text("  %.6f", timer.getPassedSeconds() * 1000.0f);
+	timer.reset();
+
 	// Rendering passes
 	for (auto pass : renderPasses)
 	{
+
+
 		uint32_t mask = pass->getRenderMaskFilter();
 		size_t bucketIndex = std::countr_zero(mask);
 		renderer.setObjects(renderBuckets[bucketIndex]);
 		renderer.execute(*pass);
+
+		if (pass->getRenderMaskFilter() == RenderPassMask::ShadowMap)
+			ImGui::TextUnformatted("Shadow pass (ms):");
+		if(pass->getRenderMaskFilter() == RenderPassMask::Opaque)
+			ImGui::TextUnformatted("Render pass (ms):");
+		ImGui::Text("  %.6f", timer.getPassedSeconds() * 1000.0f);
+		timer.reset();
 
 	}
 

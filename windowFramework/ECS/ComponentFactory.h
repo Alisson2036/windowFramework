@@ -8,6 +8,7 @@
 #include "..\Assets\MaterialAsset.h"
 #include "..\Assets\TextureAsset.h"
 #include "..\Math\SpatialData.h"
+#include "..\Graphics\Caching\VertexBufferCache.h"
 
 
 
@@ -26,7 +27,7 @@ public:
 
 
 private:
-
+	VertexBufferCacheHash vbHash;
 
 	Registry* reg;
 
