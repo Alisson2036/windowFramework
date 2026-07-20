@@ -23,6 +23,7 @@ public:
 	
 	DirectX::XMMATRIX getMatrix();
 	DirectX::XMVECTOR getPositionVector();
+	vec3 getPosition();
 
 	DirectX::XMMATRIX getProjectionMatrix();
 

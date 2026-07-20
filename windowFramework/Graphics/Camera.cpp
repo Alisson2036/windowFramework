@@ -81,6 +81,11 @@ DirectX::XMVECTOR Camera::getPositionVector()
 	return DirectX::XMVECTOR({ position.x,position.y,position.z, 1.0f });
 }
 
+vec3 Camera::getPosition()
+{
+	return position;
+}
+
 DirectX::XMMATRIX Camera::getProjectionMatrix()
 {
 	return perspectiveEnable ? 
