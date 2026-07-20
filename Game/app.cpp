@@ -446,7 +446,7 @@ void App::draw()
 	timerVertexBuffer.setSlot(3);
 	timerVertexBuffer.bind();
 	//desenha agua
-	//pipeline->drawObject(water);
+	pipeline->drawObject(water);
 
 	//escreve texto do frametime
 	static float dTime;
