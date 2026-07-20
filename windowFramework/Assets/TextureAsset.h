@@ -10,6 +10,7 @@
 class TextureAsset : public IAsset
 {
 public:
+    TextureAsset(Image&& img);
     TextureAsset(const std::filesystem::path& path, bool generateMipMap);
 
     void Load() override;
@@ -27,6 +28,6 @@ private:
     bool loaded = false;            // Indica se o asset está carregado
 
     Texture tex; // Gpu-side texture
-    Image img;   // Cpu-side texture
+    Image m_img;   // Cpu-side texture
     bool mipMap; // Needs MipMap generation
 };

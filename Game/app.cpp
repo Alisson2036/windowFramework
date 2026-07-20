@@ -70,22 +70,29 @@ App::App()
 
 	auto* coloredMat = assetManager.getAsset<MaterialAsset>("coloredMat");
 
-	// Load
-	assetManager.LoadAll();
 
 
 	// Cria textura de branco solido
-	Image solidWhite;
-	solidWhite.fromBlank(100, 100);
-	solidWhite.drawRectangle(
-		vec2(0, 0),
-		vec2(100, 100),
-		color(255u, 255u, 255u, 255u)
-	);
-	solidWhiteTex.create(solidWhite);
+	{
+		Image solidWhite;
+		solidWhite.fromBlank(100, 100);
+		solidWhite.drawRectangle(
+			vec2(0, 0),
+			vec2(100, 100),
+			color(255u, 255u, 255u, 255u)
+		);
+		solidWhiteTex.create(solidWhite);
+		auto* texw = assetManager.CreateAsset<TextureAsset>("solidWhiteTex", std::move(solidWhite));
+		texw->Load();
+		auto* mat = assetManager.CreateAsset<MaterialAsset>("solidWhite", ecsShader, texw);
+		mat->addTexture(shadowMap.getTexture(), 2);
+	}
 
 
 
+
+	// Load
+	assetManager.LoadAll();
 	
 
 	//cria o cubo teste
@@ -157,20 +164,6 @@ App::App()
 		);
 	}
 
-	// Cria os cubos bricks
-	for (int y = -10; y < 10; y++)
-	{
-		for (int x = -10; x < 10; x++)
-		{
-
-			Entity cube = factory->createObject(
-				brickMat,
-				cubeObj,
-				SpatialData(vec3(x*2.f, -1.f, y*2.f), vec3())
-			);
-		}
-	}
-
 	// Cria os coloredCubes
 	for (int y = -10; y < 10; y++)
 	{
@@ -204,13 +197,6 @@ App::App()
 		timerBuffer.create(a);
 		timerVertexBuffer.create(a);
 	}
-
-	//cria a esfera
-	sphere.create(texturedInstancedShader->getShader());
-	sphere.load(sphereObj);
-	sphere.setTexture(&solidWhiteTex, 0);
-	sphere.setTexture(shadowMap.getTexture(), 2);
-	sphere.lock();
 
 
 	//move camera para posicao inicial
@@ -347,14 +333,28 @@ void App::logic()
 	}
 
 
-	//atualiza as posições da bola
-	std::vector<vec3> ballPositions = {};
-	ballPositions.reserve(phyObjs.size());
-	for (auto i : phyObjs)
+	// Sphere update logic
+	struct phyBall { };
 	{
-		ballPositions.push_back(i->getPosition());
+		auto view = pipeline->getRegistry()->getView<SpatialData, phyBall>();
+		auto iter = view.begin();
+		for (auto i : phyObjs)
+		{
+			SpatialData sd(i->getPosition());
+			if (iter == view.end()) {
+				Entity e = factory->createObject(
+					assetManager.getAsset<MaterialAsset>("solidWhite"),
+					assetManager.getAsset<MeshAsset>("Sphere"),
+					sd
+				);
+				pipeline->getRegistry()->addComponent(e, phyBall{});
+			}
+			else {
+				(*iter.get<SpatialData>()) = sd;
+				++iter;
+			}
+		}
 	}
-	sphere.setInstancesPos(ballPositions);
 
 
 	//muda posicao da luz 
@@ -378,8 +378,6 @@ void App::draw()
 	shadowMap.clear();
 	pipeline->setRenderTarget(nullptr, &shadowMap);
 	pipeline->setCamera(&lightCam);
-	pipeline->drawObject(sphere);
-	//pipeline->drawObject(normalCube);
 	pipeline->drawObject(texturedCube);
 
 	// ECS draw
@@ -389,7 +387,6 @@ void App::draw()
 	//win.Gfx().drawToScreen();
 	pipeline->setRenderTarget(&target, &targetDS);
 	pipeline->setCamera(&cam);
-	pipeline->drawObject(sphere);
 	pipeline->drawObject(texturedCube);
 
 

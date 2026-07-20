@@ -6,6 +6,7 @@ class SpatialData
 {
 public:
 	SpatialData();
+	SpatialData(vec3 Position);
 	SpatialData(vec3 Position, vec3 Angle);
 
 	void set(vec3 Position, vec3 Angle);

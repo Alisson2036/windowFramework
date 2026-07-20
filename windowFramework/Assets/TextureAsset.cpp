@@ -1,6 +1,11 @@
 #include "TextureAsset.h"
 
 
+TextureAsset::TextureAsset(Image&& img)
+	:
+	m_img(std::move(img)),
+	mipMap(false)
+{}
 
 TextureAsset::TextureAsset(const std::filesystem::path& path, bool generateMipMap)
 {
@@ -11,11 +16,13 @@ TextureAsset::TextureAsset(const std::filesystem::path& path, bool generateMipMa
 
 void TextureAsset::Load()
 {
-	if (filePath.empty()) return;
-
-	img.loadFile(filePath.c_str());
-	if (mipMap) tex.createWithMipMap(img);
-	else tex.create(img);
+	if (filePath.empty() && !m_img.isLoaded()) return;
+	if (!m_img.isLoaded())
+	{
+		m_img.loadFile(filePath.c_str());
+	}
+	if (mipMap) tex.createWithMipMap(m_img);
+	else tex.create(m_img);
 	loaded = true;
 }
 

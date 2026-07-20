@@ -17,6 +17,21 @@ SpatialData::SpatialData()
 	scale.z = 1.0f;
 }
 
+SpatialData::SpatialData(vec3 Position)
+{
+	position.x = Position.x;
+	position.y = Position.y;
+	position.z = Position.z;
+
+	angle.x = 0.0f;
+	angle.y = 0.0f;
+	angle.z = 0.0f;
+
+	scale.x = 1.0f;
+	scale.y = 1.0f;
+	scale.z = 1.0f;
+}
+
 SpatialData::SpatialData(vec3 Position, vec3 Angle)
 {
 	position.x = Position.x;

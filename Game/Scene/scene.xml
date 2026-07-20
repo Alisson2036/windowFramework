@@ -50,15 +50,14 @@
 	</Assets>
 
 	<Objects>
-		<Object material="ecsMat" mesh="Cube">
-			<Position x="5.0" y="8.0" z="5.0" />
-			<Rotation x="0.0" y="45.0" z="0.0" />
+		<Object material="brickMat" mesh="Cube">
+			<Position x="-20.0" y="-1.0" z="-20.0" />
+			<Rotation x="0.0" y="0.0" z="0.0" />
 			<Scale x="1.0" y="1.0" z="1.0" />
 
 			<Repeat>
-				<X amount="5" distance="3.0"></X>
-				<Y amount="5" distance="3.0"></Y>
-				<Z amount="5" distance="3.0"></Z>
+				<X amount="20" distance="2.0"></X>
+				<Z amount="20" distance="2.0"></Z>
 			</Repeat>
 		</Object>
 	</Objects>
