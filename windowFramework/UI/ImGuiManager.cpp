@@ -8,8 +8,16 @@ ImGuiManager::ImGuiManager(HWND hwnd, ID3D11Device* device, ID3D11DeviceContext*
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
 
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO& io = ImGui::GetIO();
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+
+    // Font loading
+    ImFont* myFont = io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\segoeui.ttf", 18.0f);
+    io.Fonts->Flags |= ImFontAtlasFlags_NoPowerOfTwoHeight;
+    if (myFont == nullptr) {
+        io.Fonts->AddFontDefault();
+    }
+
 
     // Style settings
     ImGui::StyleColorsDark();
