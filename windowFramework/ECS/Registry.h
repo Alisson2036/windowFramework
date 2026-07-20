@@ -37,6 +37,10 @@ public:
 			{
 				return a.m_index != b.m_index or a.m_view != a.m_view;
 			}
+			friend bool operator==(const Iterator& a, const Iterator& b)
+			{
+				return !(a != b);
+			}
 			Iterator& operator*()
 			{
 				return *this;
@@ -191,6 +195,7 @@ public:
     {
 		View view{};
         (view.addComp(getComponent<Component>()), ..., view.addComp(getComponent<Others>()));
+		if (view.pArrays.size() != 1 + sizeof...(Others)) view.pArrays.clear();
         return view;
     }
 
