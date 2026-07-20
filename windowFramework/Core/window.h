@@ -6,6 +6,10 @@
 #include "..\Input\keyboard.h"
 #include "graphics.h"
 
+// IMGUI
+#include "../thirdparty/imgui/imgui.h"
+#include "../thirdparty/imgui/imgui_impl_win32.h"
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 // Classe responsável por gerenciar a janela da aplicação, incluindo
 // criação, atualização e manipulação de eventos de entrada do usuário.

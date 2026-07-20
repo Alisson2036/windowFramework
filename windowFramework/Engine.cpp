@@ -4,6 +4,11 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 	:
 	win(L"Game", &mouse, &keyboard, screenSizeX, screenSizeY),
 	gfx(win.getWindowHandle(), screenSizeX, screenSizeY),
+	imguiManager(
+		win.getWindowHandle(),
+		gfx.getDevice(),
+		gfx.getDeviceContext()
+	),
 	pipeline(gfx.getDevice(), 
 		gfx.getDeviceContext(), 
 		gfx.getBackBuffer(),
@@ -21,6 +26,8 @@ Engine::Engine(UINT screenSizeX, UINT screenSizeY)
 	//inicia GDI
 	Image::initialize();
 
+	imguiManager.BeginFrame();
+
 
 }
 Engine::~Engine()
@@ -31,7 +38,12 @@ Engine::~Engine()
 bool Engine::update()
 {
 	bool a = win.update();
+
+	imguiManager.EndFrame();
+
 	gfx.flip();
+
+	imguiManager.BeginFrame();
 
 	return a;
 }

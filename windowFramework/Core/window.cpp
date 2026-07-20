@@ -191,6 +191,12 @@ LRESULT Window::messageHandler(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam
 
 LRESULT Window::messageHandlerLocal(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 {
+	// Imgui message handling
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wParam, lParam))
+		return true;
+
+
+	// Application message handling
 	switch (msg)
 	{
 	case WM_CLOSE:

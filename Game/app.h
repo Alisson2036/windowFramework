@@ -19,6 +19,7 @@
 
 #include "Graphics\sprite.h"
 #include "UI\guiPanel.h"
+#include <thirdparty\imgui\imgui.h>
 
 #include "Physics\physicsDomain.h"
 #include "Physics\physicsObject.h"

@@ -369,6 +369,12 @@ void App::logic()
 
 void App::draw()
 {
+	// IMGUI
+	ImGui::Begin("Debug Panel");
+	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
+	ImGui::End();
+
+
 	//preenche a tela
 	eng.getPipeline()->fillScreen(0.2f, 0.6f, 0.9f);
 	target.fill(0.2f, 0.6f, 0.9f);

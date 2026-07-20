@@ -157,6 +157,13 @@
     <ClCompile Include="Graphics\Shader\ShaderCompiler.cpp" />
     <ClCompile Include="Input\inputProxy.cpp" />
     <ClCompile Include="Input\CursorController.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_impl_win32.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_demo.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_draw.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_tables.cpp" />
+    <ClCompile Include="thirdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="thirdparty\pugixml\pugixml.cpp" />
     <ClCompile Include="UI\guiPanel.cpp" />
     <ClCompile Include="Graphics\Bindables\renderTarget.cpp" />
@@ -185,6 +192,7 @@
     <ClCompile Include="Graphics\Bindables\vertexConstantBuffer.cpp" />
     <ClCompile Include="Graphics\Bindables\vertexShader.cpp" />
     <ClCompile Include="Core\window.cpp" />
+    <ClCompile Include="UI\ImGuiManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Assets\AssetLoader.h" />
@@ -193,6 +201,7 @@
     <ClInclude Include="Assets\MeshAsset.h" />
     <ClInclude Include="Assets\ShaderAsset.h" />
     <ClInclude Include="Assets\TextureAsset.h" />
+    <ClInclude Include="UI\ImGuiManager.h" />
     <ClInclude Include="ECS\ComponentArray.h" />
     <ClInclude Include="ECS\Components\Object.h" />
     <ClInclude Include="ECS\Entity.h" />
@@ -217,6 +226,14 @@
     <ClInclude Include="Input\CursorController.h" />
     <ClInclude Include="Math\color.h" />
     <ClInclude Include="Graphics\Bindables\depthStencil.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_impl_dx11.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_impl_win32.h" />
+    <ClInclude Include="thirdparty\imgui\imconfig.h" />
+    <ClInclude Include="thirdparty\imgui\imgui.h" />
+    <ClInclude Include="thirdparty\imgui\imgui_internal.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_rectpack.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_textedit.h" />
+    <ClInclude Include="thirdparty\imgui\imstb_truetype.h" />
     <ClInclude Include="thirdparty\pugixml\pugiconfig.hpp" />
     <ClInclude Include="thirdparty\pugixml\pugixml.hpp" />
     <ClInclude Include="UI\guiPanel.h" />
@@ -252,6 +269,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="thirdparty\pugixml\LICENSE.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="thirdparty\imgui\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
