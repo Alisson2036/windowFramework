@@ -18,7 +18,6 @@
 #include "Graphics\Bindables\texture.h"
 
 #include "Graphics\sprite.h"
-#include "UI\guiPanel.h"
 #include <thirdparty\imgui\imgui.h>
 
 #include "Physics\physicsDomain.h"
@@ -69,7 +68,6 @@ private:
 
 
 	sprite targetSprite;
-	guiPanel gui;
 
 
 	Shader colorBlendShader;

@@ -225,17 +225,6 @@ App::App()
 	//Define gravidade
 	phyDomain.setGravity(vec3(0.0f, -10.0f, -0.0f));
 
-
-	//inicializa guipanel
-	gui.create(vec2(eng.getScreenSize().x, eng.getScreenSize().y));
-	gui.addValue(L"Frametime", &frameTime);
-	gui.addValue(L"FPS", &FPS);
-	gui.addValue(L"Quantidade de bolas", &nBolas);
-	gui.addValue(L"Posição cubo", &cubePos, false);
-	gui.addValue(L"Rotação cubo", &cubeRot, false);
-	gui.addValue(L"Altura da luz", &a, false);
-	gui.addValue(L"Cubos colidindo ou nao talvez seja mas nao tenho certeza", &cubesColliding);
-
 	// Creating render passes
 	{
 		// Forward pass
@@ -304,9 +293,6 @@ void App::input()
 	if (kb.isKeyPressed('X')) a -= 0.1f;
 
 	//gui input handling
-	bool guiStatus = gui.handleInput((int)x, (int)y, eng.input().leftButtonPressed());
-	if (guiStatus) eng.mouseController().setCursor(CursorController::cursorType::dragHorizontal);
-	else eng.mouseController().setCursor(CursorController::cursorType::normal);
 }
 
 void App::logic()
@@ -369,10 +355,59 @@ void App::logic()
 
 void App::draw()
 {
-	// IMGUI
-	ImGui::Begin("Debug Panel");
-	ImGui::Text("FPS: %.1f", ImGui::GetIO().Framerate);
-	ImGui::End();
+
+	{
+
+		// Descobre as dimensões atuais da tela/viewport
+		const ImGuiViewport* viewport = ImGui::GetMainViewport();
+
+		// Travar a posicao
+		const float panelWidth = 200.0f;
+		ImGui::SetNextWindowPos(
+			ImVec2(viewport->WorkPos.x + viewport->WorkSize.x - panelWidth, viewport->WorkPos.y),
+			ImGuiCond_Always
+		);
+
+		// Travar o TAMANHO
+		ImGui::SetNextWindowSize(
+			ImVec2(panelWidth, viewport->WorkSize.y),
+			ImGuiCond_Always
+		);
+
+		ImGuiWindowFlags window_flags =
+			ImGuiWindowFlags_NoTitleBar |            // Remove a barra de título superior
+			ImGuiWindowFlags_NoResize |              // Impede o usuário de redimensionar
+			ImGuiWindowFlags_NoMove |                // Impede o usuário de arrastar a janela
+			ImGuiWindowFlags_NoCollapse |            // Impede de minimizar
+			ImGuiWindowFlags_NoSavedSettings;        // Ignora a posição salva no imgui.ini
+
+		ImGui::Begin("Sidebar", nullptr, window_flags);
+
+		ImGui::TextUnformatted("Frametime");
+		ImGui::Text("  %.6f", 1.0f / ImGui::GetIO().Framerate);
+
+		ImGui::TextUnformatted("FPS");
+		ImGui::Text("  %.1f", ImGui::GetIO().Framerate);
+
+		ImGui::Separator();
+
+		ImGui::TextUnformatted("Quantidade de bolas");
+		ImGui::Text("  %d", nBolas);
+
+		ImGui::Separator();
+
+		ImGui::TextUnformatted("Posicao cubo");
+		ImGui::DragFloat3("##posCubo", reinterpret_cast<float*>(&cubePos), 0.1f);
+
+		ImGui::TextUnformatted("Rotacao cubo");
+		ImGui::DragFloat3("##rotCubo", reinterpret_cast<float*>(&cubeRot), 0.1f);
+
+		ImGui::TextUnformatted("Altura da luz");
+		ImGui::SliderFloat("##alturaLuz", &a, 0.0f, 20.0f);
+
+
+		ImGui::End();
+	}
 
 
 	//preenche a tela
@@ -423,11 +458,8 @@ void App::draw()
 	eng.getPipeline()->drawToScreen();
 
 	//desenha e atualiza o hud
-	//targetSprite.update(hud);
 	targetSprite.draw(*pipeline);
 
-	//desenha o gui
-	gui.draw(*pipeline);
 }
 
 

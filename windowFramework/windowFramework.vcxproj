@@ -165,7 +165,6 @@
     <ClCompile Include="thirdparty\imgui\imgui_tables.cpp" />
     <ClCompile Include="thirdparty\imgui\imgui_widgets.cpp" />
     <ClCompile Include="thirdparty\pugixml\pugixml.cpp" />
-    <ClCompile Include="UI\guiPanel.cpp" />
     <ClCompile Include="Graphics\Bindables\renderTarget.cpp" />
     <ClCompile Include="Core\exception.cpp" />
     <ClCompile Include="Core\graphics.cpp" />
@@ -236,7 +235,6 @@
     <ClInclude Include="thirdparty\imgui\imstb_truetype.h" />
     <ClInclude Include="thirdparty\pugixml\pugiconfig.hpp" />
     <ClInclude Include="thirdparty\pugixml\pugixml.hpp" />
-    <ClInclude Include="UI\guiPanel.h" />
     <ClInclude Include="Graphics\Bindables\renderTarget.h" />
     <ClInclude Include="Core\exception.h" />
     <ClInclude Include="Core\graphics.h" />

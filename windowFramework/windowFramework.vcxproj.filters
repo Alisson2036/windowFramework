@@ -129,9 +129,6 @@
     <ClCompile Include="Physics\physicsDomain.cpp">
       <Filter>Arquivos de Origem\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="UI\guiPanel.cpp">
-      <Filter>Arquivos de Origem</Filter>
-    </ClCompile>
     <ClCompile Include="Engine.cpp">
       <Filter>Arquivos de Origem</Filter>
     </ClCompile>
@@ -312,9 +309,6 @@
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
     <ClInclude Include="Graphics\sprite.h">
-      <Filter>Arquivos de Cabeçalho\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="UI\guiPanel.h">
       <Filter>Arquivos de Cabeçalho\Object</Filter>
     </ClInclude>
     <ClInclude Include="Engine.h">
