@@ -371,3 +371,4 @@ FodyWeavers.xsd
 /Game/CompiledShaders/texturedVS.cso
 /Game/CompiledShaders/waterPS.cso
 /Game/CompiledShaders/waterVS.cso
+/Game/imgui.ini
