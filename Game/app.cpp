@@ -320,26 +320,30 @@ void App::logic()
 
 
 	// Sphere update logic
+	
 	struct phyBall { };
 	{
 		auto view = pipeline->getRegistry()->getView<SpatialData, phyBall>();
-		auto iter = view.begin();
-		for (auto i : phyObjs)
-		{
-			SpatialData sd(i->getPosition());
-			if (iter == view.end()) {
-				Entity e = factory->createObject(
-					assetManager.getAsset<MaterialAsset>("solidWhite"),
-					assetManager.getAsset<MeshAsset>("Sphere"),
-					sd
-				);
-				pipeline->getRegistry()->addComponent(e, phyBall{});
-			}
-			else {
-				(*iter.get<SpatialData>()) = sd;
-				++iter;
-			}
+		size_t ballCount = pipeline->getRegistry()->getComponentCount<phyBall>();
+		// Creating balls
+		while (ballCount < phyObjs.size()) {
+			Entity e = factory->createObject(
+				assetManager.getAsset<MaterialAsset>("solidWhite"),
+				assetManager.getAsset<MeshAsset>("Sphere"),
+				SpatialData()
+			);
+			pipeline->getRegistry()->addComponent(e, phyBall{});
+
+			ballCount++;
 		}
+		//moving balls
+		size_t idx = 0;
+		view.each(
+			[&](Entity, SpatialData& sd, phyBall) {
+				sd.set(phyObjs[idx]->getPosition(), vec3());
+				idx++;
+			}
+		);
 	}
 
 

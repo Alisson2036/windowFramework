@@ -84,10 +84,6 @@ void Pipeline::drawObject(Object& obj)
 	//texturas
 	for (auto current : obj.textures)
 	{
-		if (current.second->isAntialiased())
-			aliasedSampler.bind();
-		else
-			sampler.bind();
 		aliasedSampler.bind();
 		current.second->setSlot(current.first);
 		current.second->bind();
@@ -118,7 +114,7 @@ void Pipeline::drawObject(Object& obj)
 
 void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 {
-	Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
+	//Registry::View view = registry->getView<CMeshNonIndexed, SpatialData>();
 
 	Timer timer;
 	timer.reset();
@@ -130,27 +126,33 @@ void Pipeline::drawScene(std::vector<IRenderPass*>&& renderPasses)
 	for (auto& i : renderBuckets) i.clear();
 
 	// Bucketing
+	auto view = registry->getView<CMeshNonIndexed, SpatialData>();
 	int nObjs = 0;
+	view.each(
+		[&](Entity ent, CMeshNonIndexed& mesh, SpatialData& pos) {
+			uint32_t mask = mesh.renderMask.flags;
+
+			while (mask > 0) {
+				// find bucket index
+				size_t bucketIndex = std::countr_zero(mask);
+
+
+				// Adding object
+				renderBuckets[bucketIndex].emplace_back(
+					mesh.material, mesh.mesh, pos, mesh.sortKey
+				);
+
+				// Next mask
+				mask &= (mask - 1);
+			}
+			nObjs++;
+		}
+	);/*
 	for (auto& obj : view) {
 		CMeshNonIndexed* mesh = obj.get<CMeshNonIndexed>();
 		SpatialData pos = *obj.get<SpatialData>();
-		uint32_t mask = mesh->renderMask.flags;
-
-		while (mask > 0) {
-			// find bucket index
-			size_t bucketIndex = std::countr_zero(mask);
-
-
-			// Adding object
-			renderBuckets[bucketIndex].emplace_back(
-				mesh->material, mesh->mesh, pos, mesh->sortKey
-			);
-
-			// Next mask
-			mask &= (mask - 1);
-		}
-		nObjs++;
-	}
+		
+	}*/
 
 
 	ImGui::TextUnformatted("Objects count:");

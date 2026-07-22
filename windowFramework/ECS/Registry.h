@@ -8,141 +8,81 @@
 #include "EntityManager.h"
 #include "ComponentArray.h"
 
+template<typename... Components>
+class View
+{
+public:
+	View(ComponentArray<Components>*... arrays)
+		: pArrays(arrays...)
+	{
+		// Validates array types
+		m_isValid = (... && (arrays != nullptr));
+
+		if (m_isValid)
+		{
+			// Calculates lead_array.
+			// lead_array is always the compArray with less entities.
+			std::array<size_t, sizeof...(Components)> sizes = { arrays->getArraySize()... };
+			m_mainComponentIdx = std::distance(sizes.begin(), std::min_element(sizes.begin(), sizes.end()));
+		}
+	}
+
+	// Internal iterator
+	template<typename Func>
+	void each(Func func)
+	{
+		if (!m_isValid) return; // Return if view is not valid
+
+		auto dispatch = [&]<std::size_t... Is>(std::index_sequence<Is...>) {
+			(..., [&]() {
+				if (Is == m_mainComponentIdx) {
+					iterate_with_lead<Is>(func);
+				}
+				}());
+		};
+
+		dispatch(std::make_index_sequence<sizeof...(Components)>{});
+	}
+
+private:
+	std::tuple<ComponentArray<Components>*...> pArrays;
+	bool m_isValid = false;
+	size_t m_mainComponentIdx = 0;
+
+	// Iteration loop
+	template<size_t LeadIdx, typename Func>
+	void iterate_with_lead(Func& func)
+	{
+		auto* lead_array = std::get<LeadIdx>(pArrays);
+		const size_t size = lead_array->getArraySize();
+
+		// Iterates using lead_array and calls function
+		for (size_t i = 0; i < size; ++i)
+		{
+			const Entity entity = lead_array->indexToEntity(i);
+
+			if (checkIndex<LeadIdx>(entity))
+			{
+				func(entity, *(std::get<ComponentArray<Components>*>(pArrays)->get(entity))...);
+			}
+		}
+	}
+
+	// Check if every compArray contain Entity e (except main compArray)
+	template<size_t LeadIdx>
+	bool checkIndex(Entity e) const
+	{
+		return[&]<std::size_t... Is>(std::index_sequence<Is...>) {
+			return (... && (Is == LeadIdx || std::get<Is>(pArrays)->containsEntity(e)));
+		}(std::make_index_sequence<sizeof...(Components)>{});
+	}
+};
+
 
 class Registry
 {
 public:
 	Registry() = default;
-
-	class View
-	{
-		friend class Registry;
-	public:
-		View() : mainComponent(typeid(void)) {};
-
-		// --Iterator class--
-		class Iterator
-		{
-		public:
-			Iterator(View* view, size_t index) :
-				m_view(view),
-				m_index(index)
-			{}
-			Iterator& operator++()
-			{
-				m_index = m_view->next(m_index);
-				return *this;
-			}
-			friend bool operator!=(const Iterator& a, const Iterator& b)
-			{
-				return a.m_index != b.m_index or a.m_view != a.m_view;
-			}
-			friend bool operator==(const Iterator& a, const Iterator& b)
-			{
-				return !(a != b);
-			}
-			Iterator& operator*()
-			{
-				return *this;
-			}
-			template<typename Component>
-			Component* get()
-			{
-				return m_view->get<Component>(m_index);
-			}
-			Entity getEntity()
-			{
-				return m_view->getEntity(m_index);
-			}
-		private:
-			View* m_view;
-			size_t m_index;
-		};
-
-		// --Public member functions--
-		Iterator begin()
-		{
-			return Iterator(this, 0);
-		}
-		Iterator end()
-		{
-			if (pArrays.empty())
-				return Iterator(this, 0);
-
-			return Iterator(this, pArrays.at(mainComponent)->getArraySize() + 1u);
-		}
-
-
-	private:
-
-		size_t next(size_t index)
-		{
-			do
-			{
-				index += 1;
-				if (index == pArrays[mainComponent]->getArraySize())
-					return pArrays[mainComponent]->getArraySize() + 1;
-			} while (!checkIndex(index));
-			return index;
-		}
-		bool checkIndex(const size_t index) const
-		{
-			const Entity entity = getEntity(index);
-			for (const auto& pair : pArrays)
-			{
-				if (!pair.second->containsEntity(entity))
-					return false;
-			}
-			return true;
-		}
-		Entity getEntity(const size_t index) const
-		{
-			return pArrays.at(mainComponent)->indexToEntity(index);
-		}
-		template<typename Comp>
-		Comp* get(size_t index)
-		{
-			std::type_index type = typeid(Comp);
-			if (type == mainComponent)
-			{
-				return static_cast<ComponentArray<Comp>*>(pArrays.at(mainComponent))
-					->getByIndex(index);
-			}
-			Entity ent = getEntity(index);
-			IComponentArray* pComp = pArrays.find(type)->second;
-			ComponentArray<Comp>* pCompTyped = static_cast<ComponentArray<Comp>*>(pComp);
-			return pCompTyped->get(ent);
-		}
-
-		// Adiciona pointer para componente
-		// Atenção: todos os componentes devem
-		// ser adicionados antes de qualquer
-		// outra chamada de função.
-		template<typename Comp> 
-		void addComp(ComponentArray<Comp>* component)
-		{
-			// Nao adiciona componente nulo
-			if (component == nullptr) return;
-
-			// Adiciona pointer
-			std::type_index type = typeid(Comp);
-			pArrays[type] = component;
-
-			// Define tipo principal
-			auto it = pArrays.find(mainComponent);
-			if (it != pArrays.end())
-			{
-				if (it->second->getArraySize() > pArrays[type]->getArraySize())
-					mainComponent = type;
-				return;
-			}
-			mainComponent = type;
-		}
-
-	private:
-		std::unordered_map<std::type_index, IComponentArray*> pArrays;
-		std::type_index mainComponent;
-	};
 
 	Entity createEntity()
 	{
@@ -190,18 +130,27 @@ public:
 		return nullptr;
 	}
 
-    template<typename Component, typename... Others>
-    View getView()
-    {
-		View view{};
-        (view.addComp(getComponent<Component>()), ..., view.addComp(getComponent<Others>()));
-		if (view.pArrays.size() != 1 + sizeof...(Others)) view.pArrays.clear();
-        return view;
-    }
+	template<typename Component>
+	size_t getComponentCount() {
+		auto* comp = getComponentArray<Component>();
+		if (comp) return comp->getArraySize();
+		return 0;
+	}
+
+	template<typename Component, typename... Others>
+	View<Component, Others...> getView()
+	{
+		// Coletamos todos os ponteiros tipados
+		// e deixamos o construtor da View fazer a validação e encontrar o menor!
+		return View<Component, Others...>(
+			getComponentArray<Component>(),
+			getComponentArray<Others>()...
+		);
+	}
 
 private:
 	template<typename Component>
-	ComponentArray<Component>* getComponent()
+	ComponentArray<Component>* getComponentArray()
 	{
 		std::type_index type = typeid(Component);
 		auto res = components.find(type);
