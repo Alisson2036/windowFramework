@@ -84,14 +84,14 @@ float ProceduralWaterNoise(float2 pos, float time)
     float sumOfWeights = 0.0;
     
     // Frequência e velocidade do ruído
-    float2 noiseUV = pos.xy * 0.4f + float2(time * 0.1, time * 0.05);
+    float2 noiseUV = pos.xy * 0.8f + float2(time * 0.1, time * 0.05);
 
     // Fffset 2D entre -1.0 e 1.0
     float noiseX = Noise2D(noiseUV) * 2.0 - 1.0;
-    float noiseZ = Noise2D(noiseUV + float2(17.5, 31.2)) * 2.0 - 1.0; // Offset de amostragem para desvincular X de Z
+    float noiseZ = Noise2D(noiseUV+ float2(17.5, 31.2)) * 2.0 - 1.0; // Offset de amostragem para desvincular X de Z
 
     // Posição distorcida 
-    pos.xy += float2(noiseX, noiseZ) * 0.8;
+    pos.xy += float2(noiseX, noiseZ) * 0.5;
     
     [unroll]
     for (int i = 0; i < 5; i++)
@@ -174,7 +174,7 @@ float4 main(VS_Output input) : SV_TARGET
     // Textura/Ruído secundário para "quebrar" a espuma (opcional, se você tiver uma textura)
     // float foamTexture = tex.Sample(samp, input.vertexPos.xz * 0.5).r;
     foamFactor *= FBM(input.vertexPos.xz * 8.0f);
-    float3 foamColor = float3(0.9, 0.95, 1.0); // Branco levemente azulado
+    float3 foamColor = float3(0.8, 0.85, 1.0); // Branco levemente azulado
     
     // --- CÁLCULO DE SUBSURFACE SCATTERING (SSS) ---
     // 1. Consertamos a máscara de altura (agora o SSS só ocorre nas partes altas)
@@ -192,7 +192,7 @@ float4 main(VS_Output input) : SV_TARGET
     float ambientSSS = saturate(input.vertexPos.y * 0.5f) * 0.15f;
 
     // Cor esverdeada brilhante típica de água do mar rasa iluminada
-    float3 SSS_Color = float3(0.0, 0.7, 0.55) * 0.6f;
+    float3 SSS_Color = float3(0.1, 0.6, 0.55) * 0.4f;
 
     float3 subsurface = SSS_Color * (SSS_Intensity + ambientSSS) * SSS_HeightMask;
 
@@ -200,17 +200,17 @@ float4 main(VS_Output input) : SV_TARGET
     
     float NdotV = saturate(dot(N, V));
     float R0 = 0.02;
-    float fresnel = R0 + (1.0 - R0) * pow(1.0 - NdotV, 5.0);
+    float fresnel = R0 + (1.0 - R0) * pow(1.0 - NdotV, 8.0);
 
     float NdotL = saturate(dot(N, L));
-    float3 waterBaseColor = float3(0.02, 0.15, 0.35);
+    float3 waterBaseColor = float3(0.3, 0.6, 1.0)/2.0;
     float3 diffuse = waterBaseColor * (0.2 + 0.8 * NdotL);
 
     float3 H = normalize(L + V);
     float NdotH = saturate(dot(N, H));
     
     float specularFactor = pow(NdotH, 256.0f);
-    float3 specular = float3(1.0, 1.0, 1.0) * specularFactor * 1.5f;
+    float3 specular = float3(0.95, 0.95, 1.0) * specularFactor * 1.5f;
 
     float3 skyColor = float3(0.4, 0.65, 0.95);
     
